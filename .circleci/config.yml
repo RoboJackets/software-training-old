@@ -1,0 +1,9 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/robocup-training
+    docker:
+      - image: alpine:latest
+    steps:
+        # Install cask
+      - run: sh -c true
