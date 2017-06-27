@@ -42,14 +42,35 @@
 
 (let ((proj-base (file-name-directory load-file-name)))
   (setq org-publish-project-alist
-    `(("rc-slides"
+    `(("rj-slides"
         :recursive t
-        :base-directory ,(concat proj-base "./src")
+				:with-toc nil
+				:with-timestamps nil
+				:time-stamp-file nil
+				:with-tags nil
+				:with-author nil
+				:with-date nil
+				:section-numbers nil
+				:reveal-history nil
+				:reveal-control nil
+				:reveal-hlevel "1"
+				:reveal-plugins "(notes pdf)"
+				:reveal-speed "fast"
+				:reveal-trans "linear"
+				:reveal-theme "black"
+				:base-directory ,(concat proj-base "./src")
         :publishing-directory ,(concat proj-base "/html/slides/")
         :publishing-function org-reveal-publish-to-reveal
         :exclude-tags ("docs"))
-       ("rc-docs"
+       ("rj-docs"
          :recursive t
+				 :with-toc nil
+				 :with-tags nil
+				 :with-author nil
+				 :with-date nil
+				 :section-numbers nil
+				 :with-timestamps nil
+				 :time-stamp-file nil
          :base-directory ,(concat proj-base "./src")
          :publishing-directory ,(concat proj-base "/html/docs/")
          :publishing-function org-gfm-publish-to-gfm

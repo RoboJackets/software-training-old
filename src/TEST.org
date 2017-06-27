@@ -1,14 +1,10 @@
 #+TITLE: TEST PRESENTATION
 #+AUTHOR: Jay Kamat
 #+EMAIL: jaygkamat@gmail.com
-#+REVEAL_THEME: black
-#+REVEAL_TRANS: linear
-#+REVEAL_SPEED: fast
-#+REVEAL_PLUGINS: (notes pdf)
-#+REVEAL_HLEVEL: 1
-#+OPTIONS: toc:nil timestamp:nil reveal_control:t num:nil reveal_history:t tags:nil author:nil
 
 * This is a test file
+
+
 ** Nested
 #+BEGIN_SRC c
 int main() {
