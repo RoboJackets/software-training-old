@@ -36,7 +36,6 @@
     '(font-lock-type-face		       ((t (:foreground "#598249"))))
     '(font-lock-variable-name-face ((t (:foreground "#2F7BDE"))))
     '(font-lock-warning-face       ((t (:foreground "#bd3832" :weight bold)))))
-
   (setq htmlize-use-rgb-map 'force)
   (require 'htmlize))
 
@@ -44,33 +43,33 @@
   (setq org-publish-project-alist
     `(("rj-slides"
         :recursive t
-				:with-toc nil
-				:with-timestamps nil
-				:time-stamp-file nil
-				:with-tags nil
-				:with-author nil
-				:with-date nil
-				:section-numbers nil
-				:reveal-history nil
-				:reveal-control nil
-				:reveal-hlevel "1"
-				:reveal-plugins "(notes pdf)"
-				:reveal-speed "fast"
-				:reveal-trans "linear"
-				:reveal-theme "black"
-				:base-directory ,(concat proj-base "./src")
+        :with-toc nil
+        :with-timestamps nil
+        :time-stamp-file nil
+        :with-tags nil
+        :with-author nil
+        :with-date nil
+        :section-numbers nil
+        :reveal-history nil
+        :reveal-control nil
+        :reveal-hlevel "1"
+        :reveal-plugins "(notes pdf)"
+        :reveal-speed "fast"
+        :reveal-trans "linear"
+        :reveal-theme "black"
+        :base-directory ,(concat proj-base "./src")
         :publishing-directory ,(concat proj-base "/html/slides/")
         :publishing-function org-reveal-publish-to-reveal
         :exclude-tags ("docs"))
        ("rj-docs"
          :recursive t
-				 :with-toc nil
-				 :with-tags nil
-				 :with-author nil
-				 :with-date nil
-				 :section-numbers nil
-				 :with-timestamps nil
-				 :time-stamp-file nil
+         :with-toc nil
+         :with-tags nil
+         :with-author nil
+         :with-date nil
+         :section-numbers nil
+         :with-timestamps nil
+         :time-stamp-file nil
          :base-directory ,(concat proj-base "./src")
          :publishing-directory ,(concat proj-base "/html/docs/")
          :publishing-function org-gfm-publish-to-gfm
@@ -87,14 +86,14 @@
 
 (when noninteractive
   ;; Don't ask for evaluation
-	;; (WARNING THIS WILL COMPILE/RUN CODE ON YOUR COMPUTER)
-	;; DO NOT RUN INTERACTIVELY IF YOU DO NOT ACCEPT THIS
-	(defun my-org-confirm-babel-evaluate (lang body)
-		"Stop org mode from complaining about python.
+  ;; (WARNING THIS WILL COMPILE/RUN CODE ON YOUR COMPUTER)
+  ;; DO NOT RUN INTERACTIVELY IF YOU DO NOT ACCEPT THIS
+  (defun my-org-confirm-babel-evaluate (lang body)
+    "Stop org mode from complaining about python.
 LANG language input
 BODY code body"
-		(not (member lang '("emacs-lisp" "python" "dot" "sh" "C" "C++"))))
-	(setq org-confirm-babel-evaluate #'my-org-confirm-babel-evaluate))
+    (not (member lang '("emacs-lisp" "python" "dot" "sh" "C" "C++"))))
+  (setq org-confirm-babel-evaluate #'my-org-confirm-babel-evaluate))
 
 (defun rj-software-training-publish ()
   "Overwrite's my (jay's) personal publishing file to publish everything.
