@@ -1,0 +1,11 @@
+* RoboJackets Software Training
+
+This is the source repository for the 2017 RoboJackets Software training program.
+
+* Building Slides
+#+BEGIN_SRC sh
+cask install
+make
+#+END_SRC
+
+Output will be placed in the ~html/~ directory.
