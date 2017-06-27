@@ -1,11 +1,13 @@
-* RoboJackets Software Training
+* RoboJackets Software Training [[https://circleci.com/gh/RoboJackets/software-training][file:https://circleci.com/gh/RoboJackets/software-training.svg?style=shield]]
 
 This is the source repository for the 2017 RoboJackets Software training program.
 
 * Building Slides
-#+BEGIN_SRC sh
-cask install
-make
-#+END_SRC
 
-Output will be placed in the ~html/~ directory.
+1. Install [[https://github.com/cask/cask][cask]].
+2. Run these commands
+  #+BEGIN_SRC sh
+  cask install
+  make
+  #+END_SRC
+3. Output will be placed in the ~html/~ directory.
