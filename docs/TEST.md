@@ -3,8 +3,11 @@
 
 ## Nested
 
-```c
+```C++
 int main() {
+     std::cout << "hello emacs!" << std::endl;
      return 0;
 }
 ```
+
+    hello emacs!
