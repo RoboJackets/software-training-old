@@ -30,23 +30,39 @@
 </section>
 
 <section>
-<section id="slide-orgea99dd8">
-<h2 id="orgea99dd8">This is a test file</h2>
-<div class="outline-text-2" id="text-orgea99dd8">
+<section id="slide-org5923858">
+<h2 id="org5923858">This is a test file</h2>
+<div class="outline-text-2" id="text-org5923858">
 </div></section>
-<section id="slide-orgda8b61c">
-<h3 id="orgda8b61c">Nested</h3>
+<section id="slide-org9921b5b">
+<h3 id="org9921b5b">Nested</h3>
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
-     <span style="color: #15968D;">std</span>::cout &lt;&lt; <span style="color: #15968D;">"hello emacs!"</span> &lt;&lt; <span style="color: #15968D;">std</span>::endl;
-     <span style="color: #598249;">return</span> 0;
+<pre  class="src src-C++"><span style="color: #598249;">using</span> <span style="color: #598249;">namespace</span> <span style="color: #15968D;">std</span>;
+<span style="color: #5e6263;">// </span><span style="color: #5e6263;">C++ swapping function</span>
+<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">swap</span>(<span style="color: #598249;">int</span>&amp; <span style="color: #2F7BDE;">a</span>, <span style="color: #598249;">int</span>&amp; <span style="color: #2F7BDE;">b</span>) {
+     <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">tmp</span> = a;
+     a = b;
+     b = tmp;
+}
+<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+     cout &lt;&lt; <span style="color: #15968D;">"Swapping test:"</span> &lt;&lt; endl;
+     <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">a</span> = 1;
+     <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">b</span> = 2;
+     cout &lt;&lt; <span style="color: #15968D;">"a: "</span> &lt;&lt; a &lt;&lt; <span style="color: #15968D;">" b: "</span> &lt;&lt; b &lt;&lt; endl;
+     swap(a, b);
+     cout &lt;&lt; <span style="color: #15968D;">"a: "</span> &lt;&lt; a &lt;&lt; <span style="color: #15968D;">" b: "</span> &lt;&lt; b &lt;&lt; endl;
+     swap(a, b);
+     cout &lt;&lt; <span style="color: #15968D;">"a: "</span> &lt;&lt; a &lt;&lt; <span style="color: #15968D;">" b: "</span> &lt;&lt; b &lt;&lt; endl;
 }
 </pre>
 </div>
 
 <pre class="example">
-hello emacs!
+Swapping test:
+a: 1 b: 2
+a: 2 b: 1
+a: 1 b: 2
 
 </pre>
 </section>
