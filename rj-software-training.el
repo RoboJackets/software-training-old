@@ -14,7 +14,6 @@
 (require 'ox-reveal)
 (require 'ox-publish)
 (require 'ox-gfm)
-(require 'ob-C)
 
 ;;; Code:
 
@@ -80,15 +79,8 @@
     org-reveal-margin "0.22"))
 
 
-(defun rj-software-training-publish ()
-  "Overwrite's my (jay's) personal publishing file to publish everything.
-Also provides a script to run to publish this project."
-  (interactive)
-  ;; Don't make backup files when generating (cask)
-  (let ((make-backup-files nil))
-    (org-publish-all t)))
-
 (require 'ob-python)
+(require 'ob-C)
 (setq org-babel-python-command "python3")
 ;; Make indentation actually matter in org src blocks
 (setq org-src-preserve-indentation t)
@@ -97,11 +89,20 @@ Also provides a script to run to publish this project."
   ;; Don't ask for evaluation
 	;; (WARNING THIS WILL COMPILE/RUN CODE ON YOUR COMPUTER)
 	;; DO NOT RUN INTERACTIVELY IF YOU DO NOT ACCEPT THIS
-  (defun my-org-confirm-babel-evaluate (lang body)
+	(defun my-org-confirm-babel-evaluate (lang body)
+		"Stop org mode from complaining about python.
 LANG language input
-BODY code body
-		nil)
-	(setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate))
+BODY code body"
+		(not (member lang '("emacs-lisp" "python" "dot" "sh" "C" "C++"))))
+	(setq org-confirm-babel-evaluate #'my-org-confirm-babel-evaluate))
+
+(defun rj-software-training-publish ()
+  "Overwrite's my (jay's) personal publishing file to publish everything.
+Also provides a script to run to publish this project."
+  (interactive)
+  ;; Don't make backup files when generating (cask)
+  (let ((make-backup-files nil))
+    (org-publish-all t)))
 
 (provide 'rj-software-training)
 
