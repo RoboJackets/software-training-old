@@ -1,13 +1,13 @@
-;;; rj-software-training.el --- generation scripts for robocup-training
+;;; rj-software-training.el --- generation scripts for software-training
 
 ;; Copyright (C) 2016-2017 Jay Kamat
 ;; Author: Jay Kamat <jaygkamat@gmail.com>
 ;; Version: 1.0
 ;; Keywords: robojackets,training,revealjs,gfm
-;; URL: https://github.com/RoboJackets/robocup-training
+;; URL: https://github.com/RoboJackets/software-training
 ;; Package-Requires: ((emacs "25.0") (ox-gfm) (htmlize) (ox-reveal))
 ;;; Commentary:
-;;; Creates and builds org project files for robocup training.
+;;; Creates and builds org project files for robojackets software training.
 
 ;; To run: cask eval "(progn (require 'rj-software-training) (rj-software-training-publish))" in the root of the project.
 
