@@ -6,8 +6,12 @@
 
 
 ** Nested
-#+BEGIN_SRC c
+#+BEGIN_SRC C++ :includes <iostream> :exports output :results output :cache yes
 int main() {
+     std::cout << "hello emacs!" << std::endl;
      return 0;
 }
 #+END_SRC
+
+#+RESULTS[0d0bd420dc0e18a00c07138d9598d1528e7e82de]:
+: hello emacs!

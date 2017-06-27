@@ -14,6 +14,7 @@
 (require 'ox-reveal)
 (require 'ox-publish)
 (require 'ox-gfm)
+(require 'ob-C)
 
 ;;; Code:
 
@@ -94,12 +95,13 @@ Also provides a script to run to publish this project."
 
 (when noninteractive
   ;; Don't ask for evaluation
+	;; (WARNING THIS WILL COMPILE/RUN CODE ON YOUR COMPUTER)
+	;; DO NOT RUN INTERACTIVELY IF YOU DO NOT ACCEPT THIS
   (defun my-org-confirm-babel-evaluate (lang body)
-    "Stop org mode from complaining about python.
 LANG language input
-BODY code body"
-    (not (string= lang "python")))
-  (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate))
+BODY code body
+		nil)
+	(setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate))
 
 (provide 'rj-software-training)
 
