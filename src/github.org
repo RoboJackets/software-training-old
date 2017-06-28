@@ -23,3 +23,12 @@
 * How do you find things on Github?
 - Repositories are stored at https://github.com/"OrganizationName"/"RepoName"
 - So all of our projects can be found at https://github.com/RoboJackets
+** Create a Github account
+- [[https://github.com/join%0A][https://github.com/join]]
+- Please include /at least/ your real first name
+* Let's grab some code!
+- Navigate to github.com/robojackets/roboracing-software
+    - Or another robojackets repo...whatever floats your goat
+- Select the clone button
+- TODO: Put a picture of an arrow pointing to the top right
+- Tada! Your own working copy of RoboJackets code!
