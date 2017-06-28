@@ -8,8 +8,6 @@
 #+REVEAL_HLEVEL: 1
 #+OPTIONS: toc:nil timestamp:nil reveal_control:t num:nil reveal_history:t tags:nil author:nil
 
-# Export section for md
-* Training Summary 1 {#t20161}                                         :docs:
 * What is Git?
 - Git is a "Distributed Version Control System" (DCVS)
 - It is the tool RoboJackets uses to collaborate on code
@@ -22,3 +20,6 @@
   obtain copies of the code
 - As you matriculate through tech, you'll be building an online portfolio of
   your work on github.
+* How do you find things on Github?
+- Repositories are stored at https://github.com/"OrganizationName"/"RepoName"
+- So all of our projects can be found at https://github.com/RoboJackets
