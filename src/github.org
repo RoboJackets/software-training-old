@@ -1,0 +1,24 @@
+#+TITLE: Github Training 2017
+#+AUTHOR: Sahit Chintalapudi and Josh Ting 
+#+EMAIL: schintalapudi@gatech.edu
+#+REVEAL_THEME: black
+#+REVEAL_TRANS: linear
+#+REVEAL_SPEED: fast
+#+REVEAL_PLUGINS: (notes pdf)
+#+REVEAL_HLEVEL: 1
+#+OPTIONS: toc:nil timestamp:nil reveal_control:t num:nil reveal_history:t tags:nil author:nil
+
+# Export section for md
+* Training Summary 1 {#t20161}                                         :docs:
+* What is Git?
+- Git is a "Distributed Version Control System" (DCVS)
+- It is the tool RoboJackets uses to collaborate on code
+- Git tracks changes made to files in your project, and handles combining
+  these changes
+** What is Github?
+- Github is a publically hosted git server
+- It hosts our projects as "repositories" on the internet
+- This saves us the hassle of hosting a server for fellow RoboJackets to
+  obtain copies of the code
+- As you matriculate through tech, you'll be building an online portfolio of
+  your work on github.
