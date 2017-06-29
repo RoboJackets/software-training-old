@@ -13,6 +13,7 @@
 - It is the tool RoboJackets uses to collaborate on code
 - Git tracks changes made to files in your project, and handles combining
   these changes
+
 ** What is Github?
 - Github is a publically hosted git server
 - It hosts our projects as "repositories" on the internet
@@ -20,15 +21,37 @@
   obtain copies of the code
 - As you matriculate through tech, you'll be building an online portfolio of
   your work on github.
+
 * How do you find things on Github?
 - Repositories are stored at https://github.com/"OrganizationName"/"RepoName"
 - So all of our projects can be found at https://github.com/RoboJackets
+
 ** Create a Github account
 - [[https://github.com/join%0A][https://github.com/join]]
 - Please include /at least/ your real first name
+
+[[file:https://i.imgur.com/0cdXQXW.png]]
+
+* Fork and star our repo
+- RoboJackets/robocup-software (http://bit.ly/1L70JbB)
+
+[[file:https://i.imgur.com/kYzz2oh.png]]
+
+* Install Git on your computer
+# todo
+
+* Git Config
+- These commands set up git to attribute your contributions to our code to you.
+
+  #+BEGIN_SRC shell
+    git config --global user.name "Your Name"
+    git config --global user.email "your@email.here"
+  #+END_SRC
+
 * Let's grab some code!
 - Navigate to github.com/robojackets/roboracing-software
-    - Or another robojackets repo...whatever floats your goat
+    - Or the repo of whatever RoboJackets team you are on
 - Select the clone button
 - TODO: Put a picture of an arrow pointing to the top right
 - Tada! Your own working copy of RoboJackets code!
+
