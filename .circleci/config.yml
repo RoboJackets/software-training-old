@@ -11,6 +11,9 @@ jobs:
       - checkout
       - run: git config --global user.name "$GIT_USERNAME" && git config --global user.email "$GIT_EMAIL"
       - run: git clone "$CIRCLE_REPOSITORY_URL" html && cd html && git checkout gh-pages && cd ..
+      - run:
+          name: No HTTP Check
+          command: sh -c "! grep -r 'http[^s]' src/"
       - run: ~/.cask/bin/cask install
         # Generate build files to /html
       - run: ~/.cask/bin/cask eval "(progn (require 'rj-software-training) (rj-software-training-publish))"
