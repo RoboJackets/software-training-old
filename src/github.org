@@ -51,9 +51,8 @@
 * Let's grab some code!
 - Navigate to github.com/robojackets/roboracing-software
     - Or the repo of whatever RoboJackets team you are on
-- Select the clone button, and then select download
-[[file:http://i.imgur.com/36pXIT9.png]]
-- TODO: Put a picture of an arrow pointing to the top right
+- Select the clone button, then copy the link displayed
+[[file:https://i.imgur.com/36pXIT9.png]]
 
 ** Clone the repository
 - In your terminal navigate to your workspace
