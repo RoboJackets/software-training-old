@@ -53,5 +53,25 @@
     - Or the repo of whatever RoboJackets team you are on
 - Select the clone button
 - TODO: Put a picture of an arrow pointing to the top right
+
+** Clone the repository
+- In your terminal navigate to your workspace
+
+#+BEGIN_SRC shell
+git clone <PASTE_CLIPBOARD_CONTENTS_HERE>
+#+END_SRC
+
 - Tada! Your own working copy of RoboJackets code!
 
+** Adding Remotes
+- These commands set you up to push to your fork by default, and still be able to receive updates.
+
+#+BEGIN_SRC shell
+  cd ~/<REPOSITORY_FOLDER>
+  git remote add rj https://github.com/RoboJackets/robocup-software.git
+  git remote set-url origin https://github.com/<YOUR_GH_USERNAME>/robocup-software.git
+  git remote -v
+
+  # You can find the link in the last command under the 'clone or download'
+  # green button on your FORK
+#+END_SRC
