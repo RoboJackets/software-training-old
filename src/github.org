@@ -11,7 +11,7 @@
 * What is Git?
 - Git is a "Distributed Version Control System" (DCVS)
 - It is the tool RoboJackets uses to collaborate on code
-- Git tracks changes made to files in your project, and handles combining
+- Git tracks changes made to files in your project, and handles merging
   these changes
 
 ** What is Github?
@@ -51,7 +51,8 @@
 * Let's grab some code!
 - Navigate to github.com/robojackets/roboracing-software
     - Or the repo of whatever RoboJackets team you are on
-- Select the clone button
+- Select the clone button, and then select download
+[[file:http://i.imgur.com/36pXIT9.png]]
 - TODO: Put a picture of an arrow pointing to the top right
 
 ** Clone the repository
