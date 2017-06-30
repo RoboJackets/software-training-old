@@ -1,0 +1,40 @@
+#+TITLE: Week 1
+#+AUTHOR: Kristaps Berzinch, Raymond Ortiz
+#+EMAIL: kristaps@robojackets.org
+
+* What are we doing today?
+- Trainer introductions
+- Overview of the RoboJackets software training program
+- An introduction to the Linux terminal
+
+* Who am I?
+- Kristaps Berzinch
+  - RoboJackets Treasurer
+  - Linux Foundation Certified Engineer
+- How to contact me
+  - Slack: @kristapsberzinch
+  - Email: kristaps@robojackets.org
+
+* Why are you here?
+- Learn the basics of software development
+- Get up to speed on technologies and techniques common to most RoboJackets teams
+- TODO
+
+* The Linux terminal
+- Powerful text-based interface for interacting with your computer
+- (Almost) everything is a file
+- There's one big happy file system
+- Lots of tiny tools you can chain together to do useful things
+
+* Basic commands
+| Command | Use |
+|-------+------|
+| =cd= | Change to a different directory |
+| =ls=  | List files in this directory |
+| =mkdir= | Make a new directory |
+| =rm= | Remove a file |
+| =rmdir= | Remove a directory |
+| =cp= | Copy a file |
+| =mv= | Move a file |
+| =man= | Access documentation about a command |
+| =grep= | Search for a string |
