@@ -1,0 +1,22 @@
+* RoboJackets Software Training [[https://circleci.com/gh/RoboJackets/software-training][file:https://circleci.com/gh/RoboJackets/software-training.svg?style=shield]]
+
+This is the source repository for the 2017 RoboJackets Software training program.
+
+# TODO this section needs to be redone/populated
+* Slides
+
+- [[https://robojackets.github.io/software-training/slides/TEST#/sec-title-slide][Test Presentation]]
+
+# TODO maybe host these MD files in an external way other than GH?
+* Docs
+- [[https://github.com/RoboJackets/software-training/blob/gh-pages/docs/TEST.md][Test Presentation]]
+
+* Building Slides
+
+1. Install [[https://github.com/cask/cask][cask]].
+2. Run these commands
+  #+BEGIN_SRC sh
+  cask install
+  make
+  #+END_SRC
+3. Output will be placed in the ~html/~ directory.
