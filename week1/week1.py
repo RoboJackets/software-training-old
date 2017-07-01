@@ -26,7 +26,6 @@ def exampleFunction():
 	count = 0
 	string = ""
 
-
 	##########Operators#########
 	print (3 + 3 == 9)
 	print (2 + 2 != 5)
