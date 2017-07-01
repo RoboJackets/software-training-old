@@ -14,9 +14,6 @@ jobs:
       - run:
           name: No HTTP Check
           command: sh -c "! grep -r 'http[^s]' src/"
-      - run:
-          name: Linear Slides Only
-          command: sh -c "! grep -r "^[*][*]" src/"
       - run: ~/.cask/bin/cask install
         # Generate build files to /html
       - run: ~/.cask/bin/cask eval "(progn (require 'rj-software-training) (rj-software-training-publish))"
