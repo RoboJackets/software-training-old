@@ -5,7 +5,8 @@
 * What are we doing today?
 - Trainer introductions
 - Overview of the RoboJackets software training program
-- An introduction to the Linux terminal
+- Navigating and manipulating files and directories in the Linux terminal
+- Using Git and GitHub for version control
 
 * Who am I?
 - Kristaps Berzinch
