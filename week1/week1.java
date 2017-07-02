@@ -38,7 +38,6 @@ public class week1 {
 		System.out.println(true || false);
 		System.out.println(true && false);
 
-		//////////Loops/////////
 		//If-ElseIf-Else
 		if (num == 0) {
 			num = 3;
@@ -51,6 +50,7 @@ public class week1 {
 			System.out.println("Like George P. Burdell, I don't ever show up");
 		}
 
+		//////////Loops/////////
 		//For
 		for (int n = 0; n < gpas.length; n++) {
 			System.out.println("GPA: " + gpas[n]);
