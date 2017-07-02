@@ -52,7 +52,7 @@
         :section-numbers nil
         :reveal-history nil
         :reveal-control nil
-        :reveal-hlevel "1"
+        :reveal-hlevel "0"
         :reveal-plugins "(notes pdf)"
         :reveal-speed "fast"
         :reveal-trans "linear"
