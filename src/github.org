@@ -1,4 +1,4 @@
-#+TITLE: Github Training 2017
+#+TITLE: GitHub Training 2017
 #+AUTHOR: Sahit Chintalapudi and Josh Ting 
 #+EMAIL: schintalapudi@gatech.edu
 #+REVEAL_THEME: black
@@ -13,29 +13,41 @@
 - It is the tool RoboJackets uses to collaborate on code
 - Git tracks changes made to files in your project, and handles merging
   these changes
+- Working on different parts of code and then combining them creates unique challenges that
+  cannot be handled by file sharing systems like DropBox and Google Drive
 
-** What is Github?
-- Github is a publically hosted git server
+* What is GitHub?
+- GitHub is a publically hosted git server
 - It hosts our projects as "repositories" on the internet
 - This saves us the hassle of hosting a server for fellow RoboJackets to
   obtain copies of the code
-- As you matriculate through tech, you'll be building an online portfolio of
-  your work on github.
+- As you matriculate through Tech, you'll be building an online portfolio of
+  your work on GitHub.
 
-* How do you find things on Github?
-- Repositories are stored at https://github.com/"OrganizationName"/"RepoName"
+* How do you find things on GitHub?
+- Repositories are stored at https://github.com/<ORG-OR-USER-NAME>/<REPO-NAME>
 - So all of our projects can be found at https://github.com/RoboJackets
+- Your personal projects will exist at https://github.com/<YOUR-GH-USERNAME>
 
-** Create a Github account
+** Create a GitHub account
 - [[https://github.com/join%0A][https://github.com/join]]
 - Please include /at least/ your real first name
+# Emphasize this requirement is for display name on GitHub, not username
 
 [[file:https://i.imgur.com/0cdXQXW.png]]
 
 * Fork and star our repo
-- RoboJackets/robocup-software (http://bit.ly/1L70JbB)
+- Navigate to github.com/robojackets/robocup-software
+    - Or the repo of whatever RoboJackets team you are on
 
 [[file:https://i.imgur.com/kYzz2oh.png]]
+
+* What is a fork?
+- Problem: How do I try something out on a project without affecting the project itself?
+- Solution: Forks!
+- A fork is a copy of a repository that exists on your personal account
+- Changes made on a fork will not affect the original repository, and vice versa
+- Your fork is present on https://github.com/<YOUR-GH-USERNAME>/robocup-software
 
 * Install Git on your computer
 # todo
@@ -49,8 +61,7 @@
   #+END_SRC
 
 * Let's grab some code!
-- Navigate to github.com/robojackets/roboracing-software
-    - Or the repo of whatever RoboJackets team you are on
+- Go back to the webpage for our GitHub repository
 - Select the clone button, and then select download
 [[file:http://i.imgur.com/36pXIT9.png]]
 - TODO: Put a picture of an arrow pointing to the top right
@@ -59,7 +70,7 @@
 - In your terminal navigate to your workspace
 
 #+BEGIN_SRC shell
-git clone <PASTE_CLIPBOARD_CONTENTS_HERE>
+git clone <PASTE-CLIPBOARD-CONTENTS-HERE>
 #+END_SRC
 
 - Tada! Your own working copy of RoboJackets code!
@@ -67,12 +78,26 @@ git clone <PASTE_CLIPBOARD_CONTENTS_HERE>
 ** Adding Remotes
 - These commands set you up to push to your fork by default, and still be able to receive updates.
 
+# Emphasize that the brackets are to be replaced
 #+BEGIN_SRC shell
-  cd ~/<REPOSITORY_FOLDER>
+  cd ~/<REPOSITORY-FOLDER>
   git remote add rj https://github.com/RoboJackets/robocup-software.git
-  git remote set-url origin https://github.com/<YOUR_GH_USERNAME>/robocup-software.git
+  git remote set-url origin https://github.com/<YOUR-GH-USERNAME>/robocup-software.git
   git remote -v
 
   # You can find the link in the last command under the 'clone or download'
   # green button on your FORK
+#+END_SRC
+
+** Checking Remotes
+Now when you do:
+#+BEGIN_SRC shell
+  git remote -v
+#+END_SRC
+You should see:
+#+BEGIN_SRC shell
+origin  https://github.com/<YOUR-GH-USERNAME>/robocup-software.git (fetch)
+origin  https://github.com/<YOUR-GH-USERNAME>/robocup-software.git (push)
+rj  https://github.com/RoboJackets/robocup-software.git (fetch)
+rj  https://github.com/RoboJackets/robocup-software.git (push)
 #+END_SRC
