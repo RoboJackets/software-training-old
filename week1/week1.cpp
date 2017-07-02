@@ -26,6 +26,8 @@ int membersInRoboJackets[200];
 
 int main() {
     using namespace std;
+    //Ignore the above line for now we will cover this later
+
     //This is the main function that runs any logic!
 	//////////Loval Variables/////////
 	int num = 0;
