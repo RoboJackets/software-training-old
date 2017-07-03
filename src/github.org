@@ -1,11 +1,6 @@
 #+TITLE: GitHub Training 2017
-#+AUTHOR: Sahit Chintalapudi and Josh Ting 
-#+EMAIL: schintalapudi@gatech.edu
-#+REVEAL_THEME: black
-#+REVEAL_TRANS: linear
-#+REVEAL_SPEED: fast
-#+REVEAL_PLUGINS: (notes pdf)
-#+REVEAL_HLEVEL: 1
+#+AUTHOR: Sahit Chintalapudi, Josh Ting 
+#+EMAIL: schintalapudi@gatech.edu, josh.ting@gatech.edu
 #+OPTIONS: toc:nil timestamp:nil reveal_control:t num:nil reveal_history:t tags:nil author:nil
 
 * What is Git?
