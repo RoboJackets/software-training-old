@@ -13,8 +13,8 @@
   - RoboJackets Treasurer
   - Linux Foundation Certified Engineer
 - How to contact me
-  - Slack: @kristapsberzinch
-  - Email: kristaps@robojackets.org
+  - Slack: [[https://robojackets.slack.com/messages/@kristapsberzinch/][@kristapsberzinch]]
+  - Email: [[mailto:kristaps@robojackets.org][kristaps@robojackets.org]]
 
 * Why are you here?
 - Learn the basics of software development
