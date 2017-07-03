@@ -65,7 +65,7 @@
 * Let's grab some code!
 - Go back to the webpage for our GitHub repository
 - Select the clone button, then copy the link displayed
-[[file:https://i.imgur.com/36pXIT9.png]]
+[[file:https://i.imgur.com/n3h8Tb5.png]]
 
 ** Clone the repository
 - In your terminal navigate to your workspace
@@ -76,7 +76,7 @@ git clone <PASTE-CLIPBOARD-CONTENTS-HERE>
 
 - Tada! Your own working copy of RoboJackets code!
 
-** Adding Remotes
+* Adding Remotes
 - These commands set you up to push to your fork by default, and still be able to receive updates.
 
 # Emphasize that the brackets are to be replaced
