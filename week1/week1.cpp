@@ -33,11 +33,11 @@ int main() {
     //Ignore the above line for now we will cover this later
 
     //This is the main function that runs any logic!
-	//////////Loval Variables/////////
-	int num = 0;
-	int length = 0;
-	int count = 0;
-	string str = "";
+    //////////Loval Variables/////////
+    int num = 0;
+    int length = 0;
+    int count = 0;
+    string str = "";
 
     cout << ((3 + 3) == 9) << endl;
     cout << ((2 + 2) != 5) << endl;
@@ -61,18 +61,18 @@ int main() {
 
     //////////Loops/////////
     //For
-	for (int n = 0; n < sizeof(gpas)/sizeof(gpas[0]); n++) {
-		cout << "GPA: " << gpas[n] << endl;
-	}
+    for (int n = 0; n < sizeof(gpas)/sizeof(gpas[0]); n++) {
+        cout << "GPA: " << gpas[n] << endl;
+    }
 
-	//While
-	while (length < sizeof(gpas)/sizeof(gpas[0])) {
-		cout << "Adjusted GPA: " << (gpas[length] + 2) << endl;
-		length++;
-	}
+    //While
+    while (length < sizeof(gpas)/sizeof(gpas[0])) {
+        cout << "Adjusted GPA: " << (gpas[length] + 2) << endl;
+        length++;
+    }
 
-	//Do-While
-	do {
+    //Do-While
+    do {
         cout << "Count is: " << count << endl;
         count++;
     } while (count < 11);
