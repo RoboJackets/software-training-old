@@ -1,3 +1,7 @@
+// to compile this file do
+//		javac week1.java
+// to run this file do
+//		java week1
 public class week1 {
 
 	//////////Global Variables//////////
@@ -14,21 +18,21 @@ public class week1 {
 	*/
 	public int yearsInRoboJackets = 3;
 	public double myBirthday = 8.11;
-	public Boolean isRoboJacketsCool = true;
+	public boolean isRoboJacketsCool = true;
 
 	//////////Arrays//////////
 	//You can do this with any primitive data type
-	public static double[] gpas = {1.0, 2.6, 4.0, 3.6};
 	public int[] membersInRoboJackets = new int[200];
 
 
 	public static void main(String[] args) {
 		//This is the main function that runs any logic!
-		//////////Loval Variables/////////
+		//////////Local Variables/////////
 		int num = 0;
 		int length = 0;
 		int count = 0;
 		String str = "";
+		double[] gpas = {1.0, 2.6, 4.0, 3.6};
 
 
 		//////////Operators//////////

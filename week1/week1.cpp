@@ -1,4 +1,8 @@
 // make sure to compile with g++
+// to compile do
+//      g++ -o week1.out week1.cpp
+// to run do
+//      ./week1.out
 
 // This is including a header file for the standard library
 #include <stdlib.h>
@@ -73,5 +77,7 @@ int main() {
         count++;
     } while (count < 11);
 
+    // this is a status code that will be returned to whatever ran this executable
+    // 0 typically means to errors
     return 0;
 }

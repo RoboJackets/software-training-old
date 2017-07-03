@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+# To run this file do
+#		python3 week1.py
+
 ##########Global Variables##########
 
 ###########Primitive Data Types##########
@@ -51,8 +54,8 @@ def main():
 		print ("Like George P. Burdell, I don't ever show up")
 
 	##For
-	for n in range(len(gpas)):
-		print ("GPA:", gpas[n])
+	for n in gpas:
+		print ("GPA:", n)
 
 	##While
 	length = 0
