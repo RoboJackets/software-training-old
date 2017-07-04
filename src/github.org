@@ -33,8 +33,7 @@
 [[file:https://i.imgur.com/0cdXQXW.png]]
 
 * Fork and star our repo
-- Navigate to github.com/robojackets/robocup-software
-    - Or the repo of whatever RoboJackets team you are on
+- Navigate to github.com/robojackets/software-training
 
 [[file:https://i.imgur.com/3CtCTqj.png]]
 
@@ -43,10 +42,10 @@
 - Solution: Forks!
 - A fork is a copy of a repository that exists on your personal account
 - Changes made on a fork will not affect the original repository, and vice versa
-- Your fork will be present on https://github.com/<YOUR-GH-USERNAME>/robocup-software
+- Your fork will be present on https://github.com/<YOUR-GH-USERNAME>/software-training
 
 * Install Git on your computer
-- https://git-scm.com/downloads
+- Windows/Linux: https://git-scm.com/downloads
 - If on Mac OS, install Homebrew first from https://brew.sh/
     - Then run `brew install git`
 
@@ -57,7 +56,9 @@
   #+BEGIN_SRC shell
     git config --global user.name "Your Name"
     git config --global user.email "your@email.here"
-    git config --get --global user.{email,name}
+    # verify the change above was set
+    git config --get --global user.email
+    git config --get --global user.name
   #+END_SRC
 
 * Let's grab some code!
@@ -82,8 +83,8 @@
 # Emphasize that the brackets are to be replaced
 #+BEGIN_SRC shell
   cd ~/<REPOSITORY-FOLDER>
-  git remote add rj https://github.com/RoboJackets/robocup-software.git
-  git remote set-url origin https://github.com/<YOUR-GH-USERNAME>/robocup-software.git
+  git remote add rj https://github.com/RoboJackets/software-training.git
+  git remote set-url origin https://github.com/<YOUR-GH-USERNAME>/software-training.git
   git remote -v
 
 #+END_SRC
@@ -95,8 +96,8 @@ Now when you do:
 #+END_SRC
 You should see:
 #+BEGIN_SRC shell
-origin  https://github.com/<YOUR-GH-USERNAME>/robocup-software.git (fetch)
-origin  https://github.com/<YOUR-GH-USERNAME>/robocup-software.git (push)
-rj  https://github.com/RoboJackets/robocup-software.git (fetch)
-rj  https://github.com/RoboJackets/robocup-software.git (push)
+origin  https://github.com/<YOUR-GH-USERNAME>/software-training.git (fetch)
+origin  https://github.com/<YOUR-GH-USERNAME>/software-training.git (push)
+rj  https://github.com/RoboJackets/software-training.git (fetch)
+rj  https://github.com/RoboJackets/software-training.git (push)
 #+END_SRC
