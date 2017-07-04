@@ -49,6 +49,7 @@
         :with-tags nil
         :with-author nil
         :with-date nil
+        :with-todo-keywords nil
         :section-numbers nil
         :reveal-history nil
         :reveal-control nil
@@ -67,6 +68,7 @@
          :with-tags nil
          :with-author nil
          :with-date nil
+         :with-todo-keywords nil
          :section-numbers nil
          :with-timestamps nil
          :time-stamp-file nil
@@ -87,7 +89,7 @@
 (when noninteractive
   ;; Don't ask for evaluation
   ;; (WARNING THIS WILL COMPILE/RUN CODE ON YOUR COMPUTER)
-  ;; DO NOT RUN INTERACTIVELY IF YOU DO NOT ACCEPT THIS
+  ;; DO NOT RUN NONINTERACTIVELY IF YOU DO NOT ACCEPT THIS
   (defun my-org-confirm-babel-evaluate (lang body)
     "Stop org mode from complaining about python.
 LANG language input
@@ -96,8 +98,7 @@ BODY code body"
   (setq org-confirm-babel-evaluate #'my-org-confirm-babel-evaluate))
 
 (defun rj-software-training-publish ()
-  "Overwrite's my (jay's) personal publishing file to publish everything.
-Also provides a script to run to publish this project."
+  "Simple script to export this project."
   (interactive)
   ;; Don't make backup files when generating (cask)
   (let ((make-backup-files nil))

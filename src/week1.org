@@ -43,6 +43,18 @@
   - Slack: [[https://robojackets.slack.com/messages/@raymond/][@raymond]]
   - Email: [[mailto:rortiz9@gatech.edu][rortiz9@gatech.edu]]
 
+* DONE Who am I? - Jay
+CLOSED: [2017-07-03 Mon 20:14]
+- Jay Kamat
+  - Senior, Computer Science (Threads: Systems, Intelligence)
+  - I like contributing to Open Source!
+- Contact
+  - [[irc:irc.freenode.net:6697/jgkamat][jgkamat (freenode)]]
+  - xmpp:jayk@fysh.in
+  - [[https://matrix.to/#/@jgkamat:matrix.org][@jgkamat:matrix.org]]
+  - [[mailto:jaygkamat@gmail.com][jaygkamat@gmail.com]]
+  - [[https://github.com/jgkamat][github.com/jgkamat]]
+
 * Why are you here?
 - Learn the basics of software development
 - Get up to speed on technologies and techniques common to most RoboJackets teams
