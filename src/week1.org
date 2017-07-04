@@ -34,6 +34,15 @@
   - Slack: [[https://robojackets.slack.com/messages/@jasongibson/][@jasongibson]]
   - Email: [[mailto:jgibson37@gatech.edu][jgibson37@gatech.edu]]
 
+* Who am I? - Raymond
+- Raymond Ortiz
+  - Senior, Computer Science (Threads: Devices, Intelligence)
+  - Inside RoboJackets: IGVC Executioner, Former Training Chair
+  - Outside RoboJackets: CS1332 Head TA, Google Intern
+- How to contact me
+  - Slack: [[https://robojackets.slack.com/messages/@raymond/][@raymond]]
+  - Email: [[mailto:rortiz9@gatech.edu][rortiz9@gatech.edu]]
+
 * Why are you here?
 - Learn the basics of software development
 - Get up to speed on technologies and techniques common to most RoboJackets teams
