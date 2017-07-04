@@ -33,7 +33,7 @@ int main() {
     //Ignore the above line for now we will cover this later
 
     //This is the main function that runs any logic!
-    //////////Loval Variables/////////
+    //////////Local Variables/////////
     int num = 0;
     int length = 0;
     int count = 0;
