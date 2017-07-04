@@ -58,6 +58,8 @@
         :reveal-speed "fast"
         :reveal-trans "linear"
         :reveal-theme "white"
+        :reveal-width 1440
+        :reveal-height 800
         :base-directory ,(concat proj-base "./src")
         :publishing-directory ,(concat proj-base "/html/slides/")
         :publishing-function org-reveal-publish-to-reveal
@@ -77,7 +79,7 @@
          :publishing-function org-gfm-publish-to-gfm
          :exclude-tags ("slides")))
     org-reveal-root "https://cdn.jsdelivr.net/reveal.js/3.0.0/"
-    org-reveal-margin "0.22"))
+    org-reveal-margin "0.15"))
 
 
 (require 'ob-python)
