@@ -16,7 +16,7 @@
   - Slack: [[https://robojackets.slack.com/messages/@kristapsberzinch/][@kristapsberzinch]]
   - Email: [[mailto:kristaps@robojackets.org][kristaps@robojackets.org]]
   
-*Who am I? - Sarah
+* Who am I? - Sarah
 - Sarah Storer
   - Junior, Computer Science (Threads: Devices, Intelligence)
   - RoboJackets Software Training Coordinator
