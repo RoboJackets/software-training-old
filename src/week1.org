@@ -18,7 +18,7 @@
 
 * Who am I? - Sarah
 #+ATTR_HTML: :width 20%
-[[http://i.imgur.com/NffDOgW.jpg]]
+[[https://i.imgur.com/NffDOgW.jpg]]
 - Sarah Storer
   - Junior, Computer Science (Threads: Devices, Intelligence)
   - RoboJackets Software Training Coordinator
