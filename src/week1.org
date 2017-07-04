@@ -33,12 +33,12 @@
   - Email: [[mailto:sstorer3@gatech.edu][sstorer3@gatech.edu]]
 
 * Meet Jason
-#+ATTR_HTML: :width 10%
-[[http://i.imgur.com/L4pzB32.jpg]]
+#+ATTR_HTML: :width 15%
+[[https://i.imgur.com/izC5WWA.jpg]]
 - Jason Gibson
   - Junior, Computer Science (Threads: Devices, Intelligence)
-  - RoboJackets Training Chair
-  - IGVC Software Lead
+  - Inside RoboJackets: Training Chair, IGVC Software Lead
+  - Outside RoboJackets: Avid lover of dad jokes
 - How to contact me
   - Slack: [[https://robojackets.slack.com/messages/@jasongibson/][@jasongibson]]
   - Email: [[mailto:jgibson37@gatech.edu][jgibson37@gatech.edu]]
