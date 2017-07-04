@@ -9,10 +9,12 @@
 - Using Git and GitHub for version control
 
 * Who am I? - Kristaps
+#+ATTR_HTML: :width 20%
+[[https://i.imgur.com/7gq6xef.jpg]]
 - Kristaps Berzinch
   - Junior, Computer Science (Threads: Systems Architecture, Information Internetworks)
   - Inside RoboJackets: RoboJackets Treasurer, Former Outreach Assistant Project Manager
-  - Outside RoboJackets: Linux Foundation Certified Engineer
+  - Outside RoboJackets: 2x Capital One intern, Linux Foundation Certified Engineer
   - a.k.a. "Mom", I occasionally give good life advice.
 - How to contact me
   - Slack: [[https://robojackets.slack.com/messages/@kristapsberzinch/][@kristapsberzinch]]
