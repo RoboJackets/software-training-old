@@ -6,10 +6,12 @@ This is the source repository for the 2017 RoboJackets Software training program
 * Slides
 
 - [[https://robojackets.github.io/software-training/slides/TEST#/sec-title-slide][Test Presentation]]
+- [[https://robojackets.github.io/software-training/slides/github#/sec-title-slide][GitHub Presentation]]
 
 # TODO maybe host these MD files in an external way other than GH?
 * Docs
 - [[https://github.com/RoboJackets/software-training/blob/gh-pages/docs/TEST.md][Test Presentation]]
+- [[https://github.com/RoboJackets/software-training/blob/gh-pages/docs/github.md][GitHub Presentation]]
 
 * Building Slides
 

@@ -1,0 +1,103 @@
+#+TITLE: GitHub Training 2017
+#+AUTHOR: Sahit Chintalapudi, Josh Ting 
+#+EMAIL: schintalapudi@gatech.edu, josh.ting@gatech.edu
+
+* What is Git?
+- Git is a "Distributed Version Control System" (DCVS)
+- It is the tool RoboJackets uses to collaborate on code
+- Git tracks changes made to files in your project, so you can access old versions at any time without fear
+- Allows multiple developers to work on the same code
+- Working on different parts of code and then combining them creates unique challenges that
+  cannot be handled by file sharing systems like Dropbox and Google Drive
+
+* What is GitHub?
+- Git \neq GitHub
+- GitHub is a publicly hosted Git server
+- It hosts our projects as "repositories" on the internet
+    - A repository is a group of files that Git collectively tracks
+- This saves us the hassle of hosting a server for fellow RoboJackets to
+  obtain copies of the code
+- As you matriculate through Tech, you'll be building an online portfolio of
+  your work on GitHub
+
+* How do you find things on GitHub?
+- Repositories are stored at https://github.com/<ORG-OR-USER-NAME>/<REPO-NAME>
+- So all of our projects can be found at https://github.com/RoboJackets
+- Your personal projects will exist at https://github.com/<YOUR-GH-USERNAME>
+
+** Create a GitHub account
+- [[https://github.com/join%0A][https://github.com/join]]
+- Please include /at least/ your real first name
+# Emphasize this requirement is for display name on GitHub, not username
+
+[[file:https://i.imgur.com/0cdXQXW.png]]
+
+* Fork and star our repo
+- Navigate to github.com/robojackets/software-training
+
+[[file:https://i.imgur.com/3CtCTqj.png]]
+
+* What is a fork?
+- Problem: How do I try something out on a project without affecting the project itself?
+- Solution: Forks!
+- A fork is a copy of a repository that exists on your personal account
+- Changes made on a fork will not affect the original repository, and vice versa
+- Your fork will be present on https://github.com/<YOUR-GH-USERNAME>/software-training
+
+* Install Git on your computer
+- Windows/Linux: https://git-scm.com/downloads
+- If on Mac OS, install Homebrew first from https://brew.sh/
+    - Then run: ~brew install git~
+
+* Git Config
+- These commands set up git to attribute your contributions to our code to you.
+# third command verifies that things are working
+
+  #+BEGIN_SRC shell
+    git config --global user.name "Your Name"
+    git config --global user.email "your@email.here"
+    # verify the change above was set
+    git config --get --global user.email
+    git config --get --global user.name
+  #+END_SRC
+
+* Let's grab some code!
+- Go back to the webpage for our GitHub repository
+- Select the clone button, then copy the link displayed
+[[file:https://i.imgur.com/YjWCoqJ.png]]
+
+** Clone the repository
+- In your terminal navigate to your workspace
+
+  #+BEGIN_SRC shell
+  git clone <PASTE-CLIPBOARD-CONTENTS-HERE>
+  #+END_SRC
+
+- If using Linux, use Ctrl-Shift-V to paste in terminal
+- Tada! Your own working copy of RoboJackets code!
+
+* Adding Remotes
+- These commands set you up to separately contribute to your fork while receiving updates from the original repository
+- You can find the link in the last command under the green 'clone or download' button on your FORK
+
+# Emphasize that the brackets are to be replaced
+#+BEGIN_SRC shell
+  cd ~/<REPOSITORY-FOLDER>
+  git remote add rj https://github.com/RoboJackets/software-training.git
+  git remote set-url origin https://github.com/<YOUR-GH-USERNAME>/software-training.git
+  git remote -v
+
+#+END_SRC
+
+** Checking Remotes
+Now when you do:
+#+BEGIN_SRC shell
+  git remote -v
+#+END_SRC
+You should see:
+#+BEGIN_SRC shell
+origin  https://github.com/<YOUR-GH-USERNAME>/software-training.git (fetch)
+origin  https://github.com/<YOUR-GH-USERNAME>/software-training.git (push)
+rj  https://github.com/RoboJackets/software-training.git (fetch)
+rj  https://github.com/RoboJackets/software-training.git (push)
+#+END_SRC
