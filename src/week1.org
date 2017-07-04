@@ -46,7 +46,7 @@
   - Email: [[mailto:rortiz9@gatech.edu][rortiz9@gatech.edu]]
 
 * Who am I? - Sahit
-#+ATTR_HTML: :width 20% 
+#+ATTR_HTML: :width 20%
 [[file:https://i.imgur.com/l20o7YO.jpg]]
 - Sahit Chintalapudi
   - Sophomore, Computer Science (Threads: Intelligence, Theory)
@@ -55,9 +55,9 @@
 - How to contact me
   - Slack: [[https://robojackets.slack.com/messages/@schintalapudi/][@schintalapudi]]
   - Email: [[mailto:schintalapudi@gatech.edu][schintalapudi@gatech.edu]]
-  
+
 * Who am I? - Josh
-#+ATTR_HTML: :width 20% 
+#+ATTR_HTML: :width 20%
 [[file:https://i.imgur.com/MwcCpJI.jpg]]
 - Josh Ting
   - Senior, Computer Science (Threads: Intelligence, Information Internetworks)
@@ -68,14 +68,12 @@
   - Email: [[mailto:josh.ting@gatech.edu][josh.ting@gatech.edu]]
 
 * DONE Who am I? - Jay
-CLOSED: [2017-07-03 Mon 20:14]
+CLOSED: [2017-07-03 Mon 21:40]
 :PROPERTIES:
 :reveal_background: https://avatars0.githubusercontent.com/u/4349709?v=3&s=400
 :reveal_background_trans: zoom
 :reveal_extra_attr: style="background-color:rgba(72, 36, 36, 0.7); border-radius:10px"
 :END:
-
-#+ATTR_HTML: darkbg
 - Jay Kamat
   - Senior, Computer Science (Threads: Systems, Intelligence)
   - I like contributing to Open Source!
