@@ -47,7 +47,7 @@
 * Install Git on your computer
 - Windows/Linux: https://git-scm.com/downloads
 - If on Mac OS, install Homebrew first from https://brew.sh/
-    - Then run `brew install git`
+    - Then run: ~brew install git~
 
 * Git Config
 - These commands set up git to attribute your contributions to our code to you.
