@@ -43,6 +43,15 @@
   - Slack: [[https://robojackets.slack.com/messages/@raymond/][@raymond]]
   - Email: [[mailto:rortiz9@gatech.edu][rortiz9@gatech.edu]]
 
+* Who am I? - Sahit
+- Sahit Chintalapudi
+  - Sophomore, Computer Science (Threads: Intelligence, Theory)
+  - Roboracing Software Lead & Roboracing PR manager
+  - S-tier Taylor Swift fanboy
+- How to contact me
+  - Slack: [[https://robojackets.slack.com/messages/@schintalapudi/][@schintalapudi]]
+  - Email: [[mailto:schintalapudi@gatech.edu][schintalapudi@gatech.edu]]
+
 * DONE Who am I? - Jay
 CLOSED: [2017-07-03 Mon 20:14]
 - Jay Kamat
