@@ -46,6 +46,8 @@
   - Email: [[mailto:rortiz9@gatech.edu][rortiz9@gatech.edu]]
 
 * Who am I? - Sahit
+#+ATTR_HTML: :width 20% 
+http://i.imgur.com/l20o7YO.jpg
 - Sahit Chintalapudi
   - Sophomore, Computer Science (Threads: Intelligence, Theory)
   - Roboracing Software Lead & Roboracing PR manager
