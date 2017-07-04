@@ -3,8 +3,6 @@
 # To run this file do
 #		python3 week1.py
 
-##########Global Variables##########
-
 ###########Primitive Data Types##########
 # python is a typed language like C++ and Java
 # BUT... it is dynamically typed instead of statically typed like the other two
@@ -44,23 +42,23 @@ def main():
     #########Loops#########
     ##If-ElseIf-Else
     if (number == 0):
-    number = 3
-    print ("I understand Loops!")
+        number = 3
+        print ("I understand Loops!")
     elif (number > 4):
-    number += 3
-    print ("Like John Cena, you can't see me")
+        number += 3
+        print ("Like John Cena, you can't see me")
     else:
-    number -= 1
-    print ("Like George P. Burdell, I don't ever show up")
+        number -= 1
+        print ("Like George P. Burdell, I don't ever show up")
 
     ##For
     for n in gpas:
-    print ("GPA:", n)
+        print ("GPA:", n)
 
     ##While
     length = 0
     while (length < len(gpas)):
-    print ("Adjusted GPA:", (gpas[length] + 2))
-    length += 1
+        print ("Adjusted GPA:", (gpas[length] + 2))
+        length += 1
 
 main()
