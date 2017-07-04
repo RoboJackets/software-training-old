@@ -57,7 +57,7 @@
         :reveal-plugins "(notes pdf)"
         :reveal-speed "fast"
         :reveal-trans "linear"
-        :reveal-theme "black"
+        :reveal-theme "white"
         :base-directory ,(concat proj-base "./src")
         :publishing-directory ,(concat proj-base "/html/slides/")
         :publishing-function org-reveal-publish-to-reveal
