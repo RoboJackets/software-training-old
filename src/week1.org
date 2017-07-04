@@ -52,7 +52,7 @@
 
 * Who am I? - Sahit
 #+ATTR_HTML: :width 20%
-[[file:https://i.imgur.com/l20o7YO.jpg]]
+[[https://i.imgur.com/aqKGrKm.jpg]]
 - Sahit Chintalapudi
   - Sophomore, Computer Science (Threads: Intelligence, Theory)
   - Roboracing Software Lead & Roboracing PR manager
@@ -63,7 +63,7 @@
 
 * Who am I? - Josh
 #+ATTR_HTML: :width 20%
-[[file:https://i.imgur.com/MwcCpJI.jpg]]
+[[https://i.imgur.com/IahyGXd.jpg]]
 - Josh Ting
   - Senior, Computer Science (Threads: Intelligence, Information Internetworks)
   - Inside RoboJackets: RoboCup Software Lead
