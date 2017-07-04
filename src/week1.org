@@ -91,7 +91,7 @@ CLOSED: [2017-07-03 Mon 21:40]
 * Why are you here?
 - Learn the basics of software development
 - Get up to speed on technologies and techniques common to most RoboJackets teams
-- Have a go-to place to ask questions (Piazza!)
+- Have a go-to place to ask questions ([[https://piazza.com/gatech/fall2017/rjsw/home][Piazza!]])
 
 * The Linux terminal
 - Powerful text-based interface for interacting with your computer
