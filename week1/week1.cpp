@@ -78,6 +78,6 @@ int main() {
     } while (count < 11);
 
     // this is a status code that will be returned to whatever ran this executable
-    // 0 typically means to errors
+    // 0 typically means no errors
     return 0;
 }
