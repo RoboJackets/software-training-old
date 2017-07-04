@@ -114,3 +114,9 @@ Run some demos in your terminal! Ideally you should use each of these commands a
 | =mv= | Move a file |
 | =man= | Access documentation about a command |
 | =grep= | Search for a string |
+
+* Git
+#+BEGIN_NOTES
+Time to switch to the Git/GitHub presentation.
+#+END_NOTES
+- [[./github.html][Click here for this week's Git presentation]]
