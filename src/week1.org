@@ -3,12 +3,12 @@
 #+EMAIL: kristaps@robojackets.org
 
 * What are we doing today?
-- Trainer introductions
+- Instructor introductions
 - Overview of the RoboJackets software training program
 - Navigating and manipulating files and directories in the Linux terminal
 - Using Git and GitHub for version control
 
-* Who am I? - Kristaps
+* Meet Kristaps
 #+ATTR_HTML: :width 15%
 [[https://i.imgur.com/7gq6xef.jpg]]
 - Kristaps Berzinch
@@ -20,7 +20,7 @@
   - Slack: [[https://robojackets.slack.com/messages/@kristapsberzinch/][@kristapsberzinch]]
   - Email: [[mailto:kristaps@robojackets.org][kristaps@robojackets.org]]
 
-* Who am I? - Sarah
+* Meet Sarah
 #+ATTR_HTML: :width 20%
 [[https://i.imgur.com/NffDOgW.jpg]]
 - Sarah Storer
@@ -32,7 +32,7 @@
   - Slack: [[https://robojackets.slack.com/messages/@sarahstorer/][@sarahstorer]]
   - Email: [[mailto:sstorer3@gatech.edu][sstorer3@gatech.edu]]
 
-* Who am I? - Jason
+* Meet Jason
 - Jason Gibson
   - Junior, Computer Science (Threads: Devices, Intelligence)
   - RoboJackets Training Chair
@@ -41,7 +41,7 @@
   - Slack: [[https://robojackets.slack.com/messages/@jasongibson/][@jasongibson]]
   - Email: [[mailto:jgibson37@gatech.edu][jgibson37@gatech.edu]]
 
-* Who am I? - Raymond
+* Meet Raymond
 - Raymond Ortiz
   - Senior, Computer Science (Threads: Devices, Intelligence)
   - Inside RoboJackets: IGVC Executioner, Former Training Chair
@@ -50,7 +50,7 @@
   - Slack: [[https://robojackets.slack.com/messages/@raymond/][@raymond]]
   - Email: [[mailto:rortiz9@gatech.edu][rortiz9@gatech.edu]]
 
-* Who am I? - Sahit
+* Meet Sahit
 #+ATTR_HTML: :width 20%
 [[https://i.imgur.com/aqKGrKm.jpg]]
 - Sahit Chintalapudi
@@ -61,7 +61,7 @@
   - Slack: [[https://robojackets.slack.com/messages/@schintalapudi/][@schintalapudi]]
   - Email: [[mailto:schintalapudi@gatech.edu][schintalapudi@gatech.edu]]
 
-* Who am I? - Josh
+* Meet Josh
 #+ATTR_HTML: :width 20%
 [[https://i.imgur.com/IahyGXd.jpg]]
 - Josh Ting
@@ -72,7 +72,7 @@
   - Slack: [[https://robojackets.slack.com/messages/@joshting/][@joshting]]
   - Email: [[mailto:josh.ting@gatech.edu][josh.ting@gatech.edu]]
 
-* DONE Who am I? - Jay
+* DONE Meet Jay
 CLOSED: [2017-07-03 Mon 21:40]
 #+ATTR_HTML: :width 20%
 [[https://i.imgur.com/D5eKGRz.jpg]]
