@@ -21,8 +21,9 @@
 [[https://i.imgur.com/NffDOgW.jpg]]
 - Sarah Storer
   - Junior, Computer Science (Threads: Devices, Intelligence)
-  - RoboJackets Software Training Coordinator
-  - Former Outreach Project Manager
+  - Inside RoboJackets: Software Training Coordinator, Former Outreach Project Manager
+  - Outside RoboJackets: Microsoft Intern and Dog Lover
+  - I occasionally give good life advice.
 - How to contact me
   - Slack: [[https://robojackets.slack.com/messages/@sarahstorer/][@sarahstorer]]
   - Email: [[mailto:sstorer3@gatech.edu][sstorer3@gatech.edu]]
