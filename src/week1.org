@@ -74,11 +74,8 @@
 
 * DONE Who am I? - Jay
 CLOSED: [2017-07-03 Mon 21:40]
-:PROPERTIES:
-:reveal_background: https://i.imgur.com/D5eKGRz.jpg
-:reveal_background_trans: zoom
-:reveal_extra_attr: style="background-color:rgba(38, 23, 23, 0.52); border-radius:10px"
-:END:
+#+ATTR_HTML: :width 20%
+[[https://i.imgur.com/D5eKGRz.jpg]]
 - Jay Kamat
   - Senior, Computer Science (Threads: Systems, Intelligence)
   - I like contributing to Open Source!
