@@ -70,7 +70,7 @@
 * DONE Who am I? - Jay
 CLOSED: [2017-07-03 Mon 21:40]
 :PROPERTIES:
-:reveal_background: https://avatars0.githubusercontent.com/u/4349709?v=3&s=400
+:reveal_background: https://avatars0.githubusercontent.com/u/4349709?v=3&s=800
 :reveal_background_trans: zoom
 :reveal_extra_attr: style="background-color:rgba(72, 36, 36, 0.7); border-radius:10px"
 :END:
