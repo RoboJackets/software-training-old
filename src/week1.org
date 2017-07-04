@@ -15,7 +15,7 @@
 - How to contact me
   - Slack: [[https://robojackets.slack.com/messages/@kristapsberzinch/][@kristapsberzinch]]
   - Email: [[mailto:kristaps@robojackets.org][kristaps@robojackets.org]]
-  
+
 * Who am I? - Sarah
 - Sarah Storer
   - Junior, Computer Science (Threads: Devices, Intelligence)
@@ -24,6 +24,15 @@
 - How to contact me
   - Slack: [[https://robojackets.slack.com/messages/@sarahstorer/][@sarahstorer]]
   - Email: [[mailto:sstorer3@gatech.edu][sstorer3@gatech.edu]]
+
+* Who am I? - Jason
+- Jason Gibson
+  - Junior, Computer Science (Threads: Devices, Intelligence)
+  - RoboJackets Training Chair
+  - IGVC Software Lead
+- How to contact me
+  - Slack: [[https://robojackets.slack.com/messages/@jasongibson/][@jasongibson]]
+  - Email: [[mailto:jgibson37@gatech.edu][jgibson37@gatech.edu]]
 
 * Why are you here?
 - Learn the basics of software development
