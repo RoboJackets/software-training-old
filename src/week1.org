@@ -34,7 +34,7 @@
 
 * Meet Jason
 #+ATTR_HTML: :width 15%
-[[http://i.imgur.com/Ty155J1.jpg]]
+[[https://i.imgur.com/Ty155J1.jpg]]
 - Jason Gibson
   - Junior, Computer Science (Threads: Devices, Intelligence)
   - RoboJackets Training Chair
