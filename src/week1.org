@@ -10,8 +10,10 @@
 
 * Who am I? - Kristaps
 - Kristaps Berzinch
-  - RoboJackets Treasurer
-  - Linux Foundation Certified Engineer
+  - Junior, Computer Science (Threads: Systems Architecture, Information Internetworks)
+  - Inside RoboJackets: RoboJackets Treasurer, Former Outreach Assistant Project Manager
+  - Outside RoboJackets: Linux Foundation Certified Engineer
+  - a.k.a. "Mom", I occasionally give good life advice.
 - How to contact me
   - Slack: [[https://robojackets.slack.com/messages/@kristapsberzinch/][@kristapsberzinch]]
   - Email: [[mailto:kristaps@robojackets.org][kristaps@robojackets.org]]
@@ -23,7 +25,7 @@
   - Junior, Computer Science (Threads: Devices, Intelligence)
   - Inside RoboJackets: Software Training Coordinator, Former Outreach Project Manager
   - Outside RoboJackets: Microsoft Intern and Dog Lover
-  - I occasionally give good life advice.
+  - a.k.a. "Dad", I dance to Hannah Montana in the shop.
 - How to contact me
   - Slack: [[https://robojackets.slack.com/messages/@sarahstorer/][@sarahstorer]]
   - Email: [[mailto:sstorer3@gatech.edu][sstorer3@gatech.edu]]
