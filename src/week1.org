@@ -99,6 +99,10 @@ CLOSED: [2017-07-03 Mon 21:40]
 - Lots of tiny tools you can chain together to do useful things
 
 * Basic commands
+#+BEGIN_NOTES
+Explain that a directory is more commonly called a folder.
+Run some demos in your terminal! Ideally you should use each of these commands at least once.
+#+END_NOTES
 | Command | Use |
 |-------+------|
 | =cd= | Change to a different directory |
