@@ -88,6 +88,19 @@ CLOSED: [2017-07-03 Mon 21:40]
   - [[mailto:jaygkamat@gmail.com][jaygkamat@gmail.com]]
   - [[https://github.com/jgkamat][github.com/jgkamat]]
 
+* Meet Matt
+#+ATTR_HTML: :width 20%
+[[http://i.imgur.com/iED5Z3S.jpg]]
+- Matt Barulic
+  - Masters student in Computer Science
+  - RoboJackets President Emeritus (OOOOLLLLDDD)
+  - Outside RoboJackets:
+    - C++ for fun & profit
+    - Music (drums / piano / bad guitar)
+- How to contact me
+  - Slack: [[https://robojackets.slack.com/messages/@mbarulic/][@mbarulic]]
+  - Email: [[mailto:mbarulic@gatech.edu][mbarulic@gatech.edu]]
+
 * Why are you here?
 - Learn the basics of software development
 - Get up to speed on technologies and techniques common to most RoboJackets teams
