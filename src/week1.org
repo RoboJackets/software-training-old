@@ -45,7 +45,7 @@
 
 * Meet Raymond
 #+ATTR_HTML: :width 20%
-[[https://i.imgur.com/iSXFkIc.jpg]]
+[[https://i.imgur.com/8d43StT.jpg]]
 - Raymond Ortiz
   - Senior, Computer Science (Threads: Devices, Intelligence)
   - Inside RoboJackets: IGVC Executioner, Former Training Chair
