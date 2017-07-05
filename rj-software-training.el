@@ -60,7 +60,7 @@
         :reveal-theme "white"
         :reveal-width 1440
         :reveal-height 800
-        :base-directory ,(concat proj-base "./src")
+        :base-directory ,(concat proj-base "./slides")
         :publishing-directory ,(concat proj-base "/html/slides/")
         :publishing-function org-reveal-publish-to-reveal
         :exclude-tags ("docs"))
@@ -74,7 +74,7 @@
          :section-numbers nil
          :with-timestamps nil
          :time-stamp-file nil
-         :base-directory ,(concat proj-base "./src")
+         :base-directory ,(concat proj-base "./slides")
          :publishing-directory ,(concat proj-base "/html/docs/")
          :publishing-function org-gfm-publish-to-gfm
          :exclude-tags ("slides")))
