@@ -19,7 +19,7 @@
 
 ;; Force htmlize to activate even in nogui mode:
 ;; https://stackoverflow.com/questions/3591337/emacs-htmlize-in-batch-mode
-;; http://sebastien.kirche.free.fr/emacs_stuff/elisp/my-htmlize.el
+;; sebastien.kirche.free.fr/emacs_stuff/elisp/my-htmlize.el
 ;; Get fancy colors! (but this will screw up your native emacs install)
 (when noninteractive
   ;; Don't run in interactive mode to avoid breaking your colors
