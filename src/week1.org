@@ -44,6 +44,8 @@
   - Email: [[mailto:jgibson37@gatech.edu][jgibson37@gatech.edu]]
 
 * Meet Raymond
+#+ATTR_HTML: :width 20%
+[[https://i.imgur.com/iSXFkIc.jpg]]
 - Raymond Ortiz
   - Senior, Computer Science (Threads: Devices, Intelligence)
   - Inside RoboJackets: IGVC Executioner, Former Training Chair
