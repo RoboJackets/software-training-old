@@ -1,0 +1,138 @@
+#+TITLE: Week 1
+#+AUTHOR: Kristaps Berzinch, Raymond Ortiz
+#+EMAIL: kristaps@robojackets.org
+
+* What are we doing today?
+- Instructor introductions
+- Overview of the RoboJackets software training program
+- Navigating and manipulating files and directories in the Linux terminal
+- Using Git and GitHub for version control
+
+* Meet Kristaps
+#+ATTR_HTML: :width 15%
+[[https://i.imgur.com/7gq6xef.jpg]]
+- Kristaps Berzinch
+  - Junior, Computer Science (Threads: Systems Architecture, Information Internetworks)
+  - Inside RoboJackets: current treasurer, former Outreach assistant PM
+  - Outside RoboJackets: 2x Capital One intern, Linux Foundation Certified Engineer
+  - a.k.a. "Mom", I occasionally give good life advice.
+- How to contact me
+  - Slack: [[https://robojackets.slack.com/messages/@kristapsberzinch/][@kristapsberzinch]]
+  - Email: [[mailto:kristaps@robojackets.org][kristaps@robojackets.org]]
+
+* Meet Sarah
+#+ATTR_HTML: :width 20%
+[[https://i.imgur.com/NffDOgW.jpg]]
+- Sarah Storer
+  - Junior, Computer Science (Threads: Devices, Intelligence)
+  - Inside RoboJackets: Software Training Coordinator, Former Outreach Project Manager
+  - Outside RoboJackets: Microsoft Intern and Dog Lover
+  - a.k.a. "Dad", I dance to Hannah Montana in the shop.
+- How to contact me
+  - Slack: [[https://robojackets.slack.com/messages/@sarahstorer/][@sarahstorer]]
+  - Email: [[mailto:sstorer3@gatech.edu][sstorer3@gatech.edu]]
+
+* Meet Jason
+#+ATTR_HTML: :width 15%
+[[https://i.imgur.com/izC5WWA.jpg]]
+- Jason Gibson
+  - Junior, Computer Science (Threads: Devices, Intelligence)
+  - Inside RoboJackets: Training Chair, IGVC Software Lead
+  - Outside RoboJackets: Avid lover of dad jokes
+- How to contact me
+  - Slack: [[https://robojackets.slack.com/messages/@jasongibson/][@jasongibson]]
+  - Email: [[mailto:jgibson37@gatech.edu][jgibson37@gatech.edu]]
+
+* Meet Raymond
+#+ATTR_HTML: :width 20%
+[[https://i.imgur.com/iSXFkIc.jpg]]
+- Raymond Ortiz
+  - Senior, Computer Science (Threads: Devices, Intelligence)
+  - Inside RoboJackets: IGVC Executioner, Former Training Chair
+  - Outside RoboJackets: CS1332 Head TA, Google Intern
+- How to contact me
+  - Slack: [[https://robojackets.slack.com/messages/@raymond/][@raymond]]
+  - Email: [[mailto:rortiz9@gatech.edu][rortiz9@gatech.edu]]
+
+* Meet Sahit
+#+ATTR_HTML: :width 20%
+[[https://i.imgur.com/aqKGrKm.jpg]]
+- Sahit Chintalapudi
+  - Sophomore, Computer Science (Threads: Intelligence, Theory)
+  - Roboracing Software Lead & Roboracing PR manager
+  - S-tier Taylor Swift fanboy
+- How to contact me
+  - Slack: [[https://robojackets.slack.com/messages/@schintalapudi/][@schintalapudi]]
+  - Email: [[mailto:schintalapudi@gatech.edu][schintalapudi@gatech.edu]]
+
+* Meet Josh
+#+ATTR_HTML: :width 20%
+[[https://i.imgur.com/IahyGXd.jpg]]
+- Josh Ting
+  - Senior, Computer Science (Threads: Intelligence, Information Internetworks)
+  - Inside RoboJackets: RoboCup Software Lead
+  - Outside RoboJackets: Magic: The Gathering addict
+- How to contact me
+  - Slack: [[https://robojackets.slack.com/messages/@joshting/][@joshting]]
+  - Email: [[mailto:josh.ting@gatech.edu][josh.ting@gatech.edu]]
+
+* DONE Meet Jay
+CLOSED: [2017-07-03 Mon 21:40]
+#+ATTR_HTML: :width 20%
+[[https://i.imgur.com/D5eKGRz.jpg]]
+- Jay Kamat
+  - Senior, Computer Science (Threads: Systems, Intelligence)
+  - I like contributing to Open Source!
+- Contact
+  - [[irc:irc.freenode.net:6697/jgkamat][jgkamat (freenode)]]
+  - xmpp:jayk@fysh.in
+  - [[https://matrix.to/#/@jgkamat:matrix.org][@jgkamat:matrix.org]]
+  - [[mailto:jaygkamat@gmail.com][jaygkamat@gmail.com]]
+  - [[https://github.com/jgkamat][github.com/jgkamat]]
+
+* Meet Matt
+#+ATTR_HTML: :width 20%
+[[https://i.imgur.com/iED5Z3S.jpg]]
+- Matt Barulic
+  - Masters student in Computer Science
+  - RoboJackets President Emeritus (OOOOLLLLDDD)
+  - Outside RoboJackets:
+    - C++ for fun & profit
+    - Music (drums / piano / bad guitar)
+- How to contact me
+  - Slack: [[https://robojackets.slack.com/messages/@mbarulic/][@mbarulic]]
+  - Email: [[mailto:mbarulic@gatech.edu][mbarulic@gatech.edu]]
+
+* Why are you here?
+- Learn the basics of software development
+- Get up to speed on technologies and techniques common to most RoboJackets teams
+- Have a go-to place to ask questions ([[https://piazza.com/gatech/fall2017/rjsw/home][Piazza!]])
+
+* The Linux terminal
+- Powerful text-based interface for interacting with your computer
+- (Almost) everything is a file
+- Every file is part of one big tree
+- Lots of tiny tools you can chain together to do useful things
+
+* Basic commands
+#+BEGIN_NOTES
+Explain that a directory is more commonly called a folder.
+Run some demos in your terminal! Ideally you should use each of these commands at least once.
+#+END_NOTES
+| Command | Use |
+|-------+------|
+| =cd= | Change to a different directory |
+| =ls=  | List files in this directory |
+| =mkdir= | Make a new directory |
+| =rm= | Remove a file |
+| =rmdir= | Remove a directory |
+| =cp= | Copy a file |
+| =mv= | Move a file |
+| =man= | Access documentation about a command |
+| =grep= | Search for a string |
+
+* Git
+#+BEGIN_NOTES
+Time to switch to the Git/GitHub presentation.
+#+END_NOTES
+- [[./github.html][Click here for this week's Git presentation]]
