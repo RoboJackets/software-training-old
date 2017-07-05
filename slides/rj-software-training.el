@@ -60,8 +60,8 @@
         :reveal-theme "white"
         :reveal-width 1440
         :reveal-height 800
-        :base-directory ,(concat proj-base "./slides")
-        :publishing-directory ,(concat proj-base "/html/slides/")
+        :base-directory ,(concat proj-base ".")
+        :publishing-directory ,(concat proj-base "../html/slides/")
         :publishing-function org-reveal-publish-to-reveal
         :exclude-tags ("docs"))
        ("rj-docs"
@@ -74,8 +74,8 @@
          :section-numbers nil
          :with-timestamps nil
          :time-stamp-file nil
-         :base-directory ,(concat proj-base "./slides")
-         :publishing-directory ,(concat proj-base "/html/docs/")
+         :base-directory ,(concat proj-base ".")
+         :publishing-directory ,(concat proj-base "../html/docs/")
          :publishing-function org-gfm-publish-to-gfm
          :exclude-tags ("slides")))
     org-reveal-root "https://cdn.jsdelivr.net/reveal.js/3.0.0/"
