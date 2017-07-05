@@ -49,7 +49,7 @@
 
 # Meet Raymond
 
-![img](//i.imgur.com/iSXFkIc.jpg)
+![img](//i.imgur.com/8d43StT.jpg)
 
 -   Raymond Ortiz
     -   Senior, Computer Science (Threads: Devices, Intelligence)
