@@ -92,7 +92,7 @@ CLOSED: [2017-07-03 Mon 21:40]
 
 * Meet Matt
 #+ATTR_HTML: :width 20%
-[[http://i.imgur.com/iED5Z3S.jpg]]
+[[https://i.imgur.com/iED5Z3S.jpg]]
 - Matt Barulic
   - Masters student in Computer Science
   - RoboJackets President Emeritus (OOOOLLLLDDD)
