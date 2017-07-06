@@ -10,7 +10,7 @@
 
 * Meet Kristaps
 #+ATTR_HTML: :width 15%
-[[https://i.imgur.com/7gq6xef.jpg]]
+[[file:https://i.imgur.com/7gq6xef.jpg]]
 - Kristaps Berzinch
   - Junior, Computer Science (Threads: Systems Architecture, Information Internetworks)
   - Inside RoboJackets: current treasurer, former Outreach assistant PM
@@ -22,7 +22,7 @@
 
 * Meet Sarah
 #+ATTR_HTML: :width 20%
-[[https://i.imgur.com/NffDOgW.jpg]]
+[[file:https://i.imgur.com/NffDOgW.jpg]]
 - Sarah Storer
   - Junior, Computer Science (Threads: Devices, Intelligence)
   - Inside RoboJackets: Software Training Coordinator, Former Outreach Project Manager
@@ -34,7 +34,7 @@
 
 * Meet Jason
 #+ATTR_HTML: :width 15%
-[[https://i.imgur.com/izC5WWA.jpg]]
+[[file:https://i.imgur.com/izC5WWA.jpg]]
 - Jason Gibson
   - Junior, Computer Science (Threads: Devices, Intelligence)
   - Inside RoboJackets: Training Chair, IGVC Software Lead
@@ -45,7 +45,7 @@
 
 * Meet Raymond
 #+ATTR_HTML: :width 20%
-[[https://i.imgur.com/8d43StT.jpg]]
+[[file:https://i.imgur.com/8d43StT.jpg]]
 - Raymond Ortiz
   - Senior, Computer Science (Threads: Devices, Intelligence)
   - Inside RoboJackets: IGVC Executioner, Former Training Chair
@@ -56,7 +56,7 @@
 
 * Meet Sahit
 #+ATTR_HTML: :width 20%
-[[https://i.imgur.com/aqKGrKm.jpg]]
+[[file:https://i.imgur.com/aqKGrKm.jpg]]
 - Sahit Chintalapudi
   - Sophomore, Computer Science (Threads: Intelligence, Theory)
   - Roboracing Software Lead & Roboracing PR manager
@@ -67,7 +67,7 @@
 
 * Meet Josh
 #+ATTR_HTML: :width 20%
-[[https://i.imgur.com/IahyGXd.jpg]]
+[[file:https://i.imgur.com/IahyGXd.jpg]]
 - Josh Ting
   - Senior, Computer Science (Threads: Intelligence, Information Internetworks)
   - Inside RoboJackets: RoboCup Software Lead
@@ -79,7 +79,7 @@
 * DONE Meet Jay
 CLOSED: [2017-07-03 Mon 21:40]
 #+ATTR_HTML: :width 20%
-[[https://i.imgur.com/D5eKGRz.jpg]]
+[[file:https://i.imgur.com/D5eKGRz.jpg]]
 - Jay Kamat
   - Senior, Computer Science (Threads: Systems, Intelligence)
   - I like contributing to Open Source!
@@ -92,7 +92,7 @@ CLOSED: [2017-07-03 Mon 21:40]
 
 * Meet Matt
 #+ATTR_HTML: :width 20%
-[[https://i.imgur.com/iED5Z3S.jpg]]
+[[file:https://i.imgur.com/iED5Z3S.jpg]]
 - Matt Barulic
   - Masters student in Computer Science
   - RoboJackets President Emeritus (OOOOLLLLDDD)
