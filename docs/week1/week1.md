@@ -8,7 +8,7 @@
 
 # Meet Kristaps
 
-![img](//i.imgur.com/7gq6xef.jpg)
+![img](https://i.imgur.com/7gq6xef.jpg)
 
 -   Kristaps Berzinch
     -   Junior, Computer Science (Threads: Systems Architecture, Information Internetworks)
@@ -22,7 +22,7 @@
 
 # Meet Sarah
 
-![img](//i.imgur.com/NffDOgW.jpg)
+![img](https://i.imgur.com/NffDOgW.jpg)
 
 -   Sarah Storer
     -   Junior, Computer Science (Threads: Devices, Intelligence)
@@ -36,7 +36,7 @@
 
 # Meet Jason
 
-![img](//i.imgur.com/izC5WWA.jpg)
+![img](https://i.imgur.com/izC5WWA.jpg)
 
 -   Jason Gibson
     -   Junior, Computer Science (Threads: Devices, Intelligence)
@@ -49,7 +49,7 @@
 
 # Meet Raymond
 
-![img](//i.imgur.com/8d43StT.jpg)
+![img](https://i.imgur.com/8d43StT.jpg)
 
 -   Raymond Ortiz
     -   Senior, Computer Science (Threads: Devices, Intelligence)
@@ -62,7 +62,7 @@
 
 # Meet Sahit
 
-![img](//i.imgur.com/aqKGrKm.jpg)
+![img](https://i.imgur.com/aqKGrKm.jpg)
 
 -   Sahit Chintalapudi
     -   Sophomore, Computer Science (Threads: Intelligence, Theory)
@@ -75,7 +75,7 @@
 
 # Meet Josh
 
-![img](//i.imgur.com/IahyGXd.jpg)
+![img](https://i.imgur.com/IahyGXd.jpg)
 
 -   Josh Ting
     -   Senior, Computer Science (Threads: Intelligence, Information Internetworks)
@@ -88,7 +88,7 @@
 
 # Meet Jay
 
-![img](//i.imgur.com/D5eKGRz.jpg)
+![img](https://i.imgur.com/D5eKGRz.jpg)
 
 -   Jay Kamat
     -   Senior, Computer Science (Threads: Systems, Intelligence)
@@ -103,7 +103,7 @@
 
 # Meet Matt
 
-![img](//i.imgur.com/iED5Z3S.jpg)
+![img](https://i.imgur.com/iED5Z3S.jpg)
 
 -   Matt Barulic
     -   Masters student in Computer Science
