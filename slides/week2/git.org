@@ -1,4 +1,4 @@
-#+TITLE: GitHub 2 Training 2017
+#+TITLE: GitHub Training Two 2017
 #+AUTHOR: Sahit Chintalapudi, Josh Ting 
 #+EMAIL: schintalapudi@gatech.edu, josh.ting@gatech.edu
 
@@ -14,18 +14,17 @@
     git pull upstream master
   #+END_SRC
 
-* So what did we just do?
-- /git pull/: pull from one github repository into our current repository
-- /upstream/: specify that we are pulling from the upstream repository
-- /master/: pull into the "master" branch of our current repository
+- What does this mean?
+      - /git pull/: pull from one github repository into our current repository
+      - /upstream/: specify that we are pulling from the upstream repository
+      - /master/: pull into the "master" branch of our current repository
 #TODO should i wave my hands about master?
 
 * Let's make some of our own changes!
 - open up a text editor of your choice and create a new file with some text
   in it
 - save the file inside the repository
-
-* Time to make them official
+- Time to make them official: 
 
   #+BEGIN_SRC shell
     git add .
@@ -38,7 +37,8 @@
 - /git commit -m "..."/: commit these changes to git with a note saying what the change is. This is making the change "permanent" (more on this later). 
 - /git push origin master/: Push to the master branch of our "origin" (this is referring to our fork). 
 
-* Some notes about commits *
+* Some notes about commits 
+[[https://imgs.xkcd.com/comics/git_commit.png]]
 - A good commit message is short but clearly explains what changes were made
       - A good commit message makes it easy to see what changes could lead to
         your project not behaving properly
