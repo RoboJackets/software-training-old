@@ -1,0 +1,48 @@
+#+TITLE: GitHub 2 Training 2017
+#+AUTHOR: Sahit Chintalapudi, Josh Ting 
+#+EMAIL: schintalapudi@gatech.edu, josh.ting@gatech.edu
+
+* Let's Recap
+- We have a fork of the software training repo on our local github account
+- Reminder, A fork is an independently maintained repository based of another
+- This original repository is referred to as "upstream"
+
+* Things have changed upstream, what do we do?
+- We can keep our fork up to date with the /git pull/ command
+
+  #+BEGIN_SRC shell
+    git pull upstream master
+  #+END_SRC
+
+* So what did we just do?
+- /git pull/: pull from one github repository into our current repository
+- /upstream/: specify that we are pulling from the upstream repository
+- /master/: pull into the "master" branch of our current repository
+#TODO should i wave my hands about master?
+
+* Let's make some of our own changes!
+- open up a text editor of your choice and create a new file with some text
+  in it
+- save the file inside the repository
+
+* Time to make them official
+
+  #+BEGIN_SRC shell
+    git add .
+    git commit -m "Added a file!"
+    git push origin master
+  #+END_SRC
+
+* What did we just do?
+- /git add ./: tell git to keep track of new files added in the directory
+- /git commit -m "..."/: commit these changes to git with a note saying what the change is. This is making the change "permanent" (more on this later). 
+- /git push origin master/: Push to the master branch of our "origin" (this is referring to our fork). 
+
+* Some notes about commits *
+- A good commit message is short but clearly explains what changes were made
+      - A good commit message makes it easy to see what changes could lead to
+        your project not behaving properly
+- Anything  commited to git stays in git. 
+      - This doesn't mean bad commits can't be reverted
+      - This does mean that you should never commit things like passwords to
+        git
