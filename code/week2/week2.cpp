@@ -10,5 +10,9 @@
 #include <iostream>
 
 int main() {
+    //TODO:
+    //Add more descriptive comments on headers
+    //Sting manipulation examples with the std lib
+    //Write a function and call it in main
     return 0;
 }
