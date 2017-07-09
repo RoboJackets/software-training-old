@@ -7,7 +7,7 @@
  - What it is
  - Functions
  - Includes and headers
- - Manipulating strings
+ - Working with strings
 - How to find and read documentation
 - Sending and recieving changes from remote Git repositories
 
@@ -39,4 +39,20 @@ Include a function declaration in more than one file to cause a compilation erro
 Now you can talk about prototypes!
 #+END_NOTES
 - Only contain _declarations_, also known as prototypes, not definitions
-- This enables a lot of different files to "know" about a function and still have only one definition
+- This enables a lot of different files to "know" about a function but only have one definition for it
+
+* Working with strings
+#+BEGIN_NOTES
+Write and walk through some example code.
+#+END_NOTES
+- A C-style string is stored as an array of characters ending with a NULL (0x0)
+- The C++ standard library contains several functions for working with strings in =<string>=
+| Name | Description |
+|-------+------|
+| =length= | Returns the length of a string |
+| =substr= | Returns a portion (substring) of the string |
+| =find= | Returns the position of a substring, if present |
+| =empty= | Returns true if length is zero, otherwise false |
+- Use the addition oprator (+) to concatenate strings
+- Use =to_string= to convert other types to strings
+- Use =sto___= functions to parse strings to other types
