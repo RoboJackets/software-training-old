@@ -63,3 +63,9 @@ Show how to get to the string documentation
 #+END_NOTES
 - Most of the last slide was sourced from [[http://cplusplus.com]]
 - Great reference for all things C++
+
+* Git
+#+BEGIN_NOTES
+Time to switch to the Git/GitHub presentation.
+#+END_NOTES
+- [[file:github.org][Click here for this week's Git presentation]]
