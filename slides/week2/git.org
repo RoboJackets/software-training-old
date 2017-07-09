@@ -85,4 +85,4 @@
 # * Good vs bad:
 # | Good commit message | Bad commit message |
 # |---------------------+--------------------|
-# | [[file:http://i.imgur.com/k0Llu0s.png]] | [[file:http://i.imgur.com/8vCOZQP.png]] |
+# | [[file:https://i.imgur.com/k0Llu0s.png]] | [[file:https://i.imgur.com/8vCOZQP.png]] |
