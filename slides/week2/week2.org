@@ -56,3 +56,10 @@ Write and walk through some example code.
 - Use the addition oprator (+) to concatenate strings
 - Use =to_string= to convert other types to strings
 - Use =sto___= functions to parse strings to other types
+
+* How to find and read documentation
+#+BEGIN_NOTES
+Show how to get to the string documentation
+#+END_NOTES
+- Most of the last slide was sourced from [[http://cplusplus.com]]
+- Great reference for all things C++
