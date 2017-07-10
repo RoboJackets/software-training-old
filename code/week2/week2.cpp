@@ -23,7 +23,7 @@ int main() {
     cout << "6 / 2 = " << divide(6, 2) << endl;
 
     // ***************** STRINGS **************
-    
+
     // initializing a string
     string str1 = "test";
     string str2 = "test";
@@ -61,7 +61,7 @@ int main() {
     cout << str1 << endl;
     str1.append(" 1");
     cout << str1 << endl;
-    
+
     string lame_string = "robojackets is lame";
 
     // http://www.cplusplus.com/reference/string/string/find/

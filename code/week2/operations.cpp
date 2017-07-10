@@ -22,4 +22,3 @@ int divide(int a, int b) {
     }
     return result;
 }
-
