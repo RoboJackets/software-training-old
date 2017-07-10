@@ -1,6 +1,6 @@
 // make sure to compile with g++
 // to compile do
-//      g++ -o week2.out week2.cpp operations.cpp
+//      g++ -o week2.out *.cpp
 // to run do
 //      ./week2.out
 
@@ -20,7 +20,7 @@ int main() {
     cout << "2 + 2 = " << add(2, 2) << endl;
     cout << "2 - 4 = " << subtract(2, 4) << endl;
     cout << "2 * 2 = " << multiply(2, 2) << endl;
-    cout << "6 % 2 = " << divide(6, 2) << endl;
+    cout << "6 / 2 = " << divide(6, 2) << endl;
 
     // ***************** STRINGS **************
     
@@ -34,11 +34,13 @@ int main() {
     // maximum length a size can reach due to system limitation. DO NOT try to reach this size.
     cout << str1.max_size() << endl;
 
+    // http://www.cplusplus.com/reference/string/string/resize/
     str1.resize(3);
     cout << str1 << endl;
     str2.resize(10, 'a');
     cout << str2 << endl;
 
+    // http://www.cplusplus.com/reference/string/string/empty/
     string str3 = "";
     if(str3.empty()) {
         cout << "str3 is empty" << endl;
@@ -46,6 +48,7 @@ int main() {
         cout << "str3 is NOT empty" << endl;
     }
 
+    // http://www.cplusplus.com/reference/string/string/clear/
     str1.clear();
     if(str1.empty()) {
         cout << "str1 is empty" << endl;
@@ -53,29 +56,32 @@ int main() {
         cout << "str1 is NOT empty" << endl;
     }
 
+    // http://www.cplusplus.com/reference/string/string/append/
     str1.append("he was number one");
     cout << str1 << endl;
     str1.append(" 1");
     cout << str1 << endl;
     
-
     string lame_string = "robojackets is lame";
 
+    // http://www.cplusplus.com/reference/string/string/find/
     int position = lame_string.find("lame");
     cout << "lame is at index " << position << endl;
 
+    // http://www.cplusplus.com/reference/string/string/substr/
     string sub_str = lame_string.substr(position, lame_string.size());
     cout << "substring = " << sub_str << endl;
 
+    // http://www.cplusplus.com/reference/string/string/replace/
     lame_string.replace(position, lame_string.size(), "cool");
     cout << lame_string << endl;
 
+    // http://www.cplusplus.com/reference/string/string/operator+/
     string str4 = "Is this string only partia";
     string str5 = "lly complete?\n";
     string str6 = "not anymore";
     string str7 = str4  + str5 + str6;
     cout << str7 << endl;
-
     cout << "str4 length = " << str4.size() << endl;
     cout << "str5 length = " << str5.size() << endl;
     cout << "str6 length = " << str6.size() << endl;
