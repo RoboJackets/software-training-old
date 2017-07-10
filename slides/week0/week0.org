@@ -1,0 +1,27 @@
+#+TITLE: Intro to Programming
+#+AUTHOR: Jason Gibson
+#+EMAIL: jgibson37@gateche.edu
+
+* What are we doing today?
+- Instructor introductions
+- Overview
+- What is programming
+- Hello World!
+- Variables
+- Control Flow
+- Conditionals
+
+* Meet Jason
+#+ATTR_HTML: :width 15%
+[[file:https://i.imgur.com/izC5WWA.jpg]]
+- Jason Gibson
+  - Junior, Computer Science (Threads: Devices, Intelligence)
+  - Inside RoboJackets: Training Chair, IGVC Software Lead
+  - Outside RoboJackets: Avid lover of dad jokes
+  - Master of cringe worthy pictures
+- How to contact me
+  - Slack: [[https://robojackets.slack.com/messages/@jasongibson/][@jasongibson]]
+  - Email: [[mailto:jgibson37@gatech.edu][jgibson37@gatech.edu]]
+
+* Test
+- test
