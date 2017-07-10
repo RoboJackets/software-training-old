@@ -8,10 +8,6 @@
 #include "week2.h"
 
 int main() {
-    //TODO:
-    //Sting manipulation examples with the std lib
-    //Write a function and call it in main
-
     // This means that this code uses the std namespace, meaning all of the functions in the std namespace
     // do not require a qualifier. Generally using namespaces is considered bad practice especially in large
     // projects since it can lead to shadowing (where I think I using do_something fucntion from library A but
