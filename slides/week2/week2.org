@@ -34,7 +34,7 @@ Open the example code on your display and try to stick to that as much as you ca
 After introducing the concept, demo some basic examples of including a file within another file. Still no prototypes.
 Include a function declaration in more than one file to cause a compilation error to lead into header files
 #+END_NOTES
-- Allows you to use code from other files
+- Allows you to use code from other files, by literally inserting its contents at the =include= line
 - C++ has a lot of flexibility; this is a blessing and a curse
 - Your code will have little structure unless you organize it well
 - Break up your code logically and purposefully
