@@ -25,6 +25,7 @@ Open the example code on your display and try to stick to that as much as you ca
 - A function is a chunk of code with defined inputs and outputs
  - Minimizes copy-and-paste
  - Less buggy
+ - Easier to test than a whole program
 - These can be chained together for more complex functionality
 - You want each function to have a single high-level purpose
 
