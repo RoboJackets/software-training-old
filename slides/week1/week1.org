@@ -135,4 +135,4 @@ Run some demos in your terminal! Ideally you should use each of these commands a
 #+BEGIN_NOTES
 Time to switch to the Git/GitHub presentation.
 #+END_NOTES
-- [[file:github.org][Click here for this week's Git presentation]]
+- [[file:git.org][Click here for this week's Git presentation]]
