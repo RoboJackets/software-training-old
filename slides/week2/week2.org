@@ -20,7 +20,7 @@
 #+BEGIN_NOTES
 After introducing the concept, write a simple example. Don't go into prototypes yet, we'll cover them in a bit.
 
-TODO I think we should design a specific example that is easy to code on the fly but isn't completely trivial (e.g. writing an adder function seems dumb)
+Open the example code on your display and try to stick to that as much as you can.
 #+END_NOTES
 - A function is a chunk of code with defined inputs and outputs
  - Minimizes copy-and-paste
