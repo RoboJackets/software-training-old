@@ -21,12 +21,12 @@
 
   #+BEGIN_SRC shell
     cd software-training    # or wherever your repo is
-    git pull upstream master
+    git pull rj master
   #+END_SRC
 
 - What does this mean?
       - ~git pull~: pull from one GitHub repository into our current repository
-      - ~upstream~: specify that we are pulling from the upstream repository
+      - ~rj~: the name of the repo that we are pulling from
       - ~master~: pull into the "master" branch of our current repository
 - What are branches? That's classified! Stay tuned for next lesson
 # Basically say that this is outside the scope of the current lesson and if they want to read up on it on their own we won't stop them
