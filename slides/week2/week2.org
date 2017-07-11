@@ -58,7 +58,8 @@ Write and walk through some example code.
 #+END_NOTES
 - A C-style string is stored as an array of characters ending with a NULL (0x0)
 - The C++ standard library contains a string class with several useful functions, in =<string>=
- - Use this instead of C-style unless you have a specific reason not to
+ - (We'll get to classes later)
+ - Use this instead of C-style strings unless you have a specific reason not to
 - Use the addition oprator (+) to concatenate strings
 - Use =to_string= to convert other types to strings
 - Use =sto___= functions to parse strings to other types
