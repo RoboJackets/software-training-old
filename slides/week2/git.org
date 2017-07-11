@@ -93,7 +93,7 @@
     git
   - This does mean that good commit messages are important
 - Large files are impractical for Git to track
-  - Git will refuse to push files larger than 100 MB.
+  - It's best not to commit large files such as logs and videos.
 
 # * Good vs bad:
 # | Good commit message | Bad commit message |
