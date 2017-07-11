@@ -49,6 +49,7 @@ Now you can talk about prototypes!
  - Arguments
  - Return type
  - No functionality
+ - Example: =int add(int a, int b);=
 - This enables a lot of different files to "know" about a function but only have one definition for it
 
 * Working with strings
