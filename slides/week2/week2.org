@@ -1,6 +1,6 @@
 #+TITLE: Week 2
 #+AUTHOR: Kristaps Berzinch, Raymond Ortiz
-#+EMAIL: kristaps@robojackets.org
+#+EMAIL: kristaps@robojackets.org, rortiz9@gatech.edu
 
 * What are we doing today?
 - Introduction to C++
@@ -23,22 +23,31 @@ After introducing the concept, write a simple example. Don't go into prototypes 
 TODO I think we should design a specific example that is easy to code on the fly but isn't completely trivial (e.g. writing an adder function seems dumb)
 #+END_NOTES
 - A function is a chunk of code with defined inputs and outputs
-- These can be chained together in various ways to do useful things
-- In general, you want each function to do one thing
+ - Minimizes copy-and-paste
+ - Less buggy
+- These can be chained together for more complex functionality
+- You want each function to have a single high-level purpose
 
 * Includes
 #+BEGIN_NOTES
 After introducing the concept, demo some basic examples of including a file within another file. Still no prototypes.
 Include a function declaration in more than one file to cause a compilation error to lead into header files
 #+END_NOTES
-- Used for including other files inside of a particular file
-- This enables more modular application design
+- Allows you to use code from other files
+- C++ has a lot of flexibility; this is a blessing and a curse
+- Your code will have little structure unless you organize it well
+- Break up your code logically and purposefully
+ - Readability above all
 
 * Header files
 #+BEGIN_NOTES
 Now you can talk about prototypes!
 #+END_NOTES
 - Only contain /declarations/, also known as prototypes, not definitions
+ - Function name
+ - Arguments
+ - Return type
+ - No functionality
 - This enables a lot of different files to "know" about a function but only have one definition for it
 
 * Working with strings
@@ -47,6 +56,7 @@ Write and walk through some example code.
 #+END_NOTES
 - A C-style string is stored as an array of characters ending with a NULL (0x0)
 - The C++ standard library contains a string class with several useful functions, in =<string>=
+ - Use this instead of C-style unless you have a specific reason not to
 - Use the addition oprator (+) to concatenate strings
 - Use =to_string= to convert other types to strings
 - Use =sto___= functions to parse strings to other types
@@ -61,7 +71,8 @@ Write and walk through some example code.
 #+BEGIN_NOTES
 Show how to get to the string documentation
 #+END_NOTES
-- Most of the last slide was sourced from cplusplus.com
+- Most of the last slide was sourced from cppreference.com
+- Documents standard library functionality
 - Great reference for all things C++
 
 * Git
