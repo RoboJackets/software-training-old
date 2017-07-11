@@ -23,5 +23,113 @@
   - Slack: [[https://robojackets.slack.com/messages/@jasongibson/][@jasongibson]]
   - Email: [[mailto:jgibson37@gatech.edu][jgibson37@gatech.edu]]
 
-* Test
-- test
+* Codepad
+- Today we will be using codepad to write code in
+  - This is a remote interview tool
+- go to [[https://codepad.remoteinterview.io]]
+
+* Change to C++ The superior language
+#+ATTR_HTML: :width 50%
+[[file:https://i.imgur.com/IeHxwAM.png]]
+
+* Change to C++ The superior language
+#+ATTR_HTML: :width 50%
+[[file:https://i.imgur.com/S1PecNy.png]]
+
+* Hello World!
+- Add *World!* to your code
+#+BEGIN_SRC C++ -n
+  #include <iostream>
+  using namespace std;
+
+  int main() {
+    cout << "Hello World!";
+    return 0;
+  }
+#+END_SRC
+
+* Click Run
+#+ATTR_HTML: :width 50%
+[[file:https://i.imgur.com/caYg2AY.png]]
+
+* C++ code layout
+- line 1: inclues a header file (covered later)
+- line 4: defines the main function
+- line 6: tells the computer that the program ran successfully
+#+BEGIN_SRC C++ -n
+  #include <iostream>
+  using namespace std;
+
+  int main() {
+    cout << "Hello World!";
+    return 0;
+  }
+#+END_SRC
+
+* {}
+- Curly Braces define scope in the code
+- Right now that means that your code goes
+#+BEGIN_SRC C++ -n
+  int main() {
+    // <==== HERE =====
+  }
+#+END_SRC
+
+* ;
+- A semicolon defines the end of a line of code
+- Think of it like a period in a sentence
+#+BEGIN_SRC C++ -n
+  int main() {
+    doSomething;
+  }
+#+END_SRC
+
+* Looking back at Hello World!
+- out code is in {}
+- *cout* tells the computer to write the letters to the screen
+- *<<* tells the computer what to write out
+#+BEGIN_SRC C++ -n
+  int main() {
+    cout << "Hello World!";
+  }
+#+END_SRC
+
+* Most useful program ever
+#+BEGIN_SRC C++ -n
+  int main() {
+    cout << 2 + 2;
+  }
+#+END_SRC
+
+* Variables
+#+BEGIN_SRC C++ -n
+  int main() {
+    int my_var = 2;
+    cout << my_var + my_var;
+  }
+#+END_SRC
+
+* Primitive Variables Types
+- What makes a variable primitive
+| Name | Description |
+|-------+------|
+| =bool= | Can be either *true* or *false*|
+| =char= | A number from -128 to 127 or a letter character like c or + (on the keyboard)|
+| =int= | Any whole number from -2,147,483,648	2,147,483,647|
+| =double= | any number from 2.2e-308 to 1.8e+308 with decimals|
+
+* Primitive Variables?
+[[file:https://i.imgur.com/Wo0ovX5.jpg]]
+- But Actually... It means that it cannot be split into parts
+
+* Non Primitives we will be using today
+| Name | Description |
+|-------+------|
+| =string= | Contains text|
+
+* Questions??
+- Still more to come...
+- Let's write some code
+
+* If Statements
+- What *IF* I only want to execute code sometimes?
