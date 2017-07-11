@@ -110,13 +110,13 @@
 #+END_SRC
 
 * Primitive Variables Types
-- What makes a variable primitive
 | Name | Description |
 |-------+------|
 | =bool= | Can be either *true* or *false*|
 | =char= | A number from -128 to 127 or a letter character like c or + (on the keyboard)|
 | =int= | Any whole number from -2,147,483,648	2,147,483,647|
 | =double= | any number from 2.2e-308 to 1.8e+308 with decimals|
+- What makes a variable primitive
 
 * Primitive Variables?
 [[file:https://i.imgur.com/Wo0ovX5.jpg]]
@@ -133,3 +133,151 @@
 
 * If Statements
 - What *IF* I only want to execute code sometimes?
+
+* If Statement Syntax
+#+BEGIN_SRC C++ -n
+  int main() {
+    if (true) {
+        // <==== This executes =====
+    }
+    if (false) {
+        // <==== This does *NOT* execute =====
+    }
+  }
+#+END_SRC
+
+* Equivalence operators
+| symbol | True Condition | example true | example false
+|-------+------|------+------|
+| =!= | opposite of current value| !true | !false
+| ==== | "equal"| 2 == 2 | 4 == 2
+| =!== | *NOT* "equal"| 2 != 4 | 2 != 2
+| =>= | the number of the left is larger and not equal to| 4 > 2 | 2 > 4
+| =<= | the number of the left is smaller and not equal to| 2 < 4 | 4 < 2
+
+* If else syntax
+#+BEGIN_SRC C++ -n
+  int main() {
+    if (true) {
+        // <==== This executes =====
+    } else {
+        // <==== This does *NOT* execute =====
+    }
+    if (false) {
+        // <==== This does *NOT* execute =====
+    } else {
+        // <==== This executes =====
+    }
+  }
+#+END_SRC
+
+* Conditional Practice 1 Question
+- 1 or 2?
+#+BEGIN_SRC C++ -n
+if (2 == 2) {
+    // 1
+} else {
+    // 2
+}
+#+END_SRC
+
+* Conditional Practice 2 Question
+- 1 or 2?
+#+BEGIN_SRC C++ -n
+if (2 != 2) {
+    // 1
+} else {
+    // 2
+}
+#+END_SRC
+
+* Conditional Practice 3 Question
+- 1 or 2?
+#+BEGIN_SRC C++ -n
+if (2 < 2) {
+    // 1
+} else {
+    // 2
+}
+#+END_SRC
+
+* Chaining Conditionals
+#+BEGIN_SRC C++ -n
+  int main() {
+    if (true) {
+        // <==== This executes =====
+        if (true) {
+            // <==== This executes =====
+        }
+        // <==== This executes =====
+    }
+    // <==== This executes =====
+  }
+#+END_SRC
+
+* Logical Operators *AND*
+- *&&*
+| a | b | a && b|
+|-------+------|------+------|
+| True | True | True |
+| True | False | False |
+| False | True | False |
+| False | False | False |
+
+* Logical Operators *OR*
+- *||*
+| a | b | a || b|
+|-------+------|------+------|
+| True | True | True |
+| True | False | True |
+| False | True | True |
+| False | False | False |
+
+* Conditional Practice 4 Question
+- 1 or 2?
+#+BEGIN_SRC C++ -n
+if (2 < 2 && 2 == 2) {
+    // 1
+} else {
+    // 2
+}
+#+END_SRC
+
+* Conditional Practice 4 Question
+- 1 or 2?
+#+BEGIN_SRC C++ -n
+if (2 != 2 || 2 == 2) {
+    // 1
+} else {
+    // 2
+}
+#+END_SRC
+
+* Loops!
+- What If I want to do something multiple times
+
+* While Loops Syntax
+#+BEGIN_SRC C++ -n
+while (condition == true) {
+    // do something
+}
+#+END_SRC
+
+* For Loop Syntax
+#+BEGIN_SRC C++ -n
+for (initializer; condition; change condition) {
+    // do something
+}
+#+END_SRC
+
+* Equivalent while and for Loop
+#+BEGIN_SRC C++ -n
+int while_counter = 10;
+while (while_counter > 0) {
+    while_counter = while_counter - 1;
+    // do something
+}
+for (int for_counter = 10; for_counter > 0; for_counter = for_counter + 1) {
+    // do something
+}
+#+END_SRC
