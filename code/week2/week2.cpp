@@ -15,14 +15,16 @@ int main() {
     // decent stack overflow article https://stackoverflow.com/questions/1452721/why-is-using-namespace-std-considered-bad-practice
     using namespace std;
 
-    // ***************** FUNCTIONS **************
+    cout << "\n***************** FUNCTIONS **************\n\n";
 
-    cout << "2 + 2 = " << add(2, 2) << endl;
-    cout << "2 - 4 = " << subtract(2, 4) << endl;
-    cout << "2 * 2 = " << multiply(2, 2) << endl;
-    cout << "6 / 2 = " << divide(6, 2) << endl;
+    cout << "2 + 2 called \n"  << add(2, 2)  << " returned\n\n";
+    cout << "2.0 + 2.0 called \n" << add(2.0, 2.0) << " returned\n\n";
+    cout << "2 + 2 + 2 called \n" << add(2, 2, 2) << " returned\n\n";
+    cout << "2 - 4 called \n" << subtract(2, 4) << " returned\n\n";
+    cout << "2 * 2 called \n" << multiply(2, 2) <<  " returned\n\n";
+    cout << "6 / 2 called \n" << divide(6, 2) <<  " returned\n\n";
 
-    // ***************** STRINGS **************
+    cout << "\n***************** STRINGS **************\n\n\n";
 
     // initializing a string
     string str1 = "test";
@@ -35,12 +37,14 @@ int main() {
     cout << str1.max_size() << endl;
 
     // http://www.cplusplus.com/reference/string/string/resize/
+    // resize alters the size of the string
     str1.resize(3);
     cout << str1 << endl;
     str2.resize(10, 'a');
     cout << str2 << endl;
 
     // http://www.cplusplus.com/reference/string/string/empty/
+    // empty checks if the string is empty ""
     string str3 = "";
     if(str3.empty()) {
         cout << "str3 is empty" << endl;
@@ -49,6 +53,7 @@ int main() {
     }
 
     // http://www.cplusplus.com/reference/string/string/clear/
+    // clear repalces the string with the null string ""
     str1.clear();
     if(str1.empty()) {
         cout << "str1 is empty" << endl;
@@ -57,6 +62,7 @@ int main() {
     }
 
     // http://www.cplusplus.com/reference/string/string/append/
+    // append adds the second string to the end of the string that it was called on
     str1.append("he was number one");
     cout << str1 << endl;
     str1.append(" 1");
@@ -65,18 +71,23 @@ int main() {
     string lame_string = "robojackets is lame";
 
     // http://www.cplusplus.com/reference/string/string/find/
+    // find locates the index in the string where the substring begins
     int position = lame_string.find("lame");
     cout << "lame is at index " << position << endl;
 
     // http://www.cplusplus.com/reference/string/string/substr/
+    // substring returns a portion of the string as another string
     string sub_str = lame_string.substr(position, lame_string.size());
     cout << "substring = " << sub_str << endl;
 
     // http://www.cplusplus.com/reference/string/string/replace/
+    // replace takes the string it is called on and replaces the given locations with
+    // another string 
     lame_string.replace(position, lame_string.size(), "cool");
     cout << lame_string << endl;
 
     // http://www.cplusplus.com/reference/string/string/operator+/
+    // the + operator concatenates two string together into one
     string str4 = "Is this string only partia";
     string str5 = "lly complete?\n";
     string str6 = "not anymore";
