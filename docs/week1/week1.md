@@ -80,7 +80,7 @@
 -   Josh Ting
     -   Senior, Computer Science (Threads: Intelligence, Information Internetworks)
     -   Inside RoboJackets: RoboCup Software Lead
-    -   Outside RoboJackets: Magic: The Gathering addict
+    -   Outside RoboJackets: NASA Intern, Magic: The Gathering addict, pianist of 17 years
 -   How to contact me
     -   Slack: [@joshting](https://robojackets.slack.com/messages/@joshting/)
     -   Email: [josh.ting@gatech.edu](josh.ting@gatech.edu)
