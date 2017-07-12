@@ -14,6 +14,9 @@ jobs:
       - run:
           name: No HTTP Link Check
           command: sh -c "! grep -Er 'http[^s].+(png|jpg|jpeg|gif)\]' slides/*"
+      - run:
+          name: No Mixed Line Endings Check
+          command: sh -c "! find slides/* -name '*.org' -exec file {} \; | grep 'line terminators'"
       - run: cd slides && ~/.cask/bin/cask install
         # Generate build files to /html
       - run: cd slides && ~/.cask/bin/cask eval "(progn (require 'rj-software-training) (rj-software-training-publish))"
