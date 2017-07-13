@@ -158,4 +158,4 @@ Time to switch to the Git/GitHub presentation.
 
 </div>
 
--   [Click here for this week's Git presentation](github.md)
+-   [Click here for this week's Git presentation](git.md)
