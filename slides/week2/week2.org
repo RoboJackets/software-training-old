@@ -31,6 +31,9 @@ Open the example code on your display and try to stick to that as much as you ca
 
 * Side note: function overloading
 - C++ lets you have multiple functions with the same name, provided their parameter signatures are different
+ - A function's parameter signature is just the ordered list of its parameter types.
+ - =foo(int a, char b)= and =bar(int x, char z)= have the same signature
+ - =fizz(int a, char b)= and =buzz(char x, int z)= don't
 - The compiler will determine which function to actually call depending on the parameters
 - (This will come in handy later!)
 
