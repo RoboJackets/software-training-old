@@ -79,7 +79,7 @@ Write and walk through some example code.
 #+BEGIN_NOTES
 Show how to get to the string documentation
 #+END_NOTES
-- Most of the last slide was sourced from cppreference.com
+- Most of the last slide was sourced from [[http://en.cppreference.com/w/][cppreference.com]]
 - Documents standard library functionality
 - Great reference for all things C++
 
