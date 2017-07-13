@@ -98,5 +98,28 @@ int main() {
     cout << "str6 length = " << str6.size() << endl;
     cout << "str7 length = " << str7.size() << endl;
 
+    // converting primitives to strings
+    cout << "\n\n" << endl;
+
+    // converting string to integer
+    // http://www.cplusplus.com/reference/string/stoi/
+    int string_to_int = stoi("5");
+    cout << string_to_int << endl;
+
+    // converting string to double
+    // http://www.cplusplus.com/reference/string/stod/
+    double string_to_double = stod("5.21385");
+    cout << string_to_double << endl;
+
+    // There are many more methods to parse primitives form strings
+
+    // converting primitves to strings
+    // http://www.cplusplus.com/reference/string/to_string/
+    string str8 = to_string(string_to_int);
+    cout << str8 << endl;
+
+    string str9 = to_string(string_to_double);
+    cout << str9 << endl;
+
     return 0;
 }
