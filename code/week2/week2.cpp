@@ -8,10 +8,11 @@
 #include "week2.h"
 
 int main() {
-    // This means that this code uses the std namespace, meaning all of the functions in the std namespace
+    // This means that this code uses the std namespace. Now, all of the functions in the std namespace
     // do not require a qualifier. Generally using namespaces is considered bad practice especially in large
-    // projects since it can lead to shadowing (where I think I using do_something fucntion from library A but
-    // I am actually using do_something function from library B) and imrpoving readaility of the code.
+    // projects since it can lead to shadowing (where I think I am using do_something fucntion from library A but
+    // I am actually using do_something function from library B). Cutting down on extra declarations
+    // imrpoves the readaility of the code.
     // decent stack overflow article https://stackoverflow.com/questions/1452721/why-is-using-namespace-std-considered-bad-practice
     using namespace std;
 
@@ -53,7 +54,7 @@ int main() {
     }
 
     // http://www.cplusplus.com/reference/string/string/clear/
-    // clear repalces the string with the null string ""
+    // clear replaces the string with the null string ""
     str1.clear();
     if(str1.empty()) {
         cout << "str1 is empty" << endl;
