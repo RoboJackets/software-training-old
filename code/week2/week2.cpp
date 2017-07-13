@@ -13,7 +13,7 @@ int main() {
     // projects since it can lead to shadowing (where I think I am using do_something fucntion from library A but
     // I am actually using do_something function from library B). Cutting down on extra declarations
     // imrpoves the readaility of the code.
-    // decent stack overflow article https://stackoverflow.com/questions/1452721/why-is-using-namespace-std-considered-bad-practice
+    // decent stack overflow article: https://stackoverflow.com/q/1452721
     using namespace std;
 
     cout << "\n***************** FUNCTIONS **************\n\n";
@@ -102,20 +102,20 @@ int main() {
     // converting primitives to strings
     cout << "\n\n" << endl;
 
-    // converting string to integer
     // http://www.cplusplus.com/reference/string/stoi/
+    // converting string to integer
     int string_to_int = stoi("5");
     cout << string_to_int << endl;
 
-    // converting string to double
     // http://www.cplusplus.com/reference/string/stod/
+    // converting string to double
     double string_to_double = stod("5.21385");
     cout << string_to_double << endl;
 
     // There are many more methods to parse primitives form strings
 
-    // converting primitves to strings
     // http://www.cplusplus.com/reference/string/to_string/
+    // converting primitves to strings
     string str8 = to_string(string_to_int);
     cout << str8 << endl;
 
