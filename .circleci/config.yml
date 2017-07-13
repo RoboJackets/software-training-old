@@ -12,8 +12,11 @@ jobs:
       - run: git config --global user.name "$GIT_USERNAME" && git config --global user.email "$GIT_EMAIL"
       - run: git clone "$CIRCLE_REPOSITORY_URL" html && cd html && git checkout gh-pages && rm -r * && cd ..
       - run:
-          name: No HTTP Check
-          command: sh -c "! grep -r 'http[^s]' slides/"
+          name: No HTTP Link Check
+          command: sh -c "! grep -Er 'http[^s].+(png|jpg|jpeg|gif)\]' slides/*"
+      - run:
+          name: No Mixed Line Endings Check
+          command: sh -c "! find slides/* -name '*.org' -exec file {} \; | grep 'line terminators'"
       - run: cd slides && ~/.cask/bin/cask install
         # Generate build files to /html
       - run: cd slides && ~/.cask/bin/cask eval "(progn (require 'rj-software-training) (rj-software-training-publish))"
