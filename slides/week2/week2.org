@@ -29,6 +29,11 @@ Open the example code on your display and try to stick to that as much as you ca
 - These can be chained together for more complex functionality
 - You want each function to have a single high-level purpose
 
+* Side note: function overloading
+- C++ lets you have multiple functions with the same name, provided their parameter signatures are different
+- The compiler will determine which function to actually call depending on the parameters
+- (This will come in handy later!)
+
 * Includes
 #+BEGIN_NOTES
 After introducing the concept, demo some basic examples of including a file within another file. Still no prototypes.
