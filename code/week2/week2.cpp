@@ -12,7 +12,7 @@ int main() {
     // do not require a qualifier. Generally using namespaces is considered bad practice especially in large
     // projects since it can lead to shadowing (where I think I am using do_something fucntion from library A but
     // I am actually using do_something function from library B). Cutting down on extra declarations
-    // imrpoves the readaility of the code.
+    // improves the readability of the code.
     // decent stack overflow article: https://stackoverflow.com/q/1452721
     using namespace std;
 
