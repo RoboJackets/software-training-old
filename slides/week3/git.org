@@ -28,6 +28,10 @@
     #+BEGIN_SRC sh
       git log --oneline --graph --all
     #+END_SRC
+
+    #+BEGIN_SRC sh :results output :exports results
+      git log --oneline --graph | head -n10
+    #+END_SRC
   - ~gitk~
   - ~git~ integrations for your favorite editor!
 
