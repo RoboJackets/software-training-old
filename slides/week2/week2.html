@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Week 2</title>
+<meta name="author" content="(Kristaps Berzinch, Raymond Ortiz)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://robojackets.github.io/reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="https://robojackets.github.io/reveal.js/css/theme/white.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://robojackets.github.io/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Week 2</h1>
+</section>
+
+<section id="slide-org2b165ce">
+<h2 id="org2b165ce">What are we doing today?</h2>
+<ul>
+<li>Introduction to C++
+<ul>
+<li>What it is</li>
+<li>Functions</li>
+<li>Includes and headers</li>
+<li>Working with strings</li>
+
+</ul></li>
+<li>How to find and read documentation</li>
+<li>Sending and recieving changes from remote Git repositories</li>
+
+</ul>
+
+</section>
+<section id="slide-org63f7190">
+<h2 id="org63f7190">What is C++?</h2>
+<ul>
+<li>A general-purpose programming language</li>
+<li>Designed with performance, efficiency, and flexibility in mind</li>
+<li>Great for robots!</li>
+
+</ul>
+
+</section>
+<section id="slide-org241aec0">
+<h2 id="org241aec0">Functions</h2>
+<aside class="notes">
+<p>
+After introducing the concept, write a simple example. Don't go into prototypes yet, we'll cover them in a bit.
+</p>
+
+<p>
+Open the example code on your display and try to stick to that as much as you can.
+</p>
+
+</aside>
+<ul>
+<li>A function is a chunk of code with defined inputs and outputs
+<ul>
+<li>Minimizes copy-and-paste</li>
+<li>Less buggy</li>
+<li>Easier to test than a whole program</li>
+
+</ul></li>
+<li>These can be chained together for more complex functionality</li>
+<li>You want each function to have a single high-level purpose</li>
+
+</ul>
+
+</section>
+<section id="slide-org90c0df9">
+<h2 id="org90c0df9">Includes</h2>
+<aside class="notes">
+<p>
+After introducing the concept, demo some basic examples of including a file within another file. Still no prototypes.
+Include a function declaration in more than one file to cause a compilation error to lead into header files
+</p>
+
+</aside>
+<ul>
+<li>Allows you to use code from other files, by literally inserting its contents at the <code>include</code> line</li>
+<li>C++ has a lot of flexibility; this is a blessing and a curse</li>
+<li>Your code will have little structure unless you organize it well</li>
+<li>Break up your code logically and purposefully
+<ul>
+<li>Readability above all</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org65f63b7">
+<h2 id="org65f63b7">Header files</h2>
+<aside class="notes">
+<p>
+Now you can talk about prototypes!
+</p>
+
+</aside>
+<ul>
+<li>Only contain <i>declarations</i>, also known as prototypes, not definitions
+<ul>
+<li>Function name</li>
+<li>Arguments</li>
+<li>Return type</li>
+<li>No functionality</li>
+<li>Example: <code>int add(int a, int b);</code></li>
+
+</ul></li>
+<li>This enables a lot of different files to "know" about a function but only have one definition for it</li>
+
+</ul>
+
+</section>
+<section id="slide-org99860da">
+<h2 id="org99860da">Working with strings</h2>
+<aside class="notes">
+<p>
+Write and walk through some example code.
+</p>
+
+</aside>
+<ul>
+<li>A C-style string is stored as an array of characters ending with a NULL (0x0)</li>
+<li>The C++ standard library contains a string class with several useful functions, in <code>&lt;string&gt;</code>
+<ul>
+<li>(We'll get to classes later)</li>
+<li>Use this instead of C-style strings unless you have a specific reason not to</li>
+
+</ul></li>
+<li>Use the addition oprator (+) to concatenate strings</li>
+<li>Use <code>to_string</code> to convert other types to strings</li>
+<li>Use <code>sto___</code> functions to parse strings to other types</li>
+
+</ul>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Name</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>length</code></td>
+<td class="org-left">Returns the length of a string</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>substr</code></td>
+<td class="org-left">Returns a portion (substring) of the string</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>find</code></td>
+<td class="org-left">Returns the position of a substring, if present</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>empty</code></td>
+<td class="org-left">Returns true if length is zero, otherwise false</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+<section id="slide-orgc4f7ebc">
+<h2 id="orgc4f7ebc">How to find and read documentation</h2>
+<aside class="notes">
+<p>
+Show how to get to the string documentation
+</p>
+
+</aside>
+<ul>
+<li>Most of the last slide was sourced from cppreference.com</li>
+<li>Documents standard library functionality</li>
+<li>Great reference for all things C++</li>
+
+</ul>
+
+</section>
+<section id="slide-org2c3fd06">
+<h2 id="org2c3fd06">Git</h2>
+<aside class="notes">
+<p>
+Time to switch to the Git/GitHub presentation.
+</p>
+
+</aside>
+<ul>
+<li><a href="git.html">Click here for this week's Git presentation</a></li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="https://robojackets.github.io/reveal.js/lib/js/head.min.js"></script>
+<script src="https://robojackets.github.io/reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: false,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+width: 1440,
+height: 800,
+margin: 0.15,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'fast',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://robojackets.github.io/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+]
+});
+</script>
+</body>
+</html>
