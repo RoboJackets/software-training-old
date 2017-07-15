@@ -23,35 +23,23 @@
   - Email: [[mailto:jgibson37@gatech.edu][jgibson37@gatech.edu]]
 
 * What Programming Is
-- The art of data manipulation at varying layers of abstraction
 #+BEGIN_NOTES
 Talk for a minute or two about everything programming can do
 #+END_NOTES
+- The art of data manipulation at varying layers of abstraction
 
 * What Programming Is Not
-- Easy
 #+BEGIN_NOTES
 This is meant to emphasize that they will not become a God programmer overnight
 and to dispell the misconception that they are going to be coding amazing things
 immediately.
-#+BEGIN_NOTES
+#+END_NOTES
+- Easy
 
 * Codepad
 - Today we will be using codepad to write code in
   - This is a remote interview tool
 - go to [[https://codepad.remoteinterview.io]]
-
-#+BEGIN_NOTES
-Run this code to show them that the compiler shows an error on a different line
-than it is actually on.
-#include <iostream>
-using namespace std;
-int main() {
-    cout <<"Hello "
-    cout << "World!";
-    return 0;
-}
-#+BEGIN_NOTES
 
 * Change to C++ The superior language
 #+ATTR_HTML: :width 50%
@@ -78,8 +66,8 @@ int main() {
 [[file:https://i.imgur.com/caYg2AY.png]]
 
 * {}
-- Curly Braces define scope in the code
-- Right now that means that your code goes
+- Curly Braces define scope of a function in the code
+- Right now that means that your code goes in the main function
 #+BEGIN_SRC C++ -n
   int main() {
     // <==== HERE =====
@@ -87,12 +75,21 @@ int main() {
 #+END_SRC
 
 * ;
+#+BEGIN_NOTES
+Run this code to show them that the compiler shows an error on a different line
+than it is actually on.
+#include <iostream>
+using namespace std;
+int main() {
+    cout <<"Hello "
+    cout << "World!";
+    return 0;
+}
+#+END_NOTES
 - A semicolon defines the end of a line of code
 - Think of it like a period in a sentence
 - Almost every line of code will end with a semicolon
-    - C based langauges will throw a giant fit if you leave off a semicolon
     - often the error message will point to somewhere else
-    - Always check for semicolons first
 #+BEGIN_SRC C++ -n
   int main() {
     doSomething;
@@ -117,6 +114,10 @@ int main() {
 #+END_SRC
 
 * Most useful program ever
+#+BEGIN_NOTES
+This should naturally lead into why variables are useful. Without them
+all programs would be deterministic.
+#+END_NOTES
 #+BEGIN_SRC C++ -n
   int main() {
     cout << 2 + 2;
@@ -150,17 +151,25 @@ int main() {
 | =double= | =double_var= | = | 2.2647 | ; |
 
 * Important Symbols
+#+BEGIN_NOTES
+No lengthy explanation of << and stdout
+#+END_NOTES
 | symbol | meaning |
 |-------+------|
 | =//= | Signifies a comment, The computer will not try to compile that line |
 | === | assignment operator, value of right is assigned to variable on left |
-| =<<= | sends something to the output stream (terminal) |
+| =<<= | sends something to the OS which displays it in the terminal |
 
 * Math Operators
-| =+= | =adds two numbers together= |
-| =-= | =subtracts two numbers= |
+- order of operations still applies
+- () > *,/ > +,-
+| symbol | meaning |
+|-------+------|
+| =()= | =groups a statement= |
 | =*= | =multiplies two numbers= |
 | =/= | =divides a number by another= |
+| =+= | =adds two numbers together= |
+| =-= | =subtracts two numbers= |
 
 * Variables
 - =my_var= now represents the value 2
@@ -185,6 +194,10 @@ int main() {
 #+END_SRC
 
 * Questions??
+#+BEGIN_NOTES
+Write a couple examples of setting up a primitive already described and then
+changing it using only the operators above. like printing numbers 1 - 10.
+#+END_NOTES
 - Still more to come...
 - Let's write some code
 
@@ -259,6 +272,10 @@ if (2 < 2) {
 #+END_SRC
 
 * Chaining Conditionals
+#+BEGIN_NOTES
+Talk about how this is difficult to write at deeper levels
+Think 5-6 Conditionals
+#+END_NOTES
 #+BEGIN_SRC C++ -n
   int main() {
     if (true) {
@@ -274,7 +291,7 @@ if (2 < 2) {
 
 * Logical Operators *AND*
 - *&&*
-| a | b | a && b|
+| a | b | a AND b|
 |-------+------|------+------|
 | True | True | True |
 | True | False | False |
@@ -283,12 +300,21 @@ if (2 < 2) {
 
 * Logical Operators *OR*
 - *||*
-| a | b | a || b|
+| a | b | a OR b|
 |-------+------|------+------|
 | True | True | True |
 | True | False | True |
 | False | True | True |
 | False | False | False |
+
+* Logical Operators order
+- statements will be evaluated from left to right
+- no limit to the number you can have
+- Statements can be grouped using *()*
+    - This can often change their meaning
+    - true && (true || false)
+    - true && true
+    - true
 
 * Conditional Practice 4 Question
 - 1 or 2?
@@ -344,3 +370,10 @@ for (int for_counter = 10; for_counter > 0; for_counter++) {
     // do something
 }
 #+END_SRC
+
+* Questions??
+
+* Let's write some code
+#+BEGIN_NOTES
+Write a couple examples of code using what has already been covered.
+#+END_NOTES
