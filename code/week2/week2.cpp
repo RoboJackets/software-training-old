@@ -10,7 +10,7 @@
 int main() {
     // This means that this code uses the std namespace. Now, all of the functions in the std namespace
     // do not require a qualifier. Generally using namespaces is considered bad practice especially in large
-    // projects since it can lead to shadowing (where I think I am using do_something fucntion from library A but
+    // projects since it can lead to shadowing (where I think I am using do_something function from library A but
     // I am actually using do_something function from library B). Cutting down on extra declarations
     // improves the readability of the code.
     // decent stack overflow article: https://stackoverflow.com/q/1452721
@@ -83,7 +83,7 @@ int main() {
 
     // http://www.cplusplus.com/reference/string/string/replace/
     // replace takes the string it is called on and replaces the given locations with
-    // another string 
+    // another string
     lame_string.replace(position, lame_string.size(), "cool");
     cout << lame_string << endl;
 
