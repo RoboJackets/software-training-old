@@ -4,7 +4,6 @@
 
 * What are we doing today?
 - Instructor introductions
-- Overview
 - What is programming
 - Hello World!
 - Variables
@@ -23,10 +22,36 @@
   - Slack: [[https://robojackets.slack.com/messages/@jasongibson/][@jasongibson]]
   - Email: [[mailto:jgibson37@gatech.edu][jgibson37@gatech.edu]]
 
+* What Programming Is
+- The art of data manipulation at varying layers of abstraction
+#+BEGIN_NOTES
+Talk for a minute or two about everything programming can do
+#+END_NOTES
+
+* What Programming Is Not
+- Easy
+#+BEGIN_NOTES
+This is meant to emphasize that they will not become a God programmer overnight
+and to dispell the misconception that they are going to be coding amazing things
+immediately.
+#+BEGIN_NOTES
+
 * Codepad
 - Today we will be using codepad to write code in
   - This is a remote interview tool
 - go to [[https://codepad.remoteinterview.io]]
+
+#+BEGIN_NOTES
+Run this code to show them that the compiler shows an error on a different line
+than it is actually on.
+#include <iostream>
+using namespace std;
+int main() {
+    cout <<"Hello "
+    cout << "World!";
+    return 0;
+}
+#+BEGIN_NOTES
 
 * Change to C++ The superior language
 #+ATTR_HTML: :width 50%
@@ -52,7 +77,32 @@
 #+ATTR_HTML: :width 50%
 [[file:https://i.imgur.com/caYg2AY.png]]
 
-* C++ code layout
+* {}
+- Curly Braces define scope in the code
+- Right now that means that your code goes
+#+BEGIN_SRC C++ -n
+  int main() {
+    // <==== HERE =====
+  }
+#+END_SRC
+
+* ;
+- A semicolon defines the end of a line of code
+- Think of it like a period in a sentence
+- Almost every line of code will end with a semicolon
+    - C based langauges will throw a giant fit if you leave off a semicolon
+    - often the error message will point to somewhere else
+    - Always check for semicolons first
+#+BEGIN_SRC C++ -n
+  int main() {
+    doSomething;
+  }
+#+END_SRC
+
+* Looking back at Hello World!
+- our code is in {}
+- *cout* tells the computer to write the letters to the screen
+- *<<* tells the computer what to write out
 - line 1: inclues a header file (covered later)
 - line 4: defines the main function
 - line 6: tells the computer that the program ran successfully
@@ -66,66 +116,73 @@
   }
 #+END_SRC
 
-* {}
-- Curly Braces define scope in the code
-- Right now that means that your code goes
-#+BEGIN_SRC C++ -n
-  int main() {
-    // <==== HERE =====
-  }
-#+END_SRC
-
-* ;
-- A semicolon defines the end of a line of code
-- Think of it like a period in a sentence
-#+BEGIN_SRC C++ -n
-  int main() {
-    doSomething;
-  }
-#+END_SRC
-
-* Looking back at Hello World!
-- out code is in {}
-- *cout* tells the computer to write the letters to the screen
-- *<<* tells the computer what to write out
-#+BEGIN_SRC C++ -n
-  int main() {
-    cout << "Hello World!";
-  }
-#+END_SRC
-
 * Most useful program ever
 #+BEGIN_SRC C++ -n
   int main() {
     cout << 2 + 2;
+    return 0;
   }
 #+END_SRC
 
 * Variables
-#+BEGIN_SRC C++ -n
-  int main() {
-    int my_var = 2;
-    cout << my_var + my_var;
-  }
-#+END_SRC
+- Alias for a value
+- the value can be changed without changing the alias
 
 * Primitive Variables Types
 | Name | Description |
 |-------+------|
 | =bool= | Can be either *true* or *false*|
-| =char= | A number from -128 to 127 or a letter character like c or + (on the keyboard)|
+| =char= | A number from -128 to 127 or a character like 'c' or '+'|
 | =int= | Any whole number from -2,147,483,648	2,147,483,647|
 | =double= | any number from 2.2e-308 to 1.8e+308 with decimals|
-- What makes a variable primitive
+- What makes a variable primitive?
 
 * Primitive Variables?
 [[file:https://i.imgur.com/Wo0ovX5.jpg]]
-- But Actually... It means that it cannot be split into parts
+- But Actually... It means that it cannot be divided into smaller parts
 
-* Non Primitives we will be using today
-| Name | Description |
+* Variable Syntax
+| =type= | =name= | === | =value= | ; |
 |-------+------|
-| =string= | Contains text|
+| =bool= | =var= | = | true | ; |
+| =char= | =character= | = | 'c' | ; |
+| =int= | =intVar= | = | 2 | ; |
+| =double= | =double_var= | = | 2.2647 | ; |
+
+* Important Symbols
+| symbol | meaning |
+|-------+------|
+| =//= | Signifies a comment, The computer will not try to compile that line |
+| === | assignment operator, value of right is assigned to variable on left |
+| =<<= | sends something to the output stream (terminal) |
+
+* Math Operators
+| =+= | =adds two numbers together= |
+| =-= | =subtracts two numbers= |
+| =*= | =multiplies two numbers= |
+| =/= | =divides a number by another= |
+
+* Variables
+- =my_var= now represents the value 2
+#+BEGIN_SRC C++ -n
+  int main() {
+    int my_var = 2;
+    cout << my_var + my_var;
+    return 0;
+  }
+#+END_SRC
+
+* Variables
+- Variables can have their assigned value changed on the fly
+#+BEGIN_SRC C++ -n
+  int main() {
+    int my_var = 2;
+    cout << my_var + my_var;
+    my_var = 4;
+    cout << my_var + my_var;
+    return 0;
+  }
+#+END_SRC
 
 * Questions??
 - Still more to come...
@@ -270,6 +327,12 @@ for (initializer; condition; change condition) {
 }
 #+END_SRC
 
+* Math Operators Continued
+| syntax | meaning | equivalent |
+|-------+------|------+------|
+| =var++;= | =increments the variable= | var = var + 1; |
+| =var--;= | =decrements the variable= | var = var - 1; |
+
 * Equivalent while and for Loop
 #+BEGIN_SRC C++ -n
 int while_counter = 10;
@@ -277,7 +340,7 @@ while (while_counter > 0) {
     while_counter = while_counter - 1;
     // do something
 }
-for (int for_counter = 10; for_counter > 0; for_counter = for_counter + 1) {
+for (int for_counter = 10; for_counter > 0; for_counter++) {
     // do something
 }
 #+END_SRC
