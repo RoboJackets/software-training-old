@@ -33,5 +33,6 @@ int multiply(int a, int b);
 
 /**
  * divies (int) a by (int) b
+ * divide by zero not suuported
  */
 int divide(int a, int b);
