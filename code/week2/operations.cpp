@@ -39,7 +39,7 @@ int multiply(int a, int b) {
         b = -b;
     }
     for(int i = 0; i < a; i++) {
-      accum = add(accum, b);
+        accum = add(accum, b);
     }
     if (neg) {
         return -accum;
@@ -60,13 +60,13 @@ int divide(int a, int b) {
         b = -b;
     }
     while(a > 0) {
-      a = subtract(a, b);
-      result++;
+        a = subtract(a, b);
+        result++;
     }
     if(neg) {
-      return -result;
+        return -result;
     } else {
-      return result;
+        return result;
     }
 }
 
