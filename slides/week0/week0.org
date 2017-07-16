@@ -26,7 +26,6 @@
 #+BEGIN_NOTES
 Talk for a minute or two about everything programming can do
 #+END_NOTES
-- The art of data manipulation at varying layers of abstraction
 
 * What Programming Is Not
 #+BEGIN_NOTES
@@ -34,6 +33,7 @@ This is meant to emphasize that they will not become a God programmer overnight
 and to dispell the misconception that they are going to be coding amazing things
 immediately.
 #+END_NOTES
+- Impossible
 - Easy
 
 * Codepad
@@ -89,7 +89,7 @@ int main() {
 - A semicolon defines the end of a line of code
 - Think of it like a period in a sentence
 - Almost every line of code will end with a semicolon
-    - often the error message will point to somewhere else
+    - A missing semicolon results in an error message that can point to the wrong line
 #+BEGIN_SRC C++ -n
   int main() {
     doSomething;
@@ -141,14 +141,7 @@ all programs would be deterministic.
 * Primitive Variables?
 [[file:https://i.imgur.com/Wo0ovX5.jpg]]
 - But Actually... It means that it cannot be divided into smaller parts
-
-* Variable Syntax
-| =type= | =name= | === | =value= | ; |
-|-------+------|
-| =bool= | =var= | = | true | ; |
-| =char= | =character= | = | 'c' | ; |
-| =int= | =intVar= | = | 2 | ; |
-| =double= | =double_var= | = | 2.2647 | ; |
+- A number is just a number
 
 * Important Symbols
 #+BEGIN_NOTES
@@ -170,6 +163,14 @@ No lengthy explanation of << and stdout
 | =/= | =divides a number by another= |
 | =+= | =adds two numbers together= |
 | =-= | =subtracts two numbers= |
+
+* Variable Syntax
+| =type= | =name= | === | =value= | ; |
+|-------+------|
+| =bool= | =var= | = | true | ; |
+| =char= | =character= | = | 'c' | ; |
+| =int= | =intVar= | = | 2 | ; |
+| =double= | =double_var= | = | 2.2647 | ; |
 
 * Variables
 - =my_var= now represents the value 2
@@ -196,7 +197,8 @@ No lengthy explanation of << and stdout
 * Questions??
 #+BEGIN_NOTES
 Write a couple examples of setting up a primitive already described and then
-changing it using only the operators above. like printing numbers 1 - 10.
+changing it using only the operators above. like printing numbers 1 - 10 using a var.
+DO NOT use strings, ++, --, or anything else not covered already
 #+END_NOTES
 - Still more to come...
 - Let's write some code
@@ -222,8 +224,8 @@ changing it using only the operators above. like printing numbers 1 - 10.
 | =!= | opposite of current value| !true | !false
 | ==== | "equal"| 2 == 2 | 4 == 2
 | =!== | *NOT* "equal"| 2 != 4 | 2 != 2
-| =>= | the number of the left is larger and not equal to| 4 > 2 | 2 > 4
-| =<= | the number of the left is smaller and not equal to| 2 < 4 | 4 < 2
+| =>= | the number of the left is larger and not equal to the right| 4 > 2 | 2 > 4
+| =<= | the number of the left is smaller and not equal to the right| 2 < 4 | 4 < 2
 
 * If else syntax
 #+BEGIN_SRC C++ -n
@@ -242,6 +244,9 @@ changing it using only the operators above. like printing numbers 1 - 10.
 #+END_SRC
 
 * Conditional Practice 1 Question
+#+BEGIN_NOTES
+1
+#+END_NOTES
 - 1 or 2?
 #+BEGIN_SRC C++ -n
 if (2 == 2) {
@@ -252,6 +257,9 @@ if (2 == 2) {
 #+END_SRC
 
 * Conditional Practice 2 Question
+#+BEGIN_NOTES
+2
+#+END_NOTES
 - 1 or 2?
 #+BEGIN_SRC C++ -n
 if (2 != 2) {
@@ -262,6 +270,9 @@ if (2 != 2) {
 #+END_SRC
 
 * Conditional Practice 3 Question
+#+BEGIN_NOTES
+2
+#+END_NOTES
 - 1 or 2?
 #+BEGIN_SRC C++ -n
 if (2 < 2) {
@@ -311,12 +322,14 @@ Think 5-6 Conditionals
 - statements will be evaluated from left to right
 - no limit to the number you can have
 - Statements can be grouped using *()*
-    - This can often change their meaning
-    - true && (true || false)
-    - true && true
-    - true
+    - Just like with math operators *()* are executed first
+    - 1 && (2 || 3)
+        - 2 || 3 is done first and the result in anded with 1
 
 * Conditional Practice 4 Question
+#+BEGIN_NOTES
+2
+#+END_NOTES
 - 1 or 2?
 #+BEGIN_SRC C++ -n
 if (2 < 2 && 2 == 2) {
@@ -327,6 +340,9 @@ if (2 < 2 && 2 == 2) {
 #+END_SRC
 
 * Conditional Practice 4 Question
+#+BEGIN_NOTES
+1
+#+END_NOTES
 - 1 or 2?
 #+BEGIN_SRC C++ -n
 if (2 != 2 || 2 == 2) {
@@ -363,8 +379,8 @@ for (initializer; condition; change condition) {
 #+BEGIN_SRC C++ -n
 int while_counter = 10;
 while (while_counter > 0) {
-    while_counter = while_counter - 1;
     // do something
+    while_counter = while_counter - 1;
 }
 for (int for_counter = 10; for_counter > 0; for_counter++) {
     // do something
@@ -372,6 +388,8 @@ for (int for_counter = 10; for_counter > 0; for_counter++) {
 #+END_SRC
 
 * Questions??
+- A go-to place to ask questions ([[https://piazza.com/gatech/fall2017/rjsw/home][Piazza!]])
+- Monitored by highly experienced robojackets software members
 
 * Let's write some code
 #+BEGIN_NOTES
