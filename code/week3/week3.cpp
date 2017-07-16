@@ -112,12 +112,15 @@ int main() {
      // they point to a location in a data structure and can return the data at
      // that location
 
+     cout << "\n\n";
+
      // .begin gives an interator that starts at index 0 and increments up
-     // TODO explain init here
+     // COLLECTION_TYPE<TYPE>::iterator name = vector.method_to_get_iterator();
      vector<char>::iterator begin_it = robo_vector.begin();
 
      // .end gives the iterator pointing to the last element
      vector<char>::iterator end_it = robo_vector.end();
+     cout << "iterate forwards while loop" << endl;
      while(begin_it != end_it) {
          // use the * operator to get the value the itertor is pointing to
          cout << "iterator is currently pointing to " << *begin_it << endl;
@@ -126,12 +129,54 @@ int main() {
      }
 
      // iterators are great for for loops
+     cout << "iterate forwards for loop" << endl;
      for(vector<char>::iterator it = robo_vector.begin(); it != robo_vector.end(); it++) {
          cout << "iterator is currently pointing to " << *it << endl;
      }
 
+     // using rend and rbegin you can get an interator that will go in the opposite direction
+     // this will iterate backwards
+     cout << "iterate backwards while loop" << endl;
+     for(vector<char>::reverse_iterator it = robo_vector.rbegin(); it != robo_vector.rend(); it++) {
+         cout << "iterator is currently pointing to " << *it << endl;
+     }
 
+     // You can use an iterator to insert into a vector
+     robo_vector.insert(robo_vector.begin(), 'R');
+     cout << "the first index is now = " << robo_vector.front() << endl;
+     for(vector<char>::iterator it = robo_vector.begin(); it != robo_vector.end(); it++) {
+         cout << *it;
+     }
+     cout << "\n\n";
 
+     // iterator work on the std::arrays also
+     for(array<string, 3>::iterator it = string_array.begin(); it != string_array.end(); it++) {
+         cout << *it << " ";
+     }
+     cout << "\n";
+
+     // ******************** ALGORITHMS *********************
+     // algorithms is a c++ library that contains lots of commonly used functions
+     // use these whenever possible since they are often more optimized than
+     // something you will write and they have been extensively tested.
+     // algorithms uses interators as an abstraction layer
+     // http://www.cplusplus.com/reference/algorithm/
+     vector<int> long_list = {6,9,5,6,5,7,6,1,10,5,1,6,9,4,1,5,8,9,0,2,0,1,7,3,6,4};
+
+     // count returns the number
+     // http://www.cplusplus.com/reference/algorithm/count/
+     cout << "the number 5 occurs " << count(long_list.begin(), long_list.end(), 5) << " times in the list" << endl;
+
+     // sort places the elements in a specified order
+     // http://www.cplusplus.com/reference/algorithm/sort/
+     sort(long_list.begin(), long_list.end());
+     cout << "Printing sorted list" << endl;
+     for(vector<int>::iterator it = long_list.begin(); it != long_list.end(); it++) {
+         cout << *it << ",";
+     }
+     cout << "\n\n";
+
+     //
 
 
      return 0;
