@@ -1,0 +1,176 @@
+#+TITLE: Git Training - Week 3
+#+AUTHOR: Jay Kamat
+#+EMAIL: jaygkamat@gmail.com
+
+* What You Know
+- ~git~ status
+- ~git~ commit
+- ~git~ remote
+- /(any questions?)/
+* Some Problems
+- Multiple developers work on the same code, at the same time
+- We want to maintain multiple versions of the same software in parallel
+  - How do I apply a security fix to an old version?
+- You want a safe place to test out changes, without affecting anyone else
+- Branching is ~git~'s solution
+
+* Branches
+- Branches are local copies of state
+- If you do work on a branch, it won't affect any other branches
+- Later on, we can 'merge' branches together (so work done on either can be combined).
+- Branches are what people have the most trouble with
+  - _*Ask questions /please/!*_ This is a difficult topic.
+** Git As a Graph
+
+- git history is a *graph*
+- ways to see it as a graph, rather than a line of commits
+  - ~git~ porcelain
+    #+BEGIN_SRC sh
+      git log --oneline --graph --all
+    #+END_SRC
+
+    #+BEGIN_SRC sh :results output :exports results
+      git log --oneline --graph | head -n10
+    #+END_SRC
+  - ~gitk~
+  - ~git~ integrations for your favorite editor!
+
+** Creating Branches
+- Let's start by creating multiple branches
+
+  #+BEGIN_SRC
+    844a162 * master stable beta Initial commit
+  #+END_SRC
+
+- We have one commit and 3 branches point to the same commit
+  - master, stable, beta
+- Right now, everything is at the same state
+- Create branches with
+
+  #+BEGIN_SRC sh
+    # git branch <BRANCH_NAME>
+
+    # Create two branches, starting from the current commit
+
+    git branch stable
+    git branch beta
+  #+END_SRC
+
+** Switching Branches
+
+- only one branch can be 'worked on' at a time.
+- ~git status~ will display your current branch
+- ~git checkout~ let's you switch between branches
+- Let's checkout to the *stable* branch now
+  #+BEGIN_SRC sh
+    git status
+    #> On branch master
+    #> nothing to commit, working tree clean
+
+    # git checkout <BRANCH_NAME>
+
+    git checkout stable
+    #> Switched to branch 'stable
+
+    git status
+    #> On branch stable
+    #> nothing to commit, working tree clean
+  #+END_SRC
+** First Stable Commit
+- Let's add a commit to the stable branch
+  #+BEGIN_SRC sh
+    echo "Stability counts!" > stable_release.txt
+    git add -A
+    git commit -m "Add stable_release.txt"
+  #+END_SRC
+- This will *not affect* any other branches
+- The other branches will stay behind on 'initial commit'
+  #+BEGIN_SRC
+    5592388 * stable      Add stable_release.txt
+    844a162 * master beta Initial commit
+  #+END_SRC
+** First Beta Commit
+- Let's make a experimental commit on the beta branch
+  #+BEGIN_SRC sh
+    git checkout beta
+    echo "This feature is unstable!" > beta_release.txt
+    git add -A
+    git commit -m "Add beta_release.txt"
+  #+END_SRC
+- Since the beta branch was *behind* the stable branch, this creates a 'fork' in the commit history
+- Notice, master has not moved at all (since no commits have been made on it)
+  #+BEGIN_SRC
+    1c65f7b * beta Add beta_release.txt
+    5592388 | * stable Add stable_release.txt
+            |/
+    844a162 * master Initial commit
+  #+END_SRC
+- Play around, and checkout to the various branches!
+  #+BEGIN_SRC shell
+    git checkout <BRANCH>
+    ls
+  #+END_SRC
+** Let's Make Beta Official
+- Let's bring the hard work from the beta branch onto the stable branch
+- Right now, the stable and the beta branch have 'forked', we need to bring them back together
+- This is a *merge*
+  #+BEGIN_SRC sh
+    # Checkout to the branch we want to merge **into**
+    git checkout stable
+    # Merge the branch we want into the current branch (stable)
+    git merge beta
+    # This will launch an editor, save and quit it to complete
+  #+END_SRC
+- This does not change any other branch
+  #+BEGIN_SRC
+    ddc2df9 *   stable Merge branch 'beta' into stable
+            |\
+    1c65f7b | * beta Add beta_release.txt
+    5592388 * | Add stable_release.txt
+            |/
+    844a162 * master Initial commit
+  #+END_SRC
+* Remotes and Branches
+** Remotes vs Branches
+- A fork or close does a full copy of the git repo
+- A remote is a pointer to another copy of this git repo
+- A repository is a collection of *branches*
+- You can only directly modify local branches, but:
+  - You can merge from a remote into your branch (pull)
+  - You can merge from your branch to a remote (push)
+** Pull Requests
+- A pull request = PR
+- A request for a project owner to merge from your fork to their copy
+  #+BEGIN_SRC fundamental
+          push     PR
+    laptop -> fork -> upstream
+      ^         |        |
+      |         v        v
+      |-------------------
+               pull
+  #+END_SRC
+- Request an owner to merge *from a branch on your fork*
+** Overall Contribution Flow
+#+BEGIN_SRC shell
+  # start on master
+  git checkout master
+
+  # Ensure we branch off from a recent version
+  git pull rj master
+
+  # create a new branch
+  git branch my-new-feature
+  git checkout my-new-feature
+
+  # Add commits with your work
+  git commit -m "Fix all of RoboJackets"
+
+  # push to a seperate branch on your fork
+  git push origin my-new-feature
+
+  # Go to github, and click 'new pull request'
+
+  # add updates by
+  git commit -m "Add missing files"
+  git push origin my-new-feature
+#+END_SRC
