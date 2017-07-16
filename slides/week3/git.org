@@ -1,12 +1,16 @@
 #+TITLE: Git Training - Week 3
-#+AUTHOR: Jay Kamat
-#+EMAIL: jaygkamat@gmail.com
+#+AUTHOR: Jay Kamat, Josh Ting
+#+EMAIL: jaygkamat@gmail.com, josh.ting@gatech.edu
 
 * What You Know
-- ~git~ status
-- ~git~ commit
-- ~git~ remote
+- ~git status~
+- ~git add~
+- ~git commit~
+- ~git remote~
+- ~git pull~
+- ~git push~
 - /(any questions?)/
+
 * Some Problems
 - Multiple developers work on the same code, at the same time
 - We want to maintain multiple versions of the same software in parallel
@@ -20,10 +24,12 @@
 - Later on, we can 'merge' branches together (so work done on either can be combined).
 - Branches are what people have the most trouble with
   - _*Ask questions /please/!*_ This is a difficult topic.
+
 ** Git As a Graph
 
 - git history is a *graph*
-- ways to see it as a graph, rather than a line of commits
+- Each commit is a node on the graph
+- Ways to see it as a graph, rather than a line of commits
   - ~git~ porcelain
     #+BEGIN_SRC sh
       git log --oneline --graph --all
@@ -59,7 +65,7 @@
 ** Switching Branches
 
 - only one branch can be 'worked on' at a time.
-- ~git status~ will display your current branch
+- ~git status~ will display info on your current branch
 - ~git checkout~ let's you switch between branches
 - Let's checkout to the *stable* branch now
   #+BEGIN_SRC sh
@@ -76,6 +82,7 @@
     #> On branch stable
     #> nothing to commit, working tree clean
   #+END_SRC
+
 ** First Stable Commit
 - Let's add a commit to the stable branch
   #+BEGIN_SRC sh
@@ -89,6 +96,7 @@
     5592388 * stable      Add stable_release.txt
     844a162 * master beta Initial commit
   #+END_SRC
+
 ** First Beta Commit
 - Let's make a experimental commit on the beta branch
   #+BEGIN_SRC sh
@@ -110,14 +118,15 @@
     git checkout <BRANCH>
     ls
   #+END_SRC
+
 ** Let's Make Beta Official
 - Let's bring the hard work from the beta branch onto the stable branch
 - Right now, the stable and the beta branch have 'forked', we need to bring them back together
 - This is a *merge*
   #+BEGIN_SRC sh
-    # Checkout to the branch we want to merge **into**
+    # Checkout to the branch we want to merge **into** aka the "base branch"
     git checkout stable
-    # Merge the branch we want into the current branch (stable)
+    # Merge the branch we want (beta) into the current branch (stable)
     git merge beta
     # This will launch an editor, save and quit it to complete
   #+END_SRC
@@ -130,8 +139,8 @@
             |/
     844a162 * master Initial commit
   #+END_SRC
-* Remotes and Branches
-** Remotes vs Branches
+
+** Remotes vs Branches vs Forks
 - A fork or close does a full copy of the git repo
 - A remote is a pointer to another copy of this git repo
 - A repository is a collection of *branches*
