@@ -119,7 +119,7 @@
     ls
   #+END_SRC
 
-** Let's Make Beta Official
+** Let's make beta official
 - Let's bring the hard work from the beta branch onto the stable branch
 - Right now, the stable and the beta branch have 'forked', we need to bring them back together
 - This is a *merge*
@@ -147,7 +147,8 @@
 - You can only directly modify local branches, but:
   - You can merge from a remote into your branch (pull)
   - You can merge from your branch to a remote (push)
-** Pull Requests
+
+* Pull requests
 - A pull request = PR
 - A request for a project owner to merge from your fork to their copy
   #+BEGIN_SRC fundamental
@@ -159,7 +160,21 @@
                pull
   #+END_SRC
 - Request an owner to merge *from a branch on your fork*
-** Overall Contribution Flow
+
+** Make a pull request
+- Push code locally stored on your computer to your fork on GitHub
+  #+BEGIN_SRC shell
+    git push origin stable
+  #+END_SRC
+- Locate your fork on GitHub and click "New pull request"
+[[file:https://i.imgur.com/8xwEajp.jpg]]
+
+** Make a pull request (continued)
+- Ensure that both repos and branches are correct
+- Click "Create pull request"
+[[file:https://i.imgur.com/gxUa2Zx.jpg]]
+
+* Overall Contribution Flow
 #+BEGIN_SRC shell
   # start on master
   git checkout master
