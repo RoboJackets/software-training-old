@@ -32,11 +32,11 @@
 - Ways to see it as a graph, rather than a line of commits
   - ~git~ porcelain
     #+BEGIN_SRC sh
-      git log --oneline --graph --all
+      git log --oneline --graph --all --decorate
     #+END_SRC
 
     #+BEGIN_SRC sh :results output :exports results
-      git log --oneline --graph | head -n10
+      git log --oneline --graph --decorate | head -n9
     #+END_SRC
   - ~gitk~
   - ~git~ integrations for your favorite editor!
