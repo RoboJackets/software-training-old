@@ -36,6 +36,22 @@ immediately.
 - Impossible
 - Easy
 
+* Programming Failures
+#+BEGIN_NOTES
+Talk for a minute or two about everything programming can do
+Orbiter was pounds instead of newtons
+Robocup forgot the flip the direction on the field and tried (unsuccessfully) to score on themselves
+Jason tried to delete a local directory usr and did sudo rm -rf /usr on a production server
+Ariane software testing did not acccount for increased speed and tried to store a number
+    that was not 16 bits in 1 bits and ended up in an explosion
+#+END_NOTES
+- Mars Climate Orbiter (1998)
+    - the code returned the wrong units causing a 655 million dollar explosion on Mars
+- RoboCup field disaster
+- deleting the /bin directory on a production server
+- Ariane s5 flight 501
+    - faster speed resulted in a 64 bit number being stored as 16 bits ~500 million failure
+
 * Codepad
 - Today we will be using codepad to write code in
   - This is a remote interview tool
@@ -51,7 +67,7 @@ immediately.
 
 * Hello World!
 - Add *World!* to your code
-#+BEGIN_SRC C++ -n
+#+BEGIN_SRC C++ -n :exports both :includes <iostream> :defines cout std::cout
   #include <iostream>
   using namespace std;
 
@@ -78,23 +94,30 @@ immediately.
 #+BEGIN_NOTES
 Run this code to show them that the compiler shows an error on a different line
 than it is actually on.
-#include <iostream>
-using namespace std;
-int main() {
-    cout <<"Hello "
-    cout << "World!";
-    return 0;
-}
 #+END_NOTES
 - A semicolon defines the end of a line of code
 - Think of it like a period in a sentence
-- Almost every line of code will end with a semicolon
+- All statements
     - A missing semicolon results in an error message that can point to the wrong line
+- TODO explain what lines have semicolons and what lines do not
 #+BEGIN_SRC C++ -n
-  int main() {
-    doSomething;
-  }
+    #include <iostream>
+    using namespace std;
+    int main() {
+      cout << "Hello"
+      cout << "World!";
+      return 0;
+    }
 #+END_SRC
+- Output
+#+BEGIN_EXAMPLE
+/temp/file.cpp: In function ‘int main()’:
+/temp/file.cpp:5:5: error: expected ‘;’ before ‘cout’
+     cout << "World!";
+     ^
+
+Compilation Failed
+#+END_EXAMPLE
 
 * Looking back at Hello World!
 - our code is in {}
@@ -103,7 +126,7 @@ int main() {
 - line 1: inclues a header file (covered later)
 - line 4: defines the main function
 - line 6: tells the computer that the program ran successfully
-#+BEGIN_SRC C++ -n
+#+BEGIN_SRC C++ -n :exports both :includes <iostream> :defines cout std::cout
   #include <iostream>
   using namespace std;
 
@@ -118,7 +141,7 @@ int main() {
 This should naturally lead into why variables are useful. Without them
 all programs would be deterministic.
 #+END_NOTES
-#+BEGIN_SRC C++ -n
+#+BEGIN_SRC C++ -n :exports both :includes <iostream> :defines cout std::cout
   int main() {
     cout << 2 + 2;
     return 0;
@@ -133,9 +156,9 @@ all programs would be deterministic.
 | Name | Description |
 |-------+------|
 | =bool= | Can be either *true* or *false*|
-| =char= | A number from -128 to 127 or a character like 'c' or '+'|
-| =int= | Any whole number from -2,147,483,648	2,147,483,647|
-| =double= | any number from 2.2e-308 to 1.8e+308 with decimals|
+| =char= | a character like 'c' or '+'|
+| =int= | A whole number *bounded|
+| =double= | a decimal number *bounded|
 - What makes a variable primitive?
 
 * Primitive Variables?
@@ -155,7 +178,7 @@ No lengthy explanation of << and stdout
 
 * Math Operators
 - order of operations still applies
-- () > *,/ > +,-
+- ~()~ > ~*,/~ > ~+,-~
 | symbol | meaning |
 |-------+------|
 | =()= | =groups a statement= |
@@ -174,7 +197,7 @@ No lengthy explanation of << and stdout
 
 * Variables
 - =my_var= now represents the value 2
-#+BEGIN_SRC C++ -n
+#+BEGIN_SRC C++ -n :exports both :includes <iostream> :defines cout std::cout
   int main() {
     int my_var = 2;
     cout << my_var + my_var;
@@ -182,9 +205,15 @@ No lengthy explanation of << and stdout
   }
 #+END_SRC
 
+* Declaration vs Definition
+- int num = 1;
+    - creates the variable num of type int and assigns it the value 1
+- num = 4;
+    - the type is already known from above so this line just assigns it the value 4
+
 * Variables
 - Variables can have their assigned value changed on the fly
-#+BEGIN_SRC C++ -n
+#+BEGIN_SRC C++ -n :exports both :includes <iostream> :defines cout std::cout
   int main() {
     int my_var = 2;
     cout << my_var + my_var;
@@ -389,7 +418,7 @@ for (int for_counter = 10; for_counter > 0; for_counter++) {
 
 * Questions??
 - A go-to place to ask questions ([[https://piazza.com/gatech/fall2017/rjsw/home][Piazza!]])
-- Monitored by highly experienced robojackets software members
+- Monitored by highly experienced RoboJackets software members
 
 * Let's write some code
 #+BEGIN_NOTES
