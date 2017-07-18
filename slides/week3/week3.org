@@ -2,6 +2,8 @@
 #+AUTHOR: Kristaps Berzinch, Raymond Ortiz
 #+EMAIL: kristaps@robojackets.org, rortiz9@gatech.edu
 
+* TODO Needs speaker notes
+
 * What are we doing today?
 - Data structures and algorithms in C++
 - Brancing and merging in Git
