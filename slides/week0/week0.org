@@ -472,7 +472,7 @@ int number_bottles = 4;
 for(int i = number_bottles; i > 0;) {
     char s = 's';
     if(i <= 1) {
-        s = ' ';
+        s = '\0';
     }
     cout << i << " bottle" << s << " of beer on the wall" << endl;
     cout << i << " bottle" << s << " of beer" << endl;
