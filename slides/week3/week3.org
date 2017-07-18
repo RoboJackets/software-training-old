@@ -1,0 +1,50 @@
+#+TITLE: Week 3
+#+AUTHOR: Kristaps Berzinch, Raymond Ortiz
+#+EMAIL: kristaps@robojackets.org, rortiz9@gatech.edu
+
+* What are we doing today?
+- Data structures and algorithms in C++
+- Brancing and merging in Git
+
+* What's a constructor?
+- A special type of function that instantiates a class
+- Basically, it sets up an object and returns it
+
+* What's a container?
+- An object you can use to store other objects
+- They can be ordered, associative, both, or neither
+  - *Ordered:* The contents are in a specific order
+  - *Associative:* Two objects are associated with each other within the container
+- TODO am I missing any important properties here? I want to say "uniqueness" or something...
+
+* Common containers
+| =array= | a static-length ordered list of objects |
+| =vector= | a dynamic-length ordered list of objects |
+| =set= | an ordered group of unique objects |
+| =map= | an ordered group of key-value pairs, with unique keys|
+
+* Arrays
+| =at= | returns the value at a specific index |
+| =front= | returns the first item |
+| =back= | returns the last item |
+| =size= | returns the number of elements |
+
+* Vectors
+- Everything from the last slide, and...
+| =clear= | removes all items |
+| =insert= | inserts an item at a specific index |
+| =push_back= | adds a given element to the end |
+| =pop_back= | removes the last element |
+
+* Iterators
+-
+
+* Algorithms
+- All of these can be restricted to a range in the container
+| =sort= | sorts a container |
+| =count= | counts the number of items in a container that match a given item |
+| =find= | returns an iterator to the first element that matches a given item |
+| =copy= | copies elements from one container to another |
+| =fill= | fills a container with copies of a given element |
+| =accumulate= | sums all elements in a container |
+| =iota= | fills a container with sequentially increasing values |
