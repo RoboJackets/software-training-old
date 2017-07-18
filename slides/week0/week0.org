@@ -84,6 +84,8 @@ Ariane software testing did not acccount for increased speed and tried to store 
 * {}
 - Curly Braces define scope of a function in the code
 - Right now that means that your code goes in the main function
+- All compound or control flow statements have curly braces
+    - Below the *{}* defines the main method
 #+BEGIN_SRC C++ -n
   int main() {
     // <==== HERE =====
@@ -92,19 +94,18 @@ Ariane software testing did not acccount for increased speed and tried to store 
 
 * ;
 #+BEGIN_NOTES
-Run this code to show them that the compiler shows an error on a different line
-than it is actually on.
+Make sure to note that they will see this error a lot and that it will go away with time.
 #+END_NOTES
 - A semicolon defines the end of a line of code
 - Think of it like a period in a sentence
-- All statements
+- All expression statements end in a semicolon
+    - declarations, assignments, function calls
     - A missing semicolon results in an error message that can point to the wrong line
-- TODO explain what lines have semicolons and what lines do not
 #+BEGIN_SRC C++ -n
     #include <iostream>
     using namespace std;
     int main() {
-      cout << "Hello"
+      cout << "Hello" // <=====
       cout << "World!";
       return 0;
     }
