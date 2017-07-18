@@ -424,4 +424,61 @@ for (int for_counter = 10; for_counter > 0; for_counter++) {
 * Let's write some code
 #+BEGIN_NOTES
 Write a couple examples of code using what has already been covered.
+Multiplication Table
+int mult_1 = 10;
+int mult_2 = 10;
+
+for(int i = 0; i < mult_1; i++) {
+    for(int j = 0; j < mult_2; j++) {
+        cout << i * j << " ";
+
+    }
+    cout << endl;
+}
+
+*********** Converting Time *******************
+double time = 315; // very important here
+char current_units = 's';
+char desired_units = 'h';
+
+if(current_units == 's' && desired_units == 'm') {
+    time /= 60;
+} else if(current_units == 's' && desired_units == 'h') {
+    time /= 3600;
+} else if(current_units == 'm' && desired_units == 's') {
+    time *= 60;
+} else if(current_units == 'm' && desired_units == 'h') {
+    time /= 60;
+} else if(current_units == 'h' && desired_units == 's') {
+    time *= 3600;
+} else if(current_units == 'h' && desired_units == 'm') {
+    time *= 60;
+}
+cout << "converted " << current_units << " to " << desired_units << endl;
+cout << "result = " << time;
+
+*********** Find length of a number *******************
+int number = 1351;
+int length = 0;
+
+for(int temp = number; temp > 0; temp /=10) {
+    length++;
+}
+cout << "the length of " << number << " is " << length << endl;
+
+*********** 99 bottles *******************
+int number_bottles = 4;
+
+for(int i = number_bottles; i > 0;) {
+    char s = 's';
+    if(i <= 1) {
+        s = ' ';
+    }
+    cout << i << " bottle" << s << " of beer on the wall" << endl;
+    cout << i << " bottle" << s << " of beer" << endl;
+    cout << "Take one down and pass it around" << endl;
+    i--;
+    cout << i << " bottles of beer on the wall" << endl << endl;
+}
+
 #+END_NOTES
