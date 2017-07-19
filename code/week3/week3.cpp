@@ -107,8 +107,20 @@ int main() {
      cout << "after reserve 10 robo_vector has a capacity of " << robo_vector.capacity() <<
         " and a size of " << robo_vector.size() << endl;
 
+     // ******************** set *********************
+     // TODO determine if this is needed
+     // init
+     // set<TYPE> name
+     set<string> string_set;
+
+     // ******************** map *********************
+     // TODO determine if this is needed
+     // init
+     // set<KEY_TYPE, VALUE_TYPE> name;
+
+
      // ******************** ITERATORS *********************
-     // iterators are ...
+     // iterators objects that lets you access objects in a container
      // they point to a location in a data structure and can return the data at
      // that location
 
@@ -171,12 +183,55 @@ int main() {
      // http://www.cplusplus.com/reference/algorithm/sort/
      sort(long_list.begin(), long_list.end());
      cout << "Printing sorted list" << endl;
-     for(vector<int>::iterator it = long_list.begin(); it != long_list.end(); it++) {
-         cout << *it << ",";
+     for(std::vector<int>::iterator it = long_list.begin(); it != long_list.end(); it++) {
+         std::cout << *it << ",";
      }
      cout << "\n\n";
 
-     //
+     // finds the first instance of 6 in the container
+     // http://www.cplusplus.com/reference/algorithm/find/
+     vector<int>::iterator find_iter = find(long_list.begin(), long_list.end(), 6);
+     cout << "find 6 = " << *find_iter << endl;
+
+     // returns 0 if the the element is not found
+     //vector<int>::iterator find_iter_dne = find(long_list.begin(), long_list.end(), 100);
+     //cout << "find 100 = " << *find_iter_dne << endl;
+
+
+     vector<int> new_int_vector (4);
+
+     // copies elements from one container to another
+     // http://www.cplusplus.com/reference/algorithm/copy/
+     copy(find_iter, find_iter + 4, new_int_vector.begin());
+     for(std::vector<int>::iterator it = new_int_vector.begin(); it != new_int_vector.end(); it++) {
+         std::cout << *it << ",";
+     }
+     cout << "\n\n";
+
+     // fills in copies of the given element into the container
+     // http://www.cplusplus.com/reference/algorithm/fill/
+     fill(new_int_vector.begin() + 1, new_int_vector.end(), 1);
+     for(std::vector<int>::iterator it = new_int_vector.begin(); it != new_int_vector.end(); it++) {
+         std::cout << *it << ",";
+     }
+     cout << "\n\n";
+
+     // accumulate sums all of the values in the given range
+     // http://www.cplusplus.com/reference/numeric/accumulate/
+     int summation = 0;
+     summation = accumulate(long_list.begin(), long_list.end(), summation);
+     cout << "sum of long_list = " << summation << endl;
+
+     vector<int> iota_vector (20);
+
+     // iota is a convenience to create a collection of increasing values
+     // http://www.cplusplus.com/reference/numeric/iota/?kw=iota
+     cout << "\nprinting iota vector" << endl;
+     iota(iota_vector.begin(), iota_vector.end(), 0);
+     for(std::vector<int>::iterator it = iota_vector.begin(); it != iota_vector.end(); it++) {
+         std::cout << *it << ",";
+     }
+     cout << "\n\n";
 
 
      return 0;
