@@ -39,7 +39,9 @@
 | =pop_back= | removes the last element |
 
 * Iterators
--
+- An object that lets you access objects in a container
+- Depending on their type, they will let you read or write data in the container, and move forwards, backwards, or arbitrarily
+- The containers library includes the most common ones you'll need, but you can also write your own
 
 * Algorithms
 - All of these can be restricted to a range in the container
