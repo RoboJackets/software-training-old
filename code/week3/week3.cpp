@@ -107,19 +107,8 @@ int main() {
      cout << "after reserve 10 robo_vector has a capacity of " << robo_vector.capacity() <<
         " and a size of " << robo_vector.size() << endl;
 
-     // ******************** set *********************
-     // TODO determine if this is needed
-     // init
-     // set<TYPE> name
-     set<string> string_set;
-
-     // ******************** map *********************
-     // TODO determine if this is needed
-     // init
-     // set<KEY_TYPE, VALUE_TYPE> name;
-
-
      // ******************** ITERATORS *********************
+	 // http://www.cplusplus.com/reference/iterator/iterator/?kw=iterator
      // iterators objects that lets you access objects in a container
      // they point to a location in a data structure and can return the data at
      // that location
@@ -167,7 +156,52 @@ int main() {
      }
      cout << "\n";
 
+     // ******************** set *********************
+	 // http://www.cplusplus.com/reference/set/set/?kw=set
+	 cout << "\n\n";
+     // init
+     // set<TYPE> name
+     set<int> ordered_string_set {20,19,18,1,16};
+
+	 // can insert elements into set
+	 // http://www.cplusplus.com/reference/set/set/insert/
+	 ordered_string_set.insert(21);
+
+	 for(set<int>::iterator it =  ordered_string_set.begin(); it != ordered_string_set.end(); it++) {
+	     cout << *it << endl;
+	 }
+
+	 // ******************** unordered_set *********************
+	 // http://www.cplusplus.com/reference/unordered_set/unordered_set/
+     cout << "\n\n";
+     // init
+     // set<TYPE> name
+     unordered_set<string> unordered_string_set {"20","19","18","1","16"};
+
+	 // can insert elements into set
+	 // http://www.cplusplus.com/reference/unordered_set/unordered_set/insert/
+	 unordered_string_set.insert("21");
+
+	 // order is not maintained here
+	 for(unordered_set<string>::iterator it =  unordered_string_set.begin(); it != unordered_string_set.end(); it++) {
+	       cout << *it << endl;
+	 }
+
+     // ******************** map *********************
+	 // http://www.cplusplus.com/reference/map/map/?kw=map
+	 cout << "\nmap\n";
+	 // init
+	 // map<KEY_TYPE, VALUE_TYPE
+	 map<char, int> char_map;
+
+	 // inserts a pair (key, value) into the map at iterator
+	 char_map.insert(char_map.begin(), pair<char, int>('a', 5));
+
+	 // at gets the value at the given key
+	 cout << "at char 'a' value = " << char_map.at('a') << endl;
+
      // ******************** ALGORITHMS *********************
+	 cout << "\n\nalgorithms" << endl;
      // algorithms is a c++ library that contains lots of commonly used functions
      // use these whenever possible since they are often more optimized than
      // something you will write and they have been extensively tested.
