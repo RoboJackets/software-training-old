@@ -195,9 +195,11 @@ int main() {
 	 map<char, int> char_map;
 
 	 // inserts a pair (key, value) into the map at iterator
+	 // http://www.cplusplus.com/reference/map/map/insert/
 	 char_map.insert(char_map.begin(), pair<char, int>('a', 5));
 
 	 // at gets the value at the given key
+	 // http://www.cplusplus.com/reference/map/map/at/
 	 cout << "at char 'a' value = " << char_map.at('a') << endl;
 
      // ******************** ALGORITHMS *********************
