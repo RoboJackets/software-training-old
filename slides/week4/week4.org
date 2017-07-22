@@ -1,0 +1,75 @@
+#+TITLE: Week 4
+#+AUTHOR: Kristaps Berzinch, Raymond Ortiz, Sahit Chintalapudi
+#+EMAIL: kristaps@robojackets.org, rortiz9@gatech.edu, schintalapudi@gatech.edu
+
+* What are we doing today?
+- How a program's memory is structured at a high level
+- References and pointers
+- How to convert objects between different types
+- No =git= slides this week!
+
+* Memory structure
+#+BEGIN_NOTES
+This is all fundamentally the same RAM, just arranged and managed in a certain way. Mention memory leaks.
+#+END_NOTES
+- At a high level, your program has three kinds of memory
+ - *Static memory:* allocated at compile time for things like static or global variables
+ - *The stack:* managed automatically by the language
+  - A new stack frame is allocated when a function is called, and released when the function exits
+  - This is where your parameters and local variables are stored
+ - *The heap:* your space to do whatever you want
+  - You can dynamically ask for memory from the OS and return it, all at runtime
+  - You have to keep track of what you've allocated and release it when you're done
+- We're not going to go too in depth on any of these, but a high level understanding is useful
+- At an even higher level, all the memory in your computer is a huge, indexable, iterable space, divided into bytes
+
+* References
+#+BEGIN_NOTES
+Run through some basic examples here.
+#+END_NOTES
+- A reference is a variable that points to the same content as another variable
+- Why would you want that?
+ - Remember the stack? Normally, parameters are copied into the new stack frame so they can be manipulated without affecting the rest of the program
+ - But what if you /want/ a function to change some of its inputs? Use a reference!
+ - This can also improve performance, since you're only copying a memory address instead of a (potentially) larger object
+- You can't change where a reference points after initialization
+- You can mostly just treat references exactly like normal variables once they're initialized
+
+* Pointers
+#+BEGIN_NOTES
+Run through some basic examples here.
+#+END_NOTES
+- A pointer is a special type of variable that "points to" another variable
+- The actual content of a pointer variable is a memory address
+- How are these different from references?
+ - You have to explicitly dereference a pointer to access its target
+ - You can change where a pointer is pointing
+- Pointers are great for passing around heap objects, but how do you keep track of what objects are still in use?
+
+* Smart pointers
+#+BEGIN_NOTES
+Run through some basic examples here.
+#+END_NOTES
+- Wrap a normal pointer to make it easier to manage the lifecycle of objects
+- You should generally use one of these two types instead of a normal pointer:
+ - =shared_ptr=: multiple =shared_ptr= s can own a single object, and the object is destroyed when the last =shared_ptr= is destroyed.
+ - =unique_ptr=: only one =unique_ptr= can own an object, and the object is destroyed when the =unique_ptr= is destroyed.
+- You should initizialize these using the =make_shared= and =make_unique= functions, respectively
+
+* Casting, the wrong way
+- Sometimes you want to convert a variable to a different type: this is called casting
+- In C, you can simply change the type of a variable like so:
+ - ~int a = (int)not_an_int;~
+ - Now =a= is an =int= reference to =not_an_int=, which may or may not actually be an =int=
+ - This is bad for type safety!
+ - TODO an example of something breaking because of a C-style cast would be good here.
+- TODO we need to explain what type safety is
+
+* Casting, the right way
+- C++ gives us functions that are type-safe, including compile-time checks
+- =static_cast= is mostly used for basic type conversions, e.g. between different types of numbers
+- =dynamic_cast= is mostly used for conversions between object types for polymorphism
+- =reinterpret_cast= works like a C-style cast and generally shouldn't be used
+
+* Questions?
+- Ask here or on Piazza!
