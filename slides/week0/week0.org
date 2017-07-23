@@ -22,9 +22,11 @@
   - Slack: [[https://robojackets.slack.com/messages/@jasongibson/][@jasongibson]]
   - Email: [[mailto:jgibson37@gatech.edu][jgibson37@gatech.edu]]
 
-* What Programming Is
+* What is programming?
 #+BEGIN_NOTES
 Talk for a minute or two about everything programming can do
+Fully understanding a problem, analyzing that problem, determining recurrent actions,
+and then optimizing those actions through logical constructs.
 #+END_NOTES
 
 * What Programming Is Not
@@ -38,22 +40,16 @@ immediately.
 
 * Programming Failures
 #+BEGIN_NOTES
-Talk for a minute or two about everything programming can do
-Orbiter was pounds instead of newtons
-Robocup forgot the flip the direction on the field and tried (unsuccessfully) to score on themselves
-Jason tried to delete a local directory usr and did sudo rm -rf /usr on a production server
-Ariane software testing did not acccount for increased speed and tried to store a number
-    that was not 16 bits in 1 bits and ended up in an explosion
+1. Talk for a minute or two about everything programming can do. 2. Orbiter was pounds instead of newtons
+3. Ariane software testing did not acccount for increased speed and tried too large a number.
 #+END_NOTES
 - Mars Climate Orbiter (1998)
     - the code returned the wrong units causing a 655 million dollar explosion on Mars
-- RoboCup field disaster
-- deleting the /bin directory on a production server
-- Ariane s5 flight 501
-    - faster speed resulted in a 64 bit number being stored as 16 bits ~500 million failure
+- Ariane 5 flight 501
+    - faster speed resulted in a 64 bit number being stored as 16 bits, ~500 million dollar failure
 
 * Codepad
-- Today we will be using codepad to write code in
+- Today we will be using codepad to write and compile code
   - This is a remote interview tool
 - go to [[https://codepad.remoteinterview.io]]
 
@@ -83,9 +79,9 @@ Ariane software testing did not acccount for increased speed and tried to store 
 
 * {}
 - Curly Braces define scope of a function in the code
-- Right now that means that your code goes in the main function
+- Right now, that means that your code goes in the main function
 - All compound or control flow statements have curly braces
-    - Below the *{}* defines the main method
+    - inside the *{}* defines the main method
 #+BEGIN_SRC C++ -n
   int main() {
     // <==== HERE =====
@@ -96,10 +92,10 @@ Ariane software testing did not acccount for increased speed and tried to store 
 #+BEGIN_NOTES
 Make sure to note that they will see this error a lot and that it will go away with time.
 #+END_NOTES
-- A semicolon defines the end of a line of code
+- A semicolon defines the end of a statement of code
 - Think of it like a period in a sentence
 - All expression statements end in a semicolon
-    - declarations, assignments, function calls
+    - declarations, assignments, function calls, etc
     - A missing semicolon results in an error message that can point to the wrong line
 #+BEGIN_SRC C++ -n
     #include <iostream>
@@ -110,7 +106,6 @@ Make sure to note that they will see this error a lot and that it will go away w
       return 0;
     }
 #+END_SRC
-- Output
 #+BEGIN_EXAMPLE
 /temp/file.cpp: In function ‘int main()’:
 /temp/file.cpp:5:5: error: expected ‘;’ before ‘cout’
@@ -124,7 +119,7 @@ Compilation Failed
 - our code is in {}
 - *cout* tells the computer to write the letters to the screen
 - *<<* tells the computer what to write out
-- line 1: inclues a header file (covered later)
+- line 1: includes a header file (covered later)
 - line 4: defines the main function
 - line 6: tells the computer that the program ran successfully
 #+BEGIN_SRC C++ -n :exports both :includes <iostream> :defines cout std::cout
@@ -153,14 +148,15 @@ all programs would be deterministic.
 - Alias for a value
 - the value can be changed without changing the alias
 
-* Primitive Variables Types
+* Primitive Variable Types
 | Name | Description |
 |-------+------|
 | =bool= | Can be either *true* or *false*|
 | =char= | a character like 'c' or '+'|
 | =int= | A whole number *bounded|
 | =double= | a decimal number *bounded|
-- What makes a variable primitive?
+
+* What makes a variable primitive?
 
 * Primitive Variables?
 [[file:https://i.imgur.com/Wo0ovX5.jpg]]
@@ -173,13 +169,15 @@ No lengthy explanation of << and stdout
 #+END_NOTES
 | symbol | meaning |
 |-------+------|
-| =//= | Signifies a comment, The computer will not try to compile that line |
-| === | assignment operator, value of right is assigned to variable on left |
+| =//= | Signifies a comment; The computer will not try to compile that line |
+| === | assignment operator; value of right is assigned to variable on left |
 | =<<= | sends something to the OS which displays it in the terminal |
 
 * Math Operators
+#+BEGIN_NOTES
+explain that the table is in the order of operations
+#+END_NOTES
 - order of operations still applies
-- ~()~ > ~*,/~ > ~+,-~
 | symbol | meaning |
 |-------+------|
 | =()= | =groups a statement= |
@@ -189,12 +187,12 @@ No lengthy explanation of << and stdout
 | =-= | =subtracts two numbers= |
 
 * Variable Syntax
-| =type= | =name= | === | =value= | ; |
-|-------+------|
-| =bool= | =var= | = | true | ; |
-| =char= | =character= | = | 'c' | ; |
-| =int= | =intVar= | = | 2 | ; |
-| =double= | =double_var= | = | 2.2647 | ; |
+#+BEGIN_SRC C++ -n
+  bool var = true;
+  char character = 'c';
+  int intVar = 2;
+  double double_var = 2.2647;
+#+END_SRC
 
 * Variables
 - =my_var= now represents the value 2
@@ -207,10 +205,13 @@ No lengthy explanation of << and stdout
 #+END_SRC
 
 * Declaration vs Definition
-- int num = 1;
-    - creates the variable num of type int and assigns it the value 1
-- num = 4;
-    - the type is already known from above so this line just assigns it the value 4
+#+BEGIN_SRC C++ -n
+  // creates the variable num of type int and assigns it the value 1
+  int num = 1;
+
+  // the type is already known from above so this line just assigns it the value 4
+  num = 4;
+#+END_SRC
 
 * Variables
 - Variables can have their assigned value changed on the fly
@@ -224,7 +225,7 @@ No lengthy explanation of << and stdout
   }
 #+END_SRC
 
-* Questions??
+* Questions?
 #+BEGIN_NOTES
 Write a couple examples of setting up a primitive already described and then
 changing it using only the operators above. like printing numbers 1 - 10 using a var.
@@ -251,11 +252,11 @@ DO NOT use strings, ++, --, or anything else not covered already
 * Equivalence operators
 | symbol | True Condition | example true | example false
 |-------+------|------+------|
-| =!= | opposite of current value| !true | !false
+| =!= | opposite of current value| !false | !true
 | ==== | "equal"| 2 == 2 | 4 == 2
 | =!== | *NOT* "equal"| 2 != 4 | 2 != 2
-| =>= | the number of the left is larger and not equal to the right| 4 > 2 | 2 > 4
-| =<= | the number of the left is smaller and not equal to the right| 2 < 4 | 4 < 2
+| =>= | the number of the left is larger and not equal to the right | 4 > 2 | 2 > 4
+| =<= | the number of the left is smaller and not equal to the right | 2 < 4 | 4 < 2
 
 * If else syntax
 #+BEGIN_SRC C++ -n
@@ -330,18 +331,18 @@ Think 5-6 Conditionals
   }
 #+END_SRC
 
-* Logical Operators *AND*
+* Logical Operators - AND
 - *&&*
-| a | b | a AND b|
+| a | b | a && b|
 |-------+------|------+------|
 | True | True | True |
 | True | False | False |
 | False | True | False |
 | False | False | False |
 
-* Logical Operators *OR*
+* Logical Operators OR
 - *||*
-| a | b | a OR b|
+| a | b | a \vert\vert b|
 |-------+------|------+------|
 | True | True | True |
 | True | False | True |
@@ -352,7 +353,7 @@ Think 5-6 Conditionals
 - statements will be evaluated from left to right
 - no limit to the number you can have
 - Statements can be grouped using *()*
-    - Just like with math operators *()* are executed first
+    - Just like with math, operators *()* are executed first
     - 1 && (2 || 3)
         - 2 || 3 is done first and the result in anded with 1
 
@@ -383,7 +384,7 @@ if (2 != 2 || 2 == 2) {
 #+END_SRC
 
 * Loops!
-- What If I want to do something multiple times
+- What If I want to do something multiple times?
 
 * While Loops Syntax
 #+BEGIN_SRC C++ -n
@@ -400,10 +401,15 @@ for (initializer; condition; change condition) {
 #+END_SRC
 
 * Math Operators Continued
-| syntax | meaning | equivalent |
-|-------+------|------+------|
-| =var++;= | =increments the variable= | var = var + 1; |
-| =var--;= | =decrements the variable= | var = var - 1; |
+#+BEGIN_SRC C++ -n
+var = var + 1;
+// equivalent to
+var++;
+
+var = var - 1;
+// equivalent to
+var--;
+#+END_SRC
 
 * Equivalent while and for Loop
 #+BEGIN_SRC C++ -n
@@ -417,68 +423,16 @@ for (int for_counter = 10; for_counter > 0; for_counter++) {
 }
 #+END_SRC
 
-* Questions??
-- A go-to place to ask questions ([[https://piazza.com/gatech/fall2017/rjsw/home][Piazza!]])
-- Monitored by highly experienced RoboJackets software members
-
 * Let's write some code
 #+BEGIN_NOTES
 Write a couple examples of code using what has already been covered.
 Multiplication Table
-int mult_1 = 10;
-int mult_2 = 10;
-
-for(int i = 0; i < mult_1; i++) {
-    for(int j = 0; j < mult_2; j++) {
-        cout << i * j << " ";
-
-    }
-    cout << endl;
-}
-
-*********** Converting Time *******************
-double time = 315; // very important here
-char current_units = 's';
-char desired_units = 'h';
-
-if(current_units == 's' && desired_units == 'm') {
-    time /= 60;
-} else if(current_units == 's' && desired_units == 'h') {
-    time /= 3600;
-} else if(current_units == 'm' && desired_units == 's') {
-    time *= 60;
-} else if(current_units == 'm' && desired_units == 'h') {
-    time /= 60;
-} else if(current_units == 'h' && desired_units == 's') {
-    time *= 3600;
-} else if(current_units == 'h' && desired_units == 'm') {
-    time *= 60;
-}
-cout << "converted " << current_units << " to " << desired_units << endl;
-cout << "result = " << time;
-
-*********** Find length of a number *******************
-int number = 1351;
-int length = 0;
-
-for(int temp = number; temp > 0; temp /=10) {
-    length++;
-}
-cout << "the length of " << number << " is " << length << endl;
-
-*********** 99 bottles *******************
-int number_bottles = 4;
-
-for(int i = number_bottles; i > 0;) {
-    char s = 's';
-    if(i <= 1) {
-        s = '\0';
-    }
-    cout << i << " bottle" << s << " of beer on the wall" << endl;
-    cout << i << " bottle" << s << " of beer" << endl;
-    cout << "Take one down and pass it around" << endl;
-    i--;
-    cout << i << " bottles of beer on the wall" << endl << endl;
-}
-
+Converting Time
+s->m->h etc
+Find length of a number
+99 bottles
 #+END_NOTES
+
+* Questions??
+- A go-to place to ask questions ([[https://piazza.com/gatech/fall2017/rjsw/home][Piazza!]])
+- Monitored by highly experienced RoboJackets software members
