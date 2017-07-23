@@ -12,30 +12,30 @@ int main() {
      array<string, 3> string_array = {"arrays", "are", "cool"};
 
      // You can get the number fo elemnts in std::array by using .size()
-     cout << "size of the array is = " << int_array.size() << endl;
+     cout << "size of the int_arrray is = " << int_array.size() << endl;
 
      // remember arrays index 0,1,2,...
      cout << "printing int_array" << endl;
      for(int i = 0; i < int_array.size(); i++) {
          // .at(index) returns the element at that index with bounds checking at runtime
-         cout << "int_array at index = " << i << " the value is = " << string_array.at(i) << endl;
+         cout << "string_array at index = " << i << " the value is = " << string_array.at(i) << endl;
          cout << "string_array at index = " << i << " the value is = " << string_array.at(i) << endl;
 
          // [] operator gets the value at the index without bounds checking
-         cout << "int_array at index = " << i << " the value is = " << string_array[i] << endl;
+         cout << "string_array at index = " << i << " the value is = " << string_array[i] << endl;
          cout << "string_array at index = " << i << " the value is = " << string_array.at(i) << endl;
      }
      cout << "\n\n";
 
      // convenience methods exist for getting the front and back elements
-     cout << "front = " << int_array.front() << endl;
-     cout << "back = " << int_array.back() << endl;
+     cout << "int_array front = " << int_array.front() << endl;
+     cout << "int_array back = " << int_array.back() << endl;
 
      // .empty returns true if the array is empty and false otherwise
      if(int_array.empty()) {
-         cout << "int_array is not empty" << endl;
-     } else {
          cout << "int_array is empty" << endl;
+     } else {
+         cout << "int_array is not empty" << endl;
      }
 
      // ******************** VECTORS *********************
@@ -74,7 +74,7 @@ int main() {
      cout << "size is now = " << robo_vector.size() << endl;
 
      // resize can be used to change the size of the vector
-     // increasing the size appends the value givent
+     // increasing the size appends the value given
      robo_vector.resize(11, 'a');
      cout << "size is now = " << robo_vector.size() << endl;
      cout << "appended value = " << robo_vector.back() << endl;
@@ -91,7 +91,7 @@ int main() {
      // reserve is NOT equivalent to resize
      // DO NOT USE reserve
      // reserve changes the size of the static backing array that is used to store the data.
-     // if resize is called on a size larger it incerases the capacity of the array
+     // if resize is called on a size larger it increases the capacity of the array
      robo_vector.reserve(30);
      cout << "after reserve 30 robo_vector has a capacity of " << robo_vector.capacity() <<
         " and a size of " << robo_vector.size() << endl;
@@ -161,13 +161,13 @@ int main() {
 	 cout << "\n\n";
      // init
      // set<TYPE> name
-     set<int> ordered_string_set {20,19,18,1,16};
+     set<int> ordered_int_set {20,19,18,1,16};
 
 	 // can insert elements into set
 	 // http://www.cplusplus.com/reference/set/set/insert/
-	 ordered_string_set.insert(21);
+	 ordered_int_set.insert(21);
 
-	 for(set<int>::iterator it =  ordered_string_set.begin(); it != ordered_string_set.end(); it++) {
+	 for(set<int>::iterator it =  ordered_int_set.begin(); it != ordered_int_set.end(); it++) {
 	     cout << *it << endl;
 	 }
 
