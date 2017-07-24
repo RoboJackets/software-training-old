@@ -65,18 +65,17 @@ Run through some basic examples here.
 
 * Type Safety
 #+BEGIN_SRC shell
-      char c = 10;                        //this is one byte in memory
+      char c = 10;                        // this is one byte in memory
 
-      int *p = (int*) &c;                 // this is a 4byte pointer pointing to one byte of
-                                          //memory, it compiles and leads to corrupted memory
-                                          //if you try to write to what p points to
+      int *p = (int*) &c;                 // this is a 4-byte pointer pointing to one byte of
+                                          // memory - it compiles but leads to corrupted memory
+                                          // if you try to write to what p points to
 
-      int *q = static_cast<int*> &c;      //throws an exception at compile time 
+      int *q = static_cast<int*> &c;      // throws an exception at compile time
 #+END_SRC
-- Our second cast was type safe, the first one was not
+- Our second cast was type-safe, the first one was not
 - Type safety refers to how a language ensures against type errors
-      - a type error is an error that has to do with referring to data with
-        the wrong type. In this case, it was calling a char a float
+ - A type error is an error that has to do with referring to data with the wrong type. In this case, it was calling a char an int.
 
 * Casting, the right way
 - C++ gives us functions that are type-safe, including compile-time checks
