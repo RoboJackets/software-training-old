@@ -4,7 +4,7 @@
 
 * What are we doing today?
 - Instructor introductions
-- What is programming
+- What is programming?
 - Hello World!
 - Variables
 - Control Flow
@@ -177,7 +177,6 @@ No lengthy explanation of << and stdout
 #+BEGIN_NOTES
 explain that the table is in the order of operations
 #+END_NOTES
-- Order of operations still applies
 | Symbol | Meaning |
 |-------+------|
 | =()= | =Groups a statement= |
