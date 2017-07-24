@@ -17,7 +17,7 @@
     -   a.k.a. "Mom", I occasionally give good life advice.
 -   How to contact me
     -   Slack: [@kristapsberzinch](https://robojackets.slack.com/messages/@kristapsberzinch/)
-    -   Email: [kristaps@robojackets.org](kristaps@robojackets.org)
+    -   Email: [kristaps@robojackets.org](mailto:kristaps@robojackets.org)
 
 
 # Meet Sarah
@@ -31,7 +31,7 @@
     -   a.k.a. "Dad", I dance to Hannah Montana in the shop.
 -   How to contact me
     -   Slack: [@sarahstorer](https://robojackets.slack.com/messages/@sarahstorer/)
-    -   Email: [sstorer3@gatech.edu](sstorer3@gatech.edu)
+    -   Email: [sstorer3@gatech.edu](mailto:sstorer3@gatech.edu)
 
 
 # Meet Jason
@@ -44,7 +44,7 @@
     -   Outside RoboJackets: Avid lover of dad jokes
 -   How to contact me
     -   Slack: [@jasongibson](https://robojackets.slack.com/messages/@jasongibson/)
-    -   Email: [jgibson37@gatech.edu](jgibson37@gatech.edu)
+    -   Email: [jgibson37@gatech.edu](mailto:jgibson37@gatech.edu)
 
 
 # Meet Raymond
@@ -57,7 +57,7 @@
     -   Outside RoboJackets: CS1332 Head TA, Google Intern
 -   How to contact me
     -   Slack: [@raymond](https://robojackets.slack.com/messages/@raymond/)
-    -   Email: [rortiz9@gatech.edu](rortiz9@gatech.edu)
+    -   Email: [rortiz9@gatech.edu](mailto:rortiz9@gatech.edu)
 
 
 # Meet Sahit
@@ -70,7 +70,7 @@
     -   S-tier Taylor Swift fanboy
 -   How to contact me
     -   Slack: [@schintalapudi](https://robojackets.slack.com/messages/@schintalapudi/)
-    -   Email: [schintalapudi@gatech.edu](schintalapudi@gatech.edu)
+    -   Email: [schintalapudi@gatech.edu](mailto:schintalapudi@gatech.edu)
 
 
 # Meet Josh
@@ -83,7 +83,7 @@
     -   Outside RoboJackets: NASA Intern, Magic: The Gathering addict, pianist of 17 years
 -   How to contact me
     -   Slack: [@joshting](https://robojackets.slack.com/messages/@joshting/)
-    -   Email: [josh.ting@gatech.edu](josh.ting@gatech.edu)
+    -   Email: [josh.ting@gatech.edu](mailto:josh.ting@gatech.edu)
 
 
 # Meet Jay
@@ -94,10 +94,10 @@
     -   Senior, Computer Science (Threads: Systems, Intelligence)
     -   I like contributing to Open Source!
 -   Contact
-    -   [jgkamat (freenode)](irc.freenode.net:6697/jgkamat)
+    -   [jgkamat (freenode)](irc:irc.freenode.net:6697/jgkamat)
     -   xmpp:jayk@fysh.in
     -   [@jgkamat:matrix.org](https://matrix.to/#/@jgkamat:matrix.org)
-    -   [jaygkamat@gmail.com](jaygkamat@gmail.com)
+    -   [jaygkamat@gmail.com](mailto:jaygkamat@gmail.com)
     -   [github.com/jgkamat](https://github.com/jgkamat)
 
 
@@ -113,7 +113,7 @@
         -   Music (drums / piano / bad guitar)
 -   How to contact me
     -   Slack: [@mbarulic](https://robojackets.slack.com/messages/@mbarulic/)
-    -   Email: [mbarulic@gatech.edu](mbarulic@gatech.edu)
+    -   Email: [mbarulic@gatech.edu](mailto:mbarulic@gatech.edu)
 
 
 # Why are you here?

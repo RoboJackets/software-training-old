@@ -1,6 +1,6 @@
 # What is Git?
 
--   Git is a "Distributed Version Control System" (DCVS)
+-   Git is a "Distributed Version Control System" (DVCS)
 -   It is the tool RoboJackets uses to collaborate on code
 -   Git tracks changes made to files in your project, so you can access old versions at any time without fear
 -   Allows multiple developers to work on the same code
