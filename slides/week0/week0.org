@@ -29,7 +29,7 @@ Fully understanding a problem, analyzing that problem, determining recurrent act
 and then optimizing those actions through logical constructs.
 #+END_NOTES
 
-* What Programming Is Not
+* What programming is not
 #+BEGIN_NOTES
 This is meant to emphasize that they will not become a God programmer overnight
 and to dispell the misconception that they are going to be coding amazing things
@@ -38,7 +38,7 @@ immediately.
 - Impossible
 - Easy
 
-* Programming Failures
+* Programming failures
 #+BEGIN_NOTES
 1. Talk for a minute or two about everything programming can do. 2. Orbiter was pounds instead of newtons
 3. Ariane software testing did not acccount for increased speed and tried too large a number.
@@ -78,7 +78,7 @@ immediately.
 [[file:https://i.imgur.com/caYg2AY.png]]
 
 * {}
-- Curly Braces define scope of a function in the code
+- Curly braces define scope of a function in the code
 - Right now, that means that your code goes in the main function
 - All compound or control flow statements have curly braces
     - inside the *{}* defines the main method
@@ -95,7 +95,7 @@ Make sure to note that they will see this error a lot and that it will go away w
 - A semicolon defines the end of a statement of code
 - Think of it like a period in a sentence
 - All expression statements end in a semicolon
-    - declarations, assignments, function calls, etc
+    - Declarations, assignments, function calls, etc
     - A missing semicolon results in an error message that can point to the wrong line
 #+BEGIN_SRC C++ -n
     #include <iostream>
@@ -116,12 +116,12 @@ Compilation Failed
 #+END_EXAMPLE
 
 * Looking back at Hello World!
-- our code is in {}
+- Our code is in {}
 - *cout* tells the computer to write the letters to the screen
 - *<<* tells the computer what to write out
-- line 1: includes a header file (covered later)
-- line 4: defines the main function
-- line 6: tells the computer that the program ran successfully
+- Line 1: includes a header file (covered later)
+- Line 4: defines the main function
+- Line 6: tells the computer that the program ran successfully
 #+BEGIN_SRC C++ -n :exports both :includes <iostream> :defines cout std::cout
   #include <iostream>
   using namespace std;
@@ -146,7 +146,7 @@ all programs would be deterministic.
 
 * Variables
 - Alias for a value
-- the value can be changed without changing the alias
+- The value can be changed without changing the alias
 
 * Primitive Variable Types
 | Name | Description |
@@ -158,35 +158,35 @@ all programs would be deterministic.
 
 * What makes a variable primitive?
 
-* Primitive Variables?
+* Primitive variables?
 [[file:https://i.imgur.com/Wo0ovX5.jpg]]
 - But Actually... It means that it cannot be divided into smaller parts
 - A number is just a number
 
-* Important Symbols
+* Important symbols
 #+BEGIN_NOTES
 No lengthy explanation of << and stdout
 #+END_NOTES
-| symbol | meaning |
+| Symbol | Meaning |
 |-------+------|
 | =//= | Signifies a comment; The computer will not try to compile that line |
-| === | assignment operator; value of right is assigned to variable on left |
-| =<<= | sends something to the OS which displays it in the terminal |
+| === | Assignment operator; value of right is assigned to variable on left |
+| =<<= | Sends something to the OS which displays it in the terminal |
 
-* Math Operators
+* Math operators
 #+BEGIN_NOTES
 explain that the table is in the order of operations
 #+END_NOTES
-- order of operations still applies
-| symbol | meaning |
+- Order of operations still applies
+| Symbol | Meaning |
 |-------+------|
-| =()= | =groups a statement= |
-| =*= | =multiplies two numbers= |
-| =/= | =divides a number by another= |
-| =+= | =adds two numbers together= |
-| =-= | =subtracts two numbers= |
+| =()= | =Groups a statement= |
+| =*= | =Multiplies two numbers= |
+| =/= | =Divides a number by another= |
+| =+= | =Adds two numbers together= |
+| =-= | =Subtracts two numbers= |
 
-* Variable Syntax
+* Variable syntax
 #+BEGIN_SRC C++ -n
   bool var = true;
   char character = 'c';
@@ -234,10 +234,10 @@ DO NOT use strings, ++, --, or anything else not covered already
 - Still more to come...
 - Let's write some code
 
-* If Statements
+* If statements
 - What *IF* I only want to execute code sometimes?
 
-* If Statement Syntax
+* If statement syntax
 #+BEGIN_SRC C++ -n
   int main() {
     if (true) {
@@ -274,7 +274,7 @@ DO NOT use strings, ++, --, or anything else not covered already
   }
 #+END_SRC
 
-* Conditional Practice 1 Question
+* Conditional practice 1 question
 #+BEGIN_NOTES
 1
 #+END_NOTES
@@ -287,7 +287,7 @@ if (2 == 2) {
 }
 #+END_SRC
 
-* Conditional Practice 2 Question
+* Conditional practice 2 question
 #+BEGIN_NOTES
 2
 #+END_NOTES
@@ -300,7 +300,7 @@ if (2 != 2) {
 }
 #+END_SRC
 
-* Conditional Practice 3 Question
+* Conditional practice 3 question
 #+BEGIN_NOTES
 2
 #+END_NOTES
@@ -313,10 +313,9 @@ if (2 < 2) {
 }
 #+END_SRC
 
-* Chaining Conditionals
+* Chaining conditionals
 #+BEGIN_NOTES
-Talk about how this is difficult to write at deeper levels
-Think 5-6 Conditionals
+Talk about how this is difficult to write at deeper levels, Think 5-6 Conditionals
 #+END_NOTES
 #+BEGIN_SRC C++ -n
   int main() {
@@ -331,7 +330,7 @@ Think 5-6 Conditionals
   }
 #+END_SRC
 
-* Logical Operators - AND
+* Logical operators - AND
 - *&&*
 | a | b | a && b|
 |-------+------|------+------|
@@ -340,7 +339,7 @@ Think 5-6 Conditionals
 | False | True | False |
 | False | False | False |
 
-* Logical Operators OR
+* Logical operators - OR
 - *||*
 | a | b | a \vert\vert b|
 |-------+------|------+------|
@@ -349,15 +348,15 @@ Think 5-6 Conditionals
 | False | True | True |
 | False | False | False |
 
-* Logical Operators order
-- statements will be evaluated from left to right
-- no limit to the number you can have
+* Logical operators order
+- Statements will be evaluated from left to right
+- No limit to the number you can have
 - Statements can be grouped using *()*
     - Just like with math, operators *()* are executed first
     - 1 && (2 || 3)
         - 2 || 3 is done first and the result in anded with 1
 
-* Conditional Practice 4 Question
+* Conditional practice 4 question
 #+BEGIN_NOTES
 2
 #+END_NOTES
@@ -370,7 +369,7 @@ if (2 < 2 && 2 == 2) {
 }
 #+END_SRC
 
-* Conditional Practice 4 Question
+* Conditional practice 4 question
 #+BEGIN_NOTES
 1
 #+END_NOTES
@@ -386,21 +385,21 @@ if (2 != 2 || 2 == 2) {
 * Loops!
 - What If I want to do something multiple times?
 
-* While Loops Syntax
+* While loops syntax
 #+BEGIN_SRC C++ -n
 while (condition == true) {
     // do something
 }
 #+END_SRC
 
-* For Loop Syntax
+* For loop syntax
 #+BEGIN_SRC C++ -n
 for (initializer; condition; change condition) {
     // do something
 }
 #+END_SRC
 
-* Math Operators Continued
+* Math operators continued
 #+BEGIN_SRC C++ -n
 var = var + 1;
 // equivalent to
@@ -411,7 +410,7 @@ var = var - 1;
 var--;
 #+END_SRC
 
-* Equivalent while and for Loop
+* Equivalent while and for loop
 #+BEGIN_SRC C++ -n
 int while_counter = 10;
 while (while_counter > 0) {
