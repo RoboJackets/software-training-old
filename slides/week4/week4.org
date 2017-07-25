@@ -76,7 +76,6 @@ Run through some basic examples here.
 - Our second cast was type-safe, the first one was not
 - Type safety is a language feature that ensures that every variable you handle is actually the type you think it is
  - The compiler will check time you assign a variable to ensure the types are compatible
- - TODO: does C++ do any runtime type checks?
 
 * Casting, the right way
 - C++ gives us functions that are type-safe, including compile-time checks
