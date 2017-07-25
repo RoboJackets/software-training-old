@@ -1,0 +1,67 @@
+#+TITLE: Week 3
+#+AUTHOR: Kristaps Berzinch, Raymond Ortiz
+#+EMAIL: kristaps@robojackets.org, rortiz9@gatech.edu
+
+* TODO Needs speaker notes
+
+* What are we doing today?
+- Data structures and algorithms in C++
+- Branching and merging in Git
+
+* What's a constructor?
+- A special type of function that instantiates a class
+- Basically, it sets up an object and returns it
+
+* What's a container?
+- An object you can use to store other objects
+- Objects are identified by keys (which can also be objects)
+- Some important properties:
+  - *Ordered:* the contents are in a specific order
+  - *Associative:* two objects are associated with each other within the container
+  - *Set:* the value of an object is its key
+  - *Unique keys:* no two objects can have the same key
+
+* Common containers
+#+BEGIN_NOTES
+Note that in most languages, sets and maps are unorded. C++ also has unordered sets and maps.
+#+END_NOTES
+| =array= | a static-length ordered list of objects |
+| =vector= | a dynamic-length ordered list of objects |
+| =set= | an ordered group of unique objects |
+| =unordered_set= | an unordered group of unique objects |
+| =map= | an ordered group of key-value pairs, with unique keys |
+| =unordered_map= | an unordered group of key-value pairs, with unique keys |
+
+* Arrays
+| =at= | returns the value at a specific index |
+| =front= | returns the first item |
+| =back= | returns the last item |
+| =size= | returns the number of elements |
+
+* Vectors
+#+BEGIN_NOTES
+Vectors can grow as items are added, whereas arrays are static.
+#+END_NOTES
+- Everything from the last slide, and...
+| =clear= | removes all items |
+| =insert= | inserts an item at a specific index |
+| =push_back= | adds a given element to the end |
+| =pop_back= | removes the last element |
+
+* Iterators
+- An object that lets you access and modify objects in a container
+- Depending on their type, they will let you read or write data in the container, and move forwards, backwards, or arbitrarily
+- The containers library includes the most common ones you'll need, but you can also write your own
+
+* Algorithms
+#+BEGIN_NOTES
+All of these can be restricted to a range in the container using iterators. All of these are in <algorithm> except for accumulate and iota, which are in <numeric>.
+#+END_NOTES
+| =sort= | sorts a container |
+| =count= | counts the number of items in a container that match a given item |
+| =find= | returns an iterator to the first element that matches a given item |
+| =copy= | copies elements from one container to another |
+| =fill= | fills a container with copies of a given element |
+| =accumulate= | sums all elements in a container |
+| =transform= | manipulates each element using a function |
+| =iota= | fills a container with sequentially increasing values |
