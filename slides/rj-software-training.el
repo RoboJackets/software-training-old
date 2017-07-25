@@ -78,12 +78,13 @@
          :publishing-directory ,(concat proj-base "../html/docs/")
          :publishing-function org-gfm-publish-to-gfm
          :exclude-tags ("slides")))
-    org-reveal-root "file:///C:/Users/Kristaps/Documents/GitHub/reveal.js/"
+    org-reveal-root "https://robojackets.github.io/reveal.js/"
     org-reveal-margin "0.15"))
 
 
 (require 'ob-python)
 (require 'ob-C)
+(require 'ob-shell)
 (setq org-babel-python-command "python3")
 ;; Make indentation actually matter in org src blocks
 (setq org-src-preserve-indentation nil)
