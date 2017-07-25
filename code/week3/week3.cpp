@@ -84,7 +84,7 @@ int main() {
      cout << "size is now = " << robo_vector.size() << endl;
 
      // capacity returns the number of elements that can be stored in the current
-     // backeing array without changing its size
+     // backing array without changing its size
      cout << "robo_vector has a capacity of " << robo_vector.capacity() << " and a size of " <<
         robo_vector.size() << endl;
 
