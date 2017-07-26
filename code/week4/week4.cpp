@@ -4,7 +4,7 @@ void no_ptr_method(int num) {
     num = 5;
 }
 
-// the * operator after a type means that we are creating a pointer 
+// the * operator after a type means that we are creating a pointer
 void ptr_method(int* numPtr) {
   // sets the memory location pointed to by num
   *numPtr = 5;
@@ -13,7 +13,7 @@ void ptr_method(int* numPtr) {
 int main() {
     using namespace std;
 
-	
+
 	/****************** POINTERS ****************************/
     /*********************************************************
     * OPERATOR    |               MEANING                    *
@@ -25,7 +25,7 @@ int main() {
     int num = 0;
 
     cout << "the number start as " << num << endl;
-	
+
 	// & is used to get address
 	cout << "The address of num is " << &num << endl;
 
@@ -42,7 +42,7 @@ int main() {
 	// pass by value
     no_ptr_method(num);
     cout << "after calling no_ptr_method " << num << endl;
-  
+
     // pass by reference
     ptr_method(&num);
     cout << "after calling ptr_method " << num << endl;
@@ -66,19 +66,62 @@ int main() {
 	vec_a_ptr_vec.insert(vec_a_ptr_vec.begin(), vector_a_ptr);
 	cout << "the first element = " << vec_a_ptr_vec.at(0)->at(0) << endl;
 
-	// This can go in indefinitely TODO verify
+	// This can go in indefinitely
 	// but at some point it just becomes absurd
 	// if your code looks like a->b->c->d->... try a different approach
 
 	/****************** unique_ptr *****************************/
+    cout << "\n\n";
 	// the problem with the above code is memory leakage...
 	// unlike other languages like java and python c++ does not always handle garabage collection
 	// If I initialize some data with a pointer then lose that pointer by assigning its
 	// value to something else we have a YUGE problem. It is difficut to always remember to
 	// destruct all objects. Thankfully smart pointer were invented
 
-	
+    { // This defines a region of scope
+        // unqiue_ptr<TYPE> NAME = make_unique<TYPE>();
+        unique_ptr<object> unqiue_vec_ptr = make_unique<object>();
+        cout << "ending scope" << endl;
+    }
 
-    
-    
+    cout << "out of scope" << endl;
+
+    {
+        cout << "creating first shared pointer" << endl;
+        // shared_ptr<TYPE> NAME = make_shared<TYPE>();
+        shared_ptr<object> shared_ptr1 = make_shared<object>();
+        cout << "number of pointers to object = " << shared_ptr1.use_count() << endl;
+        {
+            cout << "creating second shared pointer" << endl;
+            shared_ptr<object> shared_ptr2 = shared_ptr1;
+            cout << "number of pointers to object = " << shared_ptr2.use_count() << endl;
+            cout << "scope ending for second shared pointer" << endl;
+        }
+        cout << "scope ending for first shared pointer" << endl;
+    }
+
+    /****************** casting *****************************/
+    cout << "\n\n";
+
+    char c = 'c';
+    int *p = (int*) &c;
+    cout << "printing out c as an integer " << *p << endl;
+    double *d = (double*) &c;
+    cout << "printing out c as a double " << *d << endl;
+
+    // the following line will not compile
+    //int *q = static_cast<int*>(&c);
+
+    // static_cast http://en.cppreference.com/w/cpp/language/static_cast
+    // static_cast<TYPE_TO_CAST_TO>(VAR);
+    double my_double = 1579.78;
+    int my_int = static_cast<int>(my_double);
+    cout << "my_double: " << my_double << " my_int: " << my_int << endl;
+
+    // dynamic cast
+    // http://en.cppreference.com/w/cpp/language/dynamic_cast
+
+
+
+
 }
