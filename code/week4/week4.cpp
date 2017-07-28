@@ -1,3 +1,8 @@
+/*
+ * to compile
+ * g++ -std=c++14 -o week4.out week4.cpp
+*/
+
 #include "week4.h"
 
 void no_ptr_method(int num) {
@@ -12,25 +17,24 @@ void ptr_method(int* numPtr) {
 
 int main() {
     using namespace std;
-
-
 	/****************** POINTERS ****************************/
     /*********************************************************
-    * OPERATOR    |               MEANING                    *
+    *   OPERATOR  |               MEANING                    *
     * ------------------------------------------------------ *
-    *     TYPE*   | create a pointer of TYPE                 *
-    *     *VAR    | get the value pointed to by the pointer  *
+    *     TYPE*   | creates a pointer of TYPE                *
+    *     *VAR    | gets the value pointed to by the pointer *
     *     &VAR    | gets the address of the current value    *
     *********************************************************/
     int num = 0;
 
-    cout << "the number start as " << num << endl;
+    cout << "the number starts as " << num << endl;
 
-	// & is used to get address
 	cout << "The address of num is " << &num << endl;
 
 	// now numPtr points to the memory location where 0 is stored
 	int* num_ptr = &num;
+
+    cout << "the value of the pointer variable is = " << num_ptr << endl;
 
 	// dereferencing the pointer
 	cout << "value pointed to by num_ptr is " << *num_ptr << endl;
@@ -51,8 +55,14 @@ int main() {
     vector<string> vector_a = {"I", "seats", "plane"};
 	vector<string>* vector_a_ptr = &vector_a;
 
+    /**********************************************************************
+    *   OPERATOR  |               MEANING                                 *
+    * ------------------------------------------------------------------- *
+    *     VAR.    | accesses a class member given the actual object       *
+    *     VAR->   | accesses a class member given a pointer to the object *
+    ***********************************************************************/
 	// to reference the underlying vector you should use the -> operator
-	// it is just a short hand for (*())
+	// it is just a short hand for (*()).
 	vector_a_ptr->insert(vector_a_ptr->begin(), "too");
 	// see why -> exists, Thanks Dennis Ritchie for having an eye for sytle
 	(*(vector_a_ptr)).insert((*(vector_a_ptr)).begin(), "small");
@@ -60,24 +70,51 @@ int main() {
 	for(vector<string>::iterator it = vector_a.begin(); it != vector_a.end(); it++) {
 	    cout << *it << endl;
 	}
-
 	// you can even have a data structure of pointer to data structures
 	vector<vector<string>*> vec_a_ptr_vec {};
 	vec_a_ptr_vec.insert(vec_a_ptr_vec.begin(), vector_a_ptr);
 	cout << "the first element = " << vec_a_ptr_vec.at(0)->at(0) << endl;
 
-	// This can go in indefinitely
+	// This can go in indefinitely.
 	// but at some point it just becomes absurd
 	// if your code looks like a->b->c->d->... try a different approach
+
+    /****************** MEMORY STRUCTURE ****************************/
+    cout << "\n\n";
+    int* stack_value = stack_method();
+    int* heap_value = heap_method();
+    int* static_value = static_method();
+    /* see how the stack value changes. That is because the stack frame from the
+    * stack_method method call was removed. Therefore the program has a pointer
+    * to a place in memory that it no longer actively controls therefore it
+    * can change at any time.
+    *
+    * The program still has ownership of the heap_value
+    * memory location since delete has not been called on it.
+    *
+    * The static value is allocated in the static area of the program. This memory
+    * is allocated at compile time and goes away once the program ends.
+    */
+    cout << "stack value should be 0 is " << *stack_value << endl;
+    cout << "heap value should be 3 is " << *heap_value << endl;
+    cout << "static value should be 10 is " << *static_value << endl;
+
+    // This line tells the computer to give up control of that space on the heap.
+    // Meaning that now the memory can be reallocated at any point.
+    delete heap_value;
+
+    // how can we make the program handle deallocating heap variables for us
+    // smart pointers
 
 	/****************** unique_ptr *****************************/
     cout << "\n\n";
 	// the problem with the above code is memory leakage...
 	// unlike other languages like java and python c++ does not always handle garabage collection
-	// If I initialize some data with a pointer then lose that pointer by assigning its
+	// If I initialize some data on the heap then lose that pointer by assigning its
 	// value to something else we have a YUGE problem. It is difficut to always remember to
-	// destruct all objects. Thankfully smart pointer were invented
+	// free all memory. Thankfully smart pointers were invented.
 
+    // object is a struct I have defined in the header file
     { // This defines a region of scope
         // unqiue_ptr<TYPE> NAME = make_unique<TYPE>();
         unique_ptr<object> unqiue_vec_ptr = make_unique<object>();
@@ -101,6 +138,7 @@ int main() {
     }
 
     /****************** casting *****************************/
+    // EXAMPLE 1
     cout << "\n\n";
 
     char c = 'c';
@@ -109,19 +147,53 @@ int main() {
     double *d = (double*) &c;
     cout << "printing out c as a double " << *d << endl;
 
-    // the following line will not compile
-    //int *q = static_cast<int*>(&c);
-
     // static_cast http://en.cppreference.com/w/cpp/language/static_cast
     // static_cast<TYPE_TO_CAST_TO>(VAR);
+    // the following line will not compile since it is not a legal cast
+    // int *q = static_cast<int*>(&c);
+
     double my_double = 1579.78;
     int my_int = static_cast<int>(my_double);
     cout << "my_double: " << my_double << " my_int: " << my_int << endl;
 
+    // EXAMPLE 2
+    A *a = new A();
+    a->member1 = 1716543349;
+    B *b = (B*) a;
+    // here the 4 bytes of the integer are interpreted as 4 chars packed together
+    cout << "a member1 = " << a->member1 << endl;
+    cout << "b member1 = " << b->member1 << endl;
+    cout << "b member2 = " << b->member2 << endl;
+    cout << "b member3 = " << b->member3 << endl;
+    cout << "b member4 = " << b->member4 << endl;
+
+    // will not compile since it is not a legal cast
+    // static_cast<B*>(a);
+
     // dynamic cast
     // http://en.cppreference.com/w/cpp/language/dynamic_cast
+    // will also fail to compile since it is not a legal cast
+    // dynamic_cast<B*>(a);
+    delete a;
+}
 
+int* stack_method() {
+    // this is allocated on the stack
+    int var = 0;
+    // returning a pointer to a variable on the stack should never be done
+    // hence the compiler warning
+    return &var;
+}
 
+int* heap_method() {
+    // this is allocated on the heap
+    int* var = new int;
+    *var = 3;
+    return var;
+}
 
-
+int* static_method() {
+    // This allocates memory in the static area
+    static int var = 10;
+    return &var;
 }
