@@ -1,0 +1,42 @@
+#+TITLE: Week 5
+#+AUTHOR: Kristaps Berzinch, Raymond Ortiz
+#+EMAIL: kristaps@robojackets.org, rortiz9@gatech.edu
+
+* What are we doing today?
+- Classes in C++
+- Merge conflicts in =git=
+
+* What are classes?
+- Definitions for objects, i.e. what data and methods they have
+- An object is called an *instance* of a class
+
+* A simple example
+#+BEGIN_NOTES
+A class can have some data and some methods, which can either be public or private. Private means only visible to the class itself, public means visible to any other file. Drop to a terminal and use/modify this class.
+#+END_NOTES
+#+BEGIN_SRC c
+class example {
+    private:                        // private is also implied if you don't specify visibility
+        int a;
+    public:
+        int getA() { return a; }    // why wouldn't we just make `a` public?
+};
+#+END_SRC
+
+* Static members
+#+BEGIN_NOTES
+ Drop to a terminal and use this class.
+#+END_NOTES
+- For when you want data or functions to be part of your class, but they don't need to be "attached" to an instance of the class
+- Remember the =static= keyword means something else outside of class definitions!
+#+BEGIN_SRC c
+class example {
+    private:
+        static int a;
+    public:
+        static int getA() { return a; }
+};
+#+END_SRC
+
+* Questions?
+- Ask here or on Piazza!
