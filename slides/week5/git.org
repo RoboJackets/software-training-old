@@ -1,0 +1,39 @@
+#+TITLE: Git Training - Week 5
+#+AUTHOR: Sahit Chintalapudi, Josh Ting
+#+EMAIL: schintalapudi@gatech.edu, josh.ting@gatech.edu
+
+* Merge Conflicts
+- Two weeks ago, we talked about branches and how they can be used to avoid
+  conflicts in the code
+- But sometimes, multiple people edit the same file on the same branch. Git's
+  powerful, but it's not magic.
+- A merge conflict occurs when you try to push code based on an old version
+  of the software that conflicts with changes in the same files already
+  pushed.
+  [[https://developer.atlassian.com/blog/2015/01/a-better-pull-request/merge-conflict.png]]
+
+* What does a merge conflict look like
+#+BEGIN_SRC shell
+some source code...
+<<<<<< HEAD
+This is a change I made
+==========
+This is a change someone else made in the same place
+that was already pushed to master
+>>>>>> The hash of the other commit, something like fa54dd6f3...
+The rest of the source that had not been touched
+#+END_SRC
+- When you pull changes that lead to a merge conflict git will notify which
+  files have a merge conflict in them
+- In each file, you'll see the above problem
+
+* So how do we deal with this?
+- One strategy is to just go through the file and manually reconcile the
+  conflict. Often deleting the lines that git inserted is fine, but make sure
+  both changes can coexist.
+- After compiling your changes to make sure your code still compiles, you
+  have to commit your merge resolution before being able to push your
+  changes.
+
+TODO: GUI tools to review conflicts
+
