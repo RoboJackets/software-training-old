@@ -64,7 +64,7 @@ int main() {
 	// to reference the underlying vector you should use the -> operator
 	// it is just a short hand for (*()).
 	vector_a_ptr->insert(vector_a_ptr->begin(), "too");
-	// see why -> exists, Thanks Dennis Ritchie for having an eye for sytle
+	// see why -> exists, Thanks Dennis Ritchie for having an eye for style
 	(*(vector_a_ptr)).insert((*(vector_a_ptr)).begin(), "small");
 
 	for(vector<string>::iterator it = vector_a.begin(); it != vector_a.end(); it++) {
