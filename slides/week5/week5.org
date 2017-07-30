@@ -4,7 +4,7 @@
 
 * What are we doing today?
 - Classes in C++
-- Merge conflicts in =git=
+- Handling merge conflicts in =git=
 
 * What are classes?
 - Definitions for objects, i.e. what data and methods they have
@@ -16,12 +16,17 @@ A class can have some data and some methods, which can either be public or priva
 #+END_NOTES
 #+BEGIN_SRC c
 class example {
-    private:                        // private is also implied if you don't specify visibility
+    private:         // private is also implied if you don't specify visibility
         int a;
     public:
-        int getA() { return a; }    // why wouldn't we just make `a` public?
+        int getA() { return a; }
 };
 #+END_SRC
+
+* Why bother?
+- Software projects are easier to understand when related data and functions are grouped together
+- Abstracting data behind getters/setters allows you to validate inputs from other parts of your application
+- Abstracting complex tasks into class methods enables simpler, easier to read high-level code
 
 * Static members
 #+BEGIN_NOTES
@@ -30,12 +35,45 @@ class example {
 - For when you want data or functions to be part of your class, but they don't need to be "attached" to an instance of the class
 - Remember the =static= keyword means something else outside of class definitions!
 #+BEGIN_SRC c
-class example {
+class static_example {
     private:
         static int a;
     public:
         static int getA() { return a; }
 };
+#+END_SRC
+
+* Inheritance
+- Classes can inherit members from other classes
+#+BEGIN_SRC c
+class child: public example {
+    // we get `a` and `getA()` from example
+    private:
+        int b;
+    public:
+        int getB() { return b; }
+};
+#+END_SRC
+
+* Polymorphism
+- Now we can create =child= objects with all the properties of an =example= object
+- This means we can safely cast a =child= object to an =example= object
+- TODO I'm not a fan of this slide layout - ideas?
+#+BEGIN_SRC c
+child c;
+example& e = dynamic_cast<example&>(c);
+#+END_SRC
+#+BEGIN_SRC c
+// The inverse will not work
+example e;
+child& c = dynamic_cast<child&>(e);
+#+END_SRC
+#+BEGIN_SRC c
+example.cpp: In function ‘int main()’:
+example.cpp:20:38: error: cannot dynamic_cast ‘e’ (of type ‘class example’) to type ‘class child&’
+(source type is not polymorphic)
+     child& c = dynamic_cast<child&>(e);
+                                      ^
 #+END_SRC
 
 * Questions?
