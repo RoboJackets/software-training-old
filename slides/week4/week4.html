@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Week 4</title>
+<meta name="author" content="(Kristaps Berzinch, Raymond Ortiz, Sahit Chintalapudi)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://robojackets.github.io/reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="https://robojackets.github.io/reveal.js/css/theme/white.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://robojackets.github.io/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Week 4</h1>
+</section>
+
+<section id="slide-orgf84c31f">
+<h2 id="orgf84c31f">What are we doing today?</h2>
+<ul>
+<li>How a program's memory is structured at a high level</li>
+<li>References and pointers</li>
+<li>How to convert objects between different types</li>
+<li>No <code>git</code> slides this week!</li>
+
+</ul>
+
+</section>
+<section id="slide-org161a787">
+<h2 id="org161a787">Memory structure</h2>
+<aside class="notes">
+<p>
+This is all fundamentally the same RAM, just arranged and managed in a certain way. Static memory is used for static/global variables. A new stack frame is allocated when a function is called, and released when the function exits - this is where your parameters and local variables are stored. Mention memory leaks.
+</p>
+
+</aside>
+<ul>
+<li>At a high level, your program has three kinds of memory
+<ul>
+<li><b>Static memory:</b> allocated at compile time</li>
+<li><b>The stack:</b> managed automatically by the language</li>
+<li><b>The heap:</b> your space to do whatever you want
+<ul>
+<li>You can ask for memory from the OS and return it at runtime</li>
+<li>You have to keep track of what you've allocated to avoid memory leaks</li>
+
+</ul></li>
+
+</ul></li>
+<li>At an even higher level, all the memory in your computer is a huge, indexable, iterable space, divided into bytes</li>
+
+</ul>
+
+</section>
+<section id="slide-orga4ae0fa">
+<h2 id="orga4ae0fa">References</h2>
+<aside class="notes">
+<p>
+Parameters are copied into the new stack frame so the function can't modify anything outside of its scope. Explicitly using a reference allows a function to do that. Performance can also improve, since you're only copying a memory address instead of a (potentially) larger object. Run through some basic examples here.
+</p>
+
+</aside>
+<ul>
+<li>A reference is a variable that points to the same content as another variable</li>
+<li>Why would you want that?
+<ul>
+<li>Share data across stack frames</li>
+<li>Improve performance</li>
+
+</ul></li>
+<li>You can't change where a reference points after initialization</li>
+<li>You can mostly just treat references exactly like normal variables once they're initialized</li>
+
+</ul>
+
+</section>
+<section id="slide-orgbada5a3">
+<h2 id="orgbada5a3">Pointers</h2>
+<aside class="notes">
+<p>
+Run through some basic examples here. Pointers are great for passing around heap objects, but how do you keep track of what objects are still in use?
+</p>
+
+</aside>
+<ul>
+<li>A pointer is a special type of variable that "points to" another variable</li>
+<li>How are these different from references?
+<ul>
+<li>You have to explicitly dereference a pointer to access its target</li>
+<li>You can change where a pointer is pointing</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org79d3007">
+<h2 id="org79d3007">Smart pointers</h2>
+<aside class="notes">
+<p>
+Each type has an initialization function. Run through some basic examples here.
+</p>
+
+</aside>
+<ul>
+<li>Wrap a normal pointer to make it easier to manage the lifecycle of objects</li>
+<li>You should generally use one of these two types instead of a normal pointer:
+<ul>
+<li><code>shared_ptr</code>: multiple <code>shared_ptr</code> s can own a single object</li>
+<li><code>unique_ptr</code>: only one <code>unique_ptr</code> can own an object</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orga367e52">
+<h2 id="orga367e52">Casting, the wrong way</h2>
+<ul>
+<li>Sometimes you want to convert a variable to a different type: this is called casting</li>
+<li>In C, you can simply change the type of a variable like so:</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-c"><span style="color: #598249;">B</span>* <span style="color: #2F7BDE;">old_var</span> = ...; <span style="color: #5e6263;">// </span><span style="color: #5e6263;">some object</span>
+<span style="color: #598249;">A</span>* <span style="color: #2F7BDE;">new_var</span> = (<span style="color: #598249;">A</span>*)old_var;
+</pre>
+</div>
+<ul>
+<li>The compiler will now treat the bytes of object <code>old_var</code> as though it was of type <code>A</code></li>
+<li>This is bad for type safety!</li>
+
+</ul>
+
+</section>
+<section id="slide-org69493d0">
+<h2 id="org69493d0">Type Safety</h2>
+<div class="org-src-container">
+
+<pre  class="src src-c"><span style="color: #598249;">char</span> <span style="color: #2F7BDE;">c</span> = 10;                        <span style="color: #5e6263;">// </span><span style="color: #5e6263;">this is one byte in memory</span>
+
+<span style="color: #598249;">int</span> *<span style="color: #2F7BDE;">p</span> = (<span style="color: #598249;">int</span>*) &amp;c;                 <span style="color: #5e6263;">// </span><span style="color: #5e6263;">this is a 4-byte pointer pointing to one byte of</span>
+                                    <span style="color: #5e6263;">// </span><span style="color: #5e6263;">memory - it compiles but leads to corrupted memory</span>
+                                    <span style="color: #5e6263;">// </span><span style="color: #5e6263;">if you try to write to what p points to</span>
+
+<span style="color: #598249;">int</span> *<span style="color: #2F7BDE;">q</span> = static_cast&lt;<span style="color: #598249;">int</span>*&gt;(&amp;c);     <span style="color: #5e6263;">// </span><span style="color: #5e6263;">throws an exception at compile time</span>
+</pre>
+</div>
+<ul>
+<li>Our second cast was type-safe, the first one was not</li>
+<li>Type safety is a language feature that ensures that every variable you handle is actually the type you think it is
+<ul>
+<li>The compiler will check each time you assign a variable to ensure the types are compatible</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org0666e08">
+<h2 id="org0666e08">Casting, the right way</h2>
+<ul>
+<li>C++ gives us functions that are type-safe, including compile-time checks
+<ul>
+<li><code>static_cast</code> is mostly used for basic type conversions, e.g. between different types of numbers</li>
+<li><code>dynamic_cast</code> is mostly used for conversions between object types for polymorphism</li>
+<li><code>reinterpret_cast</code> works like a C-style cast and generally shouldn't be used unless you know exactly what you're doing</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org487e607">
+<h2 id="org487e607">Questions?</h2>
+<ul>
+<li>Ask here or on Piazza!</li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="https://robojackets.github.io/reveal.js/lib/js/head.min.js"></script>
+<script src="https://robojackets.github.io/reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: false,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+width: 1440,
+height: 800,
+margin: 0.15,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'fast',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://robojackets.github.io/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+]
+});
+</script>
+</body>
+</html>
