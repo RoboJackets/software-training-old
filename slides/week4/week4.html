@@ -29,8 +29,8 @@
 <section id="sec-title-slide"><h1 class="title">Week 4</h1>
 </section>
 
-<section id="slide-orgf84c31f">
-<h2 id="orgf84c31f">What are we doing today?</h2>
+<section id="slide-org4fdaf57">
+<h2 id="org4fdaf57">What are we doing today?</h2>
 <ul>
 <li>How a program's memory is structured at a high level</li>
 <li>References and pointers</li>
@@ -40,8 +40,8 @@
 </ul>
 
 </section>
-<section id="slide-org161a787">
-<h2 id="org161a787">Memory structure</h2>
+<section id="slide-orgc05a87a">
+<h2 id="orgc05a87a">Memory structure</h2>
 <aside class="notes">
 <p>
 This is all fundamentally the same RAM, just arranged and managed in a certain way. Static memory is used for static/global variables. A new stack frame is allocated when a function is called, and released when the function exits - this is where your parameters and local variables are stored. Mention memory leaks.
@@ -66,8 +66,8 @@ This is all fundamentally the same RAM, just arranged and managed in a certain w
 </ul>
 
 </section>
-<section id="slide-orga4ae0fa">
-<h2 id="orga4ae0fa">References</h2>
+<section id="slide-orga841990">
+<h2 id="orga841990">References</h2>
 <aside class="notes">
 <p>
 Parameters are copied into the new stack frame so the function can't modify anything outside of its scope. Explicitly using a reference allows a function to do that. Performance can also improve, since you're only copying a memory address instead of a (potentially) larger object. Run through some basic examples here.
@@ -88,8 +88,8 @@ Parameters are copied into the new stack frame so the function can't modify anyt
 </ul>
 
 </section>
-<section id="slide-orgbada5a3">
-<h2 id="orgbada5a3">Pointers</h2>
+<section id="slide-org9711e61">
+<h2 id="org9711e61">Pointers</h2>
 <aside class="notes">
 <p>
 Run through some basic examples here. Pointers are great for passing around heap objects, but how do you keep track of what objects are still in use?
@@ -108,8 +108,8 @@ Run through some basic examples here. Pointers are great for passing around heap
 </ul>
 
 </section>
-<section id="slide-org79d3007">
-<h2 id="org79d3007">Smart pointers</h2>
+<section id="slide-org831ce57">
+<h2 id="org831ce57">Smart pointers</h2>
 <aside class="notes">
 <p>
 Each type has an initialization function. Run through some basic examples here.
@@ -128,8 +128,8 @@ Each type has an initialization function. Run through some basic examples here.
 </ul>
 
 </section>
-<section id="slide-orga367e52">
-<h2 id="orga367e52">Casting, the wrong way</h2>
+<section id="slide-orga6817d6">
+<h2 id="orga6817d6">Casting, the wrong way</h2>
 <ul>
 <li>Sometimes you want to convert a variable to a different type: this is called casting</li>
 <li>In C, you can simply change the type of a variable like so:</li>
@@ -148,8 +148,8 @@ Each type has an initialization function. Run through some basic examples here.
 </ul>
 
 </section>
-<section id="slide-org69493d0">
-<h2 id="org69493d0">Type Safety</h2>
+<section id="slide-orgda3b6a5">
+<h2 id="orgda3b6a5">Type Safety</h2>
 <div class="org-src-container">
 
 <pre  class="src src-c"><span style="color: #598249;">char</span> <span style="color: #2F7BDE;">c</span> = 10;                        <span style="color: #5e6263;">// </span><span style="color: #5e6263;">this is one byte in memory</span>
@@ -172,8 +172,8 @@ Each type has an initialization function. Run through some basic examples here.
 </ul>
 
 </section>
-<section id="slide-org0666e08">
-<h2 id="org0666e08">Casting, the right way</h2>
+<section id="slide-orgcadca13">
+<h2 id="orgcadca13">Casting, the right way</h2>
 <ul>
 <li>C++ gives us functions that are type-safe, including compile-time checks
 <ul>
@@ -186,8 +186,8 @@ Each type has an initialization function. Run through some basic examples here.
 </ul>
 
 </section>
-<section id="slide-org487e607">
-<h2 id="org487e607">Questions?</h2>
+<section id="slide-org360f02f">
+<h2 id="org360f02f">Questions?</h2>
 <ul>
 <li>Ask here or on Piazza!</li>
 
