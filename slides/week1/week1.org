@@ -130,6 +130,16 @@ Run some demos in your terminal! Ideally you should use each of these commands a
 | =mv= | Move a file |
 | =man= | Access documentation about a command |
 | =grep= | Search for a string |
+| =history= | Shows your command history |
+
+* Basic hotkeys
+- *Up/down arrow keys:* Cycle through your command history (great for recent commands)
+- *Ctrl+R:* Search through your command history (great for less recent commands)
+- *Tab:* Complete this command/file/directory name
+- *Tab-Tab:* Show possible completions
+- *Ctrl+C:* /NOT COPY!/ Stops the current command.
+- *Ctrl+Z:* /NOT UNDO!/ Sends the current command to the background. Use =fg= to bring it back to the foreground.
+- *Ctrl+D:* Exit the shell.
 
 * Git
 #+BEGIN_NOTES
