@@ -54,6 +54,7 @@ class child: public example {
         int b;
     public:
         int getB() { return b; }
+        int getAplusB() { return getA() + b; } // we can't use `a` directly since it's private
 };
 #+END_SRC
 
