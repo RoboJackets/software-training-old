@@ -8,6 +8,7 @@
 
 * What are classes?
 - Definitions for objects, i.e. what data and methods they have
+- In other words, a blueprint for how to create an object
 - An object is called an *instance* of a class
 
 * A simple example
