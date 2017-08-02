@@ -138,7 +138,8 @@ Run some demos in your terminal! Ideally you should use each of these commands a
 - *Tab:* Complete this command/file/directory name
 - *Tab-Tab:* Show possible completions
 - *Ctrl+C:* /NOT COPY!/ Stops the current command.
-- *Ctrl+Z:* /NOT UNDO!/ Sends the current command to the background. Use =fg= to bring it back to the foreground.
+- *Ctrl+Z:* /NOT UNDO!/ Sends the current command to the background.
+ - Use =fg= to bring it back to the foreground.
 - *Ctrl+D:* Exit the shell.
 
 * Git
