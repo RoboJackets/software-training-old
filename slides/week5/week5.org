@@ -61,23 +61,22 @@ class child: public example {
 * Polymorphism
 - Now we can create =child= objects with all the properties of an =example= object
 - This means we can safely cast a =child= object to an =example= object
-- TODO I'm not a fan of this slide layout - ideas?
-#+BEGIN_SRC c++
-child c;
-example& e = dynamic_cast<example&>(c);
-#+END_SRC
-#+BEGIN_SRC c
-// The inverse will not work
-example e;
-child& c = dynamic_cast<child&>(e);
-#+END_SRC
-#+BEGIN_SRC c++
-example.cpp: In function ‘int main()’:
-example.cpp:20:38: error: cannot dynamic_cast ‘e’ (of type ‘class example’) to type ‘class child&’
-(source type is not polymorphic)
-     child& c = dynamic_cast<child&>(e);
+ #+BEGIN_SRC c++
+ child c;
+ example& e = dynamic_cast<example&>(c);
+ #+END_SRC
+- But not the other way around
+ #+BEGIN_SRC c++
+ example e;
+ child& c = dynamic_cast<child&>(e);
+ #+END_SRC
+ #+BEGIN_SRC
+ example.cpp: In function ‘int main()’:
+ example.cpp:20:38: error: cannot dynamic_cast ‘e’ (of type ‘class example’) to type ‘class child&’
+ (source type is not polymorphic)
+      child& c = dynamic_cast<child&>(e);
                                       ^
-#+END_SRC
+ #+END_SRC
 
 * Questions?
 - Ask here or on Piazza!
