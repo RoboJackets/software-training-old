@@ -9,10 +9,10 @@
 - Using Git and GitHub for version control
 
 * Meet Kristaps
-#+ATTR_HTML: :width 15%
+#+ATTR_HTML: :width 10%
 [[file:https://i.imgur.com/7gq6xef.jpg]]
 - Kristaps Berzinch
-  - Junior, Computer Science (Threads: Systems Architecture, Information Internetworks)
+  - Junior, Computer Science (Threads: SysArch, InfoInternetworks)
   - Inside RoboJackets: current treasurer, former Outreach assistant PM
   - Outside RoboJackets: 2x Capital One intern, Linux Foundation Certified Engineer
   - a.k.a. "Mom", I occasionally give good life advice.
