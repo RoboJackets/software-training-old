@@ -126,6 +126,10 @@ Run some demos in your terminal! Ideally you should use each of these commands a
 | =mkdir= | Make a new directory |
 | =rm= | Remove a file |
 | =rmdir= | Remove a directory |
+
+* Basic commands
+| Command | Use |
+|-------+------|
 | =cp= | Copy a file |
 | =mv= | Move a file |
 | =man= | Access documentation about a command |
