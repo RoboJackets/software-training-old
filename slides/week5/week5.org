@@ -11,7 +11,7 @@
  - In other words, a blueprint for how to create an object
 - An object is called an *instance* of a class
  - An object has all the functions and data structures defined in its class
- - It doesn't share any data with other objects
+ - Data schema is the same across all instances of a class, but values differ
  - It's interchangeable with other objects from the same class
 
 * A simple example
