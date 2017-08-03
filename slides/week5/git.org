@@ -10,10 +10,10 @@
 - A merge conflict occurs when you try to push code based on an old version
   of the software that conflicts with changes in the same files already
   pushed.
-  [[file:https://developer.atlassian.com/blog/2015/01/a-better-pull-request/merge-conflict.png]]
+[[file:https://developer.atlassian.com/blog/2015/01/a-better-pull-request/merge-conflict.png]]
 
 * What does a merge conflict look like
-#+BEGIN_SRC shell
+#+BEGIN_SRC
 some source code...
 <<<<<< HEAD
 This is a change I made
