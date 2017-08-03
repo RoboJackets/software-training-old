@@ -28,7 +28,7 @@ class example {
 - Software projects are easier to understand when related data and functions are grouped together
 - Abstracting data behind getters/setters allows you to validate inputs from other parts of your application
 - Abstracting complex tasks into class methods enables simpler, easier to read high-level code
-- Similar classes can build on a common base class using inheritance
+- Classes can be extended to add functionality with minimal extra code using inheritance
 
 * Static members
 #+BEGIN_NOTES
