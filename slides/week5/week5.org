@@ -75,8 +75,8 @@ class child: public example {
  #+END_SRC
  #+BEGIN_SRC
  example.cpp: In function ‘int main()’:
- example.cpp:20:38: error: cannot dynamic_cast ‘e’ (of type ‘class example’) to type ‘class child&’
- (source type is not polymorphic)
+ example.cpp:20:38: error: cannot dynamic_cast ‘e’ (of type ‘class example’) to type
+ ‘class child&’ (source type is not polymorphic)
       child& c = dynamic_cast<child&>(e);
                                       ^
  #+END_SRC
