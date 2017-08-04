@@ -7,10 +7,10 @@
 // subclass of Animal
 class Predator : public Animal {
 public:
-	// constructor 
+	// constructor. Calls the animal constructor with name
     Predator(std::string name) : Animal(name) {};
 	
-	// overwrites the say_hello method from animal
+	// this will be called instead of the say_hello method from animal
 	void say_hello();
 
 	// overwrites the do_something method from animal and will be called

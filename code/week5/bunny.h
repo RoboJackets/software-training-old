@@ -23,5 +23,6 @@ public:
 	int get_ticket_num();
 	void print_ticket_numbers();
 
+	// static class method
 	static int get_meter_maid_number();
 };

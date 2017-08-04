@@ -8,10 +8,10 @@ public:
 	// prototype for constructor. Called when the object is constructed.
 	Animal(std::string name);
 
-	// virtual method
+	// virtual method that can be overriden by subclasses
 	virtual void do_something();
 
-	//  two generic class methods
+	// basic class methods
 	void say_hello();
 	void say_your_name();
 
