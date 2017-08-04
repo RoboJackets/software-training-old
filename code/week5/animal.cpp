@@ -1,9 +1,25 @@
 #include "animal.h"
 
+Animal::Animal(std::string name) {
+	this->name = name;
+}
+
 void Animal::say_hello() {
 	std::cout << "Hello, I am an Animal" << std::endl;
 }
 
 void Animal::do_something() {
 	std::cout << "generic animals cannot do anything!" << std::endl;
+}
+
+void Animal::say_your_name() {
+	std:: cout << "My Name is: " << this->name << std::endl;
+}
+
+std::string Animal::get_name() {
+	return name;
+}
+
+void Animal::set_name(std::string name) {
+	this->name = name;
 }

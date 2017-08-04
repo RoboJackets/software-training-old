@@ -4,4 +4,6 @@
 #include "calculator.h"
 
 #include "animal.h"
-#include "mammal.h"
+#include "predator.h"
+#include "prey.h"
+#include "bunny.h"

@@ -10,15 +10,48 @@ int main() {
 	cout << "5.0 / 6.0 = " << Calculator::divide(5.0, 6.0) << endl;
 
 	cout << "\n\n";
-	unique_ptr<Animal> animal_object = make_unique<Animal>();
+	/************* ANIMAL *************/
+	unique_ptr<Animal> animal_object = make_unique<Animal>("Bob");
+	animal_object->set_name("Bob");
 	animal_object->say_hello();
 	animal_object->do_something();
+	animal_object->say_your_name();
+	cout << "\n";
 
-	unique_ptr<Mammal> mammal_object = make_unique<Mammal>();
-	mammal_object->say_hello();
-	mammal_object->do_something();
+	/************* PREDATOR *************/
+	unique_ptr<Predator> predator_object = make_unique<Predator>("Sally");
+	predator_object->set_name("Sally");
+	predator_object->say_hello();
+	predator_object->do_something();
+	predator_object->say_your_name();
+	cout << "\n";
 
-	Animal* casted_mammal = dynamic_cast<Animal*>(make_unique<Mammal>().get());
-	casted_mammal->say_hello();
-	casted_mammal->do_something(); 
+	/************* PREY *************/
+	unique_ptr<Prey> prey_object = make_unique<Prey>("Emma");
+	prey_object->say_your_name();
+	prey_object->set_name("Not Emma");
+	prey_object->say_your_name();
+	prey_object->say_hello();
+	prey_object->do_something();
+	cout << "\n";
+
+	/************* BUNNY *************/
+	unique_ptr<Bunny> judy_bunny_object = make_unique<Bunny>("Judy", 10);
+	judy_bunny_object->say_your_name();
+	judy_bunny_object->say_hello();
+	judy_bunny_object->print_ticket_numbers();
+	judy_bunny_object->do_something();
+	judy_bunny_object->do_something();
+	judy_bunny_object->print_ticket_numbers();
+	cout << "\n";
+
+	/************* DYNAMIC CASTING *************/
+	Animal* casted_predator = dynamic_cast<Animal*>(make_unique<Predator>("John").get());
+	casted_predator->set_name("John");
+	casted_predator->say_hello();
+	casted_predator->do_something(); 
+	casted_predator->say_your_name();
+	cout << "\n";
+
+	
 }
