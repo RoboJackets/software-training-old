@@ -1,3 +1,4 @@
+
 #include "week5.h"
 
 int main() {
@@ -43,6 +44,9 @@ int main() {
 	judy_bunny_object->do_something();
 	judy_bunny_object->do_something();
 	judy_bunny_object->print_ticket_numbers();
+	cout << "there are " << Bunny::get_meter_maid_number() << " meter maids" << endl;
+	unique_ptr<Bunny> another_bunny = make_unique<Bunny>("Judy", 10);
+	cout << "there are " << Bunny::get_meter_maid_number() << " meter maids" << endl;
 	cout << "\n";
 
 	/************* DYNAMIC CASTING *************/

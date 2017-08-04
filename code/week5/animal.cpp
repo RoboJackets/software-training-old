@@ -1,7 +1,8 @@
 #include "animal.h"
 
-Animal::Animal(std::string name) {
-	this->name = name;
+// constructor
+Animal::Animal(std::string new_name) {
+	name = new_name;
 }
 
 void Animal::say_hello() {
@@ -13,13 +14,13 @@ void Animal::do_something() {
 }
 
 void Animal::say_your_name() {
-	std:: cout << "My Name is: " << this->name << std::endl;
+	std:: cout << "My Name is: " << get_name() << std::endl;
 }
 
 std::string Animal::get_name() {
 	return name;
 }
 
-void Animal::set_name(std::string name) {
-	this->name = name;
+void Animal::set_name(std::string new_name) {
+	name = new_name;
 }
