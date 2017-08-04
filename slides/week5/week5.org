@@ -81,5 +81,11 @@ class child: public example {
                                       ^
  #+END_SRC
 
+* Virtual functions
+- A parent class can specify that certain functions are *virtual*
+- Child classes can then implement their own versions of the function
+- The child implementation will be called even from a reference of the type of the parent
+ - If the function isn't marked virtual, which implementation is called depends on the type of the reference
+
 * Questions?
 - Ask here or on Piazza!
