@@ -5,8 +5,8 @@
 * Computer Vision
 - Oh shit kids
 - We have the knowledge in C++ to describe the logic we might want a robot to
-  have. But we need to be able to make sense of what the robot sees and make
-  some sense of it before we can act on this logic.
+  have. But we need to be able to make sense of what the robot sees and
+  classify it before we can act on this logic.
 - Cue OpenCV, an open source computer vision library with bindings for C++
   (and a few other languages)
 
@@ -17,7 +17,10 @@
   to its location in the image
 - If the image is grayscale, then a pixel is an int from 0 (black) to 255
   (white)
-- its a long row d00d
+- Computers have no concept of "2d", so Images in memory are /continuous/.
+  This means each row of the image is appended onto the end of the last. To
+  iterate through a Mat you just get a pointer to the beginning of the first
+  row and keep track of your row number by how far you've traversed.
 
 * Color Images
 - Color images don't embed the color of a pixel in one element. Often, you'll
@@ -25,18 +28,51 @@
   Component) form. So now, each row of a color image is 3 times as long as a
   row of a black and white image.
 [[http://docs.opencv.org/2.4/_images/math/b6df115410caafea291ceb011f19cc4a19ae6c2c.png]]
-- It doesn't have to be just RGB!
+- Images don't have to be stored in just BGR format!
 
-* A simple example
-#+BEGIN_NOTES
-A class can have some data and some methods, which can either be public or private. Private means only visible to the class itself, public means visible to any other file. Drop to a terminal and use/modify this class.
-#+END_NOTES
+* HSV Images
+- Each Pixel in a color image has a hue, a saturation, and a luminosity. 
+- The nice thing about looking at colors from this perspective is that we're
+  more tolerant to changes in lighting conditions making the same color look
+  different.
+[[https://image.slidesharecdn.com/01presentationhuehistograms-150707215651-lva1-app6892/95/about-perception-and-hue-histograms-in-hsv-space-5-638.jpg]]
+
+* Roboracing CV Source abridged - Find the blue in an image (setup)
 #+BEGIN_SRC c++
-class example {
-    private:         // private is also implied if you don't specify visibility
-        int a;
-    public:
-        int getA() { return a; }
-};
+//our input image comes from the camera
+//this method would be triggered everytime the camera published a new image
+//in the ROS network
+void findBlue(const Mat&frameBGR) { 
+      //cv::Scalar is a container that is used to hold pixel values
+      //the values shown below are tuned by hand on example data that is
+      //gathered
+      const Scalar blue_low{78, 50, 70};     //these are the lowest HSV values
+                                             //that we accept as blue 
+      const Scalar blue_high{138, 255, 255}; //these are the highest HSV
+                                             //values we accept as blue
+      //applying a GaussianBlur makes the image "fuzzier". This smoothes out
+      //noisy pixels
+      Mat frameBlurred;
+      GaussianBlur(frameBGR, frameBlurred, Size{7,7}, 0);
+      //We shift the mat which is encodes as an RGB image into an HSV image
+      Mat frameHSV;
+      cvtColor(frameBlurred, frameHSV, CV_BGR2HSV); 
+}
 #+END_SRC
 
+* Roboracing CV continued - filtering
+#+BEGIN_SRC c++
+void findBlue(const Mat& frameBGR) {
+      //...
+      //We initialize an empty Mat to store all the pixels that we identify
+      //as blue. CV_8U is the image depth: each pixel is only one bit
+      Mat output_blue = Mat::zeros(mask.height, mask.width, CV_8U);
+      //for every pixel in our frame that we define as blue, write a white
+      //pixel to the output_blue Mat 
+      inRange(frame_masked, blue_low, blue_high, output_blue);
+      //apply an erode operation onto the filtered image. This helps us
+      //remove specks of blue that show up due to noise or glare
+      erode(output_blue, output_blue, erosion_kernel_blue);
+      //the logic to publish the result of the filtering in ROS would go here
+}
+#+END_SRC
