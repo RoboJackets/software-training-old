@@ -1,0 +1,42 @@
+#+TITLE: Week 6
+#+AUTHOR: Sahit Chintalapudi 
+#+EMAIL: schintalapudi@gatech.edu
+
+* Computer Vision
+- Oh shit kids
+- We have the knowledge in C++ to describe the logic we might want a robot to
+  have. But we need to be able to make sense of what the robot sees and make
+  some sense of it before we can act on this logic.
+- Cue OpenCV, an open source computer vision library with bindings for C++
+  (and a few other languages)
+
+* What does an Image look like to your computer?
+- OpenCV stores images in an object called a /Mat/
+- A Mat is matrix with rows and columns! In a grayscale image. each element
+  of the Mat is a pixel in the image and its location in the Mat corresponds 
+  to its location in the image
+- If the image is grayscale, then a pixel is an int from 0 (black) to 255
+  (white)
+- its a long row d00d
+
+* Color Images
+- Color images don't embed the color of a pixel in one element. Often, you'll
+  find each pixel represented in BGR (Blue component, Green Component, Red
+  Component) form. So now, each row of a color image is 3 times as long as a
+  row of a black and white image.
+[[http://docs.opencv.org/2.4/_images/math/b6df115410caafea291ceb011f19cc4a19ae6c2c.png]]
+- It doesn't have to be just RGB!
+
+* A simple example
+#+BEGIN_NOTES
+A class can have some data and some methods, which can either be public or private. Private means only visible to the class itself, public means visible to any other file. Drop to a terminal and use/modify this class.
+#+END_NOTES
+#+BEGIN_SRC c++
+class example {
+    private:         // private is also implied if you don't specify visibility
+        int a;
+    public:
+        int getA() { return a; }
+};
+#+END_SRC
+
