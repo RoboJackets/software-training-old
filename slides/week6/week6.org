@@ -3,12 +3,12 @@
 #+EMAIL: schintalapudi@gatech.edu
 
 * Computer Vision
-- Oh shit kids
 - We have the knowledge in C++ to describe the logic we might want a robot to
   have. But we need to be able to make sense of what the robot sees and
   classify it before we can act on this logic.
 - Cue OpenCV, an open source computer vision library with bindings for C++
   (and a few other languages)
+- I guess our ability to see has been ++'d
 
 * What does an Image look like to your computer?
 - OpenCV stores images in an object called a /Mat/
