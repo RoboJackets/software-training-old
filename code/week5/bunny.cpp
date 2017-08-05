@@ -7,6 +7,7 @@ int Bunny::meter_maid_number = 0;
 Bunny::Bunny(std::string name, int required_tickets_num) : Prey(name) {
 	required_tickets = required_tickets_num;
 	meter_maid_number++;
+	std::cout << "constructor of Bunny called" << std::endl;
 }
 
 void Bunny::do_something() {

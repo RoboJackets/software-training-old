@@ -3,6 +3,7 @@
 // constructor
 Animal::Animal(std::string new_name) {
 	name = new_name;
+	std:: cout << new_name << "\nconstructor of Animal called" << std::endl;
 }
 
 void Animal::say_hello() {
