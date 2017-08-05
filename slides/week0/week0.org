@@ -7,7 +7,7 @@
 - What is programming?
 - Hello World!
 - Variables
-- Control Flow
+- Control flow
 - Conditionals
 
 * Meet Jason
@@ -17,14 +17,14 @@
   - Junior, Computer Science (Threads: Devices, Intelligence)
   - Inside RoboJackets: Training Chair, IGVC Software Lead
   - Outside RoboJackets: Avid lover of dad jokes
-  - Master of cringe worthy pictures
+  - Master of cringe-worthy pictures
 - How to contact me
   - Slack: [[https://robojackets.slack.com/messages/@jasongibson/][@jasongibson]]
   - Email: [[mailto:jgibson37@gatech.edu][jgibson37@gatech.edu]]
 
 * What is programming?
 #+BEGIN_NOTES
-Talk for a minute or two about everything programming can do
+Talk for a minute or two about everything programming can do -
 Fully understanding a problem, analyzing that problem, determining recurrent actions,
 and then optimizing those actions through logical constructs.
 #+END_NOTES
@@ -44,20 +44,16 @@ immediately.
 3. Ariane software testing did not acccount for increased speed and tried too large a number.
 #+END_NOTES
 - Mars Climate Orbiter (1998)
-    - the code returned the wrong units causing a 655 million dollar explosion on Mars
+    - The code returned the wrong units causing a 655 million dollar explosion on Mars
 - Ariane 5 flight 501
-    - faster speed resulted in a 64 bit number being stored as 16 bits, ~500 million dollar failure
+    - Faster speed resulted in a 64 bit number being stored as 16 bits, ~500 million dollar failure
 
-* Codepad
-- Today we will be using codepad to write and compile code
+* CodePad
+- Today we will be using CodePad to write and compile code
   - This is a remote interview tool
-- go to [[https://codepad.remoteinterview.io]]
+- Go to [[https://codepad.remoteinterview.io]]
 
-* Change to C++ The superior language
-#+ATTR_HTML: :width 50%
-[[file:https://i.imgur.com/IeHxwAM.png]]
-
-* Change to C++ The superior language
+* Change to C++ - the superior language
 #+ATTR_HTML: :width 50%
 [[file:https://i.imgur.com/S1PecNy.png]]
 
@@ -116,9 +112,9 @@ Compilation Failed
 #+END_EXAMPLE
 
 * Looking back at Hello World!
-- Our code is in {}
-- *cout* tells the computer to write the letters to the screen
-- *<<* tells the computer what to write out
+- Our code is in ={}=
+- =cout= tells the computer to write the letters to the screen
+- =<<= tells the computer what to write out
 - Line 1: includes a header file (covered later)
 - Line 4: defines the main function
 - Line 6: tells the computer that the program ran successfully
@@ -160,7 +156,7 @@ all programs would be deterministic.
 
 * Primitive variables?
 [[file:https://i.imgur.com/Wo0ovX5.jpg]]
-- But Actually... It means that it cannot be divided into smaller parts
+- But actually...it means that it cannot be divided into smaller parts
 - A number is just a number
 
 * Important symbols
@@ -169,8 +165,8 @@ No lengthy explanation of << and stdout
 #+END_NOTES
 | Symbol | Meaning |
 |-------+------|
-| =//= | Signifies a comment; The computer will not try to compile that line |
-| === | Assignment operator; value of right is assigned to variable on left |
+| =//= | Signifies a comment - the computer will not try to compile that line |
+| === | Assignment operator - value of right is assigned to variable on left |
 | =<<= | Sends something to the OS which displays it in the terminal |
 
 * Math operators
@@ -179,11 +175,11 @@ explain that the table is in the order of operations
 #+END_NOTES
 | Symbol | Meaning |
 |-------+------|
-| =()= | =Groups a statement= |
-| =*= | =Multiplies two numbers= |
-| =/= | =Divides a number by another= |
-| =+= | =Adds two numbers together= |
-| =-= | =Subtracts two numbers= |
+| =()= | Groups a statement |
+| =*= | Multiplies two numbers |
+| =/= | Divides a number by another |
+| =+= | Adds two numbers together |
+| =-= | Subtracts two numbers |
 
 * Variable syntax
 #+BEGIN_SRC C++ -n
@@ -249,13 +245,13 @@ DO NOT use strings, ++, --, or anything else not covered already
 #+END_SRC
 
 * Equivalence operators
-| symbol | True Condition | example true | example false
+| Symbol | Condition | True Example | False Example
 |-------+------|------+------|
-| =!= | opposite of current value| !false | !true
-| ==== | "equal"| 2 == 2 | 4 == 2
-| =!== | *NOT* "equal"| 2 != 4 | 2 != 2
-| =>= | the number of the left is larger and not equal to the right | 4 > 2 | 2 > 4
-| =<= | the number of the left is smaller and not equal to the right | 2 < 4 | 4 < 2
+| =!= | opposite of current value| =!false= | =!true=
+| ==== | "equal"| ~2 == 2~ | ~4 == 2~
+| =!== | *NOT* "equal"| ~2 != 4~ | ~2 != 2~
+| =>= | the number of the left is larger and not equal to the right | =4 > 2= | =2 > 4=
+| =<= | the number of the left is smaller and not equal to the right | =2 < 4= | =4 < 2=
 
 * If else syntax
 #+BEGIN_SRC C++ -n
@@ -330,7 +326,6 @@ Talk about how this is difficult to write at deeper levels, Think 5-6 Conditiona
 #+END_SRC
 
 * Logical operators - AND
-- *&&*
 | a | b | a && b|
 |-------+------|------+------|
 | True | True | True |
@@ -339,7 +334,6 @@ Talk about how this is difficult to write at deeper levels, Think 5-6 Conditiona
 | False | False | False |
 
 * Logical operators - OR
-- *||*
 | a | b | a \vert\vert b|
 |-------+------|------+------|
 | True | True | True |
@@ -350,10 +344,10 @@ Talk about how this is difficult to write at deeper levels, Think 5-6 Conditiona
 * Logical operators order
 - Statements will be evaluated from left to right
 - No limit to the number you can have
-- Statements can be grouped using *()*
-    - Just like with math, operators *()* are executed first
-    - 1 && (2 || 3)
-        - 2 || 3 is done first and the result in anded with 1
+- Statements can be grouped using =()=
+    - Just like with math, operators =()= are executed first
+    - =1 && (2 || 3)=
+        - =2 || 3= is done first and the result is ANDed with 1
 
 * Conditional practice 4 question
 #+BEGIN_NOTES
@@ -382,7 +376,7 @@ if (2 != 2 || 2 == 2) {
 #+END_SRC
 
 * Loops!
-- What If I want to do something multiple times?
+- What if I want to do something multiple times?
 
 * While loops syntax
 #+BEGIN_SRC C++ -n
@@ -421,7 +415,7 @@ for (int for_counter = 10; for_counter > 0; for_counter++) {
 }
 #+END_SRC
 
-* Let's write some code
+* Let's write some code!
 #+BEGIN_NOTES
 Write a couple examples of code using what has already been covered.
 Multiplication Table
@@ -431,6 +425,6 @@ Find length of a number
 99 bottles
 #+END_NOTES
 
-* Questions??
+* Questions?
 - A go-to place to ask questions ([[https://piazza.com/gatech/fall2017/rjsw/home][Piazza!]])
 - Monitored by highly experienced RoboJackets software members
