@@ -83,10 +83,13 @@ int main() {
         cout << "\n";
     }
 
-    Prey* casted_animal = dynamic_cast<Prey*>(new Animal("Fail"));
-    // dynamic casting can fail
+    // This casting will always fail since Prey is a subclass of Animal
+    // When a cast fails it return a null pointer and this should always be checked
+    Animal* pre_casted_animal = new Animal("Fail");
+    Prey* casted_animal = dynamic_cast<Prey*>(pre_casted_animal);
     if(!casted_animal) {
         cout << "casting failed" << endl;
+        delete pre_casted_animal;
     } else {
         cout << "casting successful" << endl;
         delete casted_animal;
