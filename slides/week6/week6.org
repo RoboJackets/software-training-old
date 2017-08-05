@@ -37,42 +37,19 @@
   different.
 [[https://image.slidesharecdn.com/01presentationhuehistograms-150707215651-lva1-app6892/95/about-perception-and-hue-histograms-in-hsv-space-5-638.jpg]]
 
-* Roboracing CV Source abridged - Find the blue in an image (setup)
+* Finding the blue in an image
 #+BEGIN_SRC c++
-//our input image comes from the camera
-//this method would be triggered everytime the camera published a new image
-//in the ROS network
-void findBlue(const Mat&frameBGR) { 
-      //cv::Scalar is a container that is used to hold pixel values
-      //the values shown below are tuned by hand on example data that is
-      //gathered
-      const Scalar blue_low{78, 50, 70};     //these are the lowest HSV values
-                                             //that we accept as blue 
-      const Scalar blue_high{138, 255, 255}; //these are the highest HSV
-                                             //values we accept as blue
-      //applying a GaussianBlur makes the image "fuzzier". This smoothes out
-      //noisy pixels
+Mat findBlue(const Mat& frameBGR) { 
+      const Scalar blue_low{78, 50, 70};     
+      const Scalar blue_high{138, 255, 255}; 
       Mat frameBlurred;
       GaussianBlur(frameBGR, frameBlurred, Size{7,7}, 0);
-      //We shift the mat which is encodes as an RGB image into an HSV image
       Mat frameHSV;
       cvtColor(frameBlurred, frameHSV, CV_BGR2HSV); 
+      Mat output_blue = Mat::zeros(frameHSV.height, frameHSV.width, CV_8U);
+      inRange(frameHSV, blue_low, blue_high, output_blue);
+      erode(output_blue, output_blue, erosion_kernel_blue);
+      return output_blue;
 }
 #+END_SRC
 
-* Roboracing CV continued - filtering
-#+BEGIN_SRC c++
-void findBlue(const Mat& frameBGR) {
-      //...
-      //We initialize an empty Mat to store all the pixels that we identify
-      //as blue. CV_8U is the image depth: each pixel is only one bit
-      Mat output_blue = Mat::zeros(mask.height, mask.width, CV_8U);
-      //for every pixel in our frame that we define as blue, write a white
-      //pixel to the output_blue Mat 
-      inRange(frame_masked, blue_low, blue_high, output_blue);
-      //apply an erode operation onto the filtered image. This helps us
-      //remove specks of blue that show up due to noise or glare
-      erode(output_blue, output_blue, erosion_kernel_blue);
-      //the logic to publish the result of the filtering in ROS would go here
-}
-#+END_SRC
