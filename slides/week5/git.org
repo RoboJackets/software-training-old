@@ -35,7 +35,7 @@ The rest of the source that had not been touched
 
 * KDiff3
 #+ATTR_HTML: :width 50%
-[[file:http://i.imgur.com/undWZmR.png]]
+[[file:https://i.imgur.com/undWZmR.png]]
 
 #+BEGIN_SRC
 $ git mergetool -t kdiff3
