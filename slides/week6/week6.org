@@ -53,3 +53,5 @@ Mat findBlue(const Mat& frameBGR) {
 }
 #+END_SRC
 
+* Roboracing Computer Vision
+[[https://github.com/RoboJackets/roboracing-software/blob/master/iarrc/src/color_detector/color_detector.cpp]]
