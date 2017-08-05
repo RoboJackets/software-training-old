@@ -3,6 +3,7 @@
  * g++ -std=c++14 -o week5.out *.cpp
  */
 #include <iostream>
+#include <memory>
 
 #include "calculator.h"
 
@@ -70,11 +71,13 @@ int main() {
     /************* DYNAMIC CASTING *************/
     // this can also be done with static cast since types are known at compile time
     // and have zero chance of being anything else
-    Animal* casted_prey = dynamic_cast<Animal*>(new Predator("Liam"));
+    Predator* pre_casted_predator = new Predator("Liam");
+    Animal* casted_prey = dynamic_cast<Animal*>(pre_casted_predator);
     // this checks if the dynamic casting failed
     // this checks for a null pointer i.e. pointer == 0
     if(!casted_prey) {
         cout << "casting failed" << endl;
+        delete pre_casted_predator;
     } else {
         casted_prey->say_hello();
         casted_prey->do_something();
