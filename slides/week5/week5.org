@@ -38,6 +38,7 @@ class example {
  Drop to a terminal and use this class.
 #+END_NOTES
 - For when you want data or functions to be part of your class, but they don't need to be "attached" to an instance of the class
+- Static data is shared between all instances of a class
 - Remember the =static= keyword means something else outside of class definitions!
 #+BEGIN_SRC c++
 class static_example {
