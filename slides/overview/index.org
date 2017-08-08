@@ -1,0 +1,10 @@
+#+TITLE: Overview of Training Materials
+#+AUTHOR: Jay Kamat
+#+EMAIL: jaygkamat@gmail.com
+#+DATE: <2017-08-08 Tue>
+
+
+# See project definition file for export function
+#+BEGIN_SRC emacs-lisp :exports results :results raw
+(rj-generate-project-toc)
+#+END_SRC

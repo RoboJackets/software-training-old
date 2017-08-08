@@ -6,6 +6,7 @@
 
 
 (development
+ (depends-on "f")
  (depends-on "ert-runner")
  (depends-on "htmlize")
  (depends-on "ox-gfm")

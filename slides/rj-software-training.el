@@ -1,22 +1,31 @@
-;;; rj-software-training.el --- generation scripts for software-training
+;;; rj-software-training.el --- generation scripts for software-training -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016-2017 Jay Kamat
 ;; Author: Jay Kamat <jaygkamat@gmail.com>
-;; Version: 1.0
+;; Version: 2.0
 ;; Keywords: robojackets,training,revealjs,gfm
 ;; URL: https://github.com/RoboJackets/software-training
-;; Package-Requires: ((emacs "25.0") (ox-gfm) (htmlize) (ox-reveal))
+;; Package-Requires: ((emacs "25.0") (f) (ox-gfm) (htmlize) (ox-reveal))
 ;;; Commentary:
-;;; Creates and builds org project files for robojackets software training.
+;; Creates and builds org project files for robojackets software training.
 
 ;; To run: cask eval "(progn (require 'rj-software-training) (rj-software-training-publish))" in the root of the project.
 
-(require 'ox-reveal)
+;;; Dependencies
+;; Org publishing
 (require 'ox-publish)
+;; Org -> Slides
+(require 'ox-reveal)
+;; Org -> gh md
 (require 'ox-gfm)
+;; file manipulation lib
+(require 'f)
 
 ;;; Code:
+;;;; Project root def
+(defconst +RJ-PROJ-ROOT+ (file-name-directory load-file-name))
 
+;;;; Project Definition
 ;; Force htmlize to activate even in nogui mode:
 ;; https://stackoverflow.com/questions/3591337/emacs-htmlize-in-batch-mode
 ;; sebastien.kirche.free.fr/emacs_stuff/elisp/my-htmlize.el
@@ -39,7 +48,7 @@
   (setq htmlize-use-rgb-map 'force)
   (require 'htmlize))
 
-(let ((proj-base (file-name-directory load-file-name)))
+(let ((proj-base +RJ-PROJ-ROOT+))
   (setq org-publish-project-alist
     `(("rj-slides"
         :recursive t
@@ -60,8 +69,8 @@
         :reveal-theme "white"
         :reveal-width 1440
         :reveal-height 800
-        :base-directory ,(concat proj-base ".")
-        :publishing-directory ,(concat proj-base "../html/slides/")
+        :base-directory ,proj-base
+        :publishing-directory ,(f-join proj-base ".." "html" "slides")
         :publishing-function org-reveal-publish-to-reveal
         :exclude-tags ("docs"))
        ("rj-docs"
@@ -74,14 +83,24 @@
          :section-numbers nil
          :with-timestamps nil
          :time-stamp-file nil
-         :base-directory ,(concat proj-base ".")
-         :publishing-directory ,(concat proj-base "../html/docs/")
+         :base-directory ,proj-base
+         :publishing-directory ,(f-join proj-base ".." "html" "docs")
          :publishing-function org-gfm-publish-to-gfm
-         :exclude-tags ("slides")))
+         :exclude-tags ("slides"))
+       ("rj-overview"
+         :recursive t
+         :with-todo-keywords nil
+         :with-timestamps nil
+         :time-stamp-file nil
+         :base-directory ,proj-base
+         :html-head-extra "<link rel=\"stylesheet\" type=\"text/css\" href=\"https://jgkamat.github.io/src/jgkamat.css\">"
+         :publishing-directory ,(f-join proj-base ".." "html" "web")
+         :publishing-function org-html-publish-to-html))
     org-reveal-root "https://robojackets.github.io/reveal.js/"
     org-reveal-margin "0.15"))
 
 
+;;;; Org Babel Settings
 (require 'ob-python)
 (require 'ob-C)
 (setq org-babel-python-command "python3")
@@ -98,6 +117,60 @@ LANG language input
 BODY code body"
     (not (member lang '("emacs-lisp" "python" "dot" "sh" "C" "C++"))))
   (setq org-confirm-babel-evaluate #'my-org-confirm-babel-evaluate))
+
+;;;; Helper scripts for automatic high level TOC
+
+(defun rj-org-file-to-link (filename)
+  "Turn an org FILENAME into a org link."
+  (with-temp-buffer
+    (insert-file-contents filename)
+    (concat
+      "[[" filename "]"
+      "[" (or
+            (first (plist-get (org-export-get-environment) :title))
+            "unknown")
+      "]]")))
+
+(defun rj-generate-project-files (relative)
+  "Generate rj org files.
+RELATIVE path that files should be relative to"
+  (mapcar
+    ;; Make paths relative
+    (lambda (file) (f-relative file relative))
+    (f-files
+      ;; Get all non-hidden org files from root (that aren't an overview)
+      +RJ-PROJ-ROOT+
+      (lambda (file)
+        (and
+          (not (f-child-of? file (f-join +RJ-PROJ-ROOT+ "overview")))
+          (not (f-hidden? file))
+          (equal (f-ext file) "org")))
+      t)))
+
+(defun rj-generate-project-toc ()
+  "Generate file level TOC via org links."
+  ;; TODO don't hardcode "overview" as the relative folder here.
+  (let ((project-files (rj-generate-project-files (f-join +RJ-PROJ-ROOT+ "overview")))
+         (collection-hasht (make-hash-table :test #'equal))
+         (result ""))
+    ;; Add files to a hashtable, to group them by folder
+    (dolist (file project-files)
+      (let ((key (f-filename (f-dirname file))))
+        (setf
+          (gethash key collection-hasht)
+          (append `(,file) (gethash key collection-hasht)))))
+    (dolist (key (sort (hash-table-keys collection-hasht) #'string<))
+      ;; Generate headers
+      (setq result (concat result
+                     "* " key "\n"))
+      (dolist (file (gethash key collection-hasht))
+        ;; Generate entries
+        (setq result (concat result "1. "
+                       (rj-org-file-to-link file)
+                       "\n"))))
+    result))
+
+;;;; Publishing script
 
 (defun rj-software-training-publish ()
   "Simple script to export this project."
