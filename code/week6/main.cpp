@@ -15,8 +15,7 @@ int main() {
      * this type CV_8UC3
      * 8 is the number of bits per item
      * U means that it is unsigned
-     * C3 means that the color channel has three entires
-       *
+     * C3 means that the color channel has three entires (BGR)
     */
     my_image = cv::Mat(2, 2, CV_8UC3, cv::Scalar(0,0,255));
 
@@ -35,10 +34,20 @@ int main() {
     // to access a single pixel use .at
     cv::Vec3b vector = my_image.at<cv::Vec3b>(2, 2);
 
+    // reads in an image
     cv::Mat image = cv::imread("igvc_gazebo.png", cv::IMREAD_COLOR);
 
-    cv::namedWindow("test", cv::WINDOW_AUTOSIZE);
-    cv::imshow("test", image );
+    // performs a gaussian blur
+    GaussianBlur(image, image, cv::Size(3,3), 0, 0, cv::BORDER_DEFAULT);
 
+    // converts image to grey scale
+    cvtColor(image, image, cv::COLOR_BGR2GRAY);
+
+    // applies to laplacian kernel
+    cv::Laplacian(image, image, image.depth(), 3, 1, 0, cv::BORDER_DEFAULT);
+
+    // creates a window and shows the image until 0 is pressed
+    cv::namedWindow("test", cv::WINDOW_AUTOSIZE);
+    cv::imshow("test", image);
     cv::waitKey(0);
 }
