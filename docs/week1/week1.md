@@ -11,7 +11,7 @@
 ![img](https://i.imgur.com/7gq6xef.jpg)
 
 -   Kristaps Berzinch
-    -   Junior, Computer Science (Threads: Systems Architecture, Information Internetworks)
+    -   Junior, Computer Science (Threads: SysArch, InfoInternetworks)
     -   Inside RoboJackets: current treasurer, former Outreach assistant PM
     -   Outside RoboJackets: 2x Capital One intern, Linux Foundation Certified Engineer
     -   a.k.a. "Mom", I occasionally give good life advice.
@@ -138,17 +138,36 @@ Explain that a directory is more commonly called a folder. Run some demos in you
 
 </div>
 
-| Command | Use                                  |
-|------- |------------------------------------ |
-| `cd`    | Change to a different directory      |
-| `ls`    | List files in this directory         |
-| `mkdir` | Make a new directory                 |
-| `rm`    | Remove a file                        |
-| `rmdir` | Remove a directory                   |
-| `cp`    | Copy a file                          |
-| `mv`    | Move a file                          |
-| `man`   | Access documentation about a command |
-| `grep`  | Search for a string                  |
+| Command | Use                             |
+|------- |------------------------------- |
+| `cd`    | Change to a different directory |
+| `ls`    | List files in this directory    |
+| `mkdir` | Make a new directory            |
+| `rm`    | Remove a file                   |
+| `rmdir` | Remove a directory              |
+
+
+# Basic commands
+
+| Command   | Use                                  |
+|--------- |------------------------------------ |
+| `cp`      | Copy a file                          |
+| `mv`      | Move a file                          |
+| `man`     | Access documentation about a command |
+| `grep`    | Search for a string                  |
+| `history` | Shows your command history           |
+
+
+# Basic hotkeys
+
+-   **Up/down arrow keys:** Cycle through your command history (great for recent commands)
+-   **Ctrl+R:** Search through your command history (great for less recent commands)
+-   **Tab:** Complete this command/file/directory name
+-   **Tab-Tab:** Show possible completions
+-   **Ctrl+C:** *NOT COPY!* Stops the current command.
+-   **Ctrl+Z:** *NOT UNDO!* Sends the current command to the background.
+    -   Use `fg` to bring it back to the foreground.
+-   **Ctrl+D:** Exit the shell.
 
 
 # Git
