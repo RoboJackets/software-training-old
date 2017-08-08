@@ -27,7 +27,7 @@
   find each pixel represented in BGR (Blue component, Green Component, Red
   Component) form. So now, each row of a color image is 3 times as long as a
   row of a black and white image.
-[[http://docs.opencv.org/2.4/_images/math/b6df115410caafea291ceb011f19cc4a19ae6c2c.png]]
+[[https://docs.opencv.org/2.4/_images/math/b6df115410caafea291ceb011f19cc4a19ae6c2c.png]]
 - Images don't have to be stored in just BGR format!
 
 * HSV Images
