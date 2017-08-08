@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Intro to Programming</title>
+<meta name="author" content="(Jason Gibson)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://robojackets.github.io/reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="https://robojackets.github.io/reveal.js/css/theme/white.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://robojackets.github.io/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Intro to Programming</h1>
+</section>
+
+<section id="slide-orgc22aa39">
+<h2 id="orgc22aa39">What are we doing today?</h2>
+<ul>
+<li>Instructor introductions</li>
+<li>What is programming?</li>
+<li>Hello World!</li>
+<li>Variables</li>
+<li>Control flow</li>
+<li>Conditionals</li>
+
+</ul>
+
+</section>
+<section id="slide-org1561f1f">
+<h2 id="org1561f1f">Meet Jason</h2>
+
+<div class="figure">
+<p><img src="https://i.imgur.com/izC5WWA.jpg" alt="izC5WWA.jpg" width="15%" />
+</p>
+</div>
+<ul>
+<li>Jason Gibson
+<ul>
+<li>Junior, Computer Science (Threads: Devices, Intelligence)</li>
+<li>Inside RoboJackets: Training Chair, IGVC Software Lead</li>
+<li>Outside RoboJackets: Avid lover of dad jokes</li>
+<li>Master of cringe-worthy pictures</li>
+
+</ul></li>
+<li>How to contact me
+<ul>
+<li>Slack: <a href="https://robojackets.slack.com/messages/@jasongibson/">@jasongibson</a></li>
+<li>Email: <a href="mailto:jgibson37@gatech.edu">jgibson37@gatech.edu</a></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgf8408e6">
+<h2 id="orgf8408e6">What is programming?</h2>
+<aside class="notes">
+<p>
+Talk for a minute or two about everything programming can do -
+Fully understanding a problem, analyzing that problem, determining recurrent actions,
+and then optimizing those actions through logical constructs.
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org8efdba3">
+<h2 id="org8efdba3">What programming is not</h2>
+<aside class="notes">
+<p>
+This is meant to emphasize that they will not become a God programmer overnight
+and to dispell the misconception that they are going to be coding amazing things
+immediately.
+</p>
+
+</aside>
+<ul>
+<li>Impossible</li>
+<li>Easy</li>
+
+</ul>
+
+</section>
+<section id="slide-org956f121">
+<h2 id="org956f121">Programming failures</h2>
+<aside class="notes">
+<ol>
+<li>Talk for a minute or two about everything programming can do. 2. Orbiter was pounds instead of newtons</li>
+<li>Ariane software testing did not acccount for increased speed and tried too large a number.</li>
+
+</ol>
+
+</aside>
+<ul>
+<li>Mars Climate Orbiter (1998)
+<ul>
+<li>The code returned the wrong units causing a 655 million dollar explosion on Mars</li>
+
+</ul></li>
+<li>Ariane 5 flight 501
+<ul>
+<li>Faster speed resulted in a 64 bit number being stored as 16 bits, ~500 million dollar failure</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgffa715d">
+<h2 id="orgffa715d">CodePad</h2>
+<ul>
+<li>Today we will be using CodePad to write and compile code
+<ul>
+<li>This is a remote interview tool</li>
+
+</ul></li>
+<li>Go to <a href="https://codepad.remoteinterview.io">https://codepad.remoteinterview.io</a></li>
+
+</ul>
+
+</section>
+<section id="slide-orgc9eb370">
+<h2 id="orgc9eb370">Change to C++ - the superior language</h2>
+
+<div class="figure">
+<p><img src="https://i.imgur.com/S1PecNy.png" alt="S1PecNy.png" width="50%" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgc4e5e49">
+<h2 id="orgc4e5e49">Hello World!</h2>
+<ul>
+<li>Add <b>World!</b> to your code</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
+<span class="linenr">2: </span><span style="color: #598249;">using</span> <span style="color: #598249;">namespace</span> <span style="color: #15968D;">std</span>;
+<span class="linenr">3: </span>
+<span class="linenr">4: </span><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+<span class="linenr">5: </span>  cout &lt;&lt; <span style="color: #15968D;">"Hello World!"</span>;
+<span class="linenr">6: </span>  <span style="color: #598249;">return</span> 0;
+<span class="linenr">7: </span>}
+</pre>
+</div>
+
+<pre class="example">
+Hello World!
+
+</pre>
+
+</section>
+<section id="slide-org8d0152a">
+<h2 id="org8d0152a">Click Run</h2>
+
+<div class="figure">
+<p><img src="https://i.imgur.com/caYg2AY.png" alt="caYg2AY.png" width="50%" />
+</p>
+</div>
+
+</section>
+<section id="slide-org53b3382">
+<h2 id="org53b3382">{}</h2>
+<ul>
+<li>Curly braces define scope of a function in the code</li>
+<li>Right now, that means that your code goes in the main function</li>
+<li>All compound or control flow statements have curly braces
+<ul>
+<li>inside the <b>{}</b> defines the main method</li>
+
+</ul></li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+<span class="linenr">2: </span>  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">&lt;==== HERE =====</span>
+<span class="linenr">3: </span>}
+</pre>
+</div>
+
+</section>
+<section id="slide-org6bf40d8">
+<h2 id="org6bf40d8">;</h2>
+<aside class="notes">
+<p>
+Make sure to note that they will see this error a lot and that it will go away with time.
+</p>
+
+</aside>
+<ul>
+<li>A semicolon defines the end of a statement of code</li>
+<li>Think of it like a period in a sentence</li>
+<li>All expression statements end in a semicolon
+<ul>
+<li>Declarations, assignments, function calls, etc</li>
+<li>A missing semicolon results in an error message that can point to the wrong line</li>
+
+</ul></li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
+<span class="linenr">2: </span><span style="color: #598249;">using</span> <span style="color: #598249;">namespace</span> <span style="color: #15968D;">std</span>;
+<span class="linenr">3: </span><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+<span class="linenr">4: </span>  cout &lt;&lt; <span style="color: #15968D;">"Hello"</span> <span style="color: #5e6263;">// </span><span style="color: #5e6263;">&lt;=====</span>
+<span class="linenr">5: </span>  cout &lt;&lt; <span style="color: #15968D;">"World!"</span>;
+<span class="linenr">6: </span>  <span style="color: #598249;">return</span> 0;
+<span class="linenr">7: </span>}
+</pre>
+</div>
+<pre class="example">
+/temp/file.cpp: In function ‘int main()’:
+/temp/file.cpp:5:5: error: expected ‘;’ before ‘cout’
+     cout &lt;&lt; "World!";
+     ^
+
+Compilation Failed
+</pre>
+
+</section>
+<section id="slide-orgf8c7de3">
+<h2 id="orgf8c7de3">Looking back at Hello World!</h2>
+<ul>
+<li>Our code is in <code>{}</code></li>
+<li><code>cout</code> tells the computer to write the letters to the screen</li>
+<li><code>&lt;&lt;</code> tells the computer what to write out</li>
+<li>Line 1: includes a header file (covered later)</li>
+<li>Line 4: defines the main function</li>
+<li>Line 6: tells the computer that the program ran successfully</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
+<span class="linenr">2: </span><span style="color: #598249;">using</span> <span style="color: #598249;">namespace</span> <span style="color: #15968D;">std</span>;
+<span class="linenr">3: </span>
+<span class="linenr">4: </span><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+<span class="linenr">5: </span>  cout &lt;&lt; <span style="color: #15968D;">"Hello World!"</span>;
+<span class="linenr">6: </span>  <span style="color: #598249;">return</span> 0;
+<span class="linenr">7: </span>}
+</pre>
+</div>
+
+<pre class="example">
+Hello World!
+
+</pre>
+
+</section>
+<section id="slide-orgea81b87">
+<h2 id="orgea81b87">Most useful program ever</h2>
+<aside class="notes">
+<p>
+This should naturally lead into why variables are useful. Without them
+all programs would be deterministic.
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+<span class="linenr">2: </span>  cout &lt;&lt; 2 + 2;
+<span class="linenr">3: </span>  <span style="color: #598249;">return</span> 0;
+<span class="linenr">4: </span>}
+</pre>
+</div>
+
+<pre class="example">
+4
+
+</pre>
+
+</section>
+<section id="slide-org6c1e97b">
+<h2 id="org6c1e97b">Variables</h2>
+<ul>
+<li>Alias for a value</li>
+<li>The value can be changed without changing the alias</li>
+
+</ul>
+
+</section>
+<section id="slide-org2bf98c2">
+<h2 id="org2bf98c2">Primitive Variable Types</h2>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Name</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>bool</code></td>
+<td class="org-left">Can be either <b>true</b> or <b>false</b></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>char</code></td>
+<td class="org-left">a character like 'c' or '+'</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>int</code></td>
+<td class="org-left">A whole number *bounded</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>double</code></td>
+<td class="org-left">a decimal number *bounded</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+<section id="slide-org1178af7">
+<h2 id="org1178af7">What makes a variable primitive?</h2>
+
+</section>
+<section id="slide-orgf12a468">
+<h2 id="orgf12a468">Primitive variables?</h2>
+
+<div class="figure">
+<p><img src="https://i.imgur.com/Wo0ovX5.jpg" alt="Wo0ovX5.jpg" />
+</p>
+</div>
+<ul>
+<li>But actually&#x2026;it means that it cannot be divided into smaller parts</li>
+<li>A number is just a number</li>
+
+</ul>
+
+</section>
+<section id="slide-orgcb34850">
+<h2 id="orgcb34850">Important symbols</h2>
+<aside class="notes">
+<p>
+No lengthy explanation of &lt;&lt; and stdout
+</p>
+
+</aside>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Symbol</th>
+<th scope="col" class="org-left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>//</code></td>
+<td class="org-left">Signifies a comment - the computer will not try to compile that line</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>=</code></td>
+<td class="org-left">Assignment operator - value of right is assigned to variable on left</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>&lt;&lt;</code></td>
+<td class="org-left">Sends something to the OS which displays it in the terminal</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+<section id="slide-org9853bf0">
+<h2 id="org9853bf0">Math operators</h2>
+<aside class="notes">
+<p>
+explain that the table is in the order of operations
+</p>
+
+</aside>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Symbol</th>
+<th scope="col" class="org-left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>()</code></td>
+<td class="org-left">Groups a statement</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>*</code></td>
+<td class="org-left">Multiplies two numbers</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>/</code></td>
+<td class="org-left">Divides a number by another</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>+</code></td>
+<td class="org-left">Adds two numbers together</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>-</code></td>
+<td class="org-left">Subtracts two numbers</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+<section id="slide-org8eb088f">
+<h2 id="org8eb088f">Variable syntax</h2>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">bool</span> <span style="color: #2F7BDE;">var</span> = <span style="color: #15968D;">true</span>;
+<span class="linenr">2: </span><span style="color: #598249;">char</span> <span style="color: #2F7BDE;">character</span> = <span style="color: #15968D;">'c'</span>;
+<span class="linenr">3: </span><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">intVar</span> = 2;
+<span class="linenr">4: </span><span style="color: #598249;">double</span> <span style="color: #2F7BDE;">double_var</span> = 2.2647;
+</pre>
+</div>
+
+</section>
+<section id="slide-org193f70e">
+<h2 id="org193f70e">Variables</h2>
+<ul>
+<li><code>my_var</code> now represents the value 2</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+<span class="linenr">2: </span>  <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">my_var</span> = 2;
+<span class="linenr">3: </span>  cout &lt;&lt; my_var + my_var;
+<span class="linenr">4: </span>  <span style="color: #598249;">return</span> 0;
+<span class="linenr">5: </span>}
+</pre>
+</div>
+
+<pre class="example">
+4
+
+</pre>
+
+</section>
+<section id="slide-orgcaf164c">
+<h2 id="orgcaf164c">Declaration vs Definition</h2>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #5e6263;">// </span><span style="color: #5e6263;">creates the variable num of type int and assigns it the value 1</span>
+<span class="linenr">2: </span><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">num</span> = 1;
+<span class="linenr">3: </span>
+<span class="linenr">4: </span><span style="color: #5e6263;">// </span><span style="color: #5e6263;">the type is already known from above so this line just assigns it the value 4</span>
+<span class="linenr">5: </span>num = 4;
+</pre>
+</div>
+
+</section>
+<section id="slide-org32d94c8">
+<h2 id="org32d94c8">Variables</h2>
+<ul>
+<li>Variables can have their assigned value changed on the fly</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+<span class="linenr">2: </span>  <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">my_var</span> = 2;
+<span class="linenr">3: </span>  cout &lt;&lt; my_var + my_var;
+<span class="linenr">4: </span>  my_var = 4;
+<span class="linenr">5: </span>  cout &lt;&lt; my_var + my_var;
+<span class="linenr">6: </span>  <span style="color: #598249;">return</span> 0;
+<span class="linenr">7: </span>}
+</pre>
+</div>
+
+<pre class="example">
+48
+
+</pre>
+
+</section>
+<section id="slide-orgf8ebc6a">
+<h2 id="orgf8ebc6a">Questions?</h2>
+<aside class="notes">
+<p>
+Write a couple examples of setting up a primitive already described and then
+changing it using only the operators above. like printing numbers 1 - 10 using a var.
+DO NOT use strings, ++, &#x2013;, or anything else not covered already
+</p>
+
+</aside>
+<ul>
+<li>Still more to come&#x2026;</li>
+<li>Let's write some code</li>
+
+</ul>
+
+</section>
+<section id="slide-orgf94170d">
+<h2 id="orgf94170d">If statements</h2>
+<ul>
+<li>What <b>IF</b> I only want to execute code sometimes?</li>
+
+</ul>
+
+</section>
+<section id="slide-org82fbbc9">
+<h2 id="org82fbbc9">If statement syntax</h2>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+<span class="linenr">2: </span>  <span style="color: #598249;">if</span> (<span style="color: #15968D;">true</span>) {
+<span class="linenr">3: </span>      <span style="color: #5e6263;">// </span><span style="color: #5e6263;">&lt;==== This executes =====</span>
+<span class="linenr">4: </span>  }
+<span class="linenr">5: </span>  <span style="color: #598249;">if</span> (<span style="color: #15968D;">false</span>) {
+<span class="linenr">6: </span>      <span style="color: #5e6263;">// </span><span style="color: #5e6263;">&lt;==== This does *NOT* execute =====</span>
+<span class="linenr">7: </span>  }
+<span class="linenr">8: </span>}
+</pre>
+</div>
+
+</section>
+<section id="slide-org76ad0c5">
+<h2 id="org76ad0c5">Equivalence operators</h2>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Symbol</th>
+<th scope="col" class="org-left">Condition</th>
+<th scope="col" class="org-left">True Example</th>
+<th scope="col" class="org-left">False Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>!</code></td>
+<td class="org-left">opposite of current value</td>
+<td class="org-left"><code>!false</code></td>
+<td class="org-left"><code>!true</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>==</code></td>
+<td class="org-left">"equal"</td>
+<td class="org-left"><code>2 == 2</code></td>
+<td class="org-left"><code>4 == 2</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>!=</code></td>
+<td class="org-left"><b>NOT</b> "equal"</td>
+<td class="org-left"><code>2 != 4</code></td>
+<td class="org-left"><code>2 != 2</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>&gt;</code></td>
+<td class="org-left">the number of the left is larger and not equal to the right</td>
+<td class="org-left"><code>4 &gt; 2</code></td>
+<td class="org-left"><code>2 &gt; 4</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>&lt;</code></td>
+<td class="org-left">the number of the left is smaller and not equal to the right</td>
+<td class="org-left"><code>2 &lt; 4</code></td>
+<td class="org-left"><code>4 &lt; 2</code></td>
+</tr>
+</tbody>
+</table>
+
+</section>
+<section id="slide-orgcb6627f">
+<h2 id="orgcb6627f">If else syntax</h2>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr"> 1: </span><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+<span class="linenr"> 2: </span>  <span style="color: #598249;">if</span> (<span style="color: #15968D;">true</span>) {
+<span class="linenr"> 3: </span>      <span style="color: #5e6263;">// </span><span style="color: #5e6263;">&lt;==== This executes =====</span>
+<span class="linenr"> 4: </span>  } <span style="color: #598249;">else</span> {
+<span class="linenr"> 5: </span>      <span style="color: #5e6263;">// </span><span style="color: #5e6263;">&lt;==== This does *NOT* execute =====</span>
+<span class="linenr"> 6: </span>  }
+<span class="linenr"> 7: </span>  <span style="color: #598249;">if</span> (<span style="color: #15968D;">false</span>) {
+<span class="linenr"> 8: </span>      <span style="color: #5e6263;">// </span><span style="color: #5e6263;">&lt;==== This does *NOT* execute =====</span>
+<span class="linenr"> 9: </span>  } <span style="color: #598249;">else</span> {
+<span class="linenr">10: </span>      <span style="color: #5e6263;">// </span><span style="color: #5e6263;">&lt;==== This executes =====</span>
+<span class="linenr">11: </span>  }
+<span class="linenr">12: </span>}
+</pre>
+</div>
+
+</section>
+<section id="slide-org5ce611c">
+<h2 id="org5ce611c">Conditional practice 1 question</h2>
+<aside class="notes">
+<p>
+1
+</p>
+
+</aside>
+<ul>
+<li>1 or 2?</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">if</span> (2 == 2) {
+<span class="linenr">2: </span>    <span style="color: #5e6263;">// </span><span style="color: #5e6263;">1</span>
+<span class="linenr">3: </span>} <span style="color: #598249;">else</span> {
+<span class="linenr">4: </span>    <span style="color: #5e6263;">// </span><span style="color: #5e6263;">2</span>
+<span class="linenr">5: </span>}
+</pre>
+</div>
+
+</section>
+<section id="slide-orge68eb12">
+<h2 id="orge68eb12">Conditional practice 2 question</h2>
+<aside class="notes">
+<p>
+2
+</p>
+
+</aside>
+<ul>
+<li>1 or 2?</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">if</span> (2 != 2) {
+<span class="linenr">2: </span>    <span style="color: #5e6263;">// </span><span style="color: #5e6263;">1</span>
+<span class="linenr">3: </span>} <span style="color: #598249;">else</span> {
+<span class="linenr">4: </span>    <span style="color: #5e6263;">// </span><span style="color: #5e6263;">2</span>
+<span class="linenr">5: </span>}
+</pre>
+</div>
+
+</section>
+<section id="slide-org7058171">
+<h2 id="org7058171">Conditional practice 3 question</h2>
+<aside class="notes">
+<p>
+2
+</p>
+
+</aside>
+<ul>
+<li>1 or 2?</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">if</span> (2 &lt; 2) {
+<span class="linenr">2: </span>    <span style="color: #5e6263;">// </span><span style="color: #5e6263;">1</span>
+<span class="linenr">3: </span>} <span style="color: #598249;">else</span> {
+<span class="linenr">4: </span>    <span style="color: #5e6263;">// </span><span style="color: #5e6263;">2</span>
+<span class="linenr">5: </span>}
+</pre>
+</div>
+
+</section>
+<section id="slide-org5690f89">
+<h2 id="org5690f89">Chaining conditionals</h2>
+<aside class="notes">
+<p>
+Talk about how this is difficult to write at deeper levels, Think 5-6 Conditionals
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr"> 1: </span><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+<span class="linenr"> 2: </span>  <span style="color: #598249;">if</span> (<span style="color: #15968D;">true</span>) {
+<span class="linenr"> 3: </span>      <span style="color: #5e6263;">// </span><span style="color: #5e6263;">&lt;==== This executes =====</span>
+<span class="linenr"> 4: </span>      <span style="color: #598249;">if</span> (<span style="color: #15968D;">true</span>) {
+<span class="linenr"> 5: </span>          <span style="color: #5e6263;">// </span><span style="color: #5e6263;">&lt;==== This executes =====</span>
+<span class="linenr"> 6: </span>      }
+<span class="linenr"> 7: </span>      <span style="color: #5e6263;">// </span><span style="color: #5e6263;">&lt;==== This executes =====</span>
+<span class="linenr"> 8: </span>  }
+<span class="linenr"> 9: </span>  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">&lt;==== This executes =====</span>
+<span class="linenr">10: </span>}
+</pre>
+</div>
+
+</section>
+<section id="slide-orgbeca28c">
+<h2 id="orgbeca28c">Logical operators - AND</h2>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">a</th>
+<th scope="col" class="org-left">b</th>
+<th scope="col" class="org-left">a &amp;&amp; b</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">True</td>
+<td class="org-left">True</td>
+<td class="org-left">True</td>
+</tr>
+
+<tr>
+<td class="org-left">True</td>
+<td class="org-left">False</td>
+<td class="org-left">False</td>
+</tr>
+
+<tr>
+<td class="org-left">False</td>
+<td class="org-left">True</td>
+<td class="org-left">False</td>
+</tr>
+
+<tr>
+<td class="org-left">False</td>
+<td class="org-left">False</td>
+<td class="org-left">False</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+<section id="slide-org6a6412b">
+<h2 id="org6a6412b">Logical operators - OR</h2>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">a</th>
+<th scope="col" class="org-left">b</th>
+<th scope="col" class="org-left">a &vert;&vert; b</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">True</td>
+<td class="org-left">True</td>
+<td class="org-left">True</td>
+</tr>
+
+<tr>
+<td class="org-left">True</td>
+<td class="org-left">False</td>
+<td class="org-left">True</td>
+</tr>
+
+<tr>
+<td class="org-left">False</td>
+<td class="org-left">True</td>
+<td class="org-left">True</td>
+</tr>
+
+<tr>
+<td class="org-left">False</td>
+<td class="org-left">False</td>
+<td class="org-left">False</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+<section id="slide-orgc105784">
+<h2 id="orgc105784">Logical operators order</h2>
+<ul>
+<li>Statements will be evaluated from left to right</li>
+<li>No limit to the number you can have</li>
+<li>Statements can be grouped using <code>()</code>
+<ul>
+<li>Just like with math, operators <code>()</code> are executed first</li>
+<li><code>1 &amp;&amp; (2 || 3)</code>
+<ul>
+<li><code>2 || 3</code> is done first and the result is ANDed with 1</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org1bddc7b">
+<h2 id="org1bddc7b">Conditional practice 4 question</h2>
+<aside class="notes">
+<p>
+2
+</p>
+
+</aside>
+<ul>
+<li>1 or 2?</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">if</span> (2 &lt; 2 &amp;&amp; 2 == 2) {
+<span class="linenr">2: </span>    <span style="color: #5e6263;">// </span><span style="color: #5e6263;">1</span>
+<span class="linenr">3: </span>} <span style="color: #598249;">else</span> {
+<span class="linenr">4: </span>    <span style="color: #5e6263;">// </span><span style="color: #5e6263;">2</span>
+<span class="linenr">5: </span>}
+</pre>
+</div>
+
+</section>
+<section id="slide-org096a753">
+<h2 id="org096a753">Conditional practice 4 question</h2>
+<aside class="notes">
+<p>
+1
+</p>
+
+</aside>
+<ul>
+<li>1 or 2?</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">if</span> (2 != 2 || 2 == 2) {
+<span class="linenr">2: </span>    <span style="color: #5e6263;">// </span><span style="color: #5e6263;">1</span>
+<span class="linenr">3: </span>} <span style="color: #598249;">else</span> {
+<span class="linenr">4: </span>    <span style="color: #5e6263;">// </span><span style="color: #5e6263;">2</span>
+<span class="linenr">5: </span>}
+</pre>
+</div>
+
+</section>
+<section id="slide-orgd80e58b">
+<h2 id="orgd80e58b">Loops!</h2>
+<ul>
+<li>What if I want to do something multiple times?</li>
+
+</ul>
+
+</section>
+<section id="slide-orgde2ee85">
+<h2 id="orgde2ee85">While loops syntax</h2>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">while</span> (condition == <span style="color: #15968D;">true</span>) {
+<span class="linenr">2: </span>    <span style="color: #5e6263;">// </span><span style="color: #5e6263;">do something</span>
+<span class="linenr">3: </span>}
+</pre>
+</div>
+
+</section>
+<section id="slide-orgb099de4">
+<h2 id="orgb099de4">For loop syntax</h2>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">for</span> (initializer; condition; <span style="color: #598249;">change</span> <span style="color: #2F7BDE;">condition</span>) {
+<span class="linenr">2: </span>    <span style="color: #5e6263;">// </span><span style="color: #5e6263;">do something</span>
+<span class="linenr">3: </span>}
+</pre>
+</div>
+
+</section>
+<section id="slide-orgb9dd54c">
+<h2 id="orgb9dd54c">Math operators continued</h2>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span>var = var + 1;
+<span class="linenr">2: </span><span style="color: #5e6263;">// </span><span style="color: #5e6263;">equivalent to</span>
+<span class="linenr">3: </span>var++;
+<span class="linenr">4: </span>
+<span class="linenr">5: </span>var = var - 1;
+<span class="linenr">6: </span><span style="color: #5e6263;">// </span><span style="color: #5e6263;">equivalent to</span>
+<span class="linenr">7: </span>var--;
+</pre>
+</div>
+
+</section>
+<section id="slide-org3f44413">
+<h2 id="org3f44413">Equivalent while and for loop</h2>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">while_counter</span> = 10;
+<span class="linenr">2: </span><span style="color: #598249;">while</span> (while_counter &gt; 0) {
+<span class="linenr">3: </span>    <span style="color: #5e6263;">// </span><span style="color: #5e6263;">do something</span>
+<span class="linenr">4: </span>    while_counter = while_counter - 1;
+<span class="linenr">5: </span>}
+<span class="linenr">6: </span><span style="color: #598249;">for</span> (<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">for_counter</span> = 10; for_counter &gt; 0; for_counter++) {
+<span class="linenr">7: </span>    <span style="color: #5e6263;">// </span><span style="color: #5e6263;">do something</span>
+<span class="linenr">8: </span>}
+</pre>
+</div>
+
+</section>
+<section id="slide-org8dae732">
+<h2 id="org8dae732">Let's write some code!</h2>
+<aside class="notes">
+<p>
+Write a couple examples of code using what has already been covered.
+Multiplication Table
+Converting Time
+s-&gt;m-&gt;h etc
+Find length of a number
+99 bottles
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org59a2342">
+<h2 id="org59a2342">Questions?</h2>
+<ul>
+<li>A go-to place to ask questions (<a href="https://piazza.com/gatech/fall2017/rjsw/home">Piazza!</a>)</li>
+<li>Monitored by highly experienced RoboJackets software members</li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="https://robojackets.github.io/reveal.js/lib/js/head.min.js"></script>
+<script src="https://robojackets.github.io/reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: false,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+width: 1440,
+height: 800,
+margin: 0.15,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'fast',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://robojackets.github.io/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+]
+});
+</script>
+</body>
+</html>
