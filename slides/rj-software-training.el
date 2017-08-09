@@ -20,6 +20,8 @@
 (require 'ox-gfm)
 ;; file manipulation lib
 (require 'f)
+;; Hash table (and more) library
+(require 'subr-x)
 
 ;;; Code:
 ;;;; Project root def
