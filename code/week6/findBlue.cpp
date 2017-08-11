@@ -16,6 +16,7 @@ Mat findBlue(const Mat& frameBGR) {
       const Scalar blue_high{138, 255, 255}; //these are the highest HSV
                                              //values we accept as blue
 
+      // kernel that is an ellipse of size 11X11 pixels
       Mat erosion_kernel_blue = getStructuringElement(MORPH_ELLIPSE, Size(11, 11));
 
       //applying a GaussianBlur makes the image "fuzzier". This smoothes out
@@ -44,17 +45,35 @@ Mat findBlue(const Mat& frameBGR) {
 }
 
 int main() {
+    // sets up the input stream to the default video device
+    // /dev/video0 must exist
     VideoCapture stream1(0);
+
     while (true) {
         Mat cameraFrame;
+        // starts reading in images from camera
         stream1.read(cameraFrame);
+
+        // checks that the image is not empty
         if(!cameraFrame.empty()) {
+            // creates a window to display the actual camera image
             imshow("camera", cameraFrame);
             Mat blue = findBlue(cameraFrame);
+
+            // creates a window to display the blue parts of the image
             imshow("blue parts", blue);
+
+            // waits and displays the image for 1 millisecond
             waitKey(1);
         } else {
+            /* this only executes when your camera is not working
+             * type
+             *    ls /dev | grep video0
+             * you should see
+             *    video0 in printed to the terminal
+            */
             std::cout << "No image recieved from camera" << std::endl;
+            // waits for the camera to return an image
             while(cameraFrame.empty()) {
                 stream1.read(cameraFrame);
             }

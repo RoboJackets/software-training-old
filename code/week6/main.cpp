@@ -23,7 +23,7 @@ int main() {
     // Blue, Green, Red
     cout << "my_image = \n" << my_image << endl;
 
-    // iterate over n image
+    // iterate over an image
     for(cv::MatIterator_<cv::Vec3b> it = my_image.begin<cv::Vec3b>(); it != my_image.end<cv::Vec3b>(); it++) {
         cout << "Blue = " << to_string((*it)[0]) << endl;
         cout << "Green = " << to_string((*it)[1]) << endl;
@@ -47,10 +47,10 @@ int main() {
         // converts image to grey scale
         cvtColor(image, image, cv::COLOR_BGR2GRAY);
 
-        // applies to laplacian kernel, a common technique for edsge detection
+        // applies to laplacian kernel, a common technique for edge detection
         cv::Laplacian(image, image, image.depth(), 3, 1, 0, cv::BORDER_DEFAULT);
 
-        // creates a window and shows the image until 0 is pressed
+        // creates a window and shows the image until a key is pressed
         cv::namedWindow("Jaymii", cv::WINDOW_AUTOSIZE);
         cv::imshow("Jaymii", image);
         cv::waitKey(0);
