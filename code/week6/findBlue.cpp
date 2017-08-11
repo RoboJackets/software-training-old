@@ -49,7 +49,9 @@ int main() {
     // /dev/video0 must exist
     VideoCapture stream1(0);
 
-    while (true) {
+    // this checks to see if a key has been pressed and then shows the image for
+    // one millisecond
+    while (waitKey(1) == 255) {
         Mat cameraFrame;
         // starts reading in images from camera
         stream1.read(cameraFrame);
@@ -62,9 +64,6 @@ int main() {
 
             // creates a window to display the blue parts of the image
             imshow("blue parts", blue);
-
-            // waits and displays the image for 1 millisecond
-            waitKey(1);
         } else {
             /* this only executes when your camera is not working
              * type
