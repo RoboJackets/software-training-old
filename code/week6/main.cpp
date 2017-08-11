@@ -24,30 +24,35 @@ int main() {
     cout << "my_image = \n" << my_image << endl;
 
     // iterate over n image
-    cv::MatIterator_<cv::Vec3b> test;
     for(cv::MatIterator_<cv::Vec3b> it = my_image.begin<cv::Vec3b>(); it != my_image.end<cv::Vec3b>(); it++) {
         cout << "Blue = " << to_string((*it)[0]) << endl;
         cout << "Green = " << to_string((*it)[1]) << endl;
         cout << "Red = " << to_string((*it)[2]) << endl;
     }
+    cout << "\n";
 
     // to access a single pixel use .at
     cv::Vec3b vector = my_image.at<cv::Vec3b>(2, 2);
 
     // reads in an image
-    cv::Mat image = cv::imread("igvc_gazebo.png", cv::IMREAD_COLOR);
+    cv::Mat image = cv::imread("Jaymii_img.png", cv::IMREAD_COLOR);
 
-    // performs a gaussian blur
-    GaussianBlur(image, image, cv::Size(3,3), 0, 0, cv::BORDER_DEFAULT);
+    // check that the iamge was loaded
+    if(!image.empty()) {
+        cv::Vec3b image_vector = image.at<cv::Vec3b>(154,160);
+        cout << "Blue = " << to_string(image_vector[0]) << endl;
+        cout << "Green = " << to_string(image_vector[1]) << endl;
+        cout << "Red = " << to_string(image_vector[2]) << endl;
 
-    // converts image to grey scale
-    cvtColor(image, image, cv::COLOR_BGR2GRAY);
+        // converts image to grey scale
+        cvtColor(image, image, cv::COLOR_BGR2GRAY);
 
-    // applies to laplacian kernel
-    cv::Laplacian(image, image, image.depth(), 3, 1, 0, cv::BORDER_DEFAULT);
+        // applies to laplacian kernel, a common technique for edsge detection
+        cv::Laplacian(image, image, image.depth(), 3, 1, 0, cv::BORDER_DEFAULT);
 
-    // creates a window and shows the image until 0 is pressed
-    cv::namedWindow("test", cv::WINDOW_AUTOSIZE);
-    cv::imshow("test", image);
-    cv::waitKey(0);
+        // creates a window and shows the image until 0 is pressed
+        cv::namedWindow("Jaymii", cv::WINDOW_AUTOSIZE);
+        cv::imshow("Jaymii", image);
+        cv::waitKey(0);
+    }
 }
