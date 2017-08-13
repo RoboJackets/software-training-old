@@ -17,6 +17,11 @@
 - There are various different implementations of lists in the C++ standard library
 
 * Linked Lists
+- Lists in which each data element is linked to the next element in the list
+- The programmer has access to the list's "head" (the first element) and sometimes the "tail" (the last element)
+- Disadvantages: retrieving elements in the middle of the list require starting at the head and then traversing the list until the desired element is found
+- Advantages: easily resizable
+[[file:https://www.cs.usfca.edu/~srollins/courses/cs112-f08/web/notes/linkedlists/ll2.gif]]
 
 * Stacks
 
