@@ -1,0 +1,31 @@
+#+TITLE: Week 7
+#+AUTHOR: Josh Ting 
+#+EMAIL: josh.ting@gatech.edu
+
+* Data Structures
+- Data structures are ways that computers store collections of data in memory
+- Different data structures offer different advantages and disadvantages in terms of efficiency and grouping data
+
+* Arrays
+- You already have worked with arrays, which are the built in data structure for C++
+- Elements of arrays are ordered and easily retrievable
+- Arrays have a fixed size; maximum number of elements they can contain are determined when they are instantiated
+
+* Lists
+- A list is any data structure that is ordered
+- Useful when relative ordering between elements is important
+- There are various different implementations of lists in the C++ standard library
+
+* Linked Lists
+
+* Stacks
+
+* Queues
+
+* Sets
+
+* Maps
+
+* Trees
+
+* Templates
