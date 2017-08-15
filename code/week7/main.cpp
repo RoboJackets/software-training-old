@@ -72,7 +72,7 @@ Bar getMin(Foo a, Bar b) {
 int main() {
     using namespace std;
 
-    /*************** LINKED LIST ***************/
+    /*************** LIST ***************/
     // http://www.cplusplus.com/reference/list/list/
     // list<TYPE> name
     list<int> int_list = {1,2,3};
@@ -93,6 +93,7 @@ int main() {
     print_data(int_list.begin(), int_list.end(), "int_list");
 
     /*************** QUEUE ***************/
+    // http://www.cplusplus.com/reference/queue/
     queue<char> queue;
     queue.push('r');
     queue.push('o');
@@ -106,6 +107,7 @@ int main() {
     }
 
     /*************** STACK ***************/
+    // http://www.cplusplus.com/reference/stack/stack/
     stack<char> stack;
     stack.push('s');
     stack.push('t');
