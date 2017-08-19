@@ -51,7 +51,7 @@ int main() {
 
     // this checks to see if a key has been pressed and then shows the image for
     // one millisecond
-    while (waitKey(1) == 255) {
+    while ((char) waitKey(1) != 'q') {
         Mat cameraFrame;
         // starts reading in images from camera
         stream1.read(cameraFrame);
