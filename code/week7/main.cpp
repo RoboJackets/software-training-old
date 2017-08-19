@@ -128,15 +128,15 @@ int main() {
 
     // can insert elements into set
     ordered_set.insert("2");
-    print_data(ordered_set.begin(), ordered_set.end(), "ordered_set");
+    print_data(ordered_set.begin(), ordered_set.end(), "ordered_set first time");
 
     // If the same element is inserted TODO
     ordered_set.insert("1");
-    print_data(ordered_set.begin(), ordered_set.end(), "ordered_set");
+    print_data(ordered_set.begin(), ordered_set.end(), "ordered_set second time");
 
     // elements can also be erased
     ordered_set.erase("1");
-    print_data(ordered_set.begin(), ordered_set.end(), "ordered_set");
+    print_data(ordered_set.begin(), ordered_set.end(), "ordered_set third time");
 
     /*************** UNORDERED SETS ***************/
     // http://www.cplusplus.com/reference/unordered_set/unordered_set/
@@ -159,9 +159,17 @@ int main() {
 
     // inserts a pair (key, value) into the map at iterator
     char_map.insert(char_map.begin(), pair<char, int>('a', 5));
+    char_map.insert(char_map.begin(), pair<char, int>('b', 10));
+    char_map.insert(char_map.begin(), pair<char, int>('c', 25));
 
     // at gets the value at the given key
     cout << "at char 'a' value = " << char_map.at('a') << endl;
+
+    // iterating over a map
+    for(map<char,int>::iterator it = char_map.begin(); it != char_map.end(); it++) {
+        cout << "key: " << it->first << " value: " << it->second << endl;
+    }
+    cout << "\n\n";
 
     /*************** UNORDERED MAPS ***************/
     // http://www.cplusplus.com/reference/unordered_map/unordered_map/
@@ -170,8 +178,15 @@ int main() {
     unordered_map<int, string> string_map;
 
     string_map.insert(pair<int, string>(53, "string here"));
+    string_map.insert(pair<int, string>(8669, "another string"));
+    string_map.insert(pair<int, string>(753, "this is getting really long"));
 
     cout << "at int 53 value = " << string_map.at(53) << endl;
+
+    // iterating over a map
+    for(unordered_map<int, string>::iterator it = string_map.begin(); it != string_map.end(); it++) {
+        cout << "key: " << it->first << " value: " << it->second << endl;
+    }
 
     /*************** TEMPLATES ***************/
     cout << "\n\n";
@@ -179,6 +194,11 @@ int main() {
     cout << "the max of 7.0, 8.0 is = " << getMax<double>(7.0, 8.0) << endl;
     cout << "the min of 7, 8.0 is = " << getMin<int, double>(7, 8.0) << endl;
 
-    unique_ptr<Example<string>> example_str1 = make_unique<Example<string>>("storing strings here");
-    unique_ptr<Example<int>> exmaple2 = make_unique<Example<int>>(2);
+    cout << "\n\n";
+
+    unique_ptr<Example<string>> example_str = make_unique<Example<string>>("storing strings here");
+    unique_ptr<Example<int>> example2 = make_unique<Example<int>>(2);
+
+    cout << "accessing the data in example_str, data: " << example_str->getVar() << endl;
+    cout << "accessing the data in example2, data: " << example2->getVar() << endl;
 }
