@@ -24,12 +24,23 @@
 [[file:https://www.cs.usfca.edu/~srollins/courses/cs112-f08/web/notes/linkedlists/ll2.gif]]
 
 * Stacks
+- LIFO (last-in first-out) list with two key functions:
+  - Push: Places an element on the stack
+  - Pop: Removes the element most recently added to the stack
 
 * Queues
+- FIFO (first-in first-out) list with two key functions:
+  - Push: Adds an element to the end of the queue
+  - Pop: Removes the element at the front of the queue
 
 * Sets
+- A set is any data structure without duplicate elements
+- Unlike lists, sets do not necessarily have order
 
 * Maps
+- A mapping from a set of keys to a group of values
+- Each key is associated with a specific value
+- If you provide a map with a key, the map will return its value
 
 * Trees
 
