@@ -4,7 +4,7 @@
 
 * Data Structures
 - Data structures are ways that computers store collections of data in memory
-- Different data structures offer different advantages and disadvantages in terms of efficiency and grouping data
+- Different data structures offer different advantages and disadvantages in terms of how data is grouped or how efficient it is to interact with the data
 
 * Arrays
 - You already have worked with arrays, which are the built in data structure for C++
@@ -20,7 +20,7 @@
 - Lists in which each data element is linked to the next element in the list
 - The programmer has access to the list's "head" (the first element) and sometimes the "tail" (the last element)
 - Disadvantages: retrieving elements in the middle of the list require starting at the head and then traversing the list until the desired element is found
-- Advantages: easily resizable
+- Advantages: easy to resize, easy to insert an element in between two elements
 [[file:https://www.cs.usfca.edu/~srollins/courses/cs112-f08/web/notes/linkedlists/ll2.gif]]
 
 * Stacks
@@ -38,10 +38,18 @@
 - Unlike lists, sets do not necessarily have order
 
 * Maps
-- A mapping from a set of keys to a group of values
-- Each key is associated with a specific value
+- A collection of (key, value) pairs
+- The keys of a map form a set and are each associated with a specific value
+- You can add new pairs to a map, as well as remove or modify existing pairs
 - If you provide a map with a key, the map will return its value
 
+
 * Trees
+- A tree is like a linked list, except each element can point to multiple subsequent elements
+- Nodes that a node points to are called its children
+- A node that points to another node is called the other node's parent
+- The top of the tree is called its root
+- Nodes without children are called the leaves of the tree
+[[file:https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Binary_tree.svg/300px-Binary_tree.svg.png]]
 
 * Templates
