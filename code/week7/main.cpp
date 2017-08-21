@@ -10,7 +10,6 @@
 
 #include "generic_class.h"
 
-// TODO clean this method up
 template<class T>
 void print_data(T iterator_begin, T iterator_end, std::string name) {
     std::cout << "Printing " << name << std::endl;
@@ -132,7 +131,8 @@ int main() {
     ordered_set.insert("2");
     print_data(ordered_set.begin(), ordered_set.end(), "ordered_set first time");
 
-    // If the same element is inserted TODO
+    // If the an inserted element is determined to be the same it will not be inserted
+    // and a iterator to the duplicate element in the list is returned
     ordered_set.insert("1");
     print_data(ordered_set.begin(), ordered_set.end(), "ordered_set second time");
 
