@@ -9,7 +9,7 @@ public:
     };
     ~Example() {};
 
-    const primitive_type getVar() {
+    primitive_type getVar() const {
         return var;
     }
 
