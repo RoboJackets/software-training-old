@@ -47,14 +47,20 @@ Mat findBlue(const Mat& frameBGR) {
 int main() {
     // sets up the input stream to the default video device
     // /dev/video0 must exist
-    VideoCapture stream1(0);
+    VideoCapture video("FindBlueDemo.webm");
+
+    if(!video.isOpened()) {
+        std::cout << "Error opening video stream or file" << std::endl;
+        std::cout << "Verify that findBlueDemo.webm is in the local directory" << std::endl;
+        return -1;
+    }
 
     // this checks to see if a key has been pressed and then shows the image for
     // one millisecond
     while ((char) waitKey(1) != 'q') {
         Mat cameraFrame;
         // starts reading in images from camera
-        stream1.read(cameraFrame);
+        video.read(cameraFrame);
 
         // checks that the image is not empty
         if(!cameraFrame.empty()) {
@@ -65,17 +71,20 @@ int main() {
             // creates a window to display the blue parts of the image
             imshow("blue parts", blue);
         } else {
-            /* this only executes when your camera is not working
-             * type
-             *    ls /dev | grep video0
-             * you should see
-             *    video0 in printed to the terminal
-            */
-            std::cout << "No image recieved from camera" << std::endl;
-            // waits for the camera to return an image
-            while(cameraFrame.empty()) {
-                stream1.read(cameraFrame);
+            // gets the frame number
+            int frameCnt = video.get(CV_CAP_PROP_FRAME_COUNT);
+            // gets the next image
+            video.read(cameraFrame);
+            // if it is the same frame count
+            if(frameCnt == video.get(CV_CAP_PROP_FRAME_COUNT)) {
+                // resets the video to the first frame
+                video.set(CV_CAP_PROP_POS_AVI_RATIO, 0);
             }
         }
+
     }
+    // releases the video capture object
+    video.release();
+    // stops all windows
+    cv::destroyAllWindows();
 }
