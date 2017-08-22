@@ -53,7 +53,8 @@ int main() {
 
     // although a function can be implicitly converted into a pointer by the compiler
     // so the & is not required
-    int (*func_ptr2) (int) = addThree;
+    // auto is usually helpful here
+    auto func_ptr2 = addThree;
 
     // to use add ()
     cout << "value of addTwo(2) = " << func_ptr(2) << endl;
@@ -79,7 +80,7 @@ int main() {
     cout << "\n\n";
 
     // using lambda
-    // [CAPTURE_VAR] (TYPE NAME, ...) -> RETURN_TYPE {CODE};
+    // [] (TYPE NAME, ...) -> RETURN_TYPE {CODE};
     for_each(example_vec.begin(), example_vec.end(), [](int num) -> void {std::cout << "printing from lambda " << num << std::endl;});
 
     // transform is like for each but it replaces the value with what is returned
@@ -87,16 +88,9 @@ int main() {
     transform(example_vec.begin(), example_vec.end(), example_vec.begin(), [](int num) -> int {return num + 2;});
     printIntVec(example_vec);
 
-    // capture allows us to pass in another var as a constant to the lambda
-    // this makes the variable effectively constant while in the method
-    int constant = 7;
-    transform(example_vec.begin(), example_vec.end(), example_vec.begin(), [constant](int num) -> int {return num + constant;});
-    printIntVec(example_vec);
-
-    // sometimes the return type is implied and therefore can be left off
-    // [CAPTURE_VAR] (TYPE NAME, ...) {CODE};
-    constant = -2;
-    transform(example_vec.begin(), example_vec.end(), example_vec.begin(), [constant](int num) {return num + constant;});
+    // often the return type is implied and therefore can be left off
+    // [] (TYPE NAME, ...) {CODE};
+    transform(example_vec.begin(), example_vec.end(), example_vec.begin(), [](int num) {return num - 2;});
     printIntVec(example_vec);
 
     /******** OBJECT SLICING ********/
