@@ -10,9 +10,16 @@
   (and a few other languages)
 - I guess our ability to see has been ++'d
 
+* Installing OpenCV
+- Follow the instructions here:
+  http://docs.opencv.org/trunk/d7/d9f/tutorial_linux_install.html to build it
+  from source
+- Note: there exists opencv that can be installed through aptitude. It's out
+  of date so stay away
+
 * What does an Image look like to your computer?
 - OpenCV stores images in an object called a /Mat/
-- A Mat is matrix with rows and columns! In a grayscale image. each element
+- A Mat is an array with rows and columns. In a grayscale image, each element
   of the Mat is a pixel in the image and its location in the Mat corresponds 
   to its location in the image
 - If the image is grayscale, then a pixel is an int from 0 (black) to 255
@@ -27,7 +34,7 @@
   find each pixel represented in BGR (Blue component, Green Component, Red
   Component) form. So now, each row of a color image is 3 times as long as a
   row of a black and white image.
-[[https://docs.opencv.org/2.4/_images/math/b6df115410caafea291ceb011f19cc4a19ae6c2c.png]]
+[[https://i.imgur.com/QlokNTv.png]]
 - Images don't have to be stored in just BGR format!
 
 * HSV Images
