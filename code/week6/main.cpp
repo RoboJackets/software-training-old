@@ -24,7 +24,7 @@ int main() {
     cout << "my_image = \n" << my_image << endl;
 
     // iterate over an image
-    for(cv::MatIterator_<cv::Vec3b> it = my_image.begin<cv::Vec3b>(); it != my_image.end<cv::Vec3b>(); it++) {
+    for(auto it = my_image.begin<cv::Vec3b>(); it != my_image.end<cv::Vec3b>(); it++) {
         cout << "Blue = " << to_string((*it)[0]) << endl;
         cout << "Green = " << to_string((*it)[1]) << endl;
         cout << "Red = " << to_string((*it)[2]) << endl;
