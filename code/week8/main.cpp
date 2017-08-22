@@ -28,7 +28,7 @@ void printInt(int i) {
 
 class Parent {
 public:
-    virtual void do_something() {std::cout << "BASE" << std::endl;}
+    virtual void do_something() {std::cout << "PARENT" << std::endl;}
 };
 
 class Child : public Parent {
@@ -38,6 +38,10 @@ public:
 
 void callDoSomething(Parent p) {
     p.do_something();
+}
+
+void callDoSomethingRef(Child c) {
+    c.do_something();
 }
 
 int main() {
@@ -82,7 +86,6 @@ int main() {
     // using lambda
     // [] (TYPE NAME, ...) -> RETURN_TYPE {CODE};
     for_each(example_vec.begin(), example_vec.end(), [](int num) -> void {std::cout << "printing from lambda " << num << std::endl;});
-
     // transform is like for each but it replaces the value with what is returned
     // http://www.cplusplus.com/reference/algorithm/transform/?kw=transform
     transform(example_vec.begin(), example_vec.end(), example_vec.begin(), [](int num) -> int {return num + 2;});
@@ -97,9 +100,11 @@ int main() {
     // object slicing is when a child is assigned to its parent and therefore loses additional features
     Parent p = Parent();
     Child c = Child();
-    cout << "parent" << endl;
+    cout << "parent calling callDoSomething" << endl;
     callDoSomething(p);
-    cout << "child" << endl;
+    cout << "child calling callDoSomething" << endl;
     callDoSomething(c);
+    cout << "child calling callDoSomethingRef" << endl;
+    callDoSomethingRef(c);
 
 }
