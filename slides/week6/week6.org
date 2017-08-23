@@ -1,5 +1,5 @@
 #+TITLE: Week 6
-#+AUTHOR: Sahit Chintalapudi 
+#+AUTHOR: Sahit Chintalapudi
 #+EMAIL: schintalapudi@gatech.edu
 
 * Computer Vision
@@ -14,7 +14,7 @@
 * What does an Image look like to your computer?
 - OpenCV stores images in an object called a /Mat/
 - A Mat is an array with rows and columns. In a grayscale image, each element
-  of the Mat is a pixel in the image and its location in the Mat corresponds 
+  of the Mat is a pixel in the image and its location in the Mat corresponds
   to its location in the image
 - If the image is grayscale, then a pixel is an int from 0 (black) to 255
   (white)
@@ -28,11 +28,11 @@
   find each pixel represented in BGR (Blue component, Green Component, Red
   Component) form. So now, each row of a color image is 3 times as long as a
   row of a black and white image.
-[[https://i.imgur.com/QlokNTv.png]]
+- [[https://i.imgur.com/QlokNTv.png]]
 - Images don't have to be stored in just BGR format!
 
 * HSV Images
-- Each Pixel in a color image has a hue, a saturation, and a luminosity. 
+- Each Pixel in a color image has a hue, a saturation, and a luminosity.
 - Even though our cameras read in images with RGB, converting them to HSV is
   easy with OpenCV
 [[https://image.slidesharecdn.com/01presentationhuehistograms-150707215651-lva1-app6892/95/about-perception-and-hue-histograms-in-hsv-space-5-638.jpg]]
@@ -47,13 +47,13 @@
 
 * Finding the blue in an image
 #+BEGIN_SRC c++
-Mat findBlue(const Mat& frameBGR) { 
-      const Scalar blue_low{78, 50, 70};     
-      const Scalar blue_high{138, 255, 255}; 
+Mat findBlue(const Mat& frameBGR) {
+      const Scalar blue_low{78, 50, 70};
+      const Scalar blue_high{138, 255, 255};
       Mat frameBlurred;
       GaussianBlur(frameBGR, frameBlurred, Size{7,7}, 0);
       Mat frameHSV;
-      cvtColor(frameBlurred, frameHSV, CV_BGR2HSV); 
+      cvtColor(frameBlurred, frameHSV, CV_BGR2HSV);
       Mat output_blue = Mat::zeros(frameHSV.height, frameHSV.width, CV_8U);
       inRange(frameHSV, blue_low, blue_high, output_blue);
       erode(output_blue, output_blue, erosion_kernel_blue);
@@ -62,4 +62,5 @@ Mat findBlue(const Mat& frameBGR) {
 #+END_SRC
 
 * Roboracing Computer Vision
-[[https://github.com/RoboJackets/roboracing-software/blob/master/iarrc/src/color_detector/color_detector.cpp]]
+[[https://github.com/RoboJackets/roboracing-software/blob/master/iarrc/src/color_detector/color_detector.cpp][Roboracing
+Color Detector]]
