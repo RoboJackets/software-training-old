@@ -10,12 +10,6 @@
   (and a few other languages)
 - I guess our ability to see has been ++'d
 
-* Installing OpenCV
-- Follow the instructions here:
-  http://docs.opencv.org/trunk/d7/d9f/tutorial_linux_install.html to build it
-  from source
-- Note: there exists opencv that can be installed through aptitude. It's out
-  of date so stay away
 
 * What does an Image look like to your computer?
 - OpenCV stores images in an object called a /Mat/
@@ -39,10 +33,17 @@
 
 * HSV Images
 - Each Pixel in a color image has a hue, a saturation, and a luminosity. 
-- The nice thing about looking at colors from this perspective is that we're
-  more tolerant to changes in lighting conditions making the same color look
-  different.
+- Even though our cameras read in images with RGB, converting them to HSV is
+  easy with OpenCV
 [[https://image.slidesharecdn.com/01presentationhuehistograms-150707215651-lva1-app6892/95/about-perception-and-hue-histograms-in-hsv-space-5-638.jpg]]
+
+* Why do we use HSV
+- HSV encodes image data in a way that is resistant to changes in color
+- To put it another way, on a sunny day an image will contain more red, more
+  blue, and more green than on a cloudy day. All three channels are affected.
+- On a sunny day, the saturation channel will be largely effected, but we can
+  expect hue to remain mainly stable. This makes it easier to do searches for
+  colors in the HSV space.
 
 * Finding the blue in an image
 #+BEGIN_SRC c++
