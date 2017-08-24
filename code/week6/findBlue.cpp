@@ -46,18 +46,18 @@ Mat findBlue(const Mat& frameBGR) {
 
 int main() {
     // sets up the input stream to the default video device
-    // /dev/video0 must exist
-    VideoCapture video("FindBlueDemo.webm");
+    // the file must be in the local directory
+    VideoCapture video("findBlueDemo.mp4");
 
     if(!video.isOpened()) {
         std::cout << "Error opening video stream or file" << std::endl;
-        std::cout << "Verify that findBlueDemo.webm is in the local directory" << std::endl;
+        std::cout << "Verify that findBlueDemo.mp4 is in the local directory" << std::endl;
         return -1;
     }
 
     // this checks to see if a key has been pressed and then shows the image for
-    // one millisecond
-    while ((char) waitKey(1) != 'q') {
+    // 300 milisecond so you can see what is happening
+    while (static_cast<char>(waitKey(300)) != 'q') {
         Mat cameraFrame;
         // starts reading in images from camera
         video.read(cameraFrame);
