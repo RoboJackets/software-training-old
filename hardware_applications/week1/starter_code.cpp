@@ -1,1 +1,5 @@
-// This file intentionally left blank
+#include <iostream>
+#include <STSL/RJRobot.h>
+
+using namespace std;
+

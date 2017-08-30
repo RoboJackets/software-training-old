@@ -9,7 +9,7 @@ if(WIN32)
     link_directories(STSL/lib/WINDOWS)
 elseif(UNIX AND NOT APPLET)
     link_directories(STSL/lib/LINUX)
-    set(CMAKE_CXX_STANDARD_LIBRARIES /lib/udev)
+    set(CMAKE_CXX_STANDARD_LIBRARIES /usr/lib/x86_64-linux-gnu/libudev.so)
 endif()
 
 add_subdirectory(week1)
