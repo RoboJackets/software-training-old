@@ -4,72 +4,68 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
-using namespace cv;
-
-
-Mat findBlue(const Mat& frameBGR) {
+cv::Mat findBlue(const cv::Mat& frameBGR) {
       //cv::Scalar is a container that is used to hold pixel values
       //the values shown below are tuned by hand on example data that is
       //gathered
-      const Scalar blue_low{78, 50, 70};     //these are the lowest HSV values
+      const cv::Scalar blue_low{78, 50, 70};     //these are the lowest HSV values
                                              //that we accept as blue
-      const Scalar blue_high{138, 255, 255}; //these are the highest HSV
+      const cv::Scalar blue_high{138, 255, 255}; //these are the highest HSV
                                              //values we accept as blue
 
       // kernel that is an ellipse of size 11X11 pixels
-      Mat erosion_kernel_blue = getStructuringElement(MORPH_ELLIPSE, Size(11, 11));
+      cv::Mat erosion_kernel_blue = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(11, 11));
 
       //applying a GaussianBlur makes the image "fuzzier". This smoothes out
       //noisy pixels
-      Mat frameBlurred;
-      GaussianBlur(frameBGR, frameBlurred, Size{7,7}, 0);
+      cv::Mat frameBlurred;
+      cv::GaussianBlur(frameBGR, frameBlurred, cv::Size{7,7}, 0);
 
-      //We shift the mat which is encodes as an RGB image into an HSV image
-      Mat frameHSV;
-      cvtColor(frameBlurred, frameHSV, CV_BGR2HSV);
+      //We shift the mat which is encoded as an RGB image into an HSV image
+      cv::Mat frameHSV;
+      cv::cvtColor(frameBlurred, frameHSV, CV_BGR2HSV);
 
       //We initialize an empty Mat to store all the pixels that we identify
-      //as blue. CV_8U is the image depth: each pixel is only one bit
-      Mat output_blue = Mat::zeros(200, 640, CV_8U);
+      //as blue. CV_8U is the image depth: each pixel is only one byte
+      cv::Mat output_blue = cv::Mat::zeros(200, 640, CV_8U);
 
       //for every pixel in our frame that we define as blue, write a white
       //pixel to the output_blue Mat
-      inRange(frameHSV, blue_low, blue_high, output_blue);
+      cv::inRange(frameHSV, blue_low, blue_high, output_blue);
 
       //apply an erode operation onto the filtered image. This helps us
       //remove specks of blue that show up due to noise or glare
-      erode(output_blue, output_blue, erosion_kernel_blue);
+      cv::erode(output_blue, output_blue, erosion_kernel_blue);
 
-      //the logic to publish the result of the filtering in ROS would go here
-    return output_blue;
+      return output_blue;
 }
 
 int main() {
-    // sets up the input stream to the default video device
+    // sets up the input stream to the video findBlueDemo.mp4
     // the file must be in the local directory
-    VideoCapture video("findBlueDemo.mp4");
+    cv::VideoCapture video("findBlueDemo.mp4");
 
     if(!video.isOpened()) {
-        std::cout << "Error opening video stream or file" << std::endl;
-        std::cout << "Verify that findBlueDemo.mp4 is in the local directory" << std::endl;
+        std::cerr << "Error opening video stream or file" << std::endl;
+        std::cerr << "Verify that findBlueDemo.mp4 is in the local directory" << std::endl;
         return -1;
     }
 
     // this checks to see if a key has been pressed and then shows the image for
     // 300 milisecond so you can see what is happening
-    while (static_cast<char>(waitKey(300)) != 'q') {
-        Mat cameraFrame;
+    while (static_cast<char>(cv::waitKey(300)) != 'q') {
+        cv::Mat cameraFrame;
         // starts reading in images from camera
         video.read(cameraFrame);
 
         // checks that the image is not empty
         if(!cameraFrame.empty()) {
             // creates a window to display the actual camera image
-            imshow("camera", cameraFrame);
-            Mat blue = findBlue(cameraFrame);
+            cv::imshow("camera", cameraFrame);
+            cv::Mat blue = findBlue(cameraFrame);
 
             // creates a window to display the blue parts of the image
-            imshow("blue parts", blue);
+            cv::imshow("blue parts", blue);
         } else {
             // gets the frame number
             int frameCnt = video.get(CV_CAP_PROP_FRAME_COUNT);
@@ -87,4 +83,6 @@ int main() {
     video.release();
     // stops all windows
     cv::destroyAllWindows();
+
+    return 0;
 }

@@ -55,4 +55,6 @@ int main() {
         cv::imshow("Jaymii", image);
         cv::waitKey(0);
     }
+
+    return 0;
 }
