@@ -47,15 +47,16 @@ int main() {
      * Count the number of black squares on a strip of paper
      */
 
-    const auto number_of_squares = 10;
+    vector<int> measurements;
 
-    array<int, number_of_squares> squares;
+    auto black_threshold = 10;
 
-    fill(squares.begin(), squares.end(), 0);
+    auto grey_threshold = 40;
 
-    for(auto square : squares) {
+    // Measure light values until we see a black square
+    while(measurements.empty() || measurements.back() > black_threshold) {
         // Measure square color
-        square = robot.LightValue();
+        measurements.push_back(robot.LightValue());
 
         // Move to next square
         auto action = known_moves["forward"];
@@ -64,11 +65,14 @@ int main() {
         robot.Wait(250ms);
     }
 
-    auto less_than_threshold_func = bind2nd(std::less<int>{}, 10);
+    // Remove the black square from the list
+    measurements.erase(measurements.end()-1);
 
-    auto number_of_black_squares = count_if(squares.begin(), squares.end(), less_than_threshold_func);
+    auto is_grey = bind2nd(std::less<>{}, grey_threshold);
 
-    cout << number_of_black_squares << " black squares detected." << endl;
+    auto number_of_grey_squares = count_if(measurements.begin(), measurements.end(), is_grey);
+
+    cout << number_of_grey_squares << " grey squares detected." << endl;
 
     return 0;
 }
