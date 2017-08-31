@@ -13,3 +13,4 @@ elseif(UNIX AND NOT APPLET)
 endif()
 
 add_subdirectory(week1)
+add_subdirectory(week3)
