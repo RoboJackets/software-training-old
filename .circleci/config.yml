@@ -24,5 +24,5 @@ jobs:
           name: Deploy to github
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            cd html && git add . && git commit -m "Autoupdate html sources" || true && git push https://$GH_TOKEN@github.com/RoboJackets/software-training gh-pages || true
+            cd html && git add -A && git commit -m "Autoupdate html sources" || true && git push https://$GH_TOKEN@github.com/RoboJackets/software-training gh-pages || true
             fi

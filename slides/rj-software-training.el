@@ -78,7 +78,7 @@
          :publishing-directory ,(concat proj-base "../html/docs/")
          :publishing-function org-gfm-publish-to-gfm
          :exclude-tags ("slides")))
-    org-reveal-root "https://cdn.jsdelivr.net/reveal.js/3.0.0/"
+    org-reveal-root "https://robojackets.github.io/reveal.js/"
     org-reveal-margin "0.15"))
 
 
