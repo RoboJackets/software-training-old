@@ -53,8 +53,8 @@ int main() {
 
     // this checks to see if a key has been pressed and then shows the image for
     // 300 milisecond so you can see what is happening
+    cv::Mat cameraFrame;
     while (static_cast<char>(cv::waitKey(300)) != 'q') {
-        cv::Mat cameraFrame;
         // starts reading in images from camera
         video.read(cameraFrame);
 
