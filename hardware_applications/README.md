@@ -64,8 +64,8 @@ Binaries and headers for the STSL are provided in the STSL folder. These should 
    
    __Linux__
    
-   Copy...
+   Copy _libSTSL.a_ from _build_ to _hardware_applications/STSL/lib/LINUX_.
 
    __OS X__
    
-   Copy...
+   Copy _libSTSL.a_ from _build_ to _hardware_applications/STSL/lib/OSX_.
