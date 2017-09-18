@@ -4,6 +4,7 @@
 -   Overview of the RoboJackets software training program
 -   Navigating and manipulating files and directories in the Linux terminal
 -   Using Git and GitHub for version control
+-   Get a simple program running on the training robots
 
 
 # Meet Kristaps
@@ -79,11 +80,24 @@
 
 -   Josh Ting
     -   Senior, Computer Science (Threads: Intelligence, Information Internetworks)
-    -   Inside RoboJackets: RoboCup Software Lead
+    -   Inside RoboJackets: RoboCup Fall Software Lead
     -   Outside RoboJackets: NASA Intern, Magic: The Gathering addict, pianist of 17 years
 -   How to contact me
     -   Slack: [@joshting](https://robojackets.slack.com/messages/@joshting/)
     -   Email: [josh.ting@gatech.edu](mailto:josh.ting@gatech.edu)
+
+
+# Meet Matthew
+
+![img](https://imgur.com/nDgF0NX.jpg)
+
+-   Matthew Woodward
+    -   Junior, Computer Engineering
+    -   RoboCup Spring Software Lead
+    -   Outside RoboJackets: Triangle Fraternity and undergrad CS research
+-   How to contact me
+    -   Slack: [@chachmu](https://robojackets.slack.com/messages/@chachmu/)
+    -   Email: [mwoodward@gatech.edu](mailto:mwoodward@gatech.edu)
 
 
 # Meet Jay
@@ -134,20 +148,26 @@
 # Basic commands
 
 <div class="NOTES">
-Explain that a directory is more commonly called a folder. Run some demos in your terminal! Ideally you should use each of these commands at least once.
+Explain that a directory is more commonly called a folder. Go to your home directory. Create a directory. cd to it. Use echo to create a file. List the files with ls -al. Explain what . and .. are. Remove the file. cd up a level. Remove the directory.
 
 </div>
 
-| Command | Use                             |
-|------- |------------------------------- |
-| `cd`    | Change to a different directory |
-| `ls`    | List files in this directory    |
-| `mkdir` | Make a new directory            |
-| `rm`    | Remove a file                   |
-| `rmdir` | Remove a directory              |
+| Command | Use                                    |
+|------- |-------------------------------------- |
+| `cd`    | Change to a different directory        |
+| `ls`    | List files in this directory           |
+| `mkdir` | Make a new directory                   |
+| `rm`    | Remove a file                          |
+| `rmdir` | Remove a directory                     |
+| `echo`  | Write arguments to the standard output |
 
 
 # Basic commands
+
+<div class="NOTES">
+Create a directory with a file again, copy the file to the same folder with a different name, move the original up a level. Run man grep. Grep your file for a keyword. Run history.
+
+</div>
 
 | Command   | Use                                  |
 |--------- |------------------------------------ |
@@ -160,6 +180,11 @@ Explain that a directory is more commonly called a folder. Run some demos in you
 
 # Basic hotkeys
 
+<div class="NOTES">
+Copy/paste are generally ctrl+shift+c/ctrl+shift+v, respectively, but varies by shell.
+
+</div>
+
 -   **Up/down arrow keys:** Cycle through your command history (great for recent commands)
 -   **Ctrl+R:** Search through your command history (great for less recent commands)
 -   **Tab:** Complete this command/file/directory name
@@ -168,6 +193,13 @@ Explain that a directory is more commonly called a folder. Run some demos in you
 -   **Ctrl+Z:** *NOT UNDO!* Sends the current command to the background.
     -   Use `fg` to bring it back to the foreground.
 -   **Ctrl+D:** Exit the shell.
+
+
+# Example code
+
+-   It's all on the software training GitHub repository
+-   Same code in 3 different languages - you should be able to understand at least one by now
+-   Look at the cpp file and try to understand it if you've never written C++ before
 
 
 # Git

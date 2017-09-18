@@ -9,6 +9,11 @@
 
 # What is GitHub?
 
+<div class="NOTES">
+Publicly hosted Git server means that it has a bunch of Git repositories on its computers, just like how you will have Git repositories on your own computer
+
+</div>
+
 -   Git &ne; GitHub
 -   GitHub is a publicly hosted Git server
 -   It hosts our projects as "repositories" on the internet
@@ -19,14 +24,14 @@
 
 # How do you find things on GitHub?
 
--   Repositories are stored at <https://github.com/><ORG-OR-USER-NAME>/<REPO-NAME>
+-   Repositories are stored at `https://github.com/<ORG-OR-USER-NAME>/<REPO-NAME>`
 -   So all of our projects can be found at <https://github.com/RoboJackets>
--   Your personal projects will exist at <https://github.com/><YOUR-GH-USERNAME>
+-   Your personal projects will exist at `https://github.com/<YOUR-GH-USERNAME>`
 
 
 ## Create a GitHub account
 
--   [<https://github.com/join>](https://github.com/join%0A)
+-   [https://github.com/join](https://github.com/join%0A)
 -   Please include *at least* your real first name
 
 ![img](https://i.imgur.com/0cdXQXW.png)
@@ -34,7 +39,7 @@
 
 # Fork and star our repo
 
--   Navigate to github.com/robojackets/software-training
+-   Navigate to <https://github.com/RoboJackets/software-training>
 
 ![img](https://i.imgur.com/3CtCTqj.png)
 
@@ -45,14 +50,17 @@
 -   Solution: Forks!
 -   A fork is a copy of a repository that exists on your personal account
 -   Changes made on a fork will not affect the original repository, and vice versa
--   Your fork will be present on <https://github.com/><YOUR-GH-USERNAME>/software-training
+-   Your fork will be present on `https://github.com/<YOUR-GH-USERNAME>/software-training`
 
 
 # Install Git on your computer
 
--   Windows/Linux: <https://git-scm.com/downloads>
--   If on Mac OS, install Homebrew first from <https://brew.sh/>
+-   Windows: <https://git-scm.com/downloads>
+-   Mac OS:
+    -   Install Homebrew first from <https://brew.sh/>
     -   Then run: `brew install git`
+-   Ubuntu:
+    -   Run `sudo apt install git`
 
 
 # Git Config
