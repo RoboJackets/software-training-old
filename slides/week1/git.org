@@ -54,7 +54,7 @@ Publicly hosted Git server means that it has a bunch of Git repositories on its 
     - Install Homebrew first from https://brew.sh/
     - Then run: ~brew install git~
 - Ubuntu:
-    - Run ~sudo apt-get install git~
+    - Run ~sudo apt install git~
 
 * Git Config
 - These commands set up git to attribute your contributions to our code to you.

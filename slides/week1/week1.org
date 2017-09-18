@@ -137,7 +137,7 @@ Explain that a directory is more commonly called a folder. Go to your home direc
 | =mkdir= | Make a new directory |
 | =rm= | Remove a file |
 | =rmdir= | Remove a directory |
-| =echo= | Echoes back anything you pass |
+| =echo= | Write arguments to the standard output |
 
 * Basic commands
 #+BEGIN_NOTES
@@ -153,7 +153,7 @@ Create a directory with a file again, copy the file to the same folder with a di
 
 * Basic hotkeys
 #+BEGIN_NOTES
-Copy/paste are generally ctrl+shift+ctrl+shift+v but varies by shell.
+Copy/paste are generally ctrl+shift+c/ctrl+shift+v, respectively, but varies by shell.
 #+END_NOTES
 - *Up/down arrow keys:* Cycle through your command history (great for recent commands)
 - *Ctrl+R:* Search through your command history (great for less recent commands)
