@@ -35,6 +35,20 @@ At this point, you can select a specific demo to run using the drop down and oth
 4. Build all demos
 
    ```make```
+   
+## Troubleshooting ##
+
+### Linux ###
+
+__Error__: Could not find UDev library
+
+__Solution__: Install libudev. ie: `sudo apt-get install libudev-dev`
+
+### Windows ###
+
+__Error__: Undefined reference to RJRobot::________
+
+__Solution__: Follow the instructions below in "How to Rebuild the STSL"
 
 ## How to Rebuild the STSL ##
 
@@ -60,7 +74,7 @@ Binaries and headers for the STSL are provided in the STSL folder. These should 
    
    __Windows__
    
-   Copy _libSTSL.a_ from _build_ to _hardware_applications/STSL/lib/WINDOWS_.
+   Copy _libSTSL.dll_ from _build_ to _hardware_applications/STSL/lib/WINDOWS_.
    
    __Linux__
    
