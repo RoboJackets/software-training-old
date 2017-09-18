@@ -7,6 +7,8 @@ include_directories(STSL/include)
 
 if(WIN32)
     link_directories(STSL/lib/WINDOWS)
+    configure_file(STSL/lib/WINDOWS/libSTSL.dll ${CMAKE_CURRENT_BINARY_DIR}/libSTSL.dll COPYONLY)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 elseif(UNIX AND NOT APPLE)
     link_directories(STSL/lib/LINUX)
     set(CMAKE_CXX_STANDARD_LIBRARIES /usr/lib/x86_64-linux-gnu/libudev.so)
