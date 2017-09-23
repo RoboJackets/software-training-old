@@ -4,15 +4,16 @@
 
 * Let's Recap
 - We have a fork of the software training repo on our local GitHub account
-- Reminder: a fork is a git repository that is a deep copy of another git repository
+- Reminder: a fork is a git repository that is a copy of another git repository
 - Changes made in one of the repositories do not automatically show up in the other
-- The original repository is referred to as "upstream"
 
 * Things have changed upstream, what do we do?
 - We need a series of git commands that can update our fork and local repo with the new content in the upstream repo
 - All terminal git commands are in the form:
   #+BEGIN_SRC shell
     git <command> <param1> <param2> ...
+    git add newfile.cpp
+    git checkout new_branch
   #+END_SRC
 
 * Git pull
@@ -50,8 +51,11 @@
 
 - Note that the above command contains a period!
 - The add command tells git to keep track of new files added in the directory
+- git needs to be told which files to version control. git add puts the files
+  on git's "stage". The stage is where files go before they are saved by git
 - git add takes in parameters for each file or directory to stage
   - The period means all files in this directory and its subdirectories
+  - Generally in bash, a period is shorthand for the current directory
 
 * Git commit
 
@@ -77,6 +81,7 @@
   #+END_SRC
 
 - ~git push~: Command to push commits to another repository
+  - git push is what makes code public
 - ~origin~: Name of the repo to push to (origin is referring to our fork)
 - ~master~: Name of the branch to push to (still top secret material)
 
