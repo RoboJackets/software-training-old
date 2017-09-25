@@ -4,7 +4,7 @@
 // stdlib.h contains a lot of useful function that do many things like parsing primimitives from strings and system calls
 #include <stdlib.h>
 // string.h contains a lot of functions that will be covered this week ex). strncmp, strcat, ...
-#include <string.h>
+#include <string>
 // iostream contains the functions cout, cin, cerr, and clog all fucntions taht deal with IO (input and output)
 #include <iostream>
 // This includes the operations header file that is in this directory hence "" instead of <>
