@@ -1,4 +1,7 @@
 #pragma once
+// This line has the complier check that this header file is not included more than once in a single file
+
+// iostream contains the functions cout, cin, cerr, and clog all fucntions taht deal with IO (input and output)
 #include <iostream>
 
 /**
