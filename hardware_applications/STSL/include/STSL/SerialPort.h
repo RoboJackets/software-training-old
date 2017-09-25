@@ -11,6 +11,11 @@ using SerialPort = SerialPort_WIN32;
 #include "SerialPort_LINUX.h"
 using SerialPort = SerialPort_LINUX;
 
+#elif __APPLE__
+
+#include "SerialPort_OSX.h"
+using SerialPort = SerialPort_OSX;
+
 #endif
 
 
