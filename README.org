@@ -9,11 +9,19 @@ This is the source repository for the 2017 RoboJackets Software training program
    + [[https://robojackets.github.io/software-training/slides/week1/git.html][Git Presentation]]
    + [[https://robojackets.github.io/software-training/slides/week1/week1.html][Code Presentation]]
 
+2. Week 2
+   + [[https://robojackets.github.io/software-training/slides/week2/git.html][Git Presentation]]
+   + [[https://robojackets.github.io/software-training/slides/week2/week2.html][Code Presentation]]
+
 # TODO maybe host these MD files in an external way other than GH?
 * Docs
 1. Week 1
    + [[https://github.com/RoboJackets/software-training/blob/gh-pages/docs/week1/git.md][Git Presentation]]
    + [[https://github.com/RoboJackets/software-training/blob/gh-pages/docs/week1/week1.md][Code Presentation]]
+
+2. Week 2
+   + [[https://github.com/RoboJackets/software-training/blob/gh-pages/docs/week2/git.md][Git Presentation]]
+   + [[https://github.com/RoboJackets/software-training/blob/gh-pages/docs/week2/week2.md][Code Presentation]]
 
 * Building Slides
 

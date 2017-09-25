@@ -44,42 +44,6 @@ __Error__: Could not find UDev library
 
 __Solution__: Install libudev. ie: `sudo apt-get install libudev-dev`
 
-### Windows ###
-
-__Error__: Undefined reference to RJRobot::________
-
-__Solution__: Follow the instructions below in "How to Rebuild the STSL"
-
 ## How to Rebuild the STSL ##
 
-Binaries and headers for the STSL are provided in the STSL folder. These should work for most circumstances. If you experience problems building the demos with the provided binaries, you may need to rebuild the STSL from source.
-
-1. Clone the STSL source from [GitHub](https://github.com/RoboJackets/stsl).
-
-   ```git clone https://github.com/RoboJackets/stsl```
-
-2. Navigate to the STSL source directory, create a _build_ directory, and navigate into it
-
-   ```cd stsl && mkdir build && cd build```
-   
-3. Configure the project with CMake
-
-   ```cmake ..```
-   
-4. Build the STSL
-
-   ```make```
-   
-5. Copy the binaries back to the hardware_applications project.
-   
-   __Windows__
-   
-   Copy _libSTSL.dll_ from _build_ to _hardware_applications/STSL/lib/WINDOWS_.
-   
-   __Linux__
-   
-   Copy _libSTSL.a_ from _build_ to _hardware_applications/STSL/lib/LINUX_.
-
-   __OS X__
-   
-   Copy _libSTSL.a_ from _build_ to _hardware_applications/STSL/lib/OSX_.
+As of Week 2, 2017, the STSL is now automatically downloaded and built in your cmake build directory. If you encounter a problem you believe can be fixed by rebuilding the STSL, simply clean and rebuild the hardware-applications project.
