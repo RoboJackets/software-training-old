@@ -1,4 +1,4 @@
-#+TITLE: Git Training 2017
+#+TITLE: Week 1 Git
 #+AUTHOR: Sahit Chintalapudi, Josh Ting 
 #+EMAIL: schintalapudi@gatech.edu, josh.ting@gatech.edu
 
@@ -11,6 +11,10 @@
   cannot be handled by file sharing systems like Dropbox and Google Drive
 
 * What is GitHub?
+
+#+BEGIN_NOTES
+Publicly hosted Git server means that it has a bunch of Git repositories on its computers, just like how you will have Git repositories on your own computer
+#+END_NOTES
 - Git \neq GitHub
 - GitHub is a publicly hosted Git server
 - It hosts our projects as "repositories" on the internet
@@ -21,9 +25,9 @@
   your work on GitHub
 
 * How do you find things on GitHub?
-- Repositories are stored at https://github.com/<ORG-OR-USER-NAME>/<REPO-NAME>
+- Repositories are stored at =https://github.com/<ORG-OR-USER-NAME>/<REPO-NAME>=
 - So all of our projects can be found at https://github.com/RoboJackets
-- Your personal projects will exist at https://github.com/<YOUR-GH-USERNAME>
+- Your personal projects will exist at =https://github.com/<YOUR-GH-USERNAME>=
 
 ** Create a GitHub account
 - [[https://github.com/join%0A][https://github.com/join]]
@@ -33,7 +37,7 @@
 [[file:https://i.imgur.com/0cdXQXW.png]]
 
 * Fork and star our repo
-- Navigate to github.com/robojackets/software-training
+- Navigate to https://github.com/RoboJackets/software-training
 
 [[file:https://i.imgur.com/3CtCTqj.png]]
 
@@ -42,12 +46,15 @@
 - Solution: Forks!
 - A fork is a copy of a repository that exists on your personal account
 - Changes made on a fork will not affect the original repository, and vice versa
-- Your fork will be present on https://github.com/<YOUR-GH-USERNAME>/software-training
+- Your fork will be present on =https://github.com/<YOUR-GH-USERNAME>/software-training=
 
 * Install Git on your computer
-- Windows/Linux: https://git-scm.com/downloads
-- If on Mac OS, install Homebrew first from https://brew.sh/
+- Windows: https://git-scm.com/downloads
+- Mac OS:
+    - Install Homebrew first from https://brew.sh/
     - Then run: ~brew install git~
+- Ubuntu:
+    - Run ~sudo apt install git~
 
 * Git Config
 - These commands set up git to attribute your contributions to our code to you.
