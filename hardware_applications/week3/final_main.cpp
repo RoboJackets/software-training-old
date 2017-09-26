@@ -68,7 +68,7 @@ int main() {
     // Remove the black square from the list
     measurements.erase(measurements.end()-1);
 
-    auto is_grey = bind2nd(std::less<>{}, grey_threshold);
+    auto is_grey = bind2nd(std::less<int>{}, grey_threshold);
 
     auto number_of_grey_squares = count_if(measurements.begin(), measurements.end(), is_grey);
 
