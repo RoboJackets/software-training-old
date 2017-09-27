@@ -1,8 +1,6 @@
 #include <iostream>
 #include <STSL/RJRobot.h>
 #include <vector>
-#include <array>
-#include <map>
 #include <algorithm>
 
 using namespace std;
