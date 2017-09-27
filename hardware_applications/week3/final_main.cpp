@@ -12,38 +12,6 @@ int main() {
     RJRobot robot;
 
     /*
-     * Create a map of actions the robot knows
-     */
-
-    map<string, pair<int,int>> known_moves;
-
-    known_moves["forward"] = {100,100};
-    known_moves["backward"] = {-100,-100};
-    known_moves["left"] = {100,-100};
-    known_moves["right"] = {-100,100};
-
-    /*
-     * Drive in a square using these known actions
-     */
-
-    array<string,8> square_path;
-
-    for(auto i = 0; i < square_path.size(); i++) {
-        if( (i % 2) == 0 ) {
-            square_path[i] = "forward";
-        } else {
-            square_path[i] = "left";
-        }
-    }
-
-    for(const auto command : square_path) {
-        auto speeds = known_moves[command];
-        robot.SetMotor(MotorPort::A, speeds.first);
-        robot.SetMotor(MotorPort::B, speeds.second);
-        robot.Wait(250ms);
-    }
-
-    /*
      * Count the number of black squares on a strip of paper
      */
 
@@ -59,9 +27,8 @@ int main() {
         measurements.push_back(robot.LightValue());
 
         // Move to next square
-        auto action = known_moves["forward"];
-        robot.SetMotor(MotorPort::A, action.first);
-        robot.SetMotor(MotorPort::B, action.second);
+        robot.SetMotor(MotorPort::A, 200);
+        robot.SetMotor(MotorPort::B, 200);
         robot.Wait(250ms);
     }
 
