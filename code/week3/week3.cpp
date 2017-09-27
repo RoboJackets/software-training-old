@@ -189,9 +189,9 @@ int main() {
      vector<int>::iterator find_iter = find(long_list.begin(), long_list.end(), 6);
      cout << "find 6 = " << *find_iter << endl;
 
-     // returns 0 if the the element is not found
-     //vector<int>::iterator find_iter_dne = find(long_list.begin(), long_list.end(), 100);
-     //cout << "find 100 = " << *find_iter_dne << endl;
+     // returns the second argument if nothing is found
+     vector<int>::iterator find_iter_dne = find(long_list.begin(), long_list.end(), 100);
+     cout << "find 100 = " << *find_iter_dne << " long_list.end() = " << *long_list.end() << endl;
 
 
      vector<int> new_int_vector (4);
