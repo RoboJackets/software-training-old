@@ -2,15 +2,18 @@
 #+AUTHOR: Kristaps Berzinch, Raymond Ortiz
 #+EMAIL: kristaps@robojackets.org, rortiz9@gatech.edu
 
-* TODO Needs speaker notes
-
 * What are we doing today?
 - Data structures and algorithms in C++
 - Branching and merging in Git
+- Using light sensor to count grey squares
 
-* What's a constructor?
-- A special type of function that instantiates a class
-- Basically, it sets up an object and returns it
+* What is an object?
+- a module of reusable code
+  - maintains some sort of state
+    - variables
+  - have behaviors
+    - methods
+- can have multiple instances of the same object
 
 * What's a container?
 - An object you can use to store other objects
