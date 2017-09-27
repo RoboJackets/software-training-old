@@ -10,7 +10,7 @@ int main() {
     RJRobot robot;
 
     /*
-     * Count the number of black squares on a strip of paper
+     * Count the number of grey squares on a strip of paper
      */
 
     vector<int> measurements;
@@ -33,8 +33,10 @@ int main() {
     // Remove the black square from the list
     measurements.erase(measurements.end()-1);
 
-    auto is_grey = bind2nd(std::less<int>{}, grey_threshold);
+    // comment here
+    auto is_grey = bind2nd(less<int>{}, grey_threshold);
 
+    // comment here
     auto number_of_grey_squares = count_if(measurements.begin(), measurements.end(), is_grey);
 
     cout << number_of_grey_squares << " grey squares detected." << endl;
