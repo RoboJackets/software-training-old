@@ -15,56 +15,145 @@
     - methods
 - can have multiple instances of the same object
 
-* What's a container?
-- An object you can use to store other objects
-- Objects are identified by keys (which can also be objects)
-- Some important properties:
-  - *Ordered:* the contents are in a specific order
-  - *Associative:* two objects are associated with each other within the container
-  - *Set:* the value of an object is its key
-  - *Unique keys:* no two objects can have the same key
-
-* Common containers
-#+BEGIN_NOTES
-Note that in most languages, sets and maps are unorded. C++ also has unordered sets and maps.
-#+END_NOTES
-| =array= | a static-length ordered list of objects |
-| =vector= | a dynamic-length ordered list of objects |
-| =set= | an ordered group of unique objects |
-| =unordered_set= | an unordered group of unique objects |
-| =map= | an ordered group of key-value pairs, with unique keys |
-| =unordered_map= | an unordered group of key-value pairs, with unique keys |
-
 * Arrays
-| =at= | returns the value at a specific index |
-| =front= | returns the first item |
-| =back= | returns the last item |
-| =size= | returns the number of elements |
+- an object that can contain a set number of other objects
+- the size of the array cannot change
+#+BEGIN_SRC C++
+  // creates an array of integers with size 3
+  #include <array>
+
+  array<int, 3> name = {1, 2, 3};
+#+END_SRC
+
+* Array methods
+| =at=    | returns the value at a specific index |
+| =front= | returns the first item                |
+| =back=  | returns the last item                 |
+| =size=  | returns the number of elements        |
 
 * Vectors
 #+BEGIN_NOTES
+initializer lists require c++11 for vectors.
+#+END_NOTES
+- an object that can contain a variable number of other objects
+- you can keep adding elements to the vector
+- order of insertion in maintained
+#+BEGIN_SRC C++
+  #include <vector>
+
+  vector<int> name = {1, 2, 3};
+#+END_SRC
+
+* Vector methods
+#+BEGIN_NOTES
 Vectors can grow as items are added, whereas arrays are static.
 #+END_NOTES
-- Everything from the last slide, and...
-| =clear= | removes all items |
-| =insert= | inserts an item at a specific index |
-| =push_back= | adds a given element to the end |
-| =pop_back= | removes the last element |
+- Everything from the arrays slide, and...
+| =clear=     | removes all items                   |
+| =insert=    | inserts an item at a specific index |
+| =push_back= | adds a given element to the end     |
+| =pop_back=  | removes the last element            |
 
 * Iterators
 - An object that lets you access and modify objects in a container
-- Depending on their type, they will let you read or write data in the container, and move forwards, backwards, or arbitrarily
+- Depending on their type, they will let you read or write data in the container, and move forwards, backwards, or both
 - The containers library includes the most common ones you'll need, but you can also write your own
 
-* Algorithms
+* Iterator methods
 #+BEGIN_NOTES
-All of these can be restricted to a range in the container using iterators. All of these are in <algorithm> except for accumulate and iota, which are in <numeric>.
+picture upcoming. mention that the method should be called on the containing object
 #+END_NOTES
-| =sort= | sorts a container |
-| =count= | counts the number of items in a container that match a given item |
-| =find= | returns an iterator to the first element that matches a given item |
+| =*=      | gets the value at the current index                     |
+| =begin=  | starts at the *first* item that moves *up* in indexes   |
+| =end=    | starts at the *last* item that moves *up* in indexes    |
+| =rbegin= | starts at the *first* item that moves *down* in indexes |
+| =rend=   | starts at the *last* item that moves *down* in indexes  |
+
+* Moving iterators
+#+BEGIN_NOTES
+picture upcoming
+#+END_NOTES
+- =++= moves the iterator forwards
+- =--= moves the iterator backwards
+
+* Iterator practice
+#+BEGIN_NOTES
+requires c++ 11.
+#+END_NOTES
+#+BEGIN_SRC C++
+  vector<int> vec = {66,89,0,60,17,90,8};
+  vector<int>::iterator it = vec.begin();
+#+END_SRC
+#+ATTR_HTML: :width 50%
+[[file:https://i.imgur.com/MTaVFFM.png]]
+
+* Iterator practice
+#+BEGIN_NOTES
+requires c++ 11.
+#+END_NOTES
+#+BEGIN_SRC C++
+  vector<int> vec = {66,89,0,60,17,90,8};
+  vector<int>::iterator it = vec.begin();
+  it++;
+#+END_SRC
+#+ATTR_HTML: :width 50%
+[[file:https://i.imgur.com/gOXGy4i.png]]
+
+* Iterator practice
+#+BEGIN_NOTES
+requires c++ 11.
+#+END_NOTES
+#+BEGIN_SRC C++
+  vector<int> vec = {66,89,0,60,17,90,8};
+  vector<int>::iterator it = vec.begin();
+  it++;
+  it--;
+#+END_SRC
+#+ATTR_HTML: :width 50%
+[[file:https://i.imgur.com/394eVwQ.png]]
+
+* Iterator practice
+#+BEGIN_NOTES
+ask what is the result of this code. Call someone up to show where it will end up
+#+END_NOTES
+#+BEGIN_SRC C++
+  vector<int> vec = {66,89,0,60,17,90,8};
+  vector<int>::iterator it = vec.rend();
+  it += 3;
+#+END_SRC
+#+ATTR_HTML: :width 50%
+[[file:https://i.imgur.com/wrsXiAZ.png]]
+
+* Iterator practice answer
+#+BEGIN_NOTES
+write some for loops using iterators and printing out the numbers
+#+END_NOTES
+#+BEGIN_SRC C++
+  vector<int> vec = {66,89,0,60,17,90,8};
+  vector<int>::iterator it = vec.rend();
+  it += 3;
+#+END_SRC
+#+ATTR_HTML: :width 50%
+[[file:https://i.imgur.com/BMO9nL9.png]]
+
+* Algorithms
+- algorithms is a header that includes useful operators that can be used on vectors, arrays and other containers
+- uses iterators to interact with these containers
+- three cateorgies of algorithm methods
+  - does not modify the container
+  - modifies the container
+  - modifies a destination container
+
+* Does not modify the container
+| =count=      | counts the number of items in a container that match a given item  |
+| =find=       | returns an iterator to the first element that matches a given item |
+| =accumulate= | sums all elements in a container                                   |
+
+* Modifies the container
+| =sort=      | sorts a container                                     |
+| =fill=      | fills a container with copies of a given element      |
+| =iota=      | fills a container with sequentially increasing values |
+| =transform= | manipulates each element using a function             |
+
+* Modifies destination container
 | =copy= | copies elements from one container to another |
-| =fill= | fills a container with copies of a given element |
-| =accumulate= | sums all elements in a container |
-| =transform= | manipulates each element using a function |
-| =iota= | fills a container with sequentially increasing values |
