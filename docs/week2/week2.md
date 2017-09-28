@@ -75,7 +75,7 @@ Now you can talk about prototypes!
 # Includes
 
 <div class="NOTES">
-After introducing the concept, demo some basic examples of including a file within another file. Draw a picture on the board of a.h included in b.h and then b.h and a.h included in a file
+After introducing the concept, demo some basic examples of including a file within another file. Draw a picture on the board of a.h included in b.h and then b.h included in another file
 
 </div>
 
@@ -89,8 +89,14 @@ After introducing the concept, demo some basic examples of including a file with
 
 # Header guards C style
 
+<div class="NOTES">
+using the previous example include a.h in the final file as well. Show how the same code is copied in twice.
+
+</div>
+
+-   header guards prevent the compiler from including the same file multiple times
 -   will work in all cases
--   uses macros
+    -   uses C style macros
 
 ```C++
 1  #ifndef FILENAME_H
@@ -102,6 +108,8 @@ After introducing the concept, demo some basic examples of including a file with
 
 # #pragma once
 
+-   a different method to do header guards
+    -   cleaner
 -   most compilers support this
 
 ```C++

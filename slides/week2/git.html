@@ -29,8 +29,8 @@
 <section id="sec-title-slide"><h1 class="title">Git Training Two 2017</h1>
 </section>
 
-<section id="slide-org8f07c15">
-<h2 id="org8f07c15">Let's Recap</h2>
+<section id="slide-org0f17b77">
+<h2 id="org0f17b77">Let's Recap</h2>
 <ul>
 <li>We have a fork of the software training repo on our local GitHub account</li>
 <li>Reminder: a fork is a git repository that is a copy of another git repository</li>
@@ -39,8 +39,8 @@
 </ul>
 
 </section>
-<section id="slide-org71d64fb">
-<h2 id="org71d64fb">Things have changed upstream, what do we do?</h2>
+<section id="slide-org9cc1cdc">
+<h2 id="org9cc1cdc">Things have changed upstream, what do we do?</h2>
 <ul>
 <li>We need a series of git commands that can update our fork and local repo with the new content in the upstream repo</li>
 <li><p>
@@ -57,8 +57,8 @@ All terminal git commands are in the form:
 </ul>
 
 </section>
-<section id="slide-org10ef8b1">
-<h2 id="org10ef8b1">Git pull</h2>
+<section id="slide-orgcc6b1c9">
+<h2 id="orgcc6b1c9">Git pull</h2>
 <ul>
 <li>First, navigate to the git repo from the terminal</li>
 <li><p>
@@ -84,8 +84,8 @@ We can keep our fork up to date with the <code>git pull</code> command
 </ul>
 
 </section>
-<section id="slide-org827ed82">
-<h2 id="org827ed82">Let's make some of our own changes!</h2>
+<section id="slide-orgd1300c2">
+<h2 id="orgd1300c2">Let's make some of our own changes!</h2>
 <ul>
 <li>Open up a text editor of your choice and create a new file with some text
 in it</li>
@@ -95,8 +95,8 @@ in it</li>
 </ul>
 
 </section>
-<section id="slide-orgca54f34">
-<h2 id="orgca54f34">Time to make them official:</h2>
+<section id="slide-orgea2a853">
+<h2 id="orgea2a853">Time to make them official:</h2>
 <ul>
 <li>Git calls every version it stores a "commit"</li>
 <li>In order to commit something, you must specify which changes you've made to the codebase should be in the commit</li>
@@ -105,8 +105,8 @@ in it</li>
 </ul>
 
 </section>
-<section id="slide-org339307a">
-<h2 id="org339307a">Git add</h2>
+<section id="slide-org75e9b0b">
+<h2 id="org75e9b0b">Git add</h2>
 <div class="org-src-container">
 
 <pre  class="src src-shell"><span style="color: #598249;">git</span> add .
@@ -128,8 +128,8 @@ on git's "stage". The stage is where files go before they are saved by git</li>
 </ul>
 
 </section>
-<section id="slide-orgc414adb">
-<h2 id="orgc414adb">Git commit</h2>
+<section id="slide-org7bd9489">
+<h2 id="org7bd9489">Git commit</h2>
 <div class="org-src-container">
 
 <pre  class="src src-shell"><span style="color: #598249;">git</span> commit -m <span style="color: #15968D;">"Added a file!"</span>
@@ -151,8 +151,8 @@ on git's "stage". The stage is where files go before they are saved by git</li>
 </ul>
 
 </section>
-<section id="slide-org5627ffc">
-<h3 id="org5627ffc">Cli command options</h3>
+<section id="slide-org7dba83e">
+<h3 id="org7dba83e">Cli command options</h3>
 <ul>
 <li><code>-&lt;letter&gt;</code> and <code>--&lt;word&gt;</code> are often times used to set values for specific values</li>
 <li>In the previous example, <code>-m "..."</code> sets the message parameter to the value in quotes</li>
@@ -162,8 +162,8 @@ on git's "stage". The stage is where files go before they are saved by git</li>
 </ul>
 
 </section>
-<section id="slide-org02c4a50">
-<h2 id="org02c4a50">Git push</h2>
+<section id="slide-org235073c">
+<h2 id="org235073c">Git push</h2>
 <div class="org-src-container">
 
 <pre  class="src src-shell"><span style="color: #598249;">git</span> push origin master
@@ -182,8 +182,8 @@ on git's "stage". The stage is where files go before they are saved by git</li>
 </ul>
 
 </section>
-<section id="slide-org4cf4674">
-<h2 id="org4cf4674">Some notes about commits</h2>
+<section id="slide-orgc7f4ef4">
+<h2 id="orgc7f4ef4">Some notes about commits</h2>
 
 <div class="figure">
 <p><img src="https://imgs.xkcd.com/comics/git_commit.png" alt="git_commit.png" />
@@ -200,8 +200,8 @@ your project not behaving properly</li>
 </ul>
 
 </section>
-<section id="slide-org5b74070">
-<h2 id="org5b74070">Some notes about commits cont.</h2>
+<section id="slide-orgba88d87">
+<h2 id="orgba88d87">Some notes about commits cont.</h2>
 <ul>
 <li>Things committed to Git are intended to stay as a permanent record of the repository history 
 <ul>
