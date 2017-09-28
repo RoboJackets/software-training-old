@@ -61,7 +61,7 @@ Now you can talk about prototypes!
 * Includes
 #+BEGIN_NOTES
 After introducing the concept, demo some basic examples of including a file within another file.
-Draw a picture on the board of a.h included in b.h and then b.h and a.h included in a file
+Draw a picture on the board of a.h included in b.h and then b.h included in another file
 #+END_NOTES
 - Allows you to use code from other files
 - Will literally insert anything in name.h into the file
@@ -70,8 +70,12 @@ Draw a picture on the board of a.h included in b.h and then b.h and a.h included
 #+END_SRC
 
 * Header guards C style
+#+BEGIN_NOTES
+using the previous example include a.h in the final file as well. Show how the same code is copied in twice.
+#+END_NOTES
+- header guards prevent the compiler from including the same file multiple times
 - will work in all cases
-- uses macros
+  - uses C style macros
 #+BEGIN_SRC C++ -n
     #ifndef FILENAME_H
     #define FILENAME_H
@@ -80,6 +84,8 @@ Draw a picture on the board of a.h included in b.h and then b.h and a.h included
 #+END_SRC
 
 * #pragma once
+- a different method to do header guards
+  - cleaner
 - most compilers support this
 #+BEGIN_SRC C++ -n
     #pragma once
