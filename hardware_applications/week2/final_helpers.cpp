@@ -7,7 +7,7 @@ void executeCommandString(RJRobot &robot, const std::string &commands) {
     size_t currentPosition = 0;
     auto nextSpacePosition = commands.find(' ', currentPosition);
     do {
-        executeOneCommand(robot, commands.substr(currentPosition, nextSpacePosition));
+        executeOneCommand(robot, commands.substr(currentPosition, nextSpacePosition-currentPosition));
         currentPosition = nextSpacePosition + 1;
         nextSpacePosition = commands.find(' ', currentPosition);
     } while(nextSpacePosition != std::string::npos);
