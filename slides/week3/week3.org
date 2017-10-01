@@ -48,7 +48,7 @@ initializer lists require c++11 for vectors.
 #+BEGIN_NOTES
 Vectors can grow as items are added, whereas arrays are static.
 #+END_NOTES
-- Everything from the arrays slide, and...
+- Everything from the [[*Array%20methods][arrays slide]], and...
 | =clear=     | removes all items                   |
 | =insert=    | inserts an item at a specific index |
 | =push_back= | adds a given element to the end     |
