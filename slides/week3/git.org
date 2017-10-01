@@ -43,6 +43,9 @@ Call on students to explain each
 - Subsequent commits are linked by edges
 
 ** Git as a Graph cont.
+#+BEGIN_NOTES
+These tools are not installed by default.
+#+END_NOTES
 - Some useful tools to visualize your repo's git history as a graph:
   - ~git porcelain~
     #+BEGIN_SRC sh
