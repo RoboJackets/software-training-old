@@ -63,18 +63,18 @@ Vectors can grow as items are added, whereas arrays are static.
 #+BEGIN_NOTES
 picture upcoming. mention that the method should be called on the containing object
 #+END_NOTES
-| =*=      | gets the value at the current index                     |
-| =begin=  | starts at the *first* item that moves *up* in indexes   |
-| =end=    | starts at the *last* item that moves *up* in indexes    |
-| =rbegin= | starts at the *first* item that moves *down* in indexes |
-| =rend=   | starts at the *last* item that moves *down* in indexes  |
+| =*=      | gets the value at the current index                               |
+| =begin=  | starts at the *first* item and moves *forwards* when incremented  |
+| =end=    | starts at the *last* item and moves *forwards* when incremented   |
+| =rbegin= | starts at the *last* item and moves *backwards* when incremented  |
+| =rend=   | starts at the *first* item and moves *backwards* when incremented |
 
 * Moving iterators
 #+BEGIN_NOTES
 picture upcoming
 #+END_NOTES
-- =++= moves the iterator forwards
-- =--= moves the iterator backwards
+- =++= increments the iterator forwards
+- =--= decrements the iterator backwards
 
 * Iterator practice
 #+BEGIN_NOTES
@@ -87,10 +87,7 @@ requires c++ 11.
 #+ATTR_HTML: :width 50%
 [[file:https://i.imgur.com/MTaVFFM.png]]
 
-* Iterator practice
-#+BEGIN_NOTES
-requires c++ 11.
-#+END_NOTES
+#+REVEAL: split
 #+BEGIN_SRC C++
   vector<int> vec = {66,89,0,60,17,90,8};
   vector<int>::iterator it = vec.begin();
@@ -99,10 +96,7 @@ requires c++ 11.
 #+ATTR_HTML: :width 50%
 [[file:https://i.imgur.com/gOXGy4i.png]]
 
-* Iterator practice
-#+BEGIN_NOTES
-requires c++ 11.
-#+END_NOTES
+#+REVEAL: split
 #+BEGIN_SRC C++
   vector<int> vec = {66,89,0,60,17,90,8};
   vector<int>::iterator it = vec.begin();
@@ -112,19 +106,19 @@ requires c++ 11.
 #+ATTR_HTML: :width 50%
 [[file:https://i.imgur.com/394eVwQ.png]]
 
-* Iterator practice
+#+REVEAL: split
 #+BEGIN_NOTES
 ask what is the result of this code. Call someone up to show where it will end up
 #+END_NOTES
 #+BEGIN_SRC C++
   vector<int> vec = {66,89,0,60,17,90,8};
-  vector<int>::iterator it = vec.rend();
+  vector<int>::iterator it = vec.rbegin();
   it += 3;
 #+END_SRC
 #+ATTR_HTML: :width 50%
 [[file:https://i.imgur.com/wrsXiAZ.png]]
 
-* Iterator practice answer
+#+REVEAL: split
 #+BEGIN_NOTES
 write some for loops using iterators and printing out the numbers
 #+END_NOTES
