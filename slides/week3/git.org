@@ -3,6 +3,9 @@
 #+EMAIL: jaygkamat@gmail.com, josh.ting@gatech.edu
 
 * What You Know
+#+BEGIN_NOTES
+Call on students to explain each
+#+END_NOTES
 - ~git status~
 - ~git add~
 - ~git commit~
@@ -25,49 +28,47 @@
 - Branches are what people have the most trouble with
   - _*Ask questions /please/!*_ This is a difficult topic.
 
-** Git As a Graph
+** Remotes vs Branches vs Forks
+- A fork or clone does a full copy of the git repo
+- A remote is a pointer to another copy of this git repo
+- A repository can contain a collection of *branches*
+- Each branch is an independent copy of the code
+- You can only directly modify local branches, but:
+  - You can merge from a remote into your branch (pull)
+  - You can merge from your branch to a remote (push)
 
-- git history is a *graph*
+** Git as a Graph
+- Git history is a *graph*
+- A graph is simply a collection of nodes connected by edges
 - Each commit is a node on the graph
-- Ways to see it as a graph, rather than a line of commits
-  - ~git~ porcelain
-    #+BEGIN_SRC sh
-      git log --oneline --graph --all --decorate
-    #+END_SRC
+- Subsequent commits are linked by edges
 
-    #+BEGIN_SRC sh :results output :exports results
-      git log --oneline --graph --decorate | head -n9
-    #+END_SRC
+** Git as a Graph cont.
+#+BEGIN_NOTES
+These tools are not installed by default.
+#+END_NOTES
+- Some useful tools to visualize your repo's git history as a graph:
   - ~gitk~
   - ~git~ integrations for your favorite editor!
 
 ** Creating Branches
 - Let's start by creating multiple branches
-
-  #+BEGIN_SRC
-    844a162 * master stable beta Initial commit
-  #+END_SRC
-
-- We have one commit and 3 branches point to the same commit
-  - master, stable, beta
-- Right now, everything is at the same state
 - Create branches with
-
   #+BEGIN_SRC sh
     # git branch <BRANCH_NAME>
 
     # Create two branches, starting from the current commit
 
-    git branch stable
-    git branch beta
+    git branch stableRj
+    git branch betaRj
   #+END_SRC
 
 ** Switching Branches
 
-- Only one branch can be checked out at a time
+- Only one branch can be worked on at a time
 - ~git status~ will display info on your current branch
 - ~git checkout~ lets you switch between branches
-- Let's checkout the *stable* branch now
+- Let's checkout the ~stableRj~ branch now
   #+BEGIN_SRC sh
     git status
     #> On branch master
@@ -75,78 +76,61 @@
 
     # git checkout <BRANCH_NAME>
 
-    git checkout stable
-    #> Switched to branch 'stable
+    git checkout stableRj
+    #> Switched to branch 'stableRj'
 
     git status
-    #> On branch stable
+    #> On branch stableRj
     #> nothing to commit, working tree clean
   #+END_SRC
 
-** First Stable Commit
-- Let's add a commit to the stable branch
+** First stableRj Commit
+#+BEGIN_NOTES
+Do something visual, e.x., draw on whiteboard, gitk
+#+END_NOTES
+- Let's add a commit to the ~stableRj~ branch
   #+BEGIN_SRC sh
     echo "Stability counts!" > stable_release.txt
+    git status
     git add -A
+    git status
     git commit -m "Add stable_release.txt"
+    git status
   #+END_SRC
 - This will *not affect* any other branches
 - The other branches will stay behind on 'initial commit'
-  #+BEGIN_SRC
-    5592388 * stable      Add stable_release.txt
-    844a162 * master beta Initial commit
-  #+END_SRC
 
-** First Beta Commit
-- Let's make a experimental commit on the beta branch
+** First betaRj Commit
+- Let's make an experimental commit on the ~betaRj~ branch
   #+BEGIN_SRC sh
-    git checkout beta
+    git checkout betaRj
     echo "This feature is unstable!" > beta_release.txt
     git add -A
     git commit -m "Add beta_release.txt"
   #+END_SRC
-- Since the beta branch was *behind* the stable branch, this creates a 'fork' in the commit history
-- Notice, master has not moved at all (since no commits have been made on it)
-  #+BEGIN_SRC
-    1c65f7b * beta Add beta_release.txt
-    5592388 | * stable Add stable_release.txt
-            |/
-    844a162 * master Initial commit
-  #+END_SRC
+- Since the ~stableRj~ branch was *behind* the ~betaRj~ branch, the commit history has diverged
 - Play around and checkout the various branches!
   #+BEGIN_SRC shell
     git checkout <BRANCH>
     ls
   #+END_SRC
+- Notice, master has not moved at all (since no commits have been made on it)
 
-** Let's make beta official
-- Let's bring the hard work from the beta branch onto the stable branch
-- Right now, the stable and the beta branch have 'forked'
+** Let's Merge the Branches
+#+BEGIN_NOTES
+Do something visual at end to show other branches are unchanged. When the students use vi, let them know i to insert, wq to save+quit
+#+END_NOTES
+- Let's bring the hard work from the ~betaRj~ branch onto the ~stableRj~ branch
+- Right now, the ~stableRj~ and the ~betaRj~ branch have 'diverged'
 - We need to bring them back together, this is called a *merge*
   #+BEGIN_SRC sh
     # Checkout to the branch we want to merge **into** aka the "base branch"
-    git checkout stable
-    # Merge the branch we want (beta) into the current branch (stable)
-    git merge beta
+    git checkout stableRj
+    # Merge the branch we want (betaRj) into the current branch (stableRj)
+    git merge betaRj
     # This will launch an editor, save and quit it to complete
   #+END_SRC
 - This does not change any other branch
-  #+BEGIN_SRC
-    ddc2df9 *   stable Merge branch 'beta' into stable
-            |\
-    1c65f7b | * beta Add beta_release.txt
-    5592388 * | Add stable_release.txt
-            |/
-    844a162 * master Initial commit
-  #+END_SRC
-
-** Remotes vs Branches vs Forks
-- A fork or clone does a full copy of the git repo
-- A remote is a pointer to another copy of this git repo
-- A repository is a collection of *branches*
-- You can only directly modify local branches, but:
-  - You can merge from a remote into your branch (pull)
-  - You can merge from your branch to a remote (push)
 
 * Pull requests
 - A pull request (PR) is a request for a project owner to merge a branch from your fork into their repository
@@ -163,7 +147,7 @@
 ** How to make a pull request
 - Push code locally stored on your computer to your fork on GitHub
   #+BEGIN_SRC shell
-    git push origin stable
+    git push origin stableRj
   #+END_SRC
 - Locate your fork on GitHub and click "New pull request"
 [[file:https://i.imgur.com/8xwEajp.jpg]]
@@ -171,9 +155,13 @@
 ** How to make a pull request (continued)
 - Ensure that both repos and branches are correct
 - Click "Create pull request"
+#+ATTR_HTML: :width 80%
 [[file:https://i.imgur.com/gxUa2Zx.jpg]]
 
 * Overall Contribution Flow
+#+BEGIN_NOTES
+"Pull request procedure may differ for your specific team"
+#+END_NOTES
 #+BEGIN_SRC shell
   # start on master
   git checkout master
