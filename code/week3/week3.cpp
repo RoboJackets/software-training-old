@@ -17,7 +17,7 @@ int main() {
      array<int, 3> int_array = {1, 2, 3};
      array<string, 3> string_array = {"arrays", "are", "cool"};
 
-     // You can get the number fo elemnts in std::array by using .size()
+     // You can get the number of elements in a std::array by using .size()
      cout << "size of the int_arrray is = " << int_array.size() << endl;
 
      // remember arrays index 0,1,2,...
@@ -25,11 +25,9 @@ int main() {
      for(int i = 0; i < int_array.size(); i++) {
          // .at(index) returns the element at that index with bounds checking at runtime
          cout << "string_array at index = " << i << " the value is = " << string_array.at(i) << endl;
-         cout << "string_array at index = " << i << " the value is = " << string_array.at(i) << endl;
 
          // [] operator gets the value at the index without bounds checking
          cout << "string_array at index = " << i << " the value is = " << string_array[i] << endl;
-         cout << "string_array at index = " << i << " the value is = " << string_array.at(i) << endl;
      }
      cout << "\n\n";
 
