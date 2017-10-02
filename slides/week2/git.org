@@ -1,0 +1,106 @@
+#+TITLE: Git Training Two 2017
+#+AUTHOR: Sahit Chintalapudi, Josh Ting 
+#+EMAIL: schintalapudi@gatech.edu, josh.ting@gatech.edu
+
+* Let's Recap
+- We have a fork of the software training repo on our local GitHub account
+- Reminder: a fork is a git repository that is a copy of another git repository
+- Changes made in one of the repositories do not automatically show up in the other
+
+* Things have changed upstream, what do we do?
+- We need a series of git commands that can update our fork and local repo with the new content in the upstream repo
+- All terminal git commands are in the form:
+  #+BEGIN_SRC shell
+    git <command> <param1> <param2> ...
+    git add newfile.cpp
+    git checkout new_branch
+  #+END_SRC
+
+* Git pull
+- First, navigate to the git repo from the terminal
+- We can keep our fork up to date with the ~git pull~ command
+
+  #+BEGIN_SRC shell
+    cd software-training    # or wherever your repo is
+    git pull rj master
+  #+END_SRC
+
+- What does this mean?
+      - ~git pull~: pull from one GitHub repository into our current repository
+      - ~rj~: the name of the repo that we are pulling from
+      - ~master~: pull into the "master" branch of our current repository
+- What are branches? That's classified! Stay tuned for next lesson
+# Basically say that this is outside the scope of the current lesson and if they want to read up on it on their own we won't stop them
+
+* Let's make some of our own changes!
+- Open up a text editor of your choice and create a new file with some text
+  in it
+- Save the file inside the repository
+- Now how do we make this file show up online for others to see?
+
+* Time to make them official:
+- Git calls every version it stores a "commit"
+- In order to commit something, you must specify which changes you've made to the codebase should be in the commit
+- This is called "staging" your changes
+
+* Git add
+
+  #+BEGIN_SRC shell
+    git add .
+  #+END_SRC
+
+- Note that the above command contains a period!
+- The add command tells git to keep track of new files added in the directory
+- git needs to be told which files to version control. git add puts the files
+  on git's "stage". The stage is where files go before they are saved by git
+- git add takes in parameters for each file or directory to stage
+  - The period means all files in this directory and its subdirectories
+  - Generally in bash, a period is shorthand for the current directory
+
+* Git commit
+
+  #+BEGIN_SRC shell
+    git commit -m "Added a file!"
+  #+END_SRC
+
+- ~commit~: Commit currently staged changes to git
+  - This is making the change "permanent" (more on this later)
+- ~-m "..."~: Commits require commit messages to label them
+  - This is an easy way to specify that message while creating the commit
+
+** Cli command options
+- ~-<letter>~ and ~--<word>~ are often times used to set values for specific values 
+- In the previous example, ~-m "..."~ sets the message parameter to the value in quotes
+- ~-m~ and ~--message~ can be used interchangeably for ~git commit~
+- Most commands support ~-h~ or ~--help~ to show how to use them
+
+* Git push
+
+  #+BEGIN_SRC shell
+    git push origin master
+  #+END_SRC
+
+- ~git push~: Command to push commits to another repository
+  - git push is what makes code public
+- ~origin~: Name of the repo to push to (origin is referring to our fork)
+- ~master~: Name of the branch to push to (still top secret material)
+
+* Some notes about commits 
+[[file:https://imgs.xkcd.com/comics/git_commit.png]]
+- A good commit message is short but clearly explains what changes were made
+  - A good commit message makes it easy to see what changes could lead to
+    your project not behaving properly
+
+* Some notes about commits cont.
+- Things committed to Git are intended to stay as a permanent record of the repository history 
+  - This doesn't mean bad commits can't be reverted
+  - This does mean that you should never commit things like passwords to
+    git
+  - This does mean that good commit messages are important
+- Large files are impractical for Git to track
+  - It's best not to commit large files such as logs and videos.
+
+# * Good vs bad:
+# | Good commit message | Bad commit message |
+# |---------------------+--------------------|
+# | [[file:https://i.imgur.com/k0Llu0s.png]] | [[file:https://i.imgur.com/8vCOZQP.png]] |
