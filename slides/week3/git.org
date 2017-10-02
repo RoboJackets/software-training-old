@@ -31,7 +31,8 @@ Call on students to explain each
 ** Remotes vs Branches vs Forks
 - A fork or clone does a full copy of the git repo
 - A remote is a pointer to another copy of this git repo
-- A repository is a collection of *branches*
+- A repository can contain a collection of *branches*
+- Each branch is an independent copy of the code
 - You can only directly modify local branches, but:
   - You can merge from a remote into your branch (pull)
   - You can merge from your branch to a remote (push)
