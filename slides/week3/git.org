@@ -47,14 +47,6 @@ Call on students to explain each
 These tools are not installed by default.
 #+END_NOTES
 - Some useful tools to visualize your repo's git history as a graph:
-  - ~git porcelain~
-    #+BEGIN_SRC sh
-      git log --oneline --graph --all --decorate
-    #+END_SRC
-
-    #+BEGIN_SRC sh :results output :exports results
-      git log --oneline --graph --decorate | head -n9
-    #+END_SRC
   - ~gitk~
   - ~git~ integrations for your favorite editor!
 
@@ -66,8 +58,8 @@ These tools are not installed by default.
 
     # Create two branches, starting from the current commit
 
-    git branch branch1
-    git branch branch2
+    git branch stableRj
+    git branch betaRj
   #+END_SRC
 
 ** Switching Branches
@@ -75,7 +67,7 @@ These tools are not installed by default.
 - Only one branch can be worked on at a time
 - ~git status~ will display info on your current branch
 - ~git checkout~ lets you switch between branches
-- Let's checkout the ~branch1~ branch now
+- Let's checkout the ~stableRj~ branch now
   #+BEGIN_SRC sh
     git status
     #> On branch master
@@ -83,19 +75,19 @@ These tools are not installed by default.
 
     # git checkout <BRANCH_NAME>
 
-    git checkout branch1
-    #> Switched to branch 'branch1'
+    git checkout stableRj
+    #> Switched to branch 'stableRj'
 
     git status
-    #> On branch branch1
+    #> On branch stableRj
     #> nothing to commit, working tree clean
   #+END_SRC
 
-** First branch1 Commit
+** First stableRj Commit
 #+BEGIN_NOTES
 Do something visual, e.x., draw on whiteboard, gitk
 #+END_NOTES
-- Let's add a commit to the ~branch1~ branch
+- Let's add a commit to the ~stableRj~ branch
   #+BEGIN_SRC sh
     echo "Stability counts!" > stable_release.txt
     git status
@@ -107,15 +99,15 @@ Do something visual, e.x., draw on whiteboard, gitk
 - This will *not affect* any other branches
 - The other branches will stay behind on 'initial commit'
 
-** First branch2 Commit
-- Let's make an experimental commit on the ~branch2~ branch
+** First betaRj Commit
+- Let's make an experimental commit on the ~betaRj~ branch
   #+BEGIN_SRC sh
-    git checkout branch2
+    git checkout betaRj
     echo "This feature is unstable!" > beta_release.txt
     git add -A
     git commit -m "Add beta_release.txt"
   #+END_SRC
-- Since the ~branch1~ branch was *behind* the ~branch2~ branch, the commit history has diverged
+- Since the ~stableRj~ branch was *behind* the ~betaRj~ branch, the commit history has diverged
 - Play around and checkout the various branches!
   #+BEGIN_SRC shell
     git checkout <BRANCH>
@@ -127,14 +119,14 @@ Do something visual, e.x., draw on whiteboard, gitk
 #+BEGIN_NOTES
 Do something visual at end to show other branches are unchanged. When the students use vi, let them know i to insert, wq to save+quit
 #+END_NOTES
-- Let's bring the hard work from the ~branch2~ branch onto the ~branch1~ branch
-- Right now, the ~branch1~ and the ~branch2~ branch have 'diverged'
+- Let's bring the hard work from the ~betaRj~ branch onto the ~stableRj~ branch
+- Right now, the ~stableRj~ and the ~betaRj~ branch have 'diverged'
 - We need to bring them back together, this is called a *merge*
   #+BEGIN_SRC sh
     # Checkout to the branch we want to merge **into** aka the "base branch"
-    git checkout branch1
-    # Merge the branch we want (branch2) into the current branch (branch1)
-    git merge branch2
+    git checkout stableRj
+    # Merge the branch we want (betaRj) into the current branch (stableRj)
+    git merge betaRj
     # This will launch an editor, save and quit it to complete
   #+END_SRC
 - This does not change any other branch
@@ -154,7 +146,7 @@ Do something visual at end to show other branches are unchanged. When the studen
 ** How to make a pull request
 - Push code locally stored on your computer to your fork on GitHub
   #+BEGIN_SRC shell
-    git push origin branch1
+    git push origin stableRj
   #+END_SRC
 - Locate your fork on GitHub and click "New pull request"
 [[file:https://i.imgur.com/8xwEajp.jpg]]
