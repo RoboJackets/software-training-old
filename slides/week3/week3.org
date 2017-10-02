@@ -37,7 +37,7 @@ initializer lists require c++11 for vectors.
 #+END_NOTES
 - an object that can contain a variable number of other objects
 - you can keep adding elements to the vector
-- order of insertion in maintained
+- order of insertion is maintained
 #+BEGIN_SRC C++
   #include <vector>
 
