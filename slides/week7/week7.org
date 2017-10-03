@@ -22,6 +22,7 @@ The list class in the STL is specifically a doubly-linked list, but we're talkin
 #+END_NOTES
 - A list is any data structure that is ordered
 - Useful when relative ordering between elements is important
+- In this case, we're not talking about an actual data structure, but a high-level label or category of data structures
 - There are various different implementations of lists in the C++ standard library
 
 * Arrays and Vectors
@@ -35,7 +36,8 @@ The list class in the STL is specifically a doubly-linked list, but we're talkin
 forward_list and list are the STL implementations of singly-linked and doubly-linked lists, respectively. You'll want to illustrate how the nodes work in some way. If there's no white board available, maybe type up a node class really quickly to show how next pointers work.
 #+END_NOTES
 - Lists in which each element "points" to the next element in the list
-- The programmer has access to the list's "head" (the first element) and sometimes the "tail" (the last element)
+- The programmer only has direct access to the list's "head" (the first element) and sometimes the "tail" (the last element)
+  - Every other element can only be found by starting from one end and moving down the list node-by-node
 - Advantages: flexible capacity, easy to add and remove data from the front and back
 - Disadvantages: retrieving elements in the middle of the list requires starting at the head and then traversing the list until the desired element is found
 [[file:https://www.cs.usfca.edu/~srollins/courses/cs112-f08/web/notes/linkedlists/ll2.gif]]
@@ -73,7 +75,8 @@ The highlight here is access time. Good for keeping records of data to be access
 
 * Trees
 - A tree is like a linked list, except each element can point to more than one element
-- The top node in the tree is called the root
+- The first node in the tree is the root
+  - Like the head in Linked Lists, every other node is accessible by navigating from the root
 - A node that points to other nodes is a parent node
 - A node that's pointed to is called a child node
 - Nodes without children are called the leaves of the tree
