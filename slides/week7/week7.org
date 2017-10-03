@@ -1,0 +1,120 @@
+#+TITLE: Week 7
+#+AUTHOR: Josh Ting, Raymond Ortiz
+#+EMAIL: josh.ting@gatech.edu, rortiz9@gatech.edu
+
+* What are we doing today?
+- Data Structures
+  - Different types
+  - Uses
+  - Advantages and Disadvantages
+- Templates
+
+* Data Structures
+#+BEGIN_NOTES
+Make sure it's clear that each data structure has a niche it can fill. Thinking with data structures is a matter of picking the right tool for the job.
+#+END_NOTES
+- Data structures (or containers, collections) are objects that group together elements of data
+- Different data structures offer different advantages and disadvantages in terms of how data is related or how efficient it is to interact with the data
+
+* Lists
+#+BEGIN_NOTES
+The list class in the STL is specifically a doubly-linked list, but we're talking about the abstract data type here. Make sure they don't confuse the two.
+#+END_NOTES
+- A list is any data structure that is ordered
+- Useful when relative ordering between elements is important
+- In this case, we're not talking about an actual data structure, but a high-level label or category of data structures
+- There are various different implementations of lists in the C++ standard library
+
+* Arrays and Vectors
+- You already have worked with arrays, which are built into the syntax of C++
+- Vectors are more formal arrays that handle resizing for you and have a number of helpful built-in methods
+- Advantages: elements are ordered and easily retrievable
+- Disadvantages: capacity is fixed; sometimes needs to shift all elements (costly) to preserve order after adding/removing
+
+* Linked Lists (forward_list, list)
+#+BEGIN_NOTES
+forward_list and list are the STL implementations of singly-linked and doubly-linked lists, respectively. You'll want to illustrate how the nodes work in some way. If there's no white board available, maybe type up a node class really quickly to show how next pointers work.
+#+END_NOTES
+- Lists in which each element "points" to the next element in the list
+- The programmer only has direct access to the list's "head" (the first element) and sometimes the "tail" (the last element)
+  - Every other element can only be found by starting from one end and moving down the list node-by-node
+- Advantages: flexible capacity, easy to add and remove data from the front and back
+- Disadvantages: retrieving elements in the middle of the list requires starting at the head and then traversing the list until the desired element is found
+[[file:https://www.cs.usfca.edu/~srollins/courses/cs112-f08/web/notes/linkedlists/ll2.gif]]
+
+* Stacks
+#+BEGIN_NOTES
+Some useful CSy examples: back/forward buttons, undo/redo, function activation.
+
+You can actually specify which container you want to back the STL stack/queue. By default it's backed by a deque, but you can choose a vector or a list instead.
+#+END_NOTES
+- LIFO (last-in first-out) list with two key functions:
+  - Push: Places an element on the stack
+  - Pop: Removes the element most recently added to the stack
+- Implemented using another list (Vector, Linked List); inherits its properties
+
+* Queues
+#+BEGIN_NOTES
+Some obvious useful examples: literally anything that ends in "queue" (printer queue, process queue, people queue).
+#+END_NOTES
+- FIFO (first-in first-out) list with two key functions:
+  - Push: Adds an element to the end of the queue
+  - Pop: Removes the element at the front of the queue
+- Also backed by another list
+
+* Sets and Maps
+#+BEGIN_NOTES
+The highlight here is access time. Good for keeping records of data to be accessed later. Phonebook/dictionary analogies work well.
+#+END_NOTES
+- A set is any data structure without duplicate elements
+  - Unlike lists, sets do not necessarily have order
+- A map is a set of keys that each point to a corresponding value
+  - A key and value are together called a pair or key-value pair
+- You can add new pairs to a map, as well as remove or modify existing pairs
+- If you provide a map with a key, the map will return its value
+
+* Trees
+- A tree is like a linked list, except each element can point to more than one element
+- The first node in the tree is the root
+  - Like the head in Linked Lists, every other node is accessible by navigating from the root
+- A node that points to other nodes is a parent node
+- A node that's pointed to is called a child node
+- Nodes without children are called the leaves of the tree
+[[file:https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Binary_tree.svg/300px-Binary_tree.svg.png]]
+
+* Graphs
+#+BEGIN_NOTES
+Algorithms to discuss: DFS/BFS, Dijkstra's, A*, Minimum Spanning Trees.
+#+END_NOTES
+- A collection of nodes with edges connecting them
+- A more general form of trees
+  - More accurately, trees are a specific form of graphs
+- Very few constraints; there can be any number of nodes with any number of edges connecting any of them
+- Good for modeling maps and networks, which is useful for robotics
+- A number of well-known algorithms for processing graphs, also useful for robotics
+
+* Templates
+#+BEGIN_NOTES
+Good idea to plug the sample code here, as it's easier to explain with examples. There is a simple example on the next slide.
+#+END_NOTES
+- Templates are a mechanism to make your code generic
+- Instead of writing code for a specific data type, you can have a placeholder "generic" type
+- The compiler will figure out which type(s) you're actually using and replace the generic type
+- All data structures use these to make them compatible with any data
+
+* Templates Example
+- Let's say you have the following function that adds two numbers together:
+#+BEGIN_SRC C++ -n
+    int add(int a, int b) {
+        return a + b;
+    }
+#+END_SRC
+- Now let's say you want to have the same function for doubles
+- You may be tempted to make a second function with the types changed, but you can also do this:
+#+BEGIN_SRC C++ -n
+    template<class T>
+    T add(T a, T b) {
+        return a + b;
+    }
+#+END_SRC
+- This not only supports both ints and doubles, but any type that uses the + operator
