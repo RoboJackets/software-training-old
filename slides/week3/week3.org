@@ -112,7 +112,7 @@ ask what is the result of this code. Call someone up to show where it will end u
 #+END_NOTES
 #+BEGIN_SRC C++
   vector<int> vec = {66,89,0,60,17,90,8};
-  vector<int>::iterator it = vec.rbegin();
+  vector<int>::reverse_iterator it = vec.rbegin();
   it += 3;
 #+END_SRC
 #+ATTR_HTML: :width 50%
@@ -124,7 +124,7 @@ write some for loops using iterators and printing out the numbers
 #+END_NOTES
 #+BEGIN_SRC C++
   vector<int> vec = {66,89,0,60,17,90,8};
-  vector<int>::iterator it = vec.rend();
+  vector<int>::reverse_iterator it = vec.rbegin();
   it += 3;
 #+END_SRC
 #+ATTR_HTML: :width 50%
