@@ -29,8 +29,8 @@
 <section id="sec-title-slide"><h1 class="title">Week 3</h1>
 </section>
 
-<section id="slide-org66d3a7c">
-<h2 id="org66d3a7c">What are we doing today?</h2>
+<section id="slide-org59e58c8">
+<h2 id="org59e58c8">What are we doing today?</h2>
 <ul>
 <li>Data structures and algorithms in C++</li>
 <li>Branching and merging in Git</li>
@@ -39,8 +39,8 @@
 </ul>
 
 </section>
-<section id="slide-org9342a9c">
-<h2 id="org9342a9c">What is an object?</h2>
+<section id="slide-orgd6e79c9">
+<h2 id="orgd6e79c9">What is an object?</h2>
 <ul>
 <li>a module of reusable code
 <ul>
@@ -61,8 +61,8 @@
 </ul>
 
 </section>
-<section id="slide-org5ed088e">
-<h2 id="org5ed088e">Arrays</h2>
+<section id="slide-orga17bd88">
+<h2 id="orga17bd88">Arrays</h2>
 <ul>
 <li>an object that can contain a set number of other objects</li>
 <li>the size of the array cannot change</li>
@@ -78,8 +78,8 @@
 </div>
 
 </section>
-<section id="slide-org9781d2f">
-<h2 id="org9781d2f">Array methods</h2>
+<section id="slide-orgb4b714d">
+<h2 id="orgb4b714d">Array methods</h2>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -112,8 +112,8 @@
 </table>
 
 </section>
-<section id="slide-org8d9386d">
-<h2 id="org8d9386d">Vectors</h2>
+<section id="slide-orga395490">
+<h2 id="orga395490">Vectors</h2>
 <aside class="notes">
 <p>
 initializer lists require c++11 for vectors.
@@ -135,8 +135,8 @@ initializer lists require c++11 for vectors.
 </div>
 
 </section>
-<section id="slide-org7344cc3">
-<h2 id="org7344cc3">Vector methods</h2>
+<section id="slide-org15378d5">
+<h2 id="org15378d5">Vector methods</h2>
 <aside class="notes">
 <p>
 Vectors can grow as items are added, whereas arrays are static.
@@ -144,7 +144,7 @@ Vectors can grow as items are added, whereas arrays are static.
 
 </aside>
 <ul>
-<li>Everything from the <a href="#/slide-org9781d2f">arrays slide</a>, and&#x2026;</li>
+<li>Everything from the <a href="#/slide-orgb4b714d">arrays slide</a>, and&#x2026;</li>
 
 </ul>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -179,8 +179,8 @@ Vectors can grow as items are added, whereas arrays are static.
 </table>
 
 </section>
-<section id="slide-org78a90de">
-<h2 id="org78a90de">Iterators</h2>
+<section id="slide-org631c458">
+<h2 id="org631c458">Iterators</h2>
 <ul>
 <li>An object that lets you access and modify objects in a container</li>
 <li>Depending on their type, they will let you read or write data in the container, and move forwards, backwards, or both</li>
@@ -189,8 +189,8 @@ Vectors can grow as items are added, whereas arrays are static.
 </ul>
 
 </section>
-<section id="slide-orgae89f1c">
-<h2 id="orgae89f1c">Iterator methods</h2>
+<section id="slide-orgffb00e2">
+<h2 id="orgffb00e2">Iterator methods</h2>
 <aside class="notes">
 <p>
 picture upcoming. mention that the method should be called on the containing object
@@ -234,8 +234,8 @@ picture upcoming. mention that the method should be called on the containing obj
 </table>
 
 </section>
-<section id="slide-orga79d7be">
-<h2 id="orga79d7be">Moving iterators</h2>
+<section id="slide-org5a3b9e2">
+<h2 id="org5a3b9e2">Moving iterators</h2>
 <aside class="notes">
 <p>
 picture upcoming
@@ -249,8 +249,8 @@ picture upcoming
 </ul>
 
 </section>
-<section id="slide-orgcad305e">
-<h2 id="orgcad305e">Iterator practice</h2>
+<section id="slide-org9b503a8">
+<h2 id="org9b503a8">Iterator practice</h2>
 <aside class="notes">
 <p>
 requires c++ 11.
@@ -311,7 +311,7 @@ ask what is the result of this code. Call someone up to show where it will end u
 <div class="org-src-container">
 
 <pre  class="src src-C++"><span style="color: #598249;">vector</span>&lt;<span style="color: #598249;">int</span>&gt; <span style="color: #2F7BDE;">vec</span> = {66,89,0,60,17,90,8};
-<span style="color: #15968D;">vector</span>&lt;<span style="color: #598249;">int</span>&gt;::<span style="color: #598249;">iterator</span> <span style="color: #2F7BDE;">it</span> = vec.rbegin();
+<span style="color: #15968D;">vector</span>&lt;<span style="color: #598249;">int</span>&gt;::<span style="color: #598249;">reverse_iterator</span> <span style="color: #2F7BDE;">it</span> = vec.rbegin();
 it += 3;
 </pre>
 </div>
@@ -332,7 +332,7 @@ write some for loops using iterators and printing out the numbers
 <div class="org-src-container">
 
 <pre  class="src src-C++"><span style="color: #598249;">vector</span>&lt;<span style="color: #598249;">int</span>&gt; <span style="color: #2F7BDE;">vec</span> = {66,89,0,60,17,90,8};
-<span style="color: #15968D;">vector</span>&lt;<span style="color: #598249;">int</span>&gt;::<span style="color: #598249;">iterator</span> <span style="color: #2F7BDE;">it</span> = vec.rend();
+<span style="color: #15968D;">vector</span>&lt;<span style="color: #598249;">int</span>&gt;::<span style="color: #598249;">reverse_iterator</span> <span style="color: #2F7BDE;">it</span> = vec.rbegin();
 it += 3;
 </pre>
 </div>
@@ -343,8 +343,8 @@ it += 3;
 </div>
 
 </section>
-<section id="slide-orgd804412">
-<h2 id="orgd804412">Algorithms</h2>
+<section id="slide-org25490b2">
+<h2 id="org25490b2">Algorithms</h2>
 <ul>
 <li>algorithms is a header that includes useful operators that can be used on vectors, arrays and other containers</li>
 <li>uses iterators to interact with these containers</li>
@@ -359,8 +359,8 @@ it += 3;
 </ul>
 
 </section>
-<section id="slide-orgf52bb0a">
-<h2 id="orgf52bb0a">Does not modify the container</h2>
+<section id="slide-org27d9be0">
+<h2 id="org27d9be0">Does not modify the container</h2>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -388,8 +388,8 @@ it += 3;
 </table>
 
 </section>
-<section id="slide-orgdad3f60">
-<h2 id="orgdad3f60">Modifies the container</h2>
+<section id="slide-org0ca35a3">
+<h2 id="org0ca35a3">Modifies the container</h2>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -422,8 +422,8 @@ it += 3;
 </table>
 
 </section>
-<section id="slide-org572790a">
-<h2 id="org572790a">Modifies destination container</h2>
+<section id="slide-org6fbae7e">
+<h2 id="org6fbae7e">Modifies destination container</h2>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 

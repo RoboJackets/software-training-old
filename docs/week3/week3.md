@@ -28,7 +28,7 @@ array<int, 3> name = {1, 2, 3};
 ```
 
 
-<a id="orgfcbb28f"></a>
+<a id="org846784d"></a>
 
 # Array methods
 
@@ -63,7 +63,7 @@ Vectors can grow as items are added, whereas arrays are static.
 
 </div>
 
--   Everything from the [arrays slide](#orgfcbb28f), and&#x2026;
+-   Everything from the [arrays slide](#org846784d), and&#x2026;
 
 | `clear`     | removes all items                   |
 | `insert`    | inserts an item at a specific index |
@@ -141,7 +141,7 @@ ask what is the result of this code. Call someone up to show where it will end u
 
 ```C++
 vector<int> vec = {66,89,0,60,17,90,8};
-vector<int>::iterator it = vec.rbegin();
+vector<int>::reverse_iterator it = vec.rbegin();
 it += 3;
 ```
 
@@ -154,7 +154,7 @@ write some for loops using iterators and printing out the numbers
 
 ```C++
 vector<int> vec = {66,89,0,60,17,90,8};
-vector<int>::iterator it = vec.rend();
+vector<int>::reverse_iterator it = vec.rbegin();
 it += 3;
 ```
 
