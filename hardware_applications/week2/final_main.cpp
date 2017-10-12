@@ -10,7 +10,7 @@ int main() {
 
     cout << "Robot ready!" << endl;
 
-    string commands = "forward back left right left forward waitForButton stop";
+    string commands = "forward backward left right left forward waitForButton stop";
 
     executeCommandString(robot, commands);
 
