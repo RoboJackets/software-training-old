@@ -3,14 +3,27 @@
 #+EMAIL: kristaps@robojackets.org, rortiz9@gatech.edu, schintalapudi@gatech.edu
 
 * What are we doing today?
-- How a program's memory is structured at a high level
+- How a program's memory is structured and maintained
 - References and pointers
 - How to convert objects between different types
 - No =git= slides this week!
 - TODO hardware application
 
-* Lifetimes
-- TODO
+* What is the output?
+#+BEGIN_NOTES
+Ask them the output of this code. Then talk about how var and a are not the same place in memory.
+#+END_NOTES
+#+BEGIN_SRC c++
+#include <iostream>
+int increment(int a) {
+  a = a + 5;
+}
+int main() {
+  int var = 5;
+  increment(var);
+  std::cout << var << std::endl;
+}
+#+END_SRC
 
 * Memory structure
 #+BEGIN_NOTES
@@ -21,16 +34,40 @@ Make sure to emphasize how important memory allocation is for any real program. 
  - *The stack:* managed automatically by the language
  - *The heap:* your space to do whatever you want
   - You can ask for memory from the OS and return it
-    - this all happens at runtime
+    - The heap is managed at runtime
   - You have to keep track of what you've allocated to avoid memory leaks
 - At an even higher level, all the memory in your computer is a huge, indexable, iterable space, divided into bytes
 
-* What is a byte
-- TODO
+** What is a byte
+#+BEGIN_NOTES
+They may never have seen bianry before
+#+END_NOTES
+- 8 bits (0,1)
+  - 00101010
+  - 00010001
+- smallest indexable space on your computer
+
+** Object lifetimes stack
+#+BEGIN_NOTES
+talk about how in the below example the int is allocated on the stack
+#+END_NOTES
+- All variables have different lifetimes depending on where they are allocated in memory
+#+BEGIN_SRC c++
+#include <iostream>
+void increment(int a) {
+  a = a + 5;
+}
+int main() {
+  int var = 5;
+  increment(var);
+  std::cout << var << std::endl;
+}
+#+END_SRC
 
 * References
 #+BEGIN_NOTES
-Parameters are copied into the new block so the function can't modify anything outside of its scope. Explicitly using a reference allows a function to do that. Performance can also improve, since you're only copying a memory address instead of a (potentially) larger object. Run through some basic examples here.
+Parameters are copied into the new block so the function can't modify anything outside of its scope. Explicitly using a reference allows a function to do that.
+Performance can also improve, since you're only copying a memory address instead of a (potentially) larger object. Run through some basic examples here.
 #+END_NOTES
 - A reference is a variable that points to the same content as another variable
 - Why would you want that?
@@ -41,6 +78,22 @@ Parameters are copied into the new block so the function can't modify anything o
 
 ** Picture
 - TODO picture
+
+** Passing by reference
+#+BEGIN_NOTES
+Show them this example and then walk them through it. with reference to previous slide.
+#+END_NOTES
+#+BEGIN_SRC c++
+#include <iostream>
+void increment(int &a) {
+  a = a + 5;
+}
+int main() {
+  int var = 5;
+  increment(var);
+  std::cout << var << std::endl;
+}
+#+END_SRC
 
 * Pointers
 #+BEGIN_NOTES
@@ -61,7 +114,7 @@ Run through some basic examples here. Pointers are great for passing around heap
 - TODO picture
 
 * Pointer arithmatic
-- TODO
+- In c++ different datatypes have different sizes
 
 ** Picture
 
@@ -92,7 +145,7 @@ Each type has an initialization function. Run through some basic examples here.
 * Casting, the wrong way
 - Sometimes you want to convert a variable to a different type: this is called casting
 - In C, you can simply change the type of a variable like so:
-#+BEGIN_SRC c
+#+BEGIN_SRC c++
 B* old_var = new B(); // some object
 A* new_var = (A*)old_var;
 #+END_SRC
