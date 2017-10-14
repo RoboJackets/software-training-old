@@ -40,7 +40,7 @@ Make sure to emphasize how important memory allocation is for any real program. 
 
 ** What is a byte
 #+BEGIN_NOTES
-They may never have seen bianry before
+They may never have seen bibary before. 26, 17 do not talk about how binary works
 #+END_NOTES
 - 8 bits (0,1)
   - 00101010
@@ -49,9 +49,13 @@ They may never have seen bianry before
 
 ** Object lifetimes stack
 #+BEGIN_NOTES
-talk about how in the below example the int is allocated on the stack
+talk about how in the below example the int is allocated on the stack. mention what stack overflow is
 #+END_NOTES
 - All variables have different lifetimes depending on where they are allocated in memory
+- Every method call has its own copy of the variables on the stack
+- Stack overflow
+
+** Stack example
 #+BEGIN_SRC c++
 #include <iostream>
 void increment(int a) {
@@ -63,6 +67,7 @@ int main() {
   std::cout << var << std::endl;
 }
 #+END_SRC
+TODO picture
 
 * References
 #+BEGIN_NOTES
@@ -105,24 +110,75 @@ Run through some basic examples here. Pointers are great for passing around heap
  - You have to explicitly get the value a pointer is pointing to
  - You can change where a pointer is pointing
 
-** Picture
-- TODO picture
+** How to get an address
+- The *&* operator is used to get an address of a variable
+- Use the *** operator to denote a pointer variable
+#+BEGIN_SRC c++
+int main() {
+  int var = 5;
+  // TYPE* name;
+  int* var_ptr = &var;
+}
+#+END_SRC
 
-* Dereferencing pointers
+*** Example
+#+BEGIN_SRC c++
+int main() {
+  int var = 5;
+  // TYPE* name;
+  int* var_ptr = &var;
+}
+#+END_SRC
+TODO picture
+
+** Dereferencing pointers
 - gets the value pointed to
   - here is an address, what is there?
+- use the *** operator in front of a pointer to dereference it
+#+BEGIN_SRC c++
+#include <iostream>
+int main() {
+  int var = 5;
+  // TYPE* name;
+  int* var_ptr = &var;
+  std::cout << *var_ptr << std::endl;
+}
+#+END_SRC
+
+*** Example
+#+BEGIN_SRC c++
+#include <iostream>
+int main() {
+  int var = 5;
+  // TYPE* name;
+  int* var_ptr = &var;
+  std::cout << *var_ptr << std::endl;
+}
+#+END_SRC
 - TODO picture
 
 * Pointer arithmatic
 - In c++ different datatypes have different sizes
+- A pointer will increment with the size of variables pointer it is in bytes
 | =type= | =# bytes= |
 |--------+-----------|
 | char   |         1 |
 | int    |         4 |
 | double |         8 |
 
-** Picture
-- A pointer will increment with the size of variables pointer it is in bytes
+** Example
+#+BEGIN_SRC c++
+#include <iostream>
+int main() {
+  int var = 5;
+  int* var_ptr = &var;
+  var_ptr += 1;
+  char rj = 'c';
+  char* rj_ptr = &rj;
+  rj_ptr += 1;
+}
+#+END_SRC
+- TODO picture
 
 * New / Delete
 - To allocate memory on the heap you can use *new*
@@ -130,13 +186,13 @@ Run through some basic examples here. Pointers are great for passing around heap
   - returns a pointer to the memory
 - To deallocate the memory you must use delete
   - anytime memory is allocated you must deallocate it
-  - this is the cause of memoryu leaks
+  - this is the cause of memory leaks
     - stay tuned for a demo
 
 ** New
 #+BEGIN_SRC c++
 int main() {
-  A *a = new A();
+  double *a = new double();
 }
 #+END_SRC
 - TODO picture
@@ -144,7 +200,7 @@ int main() {
 ** Delete
 #+BEGIN_SRC c++
 int main() {
-  A *a = new A();
+  double *a = new double();
   delete a;
 }
 #+END_SRC
@@ -159,7 +215,7 @@ Each type has an initialization function. Run through some basic examples here.
  - =shared_ptr=: multiple =shared_ptr= s can own a single object
  - =unique_ptr=: only one =unique_ptr= can own an object
 
-** unique_ptr
+** =unique_ptr=
 #+BEGIN_NOTES
 object is a struct defined in week4.h
 #+END_NOTES
@@ -170,7 +226,7 @@ int main() {
 #+END_SRC
 - TODO picture with code to show what is pointing where
 
-** shared_ptr
+** =shared_ptr=
 #+BEGIN_SRC c++
 int main() {
   shared_ptr<object> shared_ptr1 = make_shared<object>(); // <--- here
@@ -182,7 +238,7 @@ int main() {
 #+END_SRC
 - TODO picture with code to show when it goes away
 
-*** shared_ptr
+*** =shared_ptr=
 #+BEGIN_SRC c++
 #+BEGIN_SRC c++
 int main() {
@@ -195,7 +251,7 @@ int main() {
 #+END_SRC
 - TODO picture with code to show when it goes away
 
-*** shared_ptr
+*** =shared_ptr=
 #+BEGIN_SRC c++
 #+BEGIN_SRC c++
 int main() {
@@ -209,7 +265,7 @@ int main() {
 - TODO picture with code to show when it goes away
 
 * Ownership
-- be careful about using shared pointers
+- be careful about returning a shared pointer from a method
   - who owns what?
 
 * Casting, the wrong way
@@ -251,7 +307,6 @@ OpenSSL cryptography library bug. no bounds checking allowed for buffer overflow
 #+END_NOTES
 - Heartbleed
 - https://xkcd.com/1354/
-
 
 * Memory Leak
 #+BEGIN_NOTES
