@@ -53,9 +53,19 @@ talk about how in the below example the int is allocated on the stack. mention w
 #+END_NOTES
 - All variables have different lifetimes depending on where they are allocated in memory
 - Every method call has its own copy of the variables on the stack
-- Stack overflow
+#+BEGIN_SRC c++
+#include <iostream>
+void increment(int a) {
+  a = a + 5;
+}
+int main() {
+  int var = 5;
+  increment(var);
+  std::cout << var << std::endl;
+}
+#+END_SRC
 
-** Stack example
+*** Stack example
 #+BEGIN_SRC c++
 #include <iostream>
 void increment(int a) {
@@ -81,13 +91,11 @@ Performance can also improve, since you're only copying a memory address instead
 - You can't change where a reference points after initialization
 - You can mostly just treat references exactly like normal variables once they're initialized
 
-** Picture
-- TODO picture
-
 ** Passing by reference
 #+BEGIN_NOTES
 Show them this example and then walk them through it. with reference to previous slide.
 #+END_NOTES
+- use the *&* next to a variable to make it pass by reference
 #+BEGIN_SRC c++
 #include <iostream>
 void increment(int &a) {
@@ -159,7 +167,7 @@ int main() {
 
 * Pointer arithmatic
 - In c++ different datatypes have different sizes
-- A pointer will increment with the size of variables pointer it is in bytes
+- A pointer will increment differently based on its datatype's size in bytes
 | =type= | =# bytes= |
 |--------+-----------|
 | char   |         1 |
@@ -181,12 +189,16 @@ int main() {
 - TODO picture
 
 * New / Delete
+#+BEGIN_NOTES
+do example when you get to the delete slide
+#+END_NOTES
 - To allocate memory on the heap you can use *new*
   - be careful how much you allocate
   - returns a pointer to the memory
-- To deallocate the memory you must use delete
+- To deallocate the memory you must use *delete*
   - anytime memory is allocated you must deallocate it
-  - this is the cause of memory leaks
+  - you pass the pointer to the memory you got from new
+  - not deallocating is the cause of memory leaks
     - stay tuned for a demo
 
 ** New
@@ -198,9 +210,13 @@ int main() {
 - TODO picture
 
 ** Delete
+#+BEGIN_NOTES
+use the stuct defined in week4.h, pritns when constructed and destructed
+#+END_NOTES
 #+BEGIN_SRC c++
 int main() {
   double *a = new double();
+  // ... legit code
   delete a;
 }
 #+END_SRC
@@ -208,7 +224,7 @@ int main() {
 
 * Smart pointers
 #+BEGIN_NOTES
-Each type has an initialization function. Run through some basic examples here.
+Each type has an initialization function. Run through examples in 4 slides
 #+END_NOTES
 - Wrap a normal pointer to make it easier to manage the lifecycle of objects
 - You should generally use one of these two types instead of a normal pointer:
@@ -252,7 +268,9 @@ int main() {
 - TODO picture with code to show when it goes away
 
 *** =shared_ptr=
-#+BEGIN_SRC c++
+#+BEGIN_NOTES
+do some examples using the struct defined in week4.h. prints when created and destroyed
+#+END_NOTES
 #+BEGIN_SRC c++
 int main() {
   shared_ptr<object> shared_ptr1 = make_shared<object>();
@@ -308,11 +326,10 @@ OpenSSL cryptography library bug. no bounds checking allowed for buffer overflow
 - Heartbleed
 - https://xkcd.com/1354/
 
-* Memory Leak
+* Questions?
 #+BEGIN_NOTES
 run a program that creates a lot of doubles while showing your memory usage. files may corrupt so make sure everything is closed beforehand
 #+END_NOTES
-- DO NOT TRY THIS AT HOME
-
-* Questions?
 - Ask here or on Piazza!
+- Memory leak demo
+  - DO NOT TRY THIS AT HOME
