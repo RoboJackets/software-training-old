@@ -14,15 +14,19 @@
 
 * Memory structure
 #+BEGIN_NOTES
-This is all fundamentally the same RAM, just arranged and managed in a certain way. Static memory is used for static/global variables. A new block is allocated when a function is called, and released when the function exits - this is where your parameters and local variables are stored. Mention memory leaks.
+Make sure to emphasize how important memory allocation is for any real program. This is all fundamentally the same RAM, just arranged and managed in a certain way. Static memory is used for static/global variables. A new block is allocated when a function is called, and released when the function exits - this is where your parameters and local variables are stored. Mention memory leaks.
 #+END_NOTES
 - At a high level, your program has three kinds of memory
  - *Static memory:* calculated at compile time
  - *The stack:* managed automatically by the language
  - *The heap:* your space to do whatever you want
-  - You can ask for memory from the OS and return it at runtime
+  - You can ask for memory from the OS and return it
+    - this all happens at runtime
   - You have to keep track of what you've allocated to avoid memory leaks
 - At an even higher level, all the memory in your computer is a huge, indexable, iterable space, divided into bytes
+
+* What is a byte
+- TODO
 
 * References
 #+BEGIN_NOTES
@@ -52,7 +56,20 @@ Run through some basic examples here. Pointers are great for passing around heap
 - TODO picture
 
 * Dereferencing pointers
+- gets the value pointed to
+  - here is an address, what is there?
 - TODO picture
+
+* Pointer arithmatic
+- TODO
+
+** Picture
+
+* New
+- TODO
+
+* Delete
+- TODO
 
 * Smart pointers
 #+BEGIN_NOTES
@@ -63,11 +80,20 @@ Each type has an initialization function. Run through some basic examples here.
  - =shared_ptr=: multiple =shared_ptr= s can own a single object
  - =unique_ptr=: only one =unique_ptr= can own an object
 
+** unique_ptr
+- TODO picture with code to show when it goes away
+
+** shared_ptr
+- TODO picture with code to show when it goes away
+
+* Ownership
+- TODO the intuitiion behind what should be used when
+
 * Casting, the wrong way
 - Sometimes you want to convert a variable to a different type: this is called casting
 - In C, you can simply change the type of a variable like so:
 #+BEGIN_SRC c
-B* old_var = ...; // some object
+B* old_var = new B(); // some object
 A* new_var = (A*)old_var;
 #+END_SRC
  - The compiler will now treat the bytes of object =old_var= as though it was of type =A=
@@ -88,6 +114,9 @@ A* new_var = (A*)old_var;
  - The compiler will check each time you assign a variable to ensure the types are compatible
 
 * Casting, the right way
+#+BEGIN_NOTES
+TODO info on why type safety is so important
+#+END_NOTES
 - C++ gives us functions that are type-safe, including compile-time checks
  - =static_cast= is mostly used for basic type conversions, e.g. between different types of numbers
  - =dynamic_cast= is mostly used for conversions between object types for polymorphism
