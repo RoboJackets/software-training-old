@@ -238,12 +238,20 @@ A* new_var = (A*)old_var;
 
 * Casting, the right way
 #+BEGIN_NOTES
-TODO info on why type safety is so important
+Really talk about why type safety is good. otherwise you can arbitrarily cast any type to any other. You might not make the mistake but someone else will
 #+END_NOTES
 - C++ gives us functions that are type-safe, including compile-time checks
  - =static_cast= is mostly used for basic type conversions, e.g. between different types of numbers
  - =dynamic_cast= is mostly used for conversions between object types for polymorphism
  - =reinterpret_cast= works like a C-style cast and generally shouldn't be used unless you know exactly what you're doing
+
+* Elite haxors
+#+BEGIN_NOTES
+OpenSSL cryptography library bug. no bounds checking allowed for buffer overflow.
+#+END_NOTES
+- Heartbleed
+- https://xkcd.com/1354/
+
 
 * Memory Leak
 #+BEGIN_NOTES
