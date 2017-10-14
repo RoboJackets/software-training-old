@@ -115,14 +115,40 @@ Run through some basic examples here. Pointers are great for passing around heap
 
 * Pointer arithmatic
 - In c++ different datatypes have different sizes
+| =type= | =# bytes= |
+|--------+-----------|
+| char   |         1 |
+| int    |         4 |
+| double |         8 |
 
 ** Picture
+- A pointer will increment with the size of variables pointer it is in bytes
 
-* New
-- TODO
+* New / Delete
+- To allocate memory on the heap you can use *new*
+  - be careful how much you allocate
+  - returns a pointer to the memory
+- To deallocate the memory you must use delete
+  - anytime memory is allocated you must deallocate it
+  - this is the cause of memoryu leaks
+    - stay tuned for a demo
 
-* Delete
-- TODO
+** New
+#+BEGIN_SRC c++
+int main() {
+  A *a = new A();
+}
+#+END_SRC
+- TODO picture
+
+** Delete
+#+BEGIN_SRC c++
+int main() {
+  A *a = new A();
+  delete a;
+}
+#+END_SRC
+- TODO picture
 
 * Smart pointers
 #+BEGIN_NOTES
@@ -134,13 +160,57 @@ Each type has an initialization function. Run through some basic examples here.
  - =unique_ptr=: only one =unique_ptr= can own an object
 
 ** unique_ptr
-- TODO picture with code to show when it goes away
+#+BEGIN_NOTES
+object is a struct defined in week4.h
+#+END_NOTES
+#+BEGIN_SRC c++
+int main() {
+  unique_ptr<object> unqiue_ptr = make_unique<object>();
+}
+#+END_SRC
+- TODO picture with code to show what is pointing where
 
 ** shared_ptr
+#+BEGIN_SRC c++
+int main() {
+  shared_ptr<object> shared_ptr1 = make_shared<object>(); // <--- here
+  {
+    shared_ptr<object> shared_ptr2 = make_shared<object>();
+  }
+  shared_ptr<object> shared_ptr3 = make_shared<object>();
+}
+#+END_SRC
+- TODO picture with code to show when it goes away
+
+*** shared_ptr
+#+BEGIN_SRC c++
+#+BEGIN_SRC c++
+int main() {
+  shared_ptr<object> shared_ptr1 = make_shared<object>();
+  {
+    shared_ptr<object> shared_ptr2 = make_shared<object>(); // <--- here
+  }
+  shared_ptr<object> shared_ptr3 = make_shared<object>();
+}
+#+END_SRC
+- TODO picture with code to show when it goes away
+
+*** shared_ptr
+#+BEGIN_SRC c++
+#+BEGIN_SRC c++
+int main() {
+  shared_ptr<object> shared_ptr1 = make_shared<object>();
+  {
+    shared_ptr<object> shared_ptr2 = make_shared<object>();
+  }
+  shared_ptr<object> shared_ptr3 = make_shared<object>(); // <--- here
+}
+#+END_SRC
 - TODO picture with code to show when it goes away
 
 * Ownership
-- TODO the intuitiion behind what should be used when
+- be careful about using shared pointers
+  - who owns what?
 
 * Casting, the wrong way
 - Sometimes you want to convert a variable to a different type: this is called casting
