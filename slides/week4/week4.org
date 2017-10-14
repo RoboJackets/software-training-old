@@ -7,13 +7,17 @@
 - References and pointers
 - How to convert objects between different types
 - No =git= slides this week!
+- TODO hardware application
+
+* Lifetimes
+- TODO
 
 * Memory structure
 #+BEGIN_NOTES
-This is all fundamentally the same RAM, just arranged and managed in a certain way. Static memory is used for static/global variables. A new stack frame is allocated when a function is called, and released when the function exits - this is where your parameters and local variables are stored. Mention memory leaks.
+This is all fundamentally the same RAM, just arranged and managed in a certain way. Static memory is used for static/global variables. A new block is allocated when a function is called, and released when the function exits - this is where your parameters and local variables are stored. Mention memory leaks.
 #+END_NOTES
 - At a high level, your program has three kinds of memory
- - *Static memory:* allocated at compile time
+ - *Static memory:* calculated at compile time
  - *The stack:* managed automatically by the language
  - *The heap:* your space to do whatever you want
   - You can ask for memory from the OS and return it at runtime
@@ -22,23 +26,33 @@ This is all fundamentally the same RAM, just arranged and managed in a certain w
 
 * References
 #+BEGIN_NOTES
-Parameters are copied into the new stack frame so the function can't modify anything outside of its scope. Explicitly using a reference allows a function to do that. Performance can also improve, since you're only copying a memory address instead of a (potentially) larger object. Run through some basic examples here.
+Parameters are copied into the new block so the function can't modify anything outside of its scope. Explicitly using a reference allows a function to do that. Performance can also improve, since you're only copying a memory address instead of a (potentially) larger object. Run through some basic examples here.
 #+END_NOTES
 - A reference is a variable that points to the same content as another variable
 - Why would you want that?
- - Share data across stack frames
+ - Share data across functions
  - Improve performance
 - You can't change where a reference points after initialization
 - You can mostly just treat references exactly like normal variables once they're initialized
+
+** Picture
+- TODO picture
 
 * Pointers
 #+BEGIN_NOTES
 Run through some basic examples here. Pointers are great for passing around heap objects, but how do you keep track of what objects are still in use?
 #+END_NOTES
 - A pointer is a special type of variable that "points to" another variable
+  - the pointer variable stores the address of a variable
 - How are these different from references?
- - You have to explicitly dereference a pointer to access its target
+ - You have to explicitly get the value a pointer is pointing to
  - You can change where a pointer is pointing
+
+** Picture
+- TODO picture
+
+* Dereferencing pointers
+- TODO picture
 
 * Smart pointers
 #+BEGIN_NOTES
@@ -78,6 +92,12 @@ A* new_var = (A*)old_var;
  - =static_cast= is mostly used for basic type conversions, e.g. between different types of numbers
  - =dynamic_cast= is mostly used for conversions between object types for polymorphism
  - =reinterpret_cast= works like a C-style cast and generally shouldn't be used unless you know exactly what you're doing
+
+* Memory Leak
+#+BEGIN_NOTES
+run a program that creates a lot of doubles while showing your memory usage. files may corrupt so make sure everything is closed beforehand
+#+END_NOTES
+- DO NOT TRY THIS AT HOME
 
 * Questions?
 - Ask here or on Piazza!
