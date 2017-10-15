@@ -56,9 +56,11 @@ talk about how in the below example the int is allocated on the stack. mention w
 #+BEGIN_SRC c++
 #include <iostream>
 void increment(int a) {
+  int c = 5;
   a = a + 5;
 }
 int main() {
+  int d = 6;
   int var = 5;
   increment(var);
   std::cout << var << std::endl;
@@ -69,15 +71,17 @@ int main() {
 #+BEGIN_SRC c++
 #include <iostream>
 void increment(int a) {
+  int c = 5;
   a = a + 5;
 }
 int main() {
+  int d = 6;
   int var = 5;
   increment(var);
   std::cout << var << std::endl;
 }
 #+END_SRC
-TODO picture
+[[file:https://imgur.com/b6KnwB2.png]]
 
 * References
 #+BEGIN_NOTES
@@ -137,7 +141,7 @@ int main() {
   int* var_ptr = &var;
 }
 #+END_SRC
-TODO picture
+[[file:https://imgur.com/HvxBD32.png]]
 
 ** Dereferencing pointers
 - gets the value pointed to
@@ -163,7 +167,7 @@ int main() {
   std::cout << *var_ptr << std::endl;
 }
 #+END_SRC
-- TODO picture
+[[file:https://imgur.com/7alG4QH.png]]
 
 * Pointer arithmatic
 - In c++ different datatypes have different sizes
@@ -174,19 +178,27 @@ int main() {
 | int    |         4 |
 | double |         8 |
 
-** Example
+** Example int
 #+BEGIN_SRC c++
 #include <iostream>
 int main() {
   int var = 5;
   int* var_ptr = &var;
   var_ptr += 1;
-  char rj = 'c';
-  char* rj_ptr = &rj;
-  rj_ptr += 1;
 }
 #+END_SRC
-- TODO picture
+[[file:https://imgur.com/74Lb2KQ.png]]
+
+** Example char
+#+BEGIN_SRC c++
+#include <iostream>
+int main() {
+  char rj = 'c';
+  char* rj_ptr = &rj;
+  rj_ptr += 2;
+}
+#+END_SRC
+[[file:https://imgur.com/vc7sR0R.png]]
 
 * New / Delete
 #+BEGIN_NOTES
@@ -204,23 +216,38 @@ do example when you get to the delete slide
 ** New
 #+BEGIN_SRC c++
 int main() {
-  double *a = new double();
+  double *a = new double(10.0);
 }
 #+END_SRC
-- TODO picture
+[[file:https://imgur.com/z3xGol7.png]]
 
 ** Delete
 #+BEGIN_NOTES
-use the stuct defined in week4.h, pritns when constructed and destructed
+use the stuct defined in week4.h, prints when constructed and destructed.
 #+END_NOTES
 #+BEGIN_SRC c++
 int main() {
-  double *a = new double();
+  double *a = new double(10.0);
   // ... legit code
   delete a;
 }
 #+END_SRC
-- TODO picture
+[[file:https://imgur.com/A6a4bsz.png]]
+
+*** Segfault
+#+BEGIN_NOTES
+tell them what a segfault is
+#+END_NOTES
+#+BEGIN_SRC c++
+int main() {
+  double *a = new double(10.0);
+  // ... legit code
+  delete a;
+  // .. more code
+  *a = 20.0
+  // .. more code
+}
+#+END_SRC
 
 * Smart pointers
 #+BEGIN_NOTES
@@ -233,54 +260,27 @@ Each type has an initialization function. Run through examples in 4 slides
 
 ** =unique_ptr=
 #+BEGIN_NOTES
-object is a struct defined in week4.h
+object is a struct defined in week4.h. make sure to use it as an example
 #+END_NOTES
 #+BEGIN_SRC c++
 int main() {
-  unique_ptr<object> unqiue_ptr = make_unique<object>();
+  unique_ptr<object> u_ptr = make_unique<object>();
 }
 #+END_SRC
-- TODO picture with code to show what is pointing where
+[[file:https://imgur.com/w03Qxna.png]]
 
 ** =shared_ptr=
-#+BEGIN_SRC c++
-int main() {
-  shared_ptr<object> shared_ptr1 = make_shared<object>(); // <--- here
-  {
-    shared_ptr<object> shared_ptr2 = make_shared<object>();
-  }
-  shared_ptr<object> shared_ptr3 = make_shared<object>();
-}
-#+END_SRC
-- TODO picture with code to show when it goes away
-
-*** =shared_ptr=
-#+BEGIN_SRC c++
-#+BEGIN_SRC c++
-int main() {
-  shared_ptr<object> shared_ptr1 = make_shared<object>();
-  {
-    shared_ptr<object> shared_ptr2 = make_shared<object>(); // <--- here
-  }
-  shared_ptr<object> shared_ptr3 = make_shared<object>();
-}
-#+END_SRC
-- TODO picture with code to show when it goes away
-
-*** =shared_ptr=
 #+BEGIN_NOTES
-do some examples using the struct defined in week4.h. prints when created and destroyed
+object is a struct defined in week4.h. make sure to use it as an example
 #+END_NOTES
 #+BEGIN_SRC c++
 int main() {
-  shared_ptr<object> shared_ptr1 = make_shared<object>();
-  {
-    shared_ptr<object> shared_ptr2 = make_shared<object>();
-  }
-  shared_ptr<object> shared_ptr3 = make_shared<object>(); // <--- here
+  shared_ptr<object> s_ptr1 = make_shared<object>();
+  shared_ptr<object> s_ptr2 = make_shared<object>();
+  shared_ptr<object> s_ptr3 = make_shared<object>();
 }
 #+END_SRC
-- TODO picture with code to show when it goes away
+[[file:https://i.imgur.com/AzB6QcQ.png]]
 
 * Ownership
 - be careful about returning a shared pointer from a method
