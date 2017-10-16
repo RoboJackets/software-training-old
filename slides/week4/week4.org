@@ -7,7 +7,7 @@
 - References and pointers
 - How to convert objects between different types
 - No =git= slides this week!
-- TODO hardware application
+- Pointer worksheets
 
 * What is the output?
 #+BEGIN_NOTES
@@ -40,7 +40,7 @@ Make sure to emphasize how important memory allocation is for any real program. 
 
 ** What is a byte
 #+BEGIN_NOTES
-They may never have seen bibary before. 26, 17 do not talk about how binary works
+They may never have seen binary before. 26, 17 do not talk about how binary works
 #+END_NOTES
 - 8 bits (0,1)
   - 00101010
@@ -49,7 +49,7 @@ They may never have seen bibary before. 26, 17 do not talk about how binary work
 
 ** Object lifetimes stack
 #+BEGIN_NOTES
-talk about how in the below example the int is allocated on the stack. mention what stack overflow is
+Picture on next slide. talk about how in the below example the int is allocated on the stack. mention what stack overflow is
 #+END_NOTES
 - All variables have different lifetimes depending on where they are allocated in memory
 - Every method call has its own copy of the variables on the stack
@@ -97,7 +97,7 @@ Performance can also improve, since you're only copying a memory address instead
 
 ** Passing by reference
 #+BEGIN_NOTES
-Show them this example and then walk them through it. with reference to previous slide.
+ask them what the output of the code is and then walk them through it
 #+END_NOTES
 - use the *&* next to a variable to make it pass by reference
 #+BEGIN_SRC c++
@@ -114,7 +114,7 @@ int main() {
 
 * Pointers
 #+BEGIN_NOTES
-Run through some basic examples here. Pointers are great for passing around heap objects, but how do you keep track of what objects are still in use?
+Pointers are great for passing around heap objects, but how do you keep track of what objects are still in use?
 #+END_NOTES
 - A pointer is a special type of variable that "points to" another variable
   - the pointer variable stores the address of a variable
@@ -158,6 +158,9 @@ int main() {
 #+END_SRC
 
 *** Example
+#+BEGIN_NOTES
+Now run through some basic examples
+#+END_NOTES
 #+BEGIN_SRC c++
 #include <iostream>
 int main() {
@@ -267,7 +270,8 @@ int main() {
   unique_ptr<object> u_ptr = make_unique<object>();
 }
 #+END_SRC
-[[file:https://imgur.com/w03Qxna.png]]
+#+ATTR_HTML: :width 70%
+[[file:https://i.imgur.com/nK51rsP.png]]
 
 ** =shared_ptr=
 #+BEGIN_NOTES
@@ -276,11 +280,49 @@ object is a struct defined in week4.h. make sure to use it as an example
 #+BEGIN_SRC c++
 int main() {
   shared_ptr<object> s_ptr1 = make_shared<object>();
-  shared_ptr<object> s_ptr2 = make_shared<object>();
+  // <--- HERE
+  {
+    shared_ptr<object> s_ptr2 = make_shared<object>();
+  }
   shared_ptr<object> s_ptr3 = make_shared<object>();
 }
 #+END_SRC
-[[file:https://i.imgur.com/AzB6QcQ.png]]
+#+ATTR_HTML: :width 70%
+[[file:https://i.imgur.com/Sy6CY5q.png]]
+
+*** =shared_ptr=
+#+BEGIN_NOTES
+object is a struct defined in week4.h. make sure to use it as an example
+#+END_NOTES
+#+BEGIN_SRC c++
+int main() {
+  shared_ptr<object> s_ptr1 = make_shared<object>();
+  {
+    shared_ptr<object> s_ptr2 = make_shared<object>();
+    // <--- HERE
+  }
+  shared_ptr<object> s_ptr3 = make_shared<object>();
+}
+#+END_SRC
+#+ATTR_HTML: :width 70%
+[[file:https://i.imgur.com/y3ITWBn.png]]
+
+*** =shared_ptr=
+#+BEGIN_NOTES
+object is a struct defined in week4.h. make sure to use it as an example
+#+END_NOTES
+#+BEGIN_SRC c++
+int main() {
+  shared_ptr<object> s_ptr1 = make_shared<object>();
+  {
+    shared_ptr<object> s_ptr2 = make_shared<object>();
+  }
+  shared_ptr<object> s_ptr3 = make_shared<object>();
+  // <--- HERE
+}
+#+END_SRC
+#+ATTR_HTML: :width 70%
+[[file:https://i.imgur.com/qLddS8b.png]]
 
 * Ownership
 - be careful about returning a shared pointer from a method
