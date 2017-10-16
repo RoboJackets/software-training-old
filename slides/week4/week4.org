@@ -1,0 +1,377 @@
+#+TITLE: Week 4
+#+AUTHOR: Kristaps Berzinch, Raymond Ortiz, Sahit Chintalapudi
+#+EMAIL: kristaps@robojackets.org, rortiz9@gatech.edu, schintalapudi@gatech.edu
+
+* What are we doing today?
+- How a program's memory is structured and maintained
+- References and pointers
+- How to convert objects between different types
+- No =git= slides this week!
+- Pointer worksheets
+
+* What is the output?
+#+BEGIN_NOTES
+Ask them the output of this code. Then talk about how var and a are not the same place in memory.
+#+END_NOTES
+#+BEGIN_SRC c++
+#include <iostream>
+int increment(int a) {
+  a = a + 5;
+}
+int main() {
+  int var = 5;
+  increment(var);
+  std::cout << var << std::endl;
+}
+#+END_SRC
+
+* Memory structure
+#+BEGIN_NOTES
+Make sure to emphasize how important memory allocation is for any real program. This is all fundamentally the same RAM, just arranged and managed in a certain way. Static memory is used for static/global variables. A new block is allocated when a function is called, and released when the function exits - this is where your parameters and local variables are stored. Mention memory leaks.
+#+END_NOTES
+- At a high level, your program has three kinds of memory
+ - *Static memory:* calculated at compile time
+ - *The stack:* managed automatically by the language
+ - *The heap:* your space to do whatever you want
+  - You can ask for memory from the OS and return it
+    - The heap is managed at runtime
+  - You have to keep track of what you've allocated to avoid memory leaks
+- At an even higher level, all the memory in your computer is a huge, indexable, iterable space, divided into bytes
+
+** What is a byte
+#+BEGIN_NOTES
+They may never have seen binary before. 00101010 = 26, 00010001 = 17 do not talk about how binary works
+#+END_NOTES
+- 8 bits (0,1)
+  - 00101010
+  - 00010001
+- smallest indexable space on your computer
+
+** Object lifetimes stack
+#+BEGIN_NOTES
+Picture on next slide. talk about how in the below example the int is allocated on the stack. mention what stack overflow is
+#+END_NOTES
+- All variables have different lifetimes depending on where they are allocated in memory
+- Every method call has its own copy of the variables on the stack
+#+BEGIN_SRC c++
+#include <iostream>
+void increment(int a) {
+  int c = 5;
+  a = a + 5;
+}
+int main() {
+  int d = 6;
+  int var = 5;
+  increment(var);
+  std::cout << var << std::endl;
+}
+#+END_SRC
+
+*** Stack example
+#+BEGIN_SRC c++
+#include <iostream>
+void increment(int a) {
+  int c = 5;
+  a = a + 5;
+}
+int main() {
+  int d = 6;
+  int var = 5;
+  increment(var);
+  std::cout << var << std::endl;
+}
+#+END_SRC
+[[file:https://imgur.com/b6KnwB2.png]]
+
+* References
+#+BEGIN_NOTES
+Parameters are copied into the new block so the function can't modify anything outside of its scope. Explicitly using a reference allows a function to do that.
+Performance can also improve, since you're only copying a memory address instead of a (potentially) larger object. Run through some basic examples here.
+#+END_NOTES
+- A reference is a variable that points to the same content as another variable
+- Why would you want that?
+ - Share data across functions
+ - Improve performance
+- You can't change where a reference points after initialization
+- You can mostly just treat references exactly like normal variables once they're initialized
+
+** Passing by reference
+#+BEGIN_NOTES
+ask them what the output of the code is and then walk them through it
+#+END_NOTES
+- use the *&* next to a variable to make it pass by reference
+#+BEGIN_SRC c++
+#include <iostream>
+void increment(int &a) {
+  a = a + 5;
+}
+int main() {
+  int var = 5;
+  increment(var);
+  std::cout << var << std::endl;
+}
+#+END_SRC
+
+* Pointers
+#+BEGIN_NOTES
+Pointers are great for passing around heap objects, but how do you keep track of what objects are still in use?
+#+END_NOTES
+- A pointer is a special type of variable that "points to" another variable
+  - the pointer variable stores the address of a variable
+- How are these different from references?
+ - You have to explicitly get the value a pointer is pointing to
+ - You can change where a pointer is pointing
+
+** How to get an address
+- The *&* operator is used to get an address of a variable
+- Use the *** operator to denote a pointer variable
+#+BEGIN_SRC c++
+int main() {
+  int var = 5;
+  // TYPE* name;
+  int* var_ptr = &var;
+}
+#+END_SRC
+
+*** Example
+#+BEGIN_SRC c++
+int main() {
+  int var = 5;
+  // TYPE* name;
+  int* var_ptr = &var;
+}
+#+END_SRC
+[[file:https://imgur.com/HvxBD32.png]]
+
+** Dereferencing pointers
+- gets the value pointed to
+  - here is an address, what is there?
+- use the *** operator in front of a pointer to dereference it
+#+BEGIN_SRC c++
+#include <iostream>
+int main() {
+  int var = 5;
+  // TYPE* name;
+  int* var_ptr = &var;
+  std::cout << *var_ptr << std::endl;
+}
+#+END_SRC
+
+*** Example
+#+BEGIN_NOTES
+Now run through some basic examples
+#+END_NOTES
+#+BEGIN_SRC c++
+#include <iostream>
+int main() {
+  int var = 5;
+  // TYPE* name;
+  int* var_ptr = &var;
+  std::cout << *var_ptr << std::endl;
+}
+#+END_SRC
+[[file:https://imgur.com/7alG4QH.png]]
+
+* Pointer arithmatic
+- In c++ different datatypes have different sizes
+- A pointer will increment differently based on its datatype's size in bytes
+| =type= | =# bytes= |
+|--------+-----------|
+| char   |         1 |
+| int    |         4 |
+| double |         8 |
+
+** Example int
+#+BEGIN_SRC c++
+#include <iostream>
+int main() {
+  int var = 5;
+  int* var_ptr = &var;
+  var_ptr += 1;
+}
+#+END_SRC
+[[file:https://imgur.com/74Lb2KQ.png]]
+
+** Example char
+#+BEGIN_SRC c++
+#include <iostream>
+int main() {
+  char rj = 'c';
+  char* rj_ptr = &rj;
+  rj_ptr += 2;
+}
+#+END_SRC
+[[file:https://imgur.com/vc7sR0R.png]]
+
+* New / Delete
+#+BEGIN_NOTES
+do example when you get to the delete slide
+#+END_NOTES
+- To allocate memory on the heap you can use *new*
+  - be careful how much you allocate
+  - returns a pointer to the memory
+- To deallocate the memory you must use *delete*
+  - anytime memory is allocated you must deallocate it
+  - you pass the pointer to the memory you got from new
+  - not deallocating is the cause of memory leaks
+    - stay tuned for a demo
+
+** New
+#+BEGIN_SRC c++
+int main() {
+  double *a = new double(10.0);
+}
+#+END_SRC
+[[file:https://imgur.com/z3xGol7.png]]
+
+** Delete
+#+BEGIN_NOTES
+use the stuct defined in week4.h, prints when constructed and destructed.
+#+END_NOTES
+#+BEGIN_SRC c++
+int main() {
+  double *a = new double(10.0);
+  // ... legit code
+  delete a;
+}
+#+END_SRC
+[[file:https://imgur.com/A6a4bsz.png]]
+
+*** Segfault
+#+BEGIN_NOTES
+tell them what a segfault is
+#+END_NOTES
+#+BEGIN_SRC c++
+int main() {
+  double *a = new double(10.0);
+  // ... legit code
+  delete a;
+  // .. more code
+  *a = 20.0
+  // .. more code
+}
+#+END_SRC
+
+* Smart pointers
+#+BEGIN_NOTES
+Each type has an initialization function. Run through examples in 4 slides
+#+END_NOTES
+- Wrap a normal pointer to make it easier to manage the lifecycle of objects
+- You should generally use one of these two types instead of a normal pointer:
+ - =shared_ptr=: multiple =shared_ptr= s can own a single object
+ - =unique_ptr=: only one =unique_ptr= can own an object
+
+** =unique_ptr=
+#+BEGIN_NOTES
+object is a struct defined in week4.h. make sure to use it as an example
+#+END_NOTES
+#+BEGIN_SRC c++
+int main() {
+  unique_ptr<object> u_ptr = make_unique<object>();
+}
+#+END_SRC
+#+ATTR_HTML: :width 70%
+[[file:https://i.imgur.com/nK51rsP.png]]
+
+** =shared_ptr=
+#+BEGIN_NOTES
+object is a struct defined in week4.h. make sure to use it as an example
+#+END_NOTES
+#+BEGIN_SRC c++
+int main() {
+  shared_ptr<object> s_ptr1 = make_shared<object>();
+  // <--- HERE
+  {
+    shared_ptr<object> s_ptr2 = make_shared<object>();
+  }
+  shared_ptr<object> s_ptr3 = make_shared<object>();
+}
+#+END_SRC
+#+ATTR_HTML: :width 70%
+[[file:https://i.imgur.com/Sy6CY5q.png]]
+
+*** =shared_ptr=
+#+BEGIN_NOTES
+object is a struct defined in week4.h. make sure to use it as an example
+#+END_NOTES
+#+BEGIN_SRC c++
+int main() {
+  shared_ptr<object> s_ptr1 = make_shared<object>();
+  {
+    shared_ptr<object> s_ptr2 = make_shared<object>();
+    // <--- HERE
+  }
+  shared_ptr<object> s_ptr3 = make_shared<object>();
+}
+#+END_SRC
+#+ATTR_HTML: :width 70%
+[[file:https://i.imgur.com/y3ITWBn.png]]
+
+*** =shared_ptr=
+#+BEGIN_NOTES
+object is a struct defined in week4.h. make sure to use it as an example
+#+END_NOTES
+#+BEGIN_SRC c++
+int main() {
+  shared_ptr<object> s_ptr1 = make_shared<object>();
+  {
+    shared_ptr<object> s_ptr2 = make_shared<object>();
+  }
+  shared_ptr<object> s_ptr3 = make_shared<object>();
+  // <--- HERE
+}
+#+END_SRC
+#+ATTR_HTML: :width 70%
+[[file:https://i.imgur.com/LV3kigZ.png]]
+
+* Ownership
+- be careful about returning a shared pointer from a method
+  - who owns what?
+
+* Casting, the wrong way
+- Sometimes you want to convert a variable to a different type: this is called casting
+- In C, you can simply change the type of a variable like so:
+#+BEGIN_SRC c++
+B* old_var = new B(); // some object
+A* new_var = (A*)old_var;
+#+END_SRC
+ - The compiler will now treat the bytes of object =old_var= as though it was of type =A=
+ - This is bad for type safety!
+
+* Type Safety
+#+BEGIN_SRC c
+      char c = 10;                        // this is one byte in memory
+
+      int *p = (int*) &c;                 // this is a 4-byte pointer pointing to one byte of
+                                          // memory - it compiles but leads to corrupted memory
+                                          // if you try to write to what p points to
+
+      int *q = static_cast<int*>(&c);     // throws an exception at compile time
+#+END_SRC
+- Our second cast was type-safe, the first one was not
+- Type safety is a language feature that ensures that every variable you handle is actually the type you think it is
+ - The compiler will check each time you assign a variable to ensure the types are compatible
+
+* Casting, the right way
+#+BEGIN_NOTES
+Really talk about why type safety is good. otherwise you can arbitrarily cast any type to any other. You might not make the mistake but someone else will
+#+END_NOTES
+- C++ gives us functions that are type-safe, including compile-time checks
+ - =static_cast= is mostly used for basic type conversions, e.g. between different types of numbers
+ - =dynamic_cast= is mostly used for conversions between object types for polymorphism
+ - =reinterpret_cast= works like a C-style cast and generally shouldn't be used unless you know exactly what you're doing
+
+* Elite haxors
+#+BEGIN_NOTES
+OpenSSL cryptography library bug. no bounds checking allowed for buffer overflow.
+#+END_NOTES
+- Heartbleed
+- https://xkcd.com/1354/
+
+* Questions?
+#+BEGIN_NOTES
+run a program that creates a lot of doubles while showing your memory usage. files may corrupt so make sure everything is closed beforehand
+#+END_NOTES
+- Ask here or on Piazza!
+- Memory leak demo
+  - DO NOT TRY THIS AT HOME
