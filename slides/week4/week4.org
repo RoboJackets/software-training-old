@@ -40,7 +40,7 @@ Make sure to emphasize how important memory allocation is for any real program. 
 
 ** What is a byte
 #+BEGIN_NOTES
-They may never have seen binary before. 26, 17 do not talk about how binary works
+They may never have seen binary before. 00101010 = 26, 00010001 = 17 do not talk about how binary works
 #+END_NOTES
 - 8 bits (0,1)
   - 00101010
@@ -322,7 +322,7 @@ int main() {
 }
 #+END_SRC
 #+ATTR_HTML: :width 70%
-[[file:https://i.imgur.com/qLddS8b.png]]
+[[file:https://i.imgur.com/LV3kigZ.png]]
 
 * Ownership
 - be careful about returning a shared pointer from a method
