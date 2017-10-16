@@ -34,9 +34,12 @@ This is the source repository for the 2017 RoboJackets Software training program
    + [[https://github.com/RoboJackets/software-training/blob/gh-pages/docs/week3/git.md][Git Presentation]]
    + [[https://github.com/RoboJackets/software-training/blob/gh-pages/docs/week3/week3.md][Code Presentation]]
 
+<<<<<<< HEAD
 4. Week 4
    + [[https://github.com/RoboJackets/software-training/blob/gh-pages/docs/week4/week4.md][Code Presentation]]
 
+=======
+>>>>>>> master
 * Building Slides
 
 1. Navigate to the ~./slides~ directory
