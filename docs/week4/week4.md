@@ -16,7 +16,7 @@ Ask them the output of this code. Then talk about how var and a are not the same
 
 ```c++
 #include <iostream>
-int increment(int a) {
+void increment(int a) {
   a = a + 5;
 }
 int main() {
@@ -362,9 +362,9 @@ int main() {
   shared_ptr<object> s_ptr1 = make_shared<object>();
   // <--- HERE
   {
-    shared_ptr<object> s_ptr2 = make_shared<object>();
+    shared_ptr<object> s_ptr2 = s_ptr1;
   }
-  shared_ptr<object> s_ptr3 = make_shared<object>();
+  shared_ptr<object> s_ptr3 =  s_ptr1;
 }
 ```
 
@@ -382,10 +382,10 @@ object is a struct defined in week4.h. make sure to use it as an example
 int main() {
   shared_ptr<object> s_ptr1 = make_shared<object>();
   {
-    shared_ptr<object> s_ptr2 = make_shared<object>();
+    shared_ptr<object> s_ptr2 =  s_ptr1;
     // <--- HERE
   }
-  shared_ptr<object> s_ptr3 = make_shared<object>();
+  shared_ptr<object> s_ptr3 =  s_ptr1;
 }
 ```
 
@@ -403,9 +403,9 @@ object is a struct defined in week4.h. make sure to use it as an example
 int main() {
   shared_ptr<object> s_ptr1 = make_shared<object>();
   {
-    shared_ptr<object> s_ptr2 = make_shared<object>();
+    shared_ptr<object> s_ptr2 =  s_ptr1;
   }
-  shared_ptr<object> s_ptr3 = make_shared<object>();
+  shared_ptr<object> s_ptr3 =  s_ptr1;
   // <--- HERE
 }
 ```
