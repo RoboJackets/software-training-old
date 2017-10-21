@@ -5,6 +5,8 @@
 * What are we doing today?
 - Classes in C++
 - Handling merge conflicts in =git=
+- TODO hardware application
+  - inspection of STSL
 
 * What are classes?
 - Definitions for objects, i.e. what data and methods they have
@@ -12,8 +14,17 @@
 - An object is called an *instance* of a class
  - An object has all the functions and data structures defined in its class
  - Data schema is the same across all instances of a class, but values differ
- - It's interchangeable with other objects from the same class
+ - A method can treat all instances of an object the same
+ - Think of it like a user defined, complex variable type
 
+* Scope
+- TODO general solution for scope
+** public
+- TODO
+** private
+- TODO
+** protected
+- TODO
 * A simple example
 #+BEGIN_NOTES
 A class can have some data and some methods, which can either be public or private. Private means only visible to the class itself, public means visible to any other file. Drop to a terminal and use/modify this class.
@@ -27,12 +38,12 @@ class example {
 };
 #+END_SRC
 
-* Why bother?
-- Software projects are easier to understand when related data and functions are grouped together
-- Abstracting data behind getters/setters allows you to validate inputs from other parts of your application
-- Abstracting complex tasks into class methods enables simpler, easier to read high-level code
-- Classes can be extended to add functionality with minimal extra code using inheritance
-
+* Constructors and Destructors
+- TODO
+** Constructors
+- TODO
+** Destructors
+- TODO
 * Static members
 #+BEGIN_NOTES
  Drop to a terminal and use this class.
@@ -49,8 +60,16 @@ class static_example {
 };
 #+END_SRC
 
+** Example
+- TODO static member representing the number of instances
+* Why bother?
+- Software projects are easier to understand when related data and functions are grouped together
+- Abstracting data behind getters/setters allows you to validate inputs from other parts of your application
+- Abstracting complex tasks into class methods enables simpler, easier to read high-level code
+- Classes can be extended to add functionality with minimal extra code using inheritance
+
 * Inheritance
-- Classes can inherit members from other classes
+- Classes can inherit data and methods from other classes
 #+BEGIN_SRC c++
 class child: public example {
     // we get `a` and `getA()` from example
@@ -61,6 +80,11 @@ class child: public example {
         int getAplusB() { return getA() + b; } // we can't use `a` directly since it's private
 };
 #+END_SRC
+
+** Inheritence example
+- TODO graphic about general inheritence
+** Example code
+- TODO graphic of class structure for example code
 
 * Polymorphism
 - Now we can create =child= objects with all the properties of an =example= object
@@ -82,7 +106,12 @@ class child: public example {
                                       ^
  #+END_SRC
 
+** Dynamic cast
+- TODO re-explain
 * Virtual functions
+#+BEGIN_NOTES
+Show an example using the classes defined in the example code and explained earlier
+#+END_NOTES
 - A parent class can specify that certain functions are *virtual*
 - Child classes can then implement their own versions of the function
 - The child implementation will be called even from a reference of the type of the parent
