@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Week 5</title>
+<meta name="author" content="(Kristaps Berzinch, Raymond Ortiz)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://robojackets.github.io/reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="https://robojackets.github.io/reveal.js/css/theme/white.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://robojackets.github.io/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Week 5</h1>
+</section>
+
+<section id="slide-org16d4024">
+<h2 id="org16d4024">What are we doing today?</h2>
+<ul>
+<li>Classes in C++</li>
+<li>Handling merge conflicts in <code>git</code></li>
+
+</ul>
+
+</section>
+<section id="slide-orged15f97">
+<h2 id="orged15f97">What are classes?</h2>
+<ul>
+<li>Definitions for objects, i.e. what data and methods they have
+<ul>
+<li>In other words, a blueprint for how to create an object</li>
+
+</ul></li>
+<li>An object is called an <b>instance</b> of a class
+<ul>
+<li>An object has all the functions and data structures defined in its class</li>
+<li>Data schema is the same across all instances of a class, but values differ</li>
+<li>It's interchangeable with other objects from the same class</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org0bf169c">
+<h2 id="org0bf169c">A simple example</h2>
+<aside class="notes">
+<p>
+A class can have some data and some methods, which can either be public or private. Private means only visible to the class itself, public means visible to any other file. Drop to a terminal and use/modify this class.
+</p>
+
+</aside>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">example</span> {
+    <span style="color: #598249;">private</span>:         <span style="color: #5e6263;">// </span><span style="color: #5e6263;">private is also implied if you don't specify visibility</span>
+        <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">a</span>;
+    <span style="color: #598249;">public</span>:
+        <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">getA</span>() { <span style="color: #598249;">return</span> a; }
+};
+</pre>
+</div>
+
+</section>
+<section id="slide-orgc926551">
+<h2 id="orgc926551">Why bother?</h2>
+<ul>
+<li>Software projects are easier to understand when related data and functions are grouped together</li>
+<li>Abstracting data behind getters/setters allows you to validate inputs from other parts of your application</li>
+<li>Abstracting complex tasks into class methods enables simpler, easier to read high-level code</li>
+<li>Classes can be extended to add functionality with minimal extra code using inheritance</li>
+
+</ul>
+
+</section>
+<section id="slide-org76c03fc">
+<h2 id="org76c03fc">Static members</h2>
+<aside class="notes">
+<p>
+Drop to a terminal and use this class.
+</p>
+
+</aside>
+<ul>
+<li>For when you want data or functions to be part of your class, but they don't need to be "attached" to an instance of the class</li>
+<li>Static data is shared between all instances of a class</li>
+<li>Remember the <code>static</code> keyword means something else outside of class definitions!</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">static_example</span> {
+    <span style="color: #598249;">private</span>:
+        <span style="color: #598249;">static</span> <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">a</span>;
+    <span style="color: #598249;">public</span>:
+        <span style="color: #598249;">static</span> <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">getA</span>() { <span style="color: #598249;">return</span> a; }
+};
+</pre>
+</div>
+
+</section>
+<section id="slide-org75f58ed">
+<h2 id="org75f58ed">Inheritance</h2>
+<ul>
+<li>Classes can inherit members from other classes</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">child</span>: <span style="color: #598249;">public</span> <span style="color: #598249;">example</span> {
+    <span style="color: #5e6263;">// </span><span style="color: #5e6263;">we get `a` and `getA()` from example</span>
+    <span style="color: #598249;">private</span>:
+        <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">b</span>;
+    <span style="color: #598249;">public</span>:
+        <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">getB</span>() { <span style="color: #598249;">return</span> b; }
+        <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">getAplusB</span>() { <span style="color: #598249;">return</span> getA() + b; } <span style="color: #5e6263;">// </span><span style="color: #5e6263;">we can't use `a` directly since it's private</span>
+};
+</pre>
+</div>
+
+</section>
+<section id="slide-org6e0d278">
+<h2 id="org6e0d278">Polymorphism</h2>
+<ul>
+<li>Now we can create <code>child</code> objects with all the properties of an <code>example</code> object</li>
+<li><p>
+This means we can safely cast a <code>child</code> object to an <code>example</code> object
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">child</span> <span style="color: #2F7BDE;">c</span>;
+<span style="color: #598249;">example</span>&amp; <span style="color: #2F7BDE;">e</span> = <span style="color: #598249;">dynamic_cast</span>&lt;<span style="color: #598249;">example</span>&amp;&gt;(c);
+</pre>
+</div></li>
+<li><p>
+But not the other way around
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">example</span> <span style="color: #2F7BDE;">e</span>;
+<span style="color: #598249;">child</span>&amp; <span style="color: #2F7BDE;">c</span> = <span style="color: #598249;">dynamic_cast</span>&lt;<span style="color: #598249;">child</span>&amp;&gt;(e);
+</pre>
+</div>
+<pre  class="example">
+example.cpp: In function ‘int main()’:
+example.cpp:20:38: error: cannot dynamic_cast ‘e’ (of type ‘class example’) to type
+‘class child&amp;’ (source type is not polymorphic)
+     child&amp; c = dynamic_cast&lt;child&amp;&gt;(e);
+				     ^
+</pre></li>
+
+</ul>
+
+</section>
+<section id="slide-org7d66f69">
+<h2 id="org7d66f69">Virtual functions</h2>
+<ul>
+<li>A parent class can specify that certain functions are <b>virtual</b></li>
+<li>Child classes can then implement their own versions of the function</li>
+<li>The child implementation will be called even from a reference of the type of the parent
+<ul>
+<li>If the function isn't marked virtual, which implementation is called depends on the type of the reference</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgaee6871">
+<h2 id="orgaee6871">Questions?</h2>
+<ul>
+<li>Ask here or on Piazza!</li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="https://robojackets.github.io/reveal.js/lib/js/head.min.js"></script>
+<script src="https://robojackets.github.io/reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: false,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+width: 1440,
+height: 800,
+margin: 0.15,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'fast',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://robojackets.github.io/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+]
+});
+</script>
+</body>
+</html>
