@@ -62,4 +62,3 @@ $ git mergetool -t kdiff3
 - You can select more than one of these options, and kdiff3 will insert the different versions in the order you select the buttons.
 - You can always edit the final (merged) version of the file in the bottom section. 
 #+END_NOTES
-
