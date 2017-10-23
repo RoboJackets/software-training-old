@@ -4,7 +4,7 @@
 
 * What are we doing today?
 - Classes in C++
-- TODO hardware application
+- Writing a differential drive class
 
 * What are classes?
 - Definitions for objects, i.e. what data and methods they have
@@ -18,7 +18,7 @@
 #+BEGIN_NOTES
 talk about the structure of a class
 #+END_NOTES
-- Typically decalred in a .h file with implementation in a cpp file
+- Typically declaration in a .h file with implementation in a cpp file
   - This is not a strict rule
 #+BEGIN_SRC c++
 class NAME {
