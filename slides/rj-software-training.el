@@ -84,6 +84,7 @@
 
 (require 'ob-python)
 (require 'ob-C)
+(require 'ob-shell)
 (setq org-babel-python-command "python3")
 ;; Make indentation actually matter in org src blocks
 (setq org-src-preserve-indentation nil)
@@ -98,6 +99,12 @@ LANG language input
 BODY code body"
     (not (member lang '("emacs-lisp" "python" "dot" "sh" "C" "C++"))))
   (setq org-confirm-babel-evaluate #'my-org-confirm-babel-evaluate))
+
+;; Add additional font lock keywords to sh-mode
+(add-hook 'sh-mode-hook
+  (lambda ()
+    (font-lock-add-keywords nil
+      '(("^\\s-*\\(git\\|ls\\|cat\\)\\>" . 'font-lock-keyword-face)))))
 
 (defun rj-software-training-publish ()
   "Simple script to export this project."
