@@ -2,12 +2,17 @@
 
 -   Two weeks ago, we talked about branches and how they can be used to avoid conflicts in the code
 -   But sometimes, multiple people edit the same lines of code on the same branch. Git's powerful, but it's not magic.
--   A merge conflict occurs when you try to push code based on an old version of the software that conflicts with changes in the same files already pushed.
+-   A merge conflict occurs when you try to push code based on an old version of the software that conflicts with changes in the same lines already pushed.
 
 ![img](https://developer.atlassian.com/blog/2015/01/a-better-pull-request/merge-conflict.png)
 
 
 # What does a merge conflict look like
+
+<div class="NOTES">
+Demonstrate example by setting up merge conflict beforehand, use the exact stuff on this slide
+
+</div>
 
 ```
 some source code...
@@ -21,6 +26,8 @@ The rest of the source that had not been touched
 
 -   When you pull changes that lead to a merge conflict Git will notify which files have a merge conflict in them
 -   In each file, Git inserts the above text to indicate a merge conflict
+-   "This is a change I made" is in the branch you're on
+-   "This is a different change&#x2026;" is from the branch you're merging
 
 
 # So how do we deal with this?

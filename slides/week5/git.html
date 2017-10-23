@@ -29,15 +29,15 @@
 <section id="sec-title-slide"><h1 class="title">Git Training - Week 5</h1>
 </section>
 
-<section id="slide-orgce5ab9e">
-<h2 id="orgce5ab9e">Merge Conflicts</h2>
+<section id="slide-orgfdfb5cf">
+<h2 id="orgfdfb5cf">Merge Conflicts</h2>
 <ul>
 <li>Two weeks ago, we talked about branches and how they can be used to avoid
 conflicts in the code</li>
 <li>But sometimes, multiple people edit the same lines of code on the same branch. Git's
 powerful, but it's not magic.</li>
 <li>A merge conflict occurs when you try to push code based on an old version
-of the software that conflicts with changes in the same files already
+of the software that conflicts with changes in the same lines already
 pushed.</li>
 
 </ul>
@@ -48,8 +48,14 @@ pushed.</li>
 </div>
 
 </section>
-<section id="slide-orgec11089">
-<h2 id="orgec11089">What does a merge conflict look like</h2>
+<section id="slide-org9c85618">
+<h2 id="org9c85618">What does a merge conflict look like</h2>
+<aside class="notes">
+<p>
+Demonstrate example by setting up merge conflict beforehand, use the exact stuff on this slide
+</p>
+
+</aside>
 <pre  class="example">
 some source code...
 &lt;&lt;&lt;&lt;&lt;&lt; HEAD
@@ -63,12 +69,14 @@ The rest of the source that had not been touched
 <li>When you pull changes that lead to a merge conflict Git will notify which
 files have a merge conflict in them</li>
 <li>In each file, Git inserts the above text to indicate a merge conflict</li>
+<li>"This is a change I made" is in the branch you're on</li>
+<li>"This is a different change&#x2026;" is from the branch you're merging</li>
 
 </ul>
 
 </section>
-<section id="slide-orgdd6c14f">
-<h2 id="orgdd6c14f">So how do we deal with this?</h2>
+<section id="slide-orgcd78e56">
+<h2 id="orgcd78e56">So how do we deal with this?</h2>
 <ul>
 <li>One strategy is to just go through the file and manually reconcile the
 conflict</li>
@@ -79,8 +87,8 @@ changes.</li>
 </ul>
 
 </section>
-<section id="slide-orgccaa0d4">
-<h2 id="orgccaa0d4">KDiff3</h2>
+<section id="slide-orgb36167e">
+<h2 id="orgb36167e">KDiff3</h2>
 
 <div class="figure">
 <p><img src="https://i.imgur.com/undWZmR.png" alt="undWZmR.png" width="50%" />
@@ -103,8 +111,8 @@ $ git mergetool -t kdiff3
 </aside>
 
 </section>
-<section id="slide-org0dd794f">
-<h2 id="org0dd794f">KDiff3</h2>
+<section id="slide-orga1c6818">
+<h2 id="orga1c6818">KDiff3</h2>
 
 <div class="figure">
 <p><img src="https://i.imgur.com/6MTZ6eE.png" alt="6MTZ6eE.png" width="50%" />

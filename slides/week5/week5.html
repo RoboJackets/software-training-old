@@ -29,17 +29,17 @@
 <section id="sec-title-slide"><h1 class="title">Week 5</h1>
 </section>
 
-<section id="slide-org16d4024">
-<h2 id="org16d4024">What are we doing today?</h2>
+<section id="slide-orgdd2d19d">
+<h2 id="orgdd2d19d">What are we doing today?</h2>
 <ul>
 <li>Classes in C++</li>
-<li>Handling merge conflicts in <code>git</code></li>
+<li>Writing a differential drive class</li>
 
 </ul>
 
 </section>
-<section id="slide-orged15f97">
-<h2 id="orged15f97">What are classes?</h2>
+<section id="slide-orgd75d45e">
+<h2 id="orgd75d45e">What are classes?</h2>
 <ul>
 <li>Definitions for objects, i.e. what data and methods they have
 <ul>
@@ -50,18 +50,166 @@
 <ul>
 <li>An object has all the functions and data structures defined in its class</li>
 <li>Data schema is the same across all instances of a class, but values differ</li>
-<li>It's interchangeable with other objects from the same class</li>
+<li>A method can treat all instances of an object the same
+<ul>
+<li>Think of it like a complex, user defined variable type</li>
+
+</ul></li>
 
 </ul></li>
 
 </ul>
-
 </section>
-<section id="slide-org0bf169c">
-<h2 id="org0bf169c">A simple example</h2>
+<section id="slide-orgff568fa">
+<h3 id="orgff568fa">Structure</h3>
 <aside class="notes">
 <p>
-A class can have some data and some methods, which can either be public or private. Private means only visible to the class itself, public means visible to any other file. Drop to a terminal and use/modify this class.
+talk about the structure of a class
+</p>
+
+</aside>
+<ul>
+<li>Typically declaration in a .h file with implementation in a cpp file
+<ul>
+<li>This is not a strict rule</li>
+
+</ul></li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">NAME</span> {
+    <span style="color: #5e6263;">// </span><span style="color: #5e6263;">decleration of variables</span>
+    <span style="color: #5e6263;">// </span><span style="color: #5e6263;">method prototypes</span>
+    <span style="color: #5e6263;">//   </span><span style="color: #5e6263;">can be declared in this file or a seperate cpp file</span>
+};
+</pre>
+</div>
+
+</section>
+<section id="slide-org3a493db">
+<h2 id="org3a493db">Why bother?</h2>
+<ul>
+<li>Software projects are easier to understand when related data and functions are grouped together</li>
+<li>Abstracting data behind getters/setters allows you to validate inputs from other parts of your application</li>
+<li>Abstracting complex tasks into class methods enables simpler, easier to read high-level code</li>
+<li>Classes can be extended to add functionality with minimal extra code using inheritance</li>
+
+</ul>
+
+</section>
+<section id="slide-orge6e2c48">
+<h2 id="orge6e2c48">Scope</h2>
+<aside class="notes">
+<p>
+Make sure to explain the different reason for not giving everything public scope
+</p>
+
+</aside>
+<ul>
+<li>Data and methods can have their scope set in order to have limited availability
+<ul>
+<li>Prevents unverified values from being inserted in class variables
+<ul>
+<li>Can force using getters and setters to interact with data</li>
+
+</ul></li>
+<li>Hides the internals of your classes</li>
+
+</ul></li>
+
+</ul>
+</section>
+<section id="slide-org05ae792">
+<h3 id="org05ae792">public</h3>
+<ul>
+<li>Accessible by everyone</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">example</span> {
+<span style="color: #598249;">public</span>:
+    <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">var</span>;
+    <span style="color: #598249;">void</span> <span style="color: #2F7BDE;">do_something</span>() {<span style="color: #15968D;">std</span>::cout &lt;&lt; <span style="color: #15968D;">"doing something"</span> &lt;&lt; <span style="color: #15968D;">std</span>::endl;}
+};
+</pre>
+</div>
+</section>
+<section id="slide-org58b782f">
+<h3 id="org58b782f">private</h3>
+<aside class="notes">
+<p>
+try to use the private method and then show them the compiler error. Show an exaple of using the var in the class
+</p>
+
+</aside>
+<ul>
+<li>Data and methods are only accessible from within the class itself
+<ul>
+<li>Forces using setters and getters as an abstraction layer</li>
+
+</ul></li>
+<li>implied if no scope is initially set in a class</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">example</span> {
+<span style="color: #598249;">private</span>:
+    <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">var</span>;
+    <span style="color: #598249;">void</span> <span style="color: #2F7BDE;">do_something</span>() {<span style="color: #15968D;">std</span>::cout &lt;&lt; <span style="color: #15968D;">"doing something"</span> &lt;&lt; <span style="color: #15968D;">std</span>::endl;}
+};
+</pre>
+</div>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">example</span> {
+    <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">var</span>;
+    <span style="color: #598249;">void</span> <span style="color: #2F7BDE;">do_something</span>() {<span style="color: #15968D;">std</span>::cout &lt;&lt; <span style="color: #15968D;">"doing something"</span> &lt;&lt; <span style="color: #15968D;">std</span>::endl;}
+};
+</pre>
+</div>
+</section>
+<section id="slide-org40b58fb">
+<h3 id="org40b58fb">review</h3>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Scope Type</th>
+<th scope="col" class="org-left">Accessible inside the class</th>
+<th scope="col" class="org-left">Accessible outside the class directly</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">private</td>
+<td class="org-left">Yes</td>
+<td class="org-left">No</td>
+</tr>
+
+<tr>
+<td class="org-left">public</td>
+<td class="org-left">Yes</td>
+<td class="org-left">Yes</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="slide-orgc472944">
+<h2 id="orgc472944">A simple example</h2>
+<aside class="notes">
+<p>
+A class can have some data and some methods, which can either be public or private. Drop to a terminal and use/modify this class.
 </p>
 
 </aside>
@@ -77,19 +225,86 @@ A class can have some data and some methods, which can either be public or priva
 </div>
 
 </section>
-<section id="slide-orgc926551">
-<h2 id="orgc926551">Why bother?</h2>
+<section id="slide-org72548f6">
+<h2 id="org72548f6">Constructors and Destructors</h2>
+<aside class="notes">
+<p>
+DO NOT go into why some constructors might be private.
+</p>
+
+</aside>
 <ul>
-<li>Software projects are easier to understand when related data and functions are grouped together</li>
-<li>Abstracting data behind getters/setters allows you to validate inputs from other parts of your application</li>
-<li>Abstracting complex tasks into class methods enables simpler, easier to read high-level code</li>
-<li>Classes can be extended to add functionality with minimal extra code using inheritance</li>
+<li>Often there are things that are required to create or destroy an instance of a class</li>
+<li>We put the construction code in constructors</li>
+<li>We put the destruction code in destructors</li>
+<li>Usually public, scope still applies to these methods</li>
 
 </ul>
-
 </section>
-<section id="slide-org76c03fc">
-<h2 id="org76c03fc">Static members</h2>
+<section id="slide-org3dcd4f0">
+<h3 id="org3dcd4f0">Constructors</h3>
+<aside class="notes">
+<p>
+use this version of the class
+</p>
+
+</aside>
+<ul>
+<li>Called whenever an object is created</li>
+<li>Can have multiple constructors as long as they have different argument lists</li>
+<li>Contains all of the code to create and initialize all of an object's members</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">example</span> {
+    <span style="color: #598249;">private</span>:
+        <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">a</span>;
+        <span style="color: #5e6263;">// </span><span style="color: #5e6263;">lots of important variables that live on the heap</span>
+    <span style="color: #598249;">public</span>:
+        <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">getA</span>() { <span style="color: #598249;">return</span> a; }
+        <span style="color: #2F7BDE;">example</span>() {
+            <span style="color: #15968D;">std</span>::cout &lt;&lt; <span style="color: #15968D;">"Creating an example"</span> &lt;&lt; <span style="color: #15968D;">std</span>::endl;
+            <span style="color: #5e6263;">/* </span><span style="color: #5e6263;">allocating all the memory */</span>
+        };
+        <span style="color: #2F7BDE;">example</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">a_local</span>) {
+            a = a_local;
+            <span style="color: #5e6263;">/* </span><span style="color: #5e6263;">allocating all the memory */</span>
+        }
+};
+</pre>
+</div>
+</section>
+<section id="slide-org171f0dc">
+<h3 id="org171f0dc">Destructors</h3>
+<aside class="notes">
+<p>
+use this version of the class. Make sure to destruct the object
+</p>
+
+</aside>
+<ul>
+<li>This is always a no argument method</li>
+<li>Contains all of the code to destory and deallocate all an objects members</li>
+<li>Can only have one destructor</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">example</span> {
+    <span style="color: #598249;">private</span>:
+        <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">a</span>;
+        <span style="color: #5e6263;">// </span><span style="color: #5e6263;">lots of important variables from the heap</span>
+    <span style="color: #598249;">public</span>:
+        <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">getA</span>() { <span style="color: #598249;">return</span> a; }
+        <span style="color: #5e6263;">// </span><span style="color: #5e6263;">... constructors</span>
+        ~<span style="color: #2F7BDE;">example</span>() {<span style="color: #5e6263;">/* </span><span style="color: #5e6263;">lots of deletes */</span>};
+};
+</pre>
+</div>
+</section>
+<section id="slide-orgeb715b2">
+<h2 id="orgeb715b2">Static members</h2>
 <aside class="notes">
 <p>
 Drop to a terminal and use this class.
@@ -100,6 +315,11 @@ Drop to a terminal and use this class.
 <li>For when you want data or functions to be part of your class, but they don't need to be "attached" to an instance of the class</li>
 <li>Static data is shared between all instances of a class</li>
 <li>Remember the <code>static</code> keyword means something else outside of class definitions!</li>
+<li>Static variables must be initialized before use
+<ul>
+<li>accessed by the <b>::</b> operator</li>
+
+</ul></li>
 
 </ul>
 <div class="org-src-container">
@@ -108,16 +328,24 @@ Drop to a terminal and use this class.
     <span style="color: #598249;">private</span>:
         <span style="color: #598249;">static</span> <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">a</span>;
     <span style="color: #598249;">public</span>:
+        <span style="color: #2F7BDE;">static_example</span>() {a++;}
         <span style="color: #598249;">static</span> <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">getA</span>() { <span style="color: #598249;">return</span> a; }
 };
+<span style="color: #5e6263;">// </span><span style="color: #5e6263;">init in implementing class</span>
+<span style="color: #598249;">int</span> <span style="color: #15968D;">static_example</span>::<span style="color: #2F7BDE;">a</span> = 0;
 </pre>
 </div>
-
 </section>
-<section id="slide-org75f58ed">
-<h2 id="org75f58ed">Inheritance</h2>
+<section id="slide-org8f53c61">
+<h2 id="org8f53c61">Inheritance</h2>
+<aside class="notes">
+<p>
+pull up the two classes we have written so far and use the methods of the subclass under different circumstances
+</p>
+
+</aside>
 <ul>
-<li>Classes can inherit members from other classes</li>
+<li>Classes can inherit data and methods from other classes</li>
 
 </ul>
 <div class="org-src-container">
@@ -134,8 +362,86 @@ Drop to a terminal and use this class.
 </div>
 
 </section>
-<section id="slide-org6e0d278">
-<h2 id="org6e0d278">Polymorphism</h2>
+<section id="slide-orgc21c52f">
+<h3 id="orgc21c52f">Example code</h3>
+<aside class="notes">
+<p>
+mention that you can go up the class structure but not down
+</p>
+
+</aside>
+
+<div class="figure">
+<p><img src="https://i.imgur.com/9cF7NTq.png" alt="9cF7NTq.png" width="50%" />
+</p>
+</div>
+
+</section>
+<section id="slide-org7a3a7f4">
+<h2 id="org7a3a7f4">Scope and inheritence</h2>
+<aside class="notes">
+<p>
+make sure to explain every bullet
+</p>
+
+</aside>
+<ul>
+<li>Scope applies across subclasses</li>
+
+</ul>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">scope</th>
+<th scope="col" class="org-left">subclasses</th>
+<th scope="col" class="org-left">externally</th>
+<th scope="col" class="org-left">internally</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">private</td>
+<td class="org-left">no</td>
+<td class="org-left">no</td>
+<td class="org-left">yes</td>
+</tr>
+
+<tr>
+<td class="org-left">protected</td>
+<td class="org-left">yes</td>
+<td class="org-left">no</td>
+<td class="org-left">yes</td>
+</tr>
+
+<tr>
+<td class="org-left">public</td>
+<td class="org-left">yes</td>
+<td class="org-left">yes</td>
+<td class="org-left">yes</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+<section id="slide-org0984822">
+<h2 id="org0984822">Polymorphism</h2>
+<aside class="notes">
+<p>
+explain how dynamic cast is used to change what an object is
+</p>
+
+</aside>
 <ul>
 <li>Now we can create <code>child</code> objects with all the properties of an <code>example</code> object</li>
 <li><p>
@@ -167,8 +473,14 @@ example.cpp:20:38: error: cannot dynamic_cast ‘e’ (of type ‘class example�
 </ul>
 
 </section>
-<section id="slide-org7d66f69">
-<h2 id="org7d66f69">Virtual functions</h2>
+<section id="slide-orgc262557">
+<h2 id="orgc262557">Virtual functions</h2>
+<aside class="notes">
+<p>
+Show an example using the classes defined in the example code and explained earlier
+</p>
+
+</aside>
 <ul>
 <li>A parent class can specify that certain functions are <b>virtual</b></li>
 <li>Child classes can then implement their own versions of the function</li>
@@ -181,8 +493,8 @@ example.cpp:20:38: error: cannot dynamic_cast ‘e’ (of type ‘class example�
 </ul>
 
 </section>
-<section id="slide-orgaee6871">
-<h2 id="orgaee6871">Questions?</h2>
+<section id="slide-orgbba2b61">
+<h2 id="orgbba2b61">Questions?</h2>
 <ul>
 <li>Ask here or on Piazza!</li>
 
