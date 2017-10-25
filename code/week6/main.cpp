@@ -43,16 +43,19 @@ void printBoard(const Board &board) {
           return 'O';
       }
   };
-  std::string layout = " | | \n-----\n | | \n-----\n | | ";
-  layout[0] = charForMarker(board.getMarker(0,0));
-  layout[2] = charForMarker(board.getMarker(0,1));
-  layout[4] = charForMarker(board.getMarker(0,2));
-  layout[12] = charForMarker(board.getMarker(1,0));
-  layout[14] = charForMarker(board.getMarker(1,1));
-  layout[16] = charForMarker(board.getMarker(1,2));
-  layout[24] = charForMarker(board.getMarker(2,0));
-  layout[26] = charForMarker(board.getMarker(2,1));
-  layout[28] = charForMarker(board.getMarker(2,2));
+  std::string layout;
+  auto n = 3;
+  for(auto r = 0; r < n; r++) {
+    for(auto c = 0; c < n; c++) {
+      layout += charForMarker(board.getMarker(r,c));
+      if(c != (n-1)) {
+        layout += "|";
+      }
+    }
+    if(r != (n-1)) {
+      layout += "\n-----\n";
+    }
+  }
   cout << layout << endl << endl;
 }
 
