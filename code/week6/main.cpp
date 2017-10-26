@@ -16,12 +16,12 @@ void generateComputerMove(const Board &board, unsigned int &r_out, unsigned int 
 }
 
 void getMoveFromPlayer(unsigned int &r_out, unsigned int &c_out) {
-  static regex coordinate_patter("[0-3],[0-3]");
+  static regex coordinate_pattern("[0-2],[0-2]");
   do {
     cout << "Your move (r,c): ";
     string input;
     cin >> input;
-    if(regex_match(input,coordinate_patter)) {
+    if(regex_match(input,coordinate_pattern)) {
       auto comma_loc = input.find(',');
       r_out = static_cast<unsigned int>(stoi(input.substr(0,comma_loc)));
       c_out = static_cast<unsigned int>(stoi(input.substr(comma_loc+1)));
