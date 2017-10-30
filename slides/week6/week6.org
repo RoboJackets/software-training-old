@@ -1,0 +1,66 @@
+#+TITLE: Week 6
+#+AUTHOR: Sahit Chintalapudi
+#+EMAIL: schintalapudi@gatech.edu
+
+* Computer Vision
+- We have the knowledge in C++ to describe the logic we might want a robot to
+  have. But we need to be able to make sense of what the robot sees and
+  classify it before we can act on this logic.
+- Cue OpenCV, an open source computer vision library with bindings for C++
+  (and a few other languages)
+- I guess our ability to see has been ++'d
+
+
+* What does an Image look like to your computer?
+- OpenCV stores images in an object called a /Mat/
+- A Mat is an array with rows and columns. In a grayscale image, each element
+  of the Mat is a pixel in the image and its location in the Mat corresponds
+  to its location in the image
+- If the image is grayscale, then a pixel is an int from 0 (black) to 255
+  (white)
+- Computers have no concept of "2d", so Images in memory are /continuous/.
+  This means each row of the image is appended onto the end of the last. To
+  iterate through a Mat you just get a pointer to the beginning of the first
+  row and keep track of your row number by how far you've traversed.
+
+* Color Images
+- Color images don't embed the color of a pixel in one element. Often, you'll
+  find each pixel represented in BGR (Blue component, Green Component, Red
+  Component) form. So now, each row of a color image is 3 times as long as a
+  row of a black and white image.
+- [[https://i.imgur.com/QlokNTv.png]]
+- Images don't have to be stored in just BGR format!
+
+* HSV Images
+- Each Pixel in a color image has a hue, a saturation, and a luminosity.
+- Even though our cameras read in images with RGB, converting them to HSV is
+  easy with OpenCV
+[[https://image.slidesharecdn.com/01presentationhuehistograms-150707215651-lva1-app6892/95/about-perception-and-hue-histograms-in-hsv-space-5-638.jpg]]
+
+* Why do we use HSV
+- HSV encodes image data in a way that is resistant to changes in color
+- To put it another way, on a sunny day an image will contain more red, more
+  blue, and more green than on a cloudy day. All three channels are affected.
+- On a sunny day, the saturation channel will be largely effected, but we can
+  expect hue to remain mainly stable. This makes it easier to do searches for
+  colors in the HSV space.
+
+* Finding the blue in an image
+#+BEGIN_SRC c++
+Mat findBlue(const Mat& frameBGR) {
+      const Scalar blue_low{78, 50, 70};
+      const Scalar blue_high{138, 255, 255};
+      Mat frameBlurred;
+      GaussianBlur(frameBGR, frameBlurred, Size{7,7}, 0);
+      Mat frameHSV;
+      cvtColor(frameBlurred, frameHSV, CV_BGR2HSV);
+      Mat output_blue = Mat::zeros(frameHSV.height, frameHSV.width, CV_8U);
+      inRange(frameHSV, blue_low, blue_high, output_blue);
+      erode(output_blue, output_blue, erosion_kernel_blue);
+      return output_blue;
+}
+#+END_SRC
+
+* Roboracing Computer Vision
+[[https://github.com/RoboJackets/roboracing-software/blob/master/iarrc/src/color_detector/color_detector.cpp][Roboracing
+Color Detector]]
