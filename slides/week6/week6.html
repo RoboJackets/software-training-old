@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Week 6</title>
+<meta name="author" content="(Sahit Chintalapudi)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://robojackets.github.io/reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="https://robojackets.github.io/reveal.js/css/theme/white.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://robojackets.github.io/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Week 6</h1>
+</section>
+
+<section id="slide-org765133d">
+<h2 id="org765133d">Computer Vision</h2>
+<ul>
+<li>We have the knowledge in C++ to describe the logic we might want a robot to
+have. But we need to be able to make sense of what the robot sees and
+classify it before we can act on this logic.</li>
+<li>Cue OpenCV, an open source computer vision library with bindings for C++
+(and a few other languages)</li>
+<li>I guess our ability to see has been ++'d</li>
+
+</ul>
+
+
+</section>
+<section id="slide-org37b5361">
+<h2 id="org37b5361">What does an Image look like to your computer?</h2>
+<ul>
+<li>OpenCV stores images in an object called a <i>Mat</i></li>
+<li>A Mat is an array with rows and columns. In a grayscale image, each element
+of the Mat is a pixel in the image and its location in the Mat corresponds
+to its location in the image</li>
+<li>If the image is grayscale, then a pixel is an int from 0 (black) to 255
+(white)</li>
+<li>Computers have no concept of "2d", so Images in memory are <i>continuous</i>.
+This means each row of the image is appended onto the end of the last. To
+iterate through a Mat you just get a pointer to the beginning of the first
+row and keep track of your row number by how far you've traversed.</li>
+
+</ul>
+
+</section>
+<section id="slide-org245f110">
+<h2 id="org245f110">Color Images</h2>
+<ul>
+<li>Color images don't embed the color of a pixel in one element. Often, you'll
+find each pixel represented in BGR (Blue component, Green Component, Red
+Component) form. So now, each row of a color image is 3 times as long as a
+row of a black and white image.</li>
+<li><img src="https://i.imgur.com/QlokNTv.png" alt="QlokNTv.png" /></li>
+<li>Images don't have to be stored in just BGR format!</li>
+
+</ul>
+
+</section>
+<section id="slide-org0b00a14">
+<h2 id="org0b00a14">HSV Images</h2>
+<ul>
+<li>Each Pixel in a color image has a hue, a saturation, and a luminosity.</li>
+<li>Even though our cameras read in images with RGB, converting them to HSV is
+easy with OpenCV</li>
+
+</ul>
+
+<div class="figure">
+<p><img src="https://image.slidesharecdn.com/01presentationhuehistograms-150707215651-lva1-app6892/95/about-perception-and-hue-histograms-in-hsv-space-5-638.jpg" alt="about-perception-and-hue-histograms-in-hsv-space-5-638.jpg" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgd219f32">
+<h2 id="orgd219f32">Why do we use HSV</h2>
+<ul>
+<li>HSV encodes image data in a way that is resistant to changes in color</li>
+<li>To put it another way, on a sunny day an image will contain more red, more
+blue, and more green than on a cloudy day. All three channels are affected.</li>
+<li>On a sunny day, the saturation channel will be largely effected, but we can
+expect hue to remain mainly stable. This makes it easier to do searches for
+colors in the HSV space.</li>
+
+</ul>
+
+</section>
+<section id="slide-org1dc4ab4">
+<h2 id="org1dc4ab4">Finding the blue in an image</h2>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">Mat</span> <span style="color: #2F7BDE;">findBlue</span>(<span style="color: #598249;">const</span> <span style="color: #598249;">Mat</span>&amp; <span style="color: #2F7BDE;">frameBGR</span>) {
+      <span style="color: #598249;">const</span> <span style="color: #598249;">Scalar</span> <span style="color: #2F7BDE;">blue_low</span>{78, 50, 70};
+      <span style="color: #598249;">const</span> <span style="color: #598249;">Scalar</span> <span style="color: #2F7BDE;">blue_high</span>{138, 255, 255};
+      <span style="color: #598249;">Mat</span> <span style="color: #2F7BDE;">frameBlurred</span>;
+      GaussianBlur(frameBGR, frameBlurred, Size{7,7}, 0);
+      <span style="color: #598249;">Mat</span> <span style="color: #2F7BDE;">frameHSV</span>;
+      cvtColor(frameBlurred, frameHSV, CV_BGR2HSV);
+      <span style="color: #598249;">Mat</span> <span style="color: #2F7BDE;">output_blue</span> = <span style="color: #15968D;">Mat</span>::zeros(frameHSV.height, frameHSV.width, CV_8U);
+      inRange(frameHSV, blue_low, blue_high, output_blue);
+      erode(output_blue, output_blue, erosion_kernel_blue);
+      <span style="color: #598249;">return</span> output_blue;
+}
+</pre>
+</div>
+
+</section>
+<section id="slide-org74d99b7">
+<h2 id="org74d99b7">Roboracing Computer Vision</h2>
+<p>
+<a href="https://github.com/RoboJackets/roboracing-software/blob/master/iarrc/src/color_detector/color_detector.cpp">Roboracing
+Color Detector</a>
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="https://robojackets.github.io/reveal.js/lib/js/head.min.js"></script>
+<script src="https://robojackets.github.io/reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: false,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+width: 1440,
+height: 800,
+margin: 0.15,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'fast',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://robojackets.github.io/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+]
+});
+</script>
+</body>
+</html>
