@@ -1,93 +1,107 @@
-#include <opencv2/opencv.hpp>
-#include <string>
+#include <iostream>
+#include <regex>
+#include <random>
+#include "Board.h"
+
+using namespace std;
+
+void generateComputerMove(const Board &board, unsigned int &r_out, unsigned int &c_out) {
+  static random_device rand_dev;
+  static default_random_engine engine(rand_dev());
+  static uniform_int_distribution<unsigned int> uniform_dist(0,2);
+  do {
+    r_out = uniform_dist(engine);
+    c_out = uniform_dist(engine);
+  } while(board.getMarker(r_out, c_out) != Marker::Empty);
+}
+
+void getMoveFromPlayer(unsigned int &r_out, unsigned int &c_out) {
+  static regex coordinate_pattern("[0-2],[0-2]");
+  do {
+    cout << "Your move (r,c): ";
+    string input;
+    cin >> input;
+    if(regex_match(input,coordinate_pattern)) {
+      auto comma_loc = input.find(',');
+      r_out = static_cast<unsigned int>(stoi(input.substr(0,comma_loc)));
+      c_out = static_cast<unsigned int>(stoi(input.substr(comma_loc+1)));
+      return;
+    } else {
+      cout << "Sorry, I couldn't understand your coordinates!" << endl;
+    }
+  } while(true);
+}
+
+void printBoard(const Board &board) {
+  auto charForMarker = [](const Marker &m) {
+      switch(m) {
+        case Marker::Empty:
+          return ' ';
+        case Marker::X:
+          return 'X';
+        case Marker::O:
+          return 'O';
+      }
+  };
+  std::string layout;
+  auto n = 3;
+  for(auto r = 0; r < n; r++) {
+    for(auto c = 0; c < n; c++) {
+      layout += charForMarker(board.getMarker(r,c));
+      if(c != (n-1)) {
+        layout += "|";
+      }
+    }
+    if(r != (n-1)) {
+      layout += "\n-----\n";
+    }
+  }
+  cout << layout << endl << endl;
+}
 
 int main() {
-    // Mat http://docs.opencv.org/3.3.0/d3/d63/classcv_1_1Mat.html
-    // this creates an image header. The array is not allocated yet
-    cv::Mat my_image;
+  cout << "Welcome to TicTacToe!\n\n";
+  cout << "You will play O's and the computer will play X's\n";
+  cout << "Good luck!\n\n";
 
-    /* This creates a matrix
-     * cv::Mat(rows, cols, type, default color)
-     * type: CV_[The number of bits per item][Signed or Unsigned][Type Prefix]C[The channel number]
-     * this type CV_8UC3
-     * 8 is the number of bits per item
-     * U means that it is unsigned
-     * C3 means that the color channel has three entires (BGR)
-    */
-    my_image = cv::Mat(2, 2, CV_8UC3, cv::Scalar(0,0,255));
+  Board board;
 
-    // a single pixel is made up of 3 8 bit values
-    // Blue, Green, Red
-    std::cout << "my_image = \n" << my_image << std::endl;
-
-    // iterate over an image the safe way
-    for(auto it = my_image.begin<cv::Vec3b>(); it != my_image.end<cv::Vec3b>(); it++) {
-        std::cout << "Blue = " << std::to_string((*it)[0]) << std::endl;
-        std::cout << "Green = " << std::to_string((*it)[1]) << std::endl;
-        std::cout << "Red = " << std::to_string((*it)[2]) << std::endl;
+  while(!board.isOver()) {
+    printBoard(board);
+    unsigned int r_move;
+    unsigned int c_move;
+    do {
+      r_move = 0;
+      c_move = 0;
+      getMoveFromPlayer(r_move, c_move);
+    } while(!board.placeMarker(r_move, c_move, Marker::O));
+    printBoard(board);
+    if(board.isOver()) {
+      break;
     }
-    std::cout << "\n";
+    cout << "Computer's move: ";
+    r_move = 0;
+    c_move = 0;
+    generateComputerMove(board, r_move, c_move);
+    cout << r_move << "," << c_move << endl;
+    board.placeMarker(r_move, c_move, Marker::X);
+  }
 
-    // faster way to iterate over an image
-    int channels = my_image.channels();
-    std::cout << "my_image has " << channels << " channels" << std::endl;
-    int nRows = my_image.rows;
-    std::cout << "my_image has " << nRows << " rows" << std::endl;
-    std::cout << "my_image has " << my_image.cols << " cols" << std::endl;
-    // here we multiply by the number of channels since we will be dereferencing it with uchar
-    // and each channel is a uchar
-    int nCols = my_image.cols * channels;
+  cout << "\n\n";
 
-    // if the image is stored continuously then we have only a single row of
-    // length nRows * nCols
-    if(my_image.isContinuous()) {
-        nCols *= nRows;
-        nRows = 1;
-    }
+  printBoard(board);
 
-    for(int i = 0; i < nRows; i++) {
-        // get pointer to the start of the current row
-        uchar* current = my_image.ptr<uchar>(i);
-        for(int j = 0; j < nCols; j++) {
-            // prints out the value at the nCols in nRows
-            std::cout << std::to_string(current[j]);
-            // formats the printing of the statement
-            if((j + 1) % 3 != 0) {
-                std::cout << ",";
-            } else {
-                std::cout << std::endl;
-            }
-        }
-    }
+  switch(board.getWinner()) {
+    case Marker::Empty:
+      cout << "You tied!" << endl;
+      break;
+    case Marker::O:
+      cout << "You won!" << endl;
+      break;
+    case Marker::X:
+      cout << "You lost!" << endl;
+      break;
+  }
 
-    // to access a single pixel use .at
-    cv::Vec3b vector = my_image.at<cv::Vec3b>(2, 2);
-
-    // reads in an image
-    cv::Mat image = cv::imread("Jaymii_img.png", cv::IMREAD_COLOR);
-
-    // check that the image was loaded
-    if(!image.empty()) {
-        cv::Vec3b image_vector = image.at<cv::Vec3b>(154,160);
-        std::cout << "Blue = " << std::to_string(image_vector[0]) << std::endl;
-        std::cout << "Green = " << std::to_string(image_vector[1]) << std::endl;
-        std::cout << "Red = " << std::to_string(image_vector[2]) << std::endl;
-
-        // converts image to grey scale
-        cv::cvtColor(image, image, cv::COLOR_BGR2GRAY);
-
-        // applies to laplacian kernel, a common technique for edge detection
-        cv::Laplacian(image, image, image.depth(), 3, 1, 0, cv::BORDER_DEFAULT);
-
-        // creates a window and shows the image until a key is pressed
-        cv::namedWindow("Jaymii", cv::WINDOW_AUTOSIZE);
-        cv::imshow("Jaymii", image);
-        cv::waitKey(0);
-    } else {
-        std::cerr << "\nERROR\n" << std::endl;
-        std::cerr << "Make sure that Jaymii.img is in the same directory as main when run" << std::endl;
-        std::cerr << "\nERROR\n" << std::endl;
-    }
-
-    return 0;
+  return 0;
 }
