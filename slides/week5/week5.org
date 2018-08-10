@@ -1,0 +1,229 @@
+#+TITLE: Week 5
+#+AUTHOR: Kristaps Berzinch, Raymond Ortiz
+#+EMAIL: kristaps@robojackets.org, rortiz9@gatech.edu
+
+* What are we doing today?
+- Classes in C++
+- Writing a differential drive class
+
+* What are classes?
+- Definitions for objects, i.e. what data and methods they have
+ - In other words, a blueprint for how to create an object
+- An object is called an *instance* of a class
+ - An object has all the functions and data structures defined in its class
+ - Data schema is the same across all instances of a class, but values differ
+ - A method can treat all instances of an object the same
+   - Think of it like a complex, user defined variable type
+** Structure
+#+BEGIN_NOTES
+talk about the structure of a class
+#+END_NOTES
+- Typically declaration in a .h file with implementation in a cpp file
+  - This is not a strict rule
+#+BEGIN_SRC c++
+class NAME {
+    // decleration of variables
+    // method prototypes
+    //   can be declared in this file or a seperate cpp file
+};
+#+END_SRC
+
+* Why bother?
+- Software projects are easier to understand when related data and functions are grouped together
+- Abstracting data behind getters/setters allows you to validate inputs from other parts of your application
+- Abstracting complex tasks into class methods enables simpler, easier to read high-level code
+- Classes can be extended to add functionality with minimal extra code using inheritance
+
+* Scope
+#+BEGIN_NOTES
+Make sure to explain the different reason for not giving everything public scope
+#+END_NOTES
+- Data and methods can have their scope set in order to have limited availability
+  - Prevents unverified values from being inserted in class variables
+    - Can force using getters and setters to interact with data
+  - Hides the internals of your classes
+** public
+- Accessible by everyone
+#+BEGIN_SRC c++
+class example {
+public:
+    int var;
+    void do_something() {std::cout << "doing something" << std::endl;}
+};
+#+END_SRC
+** private
+#+BEGIN_NOTES
+try to use the private method and then show them the compiler error. Show an exaple of using the var in the class
+#+END_NOTES
+- Data and methods are only accessible from within the class itself
+  - Forces using setters and getters as an abstraction layer
+- implied if no scope is initially set in a class
+#+BEGIN_SRC c++
+class example {
+private:
+    int var;
+    void do_something() {std::cout << "doing something" << std::endl;}
+};
+#+END_SRC
+#+BEGIN_SRC c++
+class example {
+    int var;
+    void do_something() {std::cout << "doing something" << std::endl;}
+};
+#+END_SRC
+** review
+| Scope Type | Accessible inside the class | Accessible outside the class directly |
+|------------+-----------------------------+---------------------------------------|
+| private    | Yes                         | No                                    |
+| public     | Yes                         | Yes                                   |
+* A simple example
+#+BEGIN_NOTES
+A class can have some data and some methods, which can either be public or private. Drop to a terminal and use/modify this class.
+#+END_NOTES
+#+BEGIN_SRC c++
+class example {
+    private:         // private is also implied if you don't specify visibility
+        int a;
+    public:
+        int getA() { return a; }
+};
+#+END_SRC
+
+* Constructors and Destructors
+#+BEGIN_NOTES
+DO NOT go into why some constructors might be private.
+#+END_NOTES
+- Often there are things that are required to create or destroy an instance of a class
+- We put the construction code in constructors
+- We put the destruction code in destructors
+- Usually public, scope still applies to these methods
+** Constructors
+#+BEGIN_NOTES
+use this version of the class
+#+END_NOTES
+- Called whenever an object is created
+- Can have multiple constructors as long as they have different argument lists
+- Contains all of the code to create and initialize all of an object's members
+#+BEGIN_SRC c++
+class example {
+    private:
+        int a;
+        // lots of important variables that live on the heap
+    public:
+        int getA() { return a; }
+        example() {
+            std::cout << "Creating an example" << std::endl;
+            /* allocating all the memory */
+        };
+        example(int a_local) {
+            a = a_local;
+            /* allocating all the memory */
+        }
+};
+#+END_SRC
+** Destructors
+#+BEGIN_NOTES
+use this version of the class. Make sure to destruct the object
+#+END_NOTES
+- This is always a no argument method
+- Contains all of the code to destory and deallocate all an objects members
+- Can only have one destructor
+#+BEGIN_SRC c++
+class example {
+    private:
+        int a;
+        // lots of important variables from the heap
+    public:
+        int getA() { return a; }
+        // ... constructors
+        ~example() {/* lots of deletes */};
+};
+#+END_SRC
+* Static members
+#+BEGIN_NOTES
+ Drop to a terminal and use this class.
+#+END_NOTES
+- For when you want data or functions to be part of your class, but they don't need to be "attached" to an instance of the class
+- Static data is shared between all instances of a class
+- Remember the =static= keyword means something else outside of class definitions!
+- Static variables must be initialized before use
+  - accessed by the *::* operator
+#+BEGIN_SRC c++
+class static_example {
+    private:
+        static int a;
+    public:
+        static_example() {a++;}
+        static int getA() { return a; }
+};
+// init in implementing class
+int static_example::a = 0;
+#+END_SRC
+* Inheritance
+#+BEGIN_NOTES
+pull up the two classes we have written so far and use the methods of the subclass under different circumstances
+#+END_NOTES
+- Classes can inherit data and methods from other classes
+#+BEGIN_SRC c++
+class child: public example {
+    // we get `a` and `getA()` from example
+    private:
+        int b;
+    public:
+        int getB() { return b; }
+        int getAplusB() { return getA() + b; } // we can't use `a` directly since it's private
+};
+#+END_SRC
+
+** Example code
+#+BEGIN_NOTES
+mention that you can go up the class structure but not down
+#+END_NOTES
+#+ATTR_HTML: :width 50%
+[[file:https://i.imgur.com/9cF7NTq.png]]
+
+* Scope and inheritence
+#+BEGIN_NOTES
+make sure to explain every bullet
+#+END_NOTES
+- Scope applies across subclasses
+| scope     | subclasses | externally | internally |
+|-----------+------------+------------+------------|
+| private   | no         | no         | yes        |
+| protected | yes        | no         | yes        |
+| public    | yes        | yes        | yes        |
+
+* Polymorphism
+#+BEGIN_NOTES
+explain how dynamic cast is used to change what an object is
+#+END_NOTES
+- Now we can create =child= objects with all the properties of an =example= object
+- This means we can safely cast a =child= object to an =example= object
+ #+BEGIN_SRC c++
+ child c;
+ example& e = dynamic_cast<example&>(c);
+ #+END_SRC
+- But not the other way around
+ #+BEGIN_SRC c++
+ example e;
+ child& c = dynamic_cast<child&>(e);
+ #+END_SRC
+ #+BEGIN_SRC
+ example.cpp: In function ‘int main()’:
+ example.cpp:20:38: error: cannot dynamic_cast ‘e’ (of type ‘class example’) to type
+ ‘class child&’ (source type is not polymorphic)
+      child& c = dynamic_cast<child&>(e);
+                                      ^
+ #+END_SRC
+
+* Virtual functions
+#+BEGIN_NOTES
+Show an example using the classes defined in the example code and explained earlier
+#+END_NOTES
+- A parent class can specify that certain functions are *virtual*
+- Child classes can then implement their own versions of the function
+- The child implementation will be called even from a reference of the type of the parent
+ - If the function isn't marked virtual, which implementation is called depends on the type of the reference
+
+* Questions?
+- Ask here or on Piazza!
