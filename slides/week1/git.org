@@ -98,8 +98,9 @@ Publicly hosted Git server means that it has a bunch of Git repositories on its 
   git remote -v
 
 #+END_SRC
-- When you want to download changes from the RJ repo, you will use the rj tag
-- When you want to upload changes to your fork of the repo, you will use the origin tag
+- Remotes tell git where to send/receive changes (AKA pull/push)
+ - When you want to download changes from the RJ repo, you will use the rj tag
+ - When you want to upload changes to your fork of the repo, you will use the origin tag
 
 ** Checking Remotes
 Now when you do:
