@@ -1,14 +1,16 @@
-#+TITLE: Week 1 Git
-#+AUTHOR: Sahit Chintalapudi, Josh Ting 
-#+EMAIL: schintalapudi@gatech.edu, josh.ting@gatech.edu
+#+TITLE: Git and GitHub
+#+AUTHOR: Sahit Chintalapudi, Josh Ting, Dallas Downing
+#+EMAIL: schintalapudi@gatech.edu, josh.ting@gatech.edu, dallasd@gatech.edu
 
 * What is Git?
 - Git is a "Distributed Version Control System" (DVCS)
 - It is the tool RoboJackets uses to collaborate on code
-- Git tracks changes made to files in your project, so you can access old versions at any time without fear
+- Git tracks changes made to files in your project, so you can access old versions
+  at any time without fear of deleting or breaking something
 - Allows multiple developers to work on the same code
-- Working on different parts of code and then combining them creates unique challenges that
-  cannot be handled by file sharing systems like Dropbox and Google Drive
+- Working on different parts of code and then combining them creates unique
+  challenges that cannot be handled by file sharing systems like Dropbox and
+  Google Drive
 
 * What is GitHub?
 
@@ -81,6 +83,7 @@ Publicly hosted Git server means that it has a bunch of Git repositories on its 
   #+END_SRC
 
 - If using Linux, use Ctrl-Shift-V to paste in terminal
+- The clone command downloads a project and its history
 - Tada! Your own working copy of RoboJackets code!
 
 * Adding Remotes
@@ -95,6 +98,8 @@ Publicly hosted Git server means that it has a bunch of Git repositories on its 
   git remote -v
 
 #+END_SRC
+- When you want to download changes from the RJ repo, you will use the rj tag
+- When you want to upload changes to your fork of the repo, you will use the origin tag
 
 ** Checking Remotes
 Now when you do:
