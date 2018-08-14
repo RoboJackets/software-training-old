@@ -10,7 +10,7 @@
 - Do a fun exercise to practice using git
 
 * Meet the Intructors
-- TODO: Insert Fall 2018 Instructors
+- *TODO:* Insert Fall 2018 Instructors
 
 * Why are you here?
 - Learn the basics of software development
@@ -18,7 +18,7 @@
 
 * Overview of Training
 - Week 0 training (*Insert dates*)
-- TODO: Anything we need to add here?
+- *TODO:* Anything we need to add here?
 
 * The Linux terminal
 - Powerful text-based interface for interacting with your computer
@@ -62,8 +62,8 @@ Copy/paste are generally ctrl+shift+c/ctrl+shift+v, respectively, but varies by 
 - *Ctrl+C:* /NOT COPY!/ Stops the current command.
 - *Ctrl+Z:* /NOT UNDO!/ Sends the current command to the background.
  - Use =fg= to bring it back to the foreground.
-- *Ctrl+Shift+C:* copy (in Linux)
-- *Ctrl+Shift+V:* paste (in Linux)
+- *Ctrl+Shift+C:* Copy (in Linux)
+- *Ctrl+Shift+V:* Paste (in Linux)
 - *Ctrl+D:* Exit the shell.
 
 * Git
