@@ -22,9 +22,15 @@
 
 * The Linux terminal
 - Powerful text-based interface for interacting with your computer
-- (Almost) everything is a file
-- Every file is part of one big tree
-- Lots of tiny tools you can chain together to do useful things
+- (Almost) everything is a file or a folder
+- It lets you navigate your folders and manipulate files quickly
+- There are lots of tiny tools and commands you can use to do useful things
+
+* ATTENTION WINDOWS USERS
+- Terminal is not the same as Command Prompt
+- We do not recommend using CMD as it has different commands than Linux
+- Instead use Git bash
+  - *TODO:* Add install/use instructions for git bash
 
 * Basic commands
 #+BEGIN_NOTES
@@ -38,6 +44,7 @@ Explain that a directory is more commonly called a folder. Go to your home direc
 | =rm= | Remove a file |
 | =rmdir= | Remove a directory |
 | =echo= | Write arguments to the standard output |
+- Note: folder = directory
 
 * Basic commands
 #+BEGIN_NOTES
