@@ -1,133 +1,188 @@
 #+TITLE: Week 2
-#+AUTHOR: Kristaps Berzinch, Raymond Ortiz
-#+EMAIL: kristaps@robojackets.org, rortiz9@gatech.edu
+#+AUTHOR: Evan Bretl
+#+EMAIL: evan.bretl@gatech.edu
+#+REVEAL_TRANS: None
 
 * What are we doing today?
 - Introduction to C++
- - What it is
  - Functions
- - Includes and headers
+ - Headers and includes
+ - Namespaces
  - Working with strings
-- How to find and read documentation
-- Sending and recieving changes from remote Git repositories
+- Using the STSL Robot API
+ - Drive in a square
+ - Line following
 
 * What is C++?
-#+BEGIN_NOTES
-C++ is a more general programming langauge than C. It can have higher levels of abstraction. C is minimalist. C++ also has classes, it is not C with classes.
-#+END_NOTES
-- A general-purpose programming language
-- Designed with performance, efficiency, and flexibility in mind
-- Great for robots!
+- Compiled (fast)
+- Can be written in many different ways (flexible)
+- NOT "C with classes" (much more powerful)
 
-* Functions
-#+BEGIN_NOTES
-After introducing the concept, write a simple example. Don't go into prototypes yet, we'll cover them in a bit.
+* Starting notes
+- We assume some knowledge of the absolute basics of C/C++ syntax (if, for, while, etc)
+ - There is another "Week 0" training session which will teach these things
 
-Open the example code on your display and try to stick to that as much as you can.
-#+END_NOTES
-- A function is a chunk of code with defined inputs and outputs
- - Minimizes copy-and-paste
- - Less buggy
- - Easier to test than a whole program
-- These can be chained together for more complex functionality
-- You want each function to have a single high-level purpose
+* hello-world.cpp
+#+BEGIN_SRC C++ -n
+#include <iostream>
 
-* Anatomy of a function declaration
-- C++ lets you have multiple functions with the same name, provided their parameter signatures are different
- - A function's parameter signature is just the ordered list of its parameter types.
- - =foo(int a, char b)= and =bar(int x, char z)= have the same signature
- - =fizz(int a, char b)= and =buzz(char x, int z)= don't
-- The compiler will determine which function to actually call depending on the parameters
-- (This will come in handy later!)
+int main() {
+  std::cout << "Hello, world!" << std::endl;
+}
+#+END_SRC
+[[http://cpp.sh/9yupt]]
 
-* Header files
-#+BEGIN_NOTES
-Now you can talk about prototypes!
-#+END_NOTES
-- Only contain /declarations/, also known as prototypes, not definitions
- - Function name
- - Arguments
- - Return type
- - No functionality
- - Example: =int add(int a, int b);=
-- This enables a lot of different files to "know" about a function but only have one definition for it
+* Functions in C++
+- Review: A function is a chunk of code with inputs and outputs
+- C++ functions have 0 or more parameters (inputs) and always have 1 output
+- Each parameter has a type and there is a return type
+- The special function =main()= with return type =int= gets run automatically
+- Example
+ - Want to add two integers, x and y, and print their result
 
-* Note about header files
-- C++ has a lot of flexibility; this is a blessing and a curse
-- Your code will have little structure unless you organize it well
-- Break up your code logically and purposefully
- - Readability above all
+* Functions Example
+1. Informative function name
+2. Input types
+3. Return type
+#+BEGIN_SRC C++ -n
+void addAndPrint(int x, int y) {
+
+}
+#+END_SRC
+
+* Functions Example
+- Perform the addition
+#+BEGIN_SRC C++ -n
+void addAndPrint(int x, int y) {
+    int sum = x + y;
+}
+#+END_SRC
+
+* Functions Example
+- Print the result
+#+BEGIN_SRC C++ -n
+void addAndPrint(int x, int y) {
+    int sum = x + y;
+    std::cout << sum << std::endl;
+}
+#+END_SRC
+
+* Functions Example
+- We can split up this code to show you real return types
+- =return= statement must be used since the return type is not =void=
+#+BEGIN_SRC C++ -n
+void addAndPrint(int x, int y) {
+    int sum = x + y;
+    std::cout << sum << std::endl;
+}
+
+int add(int x, int y) {
+    return x + y;
+}
+
+void print(int value) {
+    std::cout << value << std::endl;
+}
+#+END_SRC
+=print(add(3, 4))= gives the same result as =addAndPrint(3, 4)=
+Try it yourself [[http://cpp.sh/6lvcn]]
+
+* Forward Declaration
+- Declaration = defining the name, parameters, and return type
+- Definition = declaration + filling in the function
+- Functions have to be declared higher up in the file than when they are used
+- [[http://cpp.sh/4mbgg]]
 
 * Includes
-#+BEGIN_NOTES
-After introducing the concept, demo some basic examples of including a file within another file.
-Draw a picture on the board of a.h included in b.h and then b.h included in another file
-#+END_NOTES
-- Allows you to use code from other files
-- Will literally insert anything in name.h into the file
-#+BEGIN_SRC C++
-#include <name.h>
-#+END_SRC
+- Why do we need =#include <iostream>=?
+ - [[http://cpp.sh/7jb5t]]
+- Includes let you bring other code into a file
+- Use this for
+ - Standard library functions and data types (anything std::)
+ - Other installed libraries (e.g. ROS, OpenCV, Qt)
+ - Splitting up a large program into multiple files
+- Without including anything, C++ is very limited
 
-* Header guards C style
-#+BEGIN_NOTES
-using the previous example include a.h in the final file as well. Show how the same code is copied in twice.
-#+END_NOTES
-- header guards prevent the compiler from including the same file multiple times
-- will work in all cases
-  - uses C style macros
+* Include syntax
+- =<>= gets code from standard library or apt-installed libraries
+- =""= gets code from a nearby folder
+- If =""= does not find the file, it reverts to =<>= behavior
+- What's in the =<>= or =""= is a file name
+ - Traditionally the file name has extension ".h" or ".hpp"
+- Examples:
 #+BEGIN_SRC C++ -n
-    #ifndef FILENAME_H
-    #define FILENAME_H
-        ...
-    #endif  // FILENAME_H
+#include <string>  // standard library
+#include <QWidget>  // file from Qt installed through apt
+#include <ros/ros.h>  // file from ros installed through apt
+#include "include/my_interface.hpp"  // another file in the same project,
+                                     // in a folder called "include"
 #+END_SRC
 
-* #pragma once
-- a different method to do header guards
-  - cleaner
-- most compilers support this
+* Namespaces
+- What happens when two things are assigned the same name?
+ - [[http://cpp.sh/24v43]]
+- Solution: protect your variables and function names with a unique namespace
+ - [[http://cpp.sh/66mrj]]
+ - Use keywords from a namespace using the =::= operator
+  - types: =std::string=, =my_library::MyClass=
+  - functions: =std::min_element=
+  - static variables: =std::string::npos=
+- Everything that is included should be in a namespace
+
+* "using namespace" keyword
+- [[http://cpp.sh/4d5gz]]
+- Handy (used in RJ) but also defeats the purpose of namespaces
+- Use with caution, only if each of the following are true:
+ - You use this namespace repeatedly in your code
+ - It is already clear without the namespace where the function comes from
+
+* Strings
+- C string (still valid in C++):
 #+BEGIN_SRC C++ -n
-    #pragma once
+char[] s = "this is a string";
 #+END_SRC
+- C++ string:
+#+BEGIN_SRC C++ -n
+#include <string>
+std::string s1("this is a string");  // constructor
+std::string s2 = "this is a string";  // same effect as constructor
+#+END_SRC
+- Unlike in C, C++ strings are a class instances and have methods
 
-* Working with strings
-#+BEGIN_NOTES
-Write and walk through some example code.
-#+END_NOTES
-- A C-style string is stored as an array of characters ending with a NULL (0x0)
-- The C++ standard library contains a string class with several useful functions, in =<string>=
- - (We'll get to classes later)
- - Use this instead of C-style strings unless you have a specific reason not to
-- Use the addition oprator (+) to concatenate strings
-- Use =to_string= to convert other types to strings
-- Use =sto_= functions to parse strings to other types
-  - Ex). =stoi= to convert string to integer
-  - Ex). =stod= to convert string to double
+* String Methods
+- What methods can I use for a string? (there are lots)
+ - Google! [[https://www.google.com/search?q=c%2B%2B+std%3A%3Astring]]
+- Adding to end:  + and += operators, =append(string)=, =push_back(char)=
+ - [[http://cpp.sh/84u76]]
+- Reading user input:  =std::cin >>=
+ - [[http://cpp.sh/64mc]]
+- Access characters like an array
+ - [[http://cpp.sh/9gb4x]]
+- =size()= and =length()= each get number of characters
 
-* String methods
-| Name | Description |
-|-------+------|
-| =length= | Returns the length of a string |
-| =substr= | Returns a portion (substring) of the string |
-| =find= | Returns the position of a substring, if present |
-| =empty= | Returns true if length is zero, otherwise false |
+* Excercise
+- Find a buddy (or work alone if you want)
+- Write a function =make_palindrome=
+ - Input: string
+ - Output: string with reversed copy attached
+ - =make_palindrome("apple")= returns ="appleelppa"=
+- Starter code: [[http://cpp.sh/844tx]]
 
-* How to find and read documentation
-#+BEGIN_NOTES
-Show how to get to the string documentation
-#+END_NOTES
-- Most of the last slide was sourced from [[http://en.cppreference.com/w/][cppreference.com]]
-- Documents standard library functionality
-- Great reference for all things C++
+* Solution
+- Using what we've learned so far
+ - [[http://cpp.sh/92y54]]
+- Preview for next week
+ - [[http://cpp.sh/7jmjg]]
 
-* Example Code
-#+BEGIN_NOTES
-draw the tree structure of the example code files. week2.cpp includes week2.h which includes operator.h. operator.cpp includes operator.cpp.
-#+END_NOTES
+* Our Training Robots
+- We have robots for you to use!
+- <TODO insert details on robot capabilities>
 
-* Git
-#+BEGIN_NOTES
-Time to switch to the Git/GitHub presentation.
-#+END_NOTES
-- [[file:git.org][Click here for this week's Git presentation]]
+* STSL: Robot Control Basics
+- <TODO content>
+ - STSL functions for writing to motors
+ - compiling from terminal
+
+* Exercise: Drive in Square
+
+* Exercise: Line Following
