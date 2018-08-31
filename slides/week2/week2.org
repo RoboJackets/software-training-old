@@ -132,9 +132,9 @@ Try it yourself [[http://cpp.sh/6lvcn]]
 * "using namespace" keyword
 - [[http://cpp.sh/4d5gz]]
 - Handy (used in RJ) but also defeats the purpose of namespaces
-- Use with caution, only if each of the following are true:
- - You use this namespace repeatedly in your code
- - It is already clear without the namespace where the function comes from
+- Use with caution
+ - Must be clear, without the namespace, where the function comes from
+ - In general, use only one external namespace in a file (usually std)
 
 * Strings
 - C string (still valid in C++):
@@ -152,6 +152,7 @@ std::string s2 = "this is a string";  // same effect as constructor
 * String Methods
 - What methods can I use for a string? (there are lots)
  - Google! [[https://www.google.com/search?q=c%2B%2B+std%3A%3Astring]]
+ - cppreference.com is comprehensive and up-to-date
 - Adding to end:  + and += operators, =append(string)=, =push_back(char)=
  - [[http://cpp.sh/84u76]]
 - Reading user input:  =std::cin >>=
