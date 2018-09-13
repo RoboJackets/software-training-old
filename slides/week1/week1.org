@@ -1,130 +1,36 @@
 #+TITLE: Week 1
-#+AUTHOR: Kristaps Berzinch, Raymond Ortiz
-#+EMAIL: kristaps@robojackets.org
+#+AUTHOR: Kristaps Berzinch, Raymond Ortiz, Dallas Downing
+#+EMAIL: kristaps@robojackets.org, dallasd@gatech.edu
 
 * What are we doing today?
 - Instructor introductions
 - Overview of the RoboJackets software training program
 - Navigating and manipulating files and directories in the Linux terminal
 - Using Git and GitHub for version control
-- Get a simple program running on the training robots
+- Do a fun exercise to practice using git
 
-* Meet Kristaps
-#+ATTR_HTML: :width 10%
-[[file:https://i.imgur.com/7gq6xef.jpg]]
-- Kristaps Berzinch
-  - Junior, Computer Science (Threads: SysArch, InfoInternetworks)
-  - Inside RoboJackets: current treasurer, former Outreach assistant PM
-  - Outside RoboJackets: 2x Capital One intern, Linux Foundation Certified Engineer
-  - a.k.a. "Mom", I occasionally give good life advice.
-- How to contact me
-  - Slack: [[https://robojackets.slack.com/messages/@kristapsberzinch/][@kristapsberzinch]]
-  - Email: [[mailto:kristaps@robojackets.org][kristaps@robojackets.org]]
-
-* Meet Sarah
-#+ATTR_HTML: :width 20%
-[[file:https://i.imgur.com/NffDOgW.jpg]]
-- Sarah Storer
-  - Junior, Computer Science (Threads: Devices, Intelligence)
-  - Inside RoboJackets: Software Training Coordinator, Former Outreach Project Manager
-  - Outside RoboJackets: Microsoft Intern and Dog Lover
-  - a.k.a. "Dad", I dance to Hannah Montana in the shop.
-- How to contact me
-  - Slack: [[https://robojackets.slack.com/messages/@sarahstorer/][@sarahstorer]]
-  - Email: [[mailto:sstorer3@gatech.edu][sstorer3@gatech.edu]]
-
-* Meet Jason
-#+ATTR_HTML: :width 15%
-[[file:https://i.imgur.com/izC5WWA.jpg]]
-- Jason Gibson
-  - Junior, Computer Science (Threads: Devices, Intelligence)
-  - Inside RoboJackets: Training Chair, IGVC Software Lead
-  - Outside RoboJackets: Avid lover of dad jokes
-- How to contact me
-  - Slack: [[https://robojackets.slack.com/messages/@jasongibson/][@jasongibson]]
-  - Email: [[mailto:jgibson37@gatech.edu][jgibson37@gatech.edu]]
-
-* Meet Raymond
-#+ATTR_HTML: :width 20%
-[[file:https://i.imgur.com/8d43StT.jpg]]
-- Raymond Ortiz
-  - Senior, Computer Science (Threads: Devices, Intelligence)
-  - Inside RoboJackets: IGVC Executioner, Former Training Chair
-  - Outside RoboJackets: CS1332 Head TA, Google Intern
-- How to contact me
-  - Slack: [[https://robojackets.slack.com/messages/@raymond/][@raymond]]
-  - Email: [[mailto:rortiz9@gatech.edu][rortiz9@gatech.edu]]
-
-* Meet Sahit
-#+ATTR_HTML: :width 20%
-[[file:https://i.imgur.com/aqKGrKm.jpg]]
-- Sahit Chintalapudi
-  - Sophomore, Computer Science (Threads: Intelligence, Theory)
-  - Roboracing Software Lead & Roboracing PR manager
-  - S-tier Taylor Swift fanboy
-- How to contact me
-  - Slack: [[https://robojackets.slack.com/messages/@schintalapudi/][@schintalapudi]]
-  - Email: [[mailto:schintalapudi@gatech.edu][schintalapudi@gatech.edu]]
-
-* Meet Josh
-#+ATTR_HTML: :width 20%
-[[file:https://i.imgur.com/IahyGXd.jpg]]
-- Josh Ting
-  - Senior, Computer Science (Threads: Intelligence, Information Internetworks)
-  - Inside RoboJackets: RoboCup Fall Software Lead
-  - Outside RoboJackets: NASA Intern, Magic: The Gathering addict, pianist of 17 years
-- How to contact me
-  - Slack: [[https://robojackets.slack.com/messages/@joshting/][@joshting]]
-  - Email: [[mailto:josh.ting@gatech.edu][josh.ting@gatech.edu]]
-
-* Meet Matthew
-#+ATTR_HTML: :width 20%
-[[file:https://imgur.com/nDgF0NX.jpg]]
-- Matthew Woodward
-  - Junior, Computer Engineering
-  - RoboCup Spring Software Lead
-  - Outside RoboJackets: Triangle Fraternity and undergrad CS research
-- How to contact me
-  - Slack: [[https://robojackets.slack.com/messages/@chachmu/][@chachmu]]
-  - Email: [[mailto:mwoodward@gatech.edu][mwoodward@gatech.edu]]
-
-* DONE Meet Jay
-CLOSED: [2017-07-03 Mon 21:40]
-#+ATTR_HTML: :width 20%
-[[file:https://i.imgur.com/D5eKGRz.jpg]]
-- Jay Kamat
-  - Senior, Computer Science (Threads: Systems, Intelligence)
-  - I like contributing to Open Source!
-- Contact
-  - [[irc:irc.freenode.net:6697/jgkamat][jgkamat (freenode)]]
-  - xmpp:jayk@fysh.in
-  - [[https://matrix.to/#/@jgkamat:matrix.org][@jgkamat:matrix.org]]
-  - [[mailto:jaygkamat@gmail.com][jaygkamat@gmail.com]]
-  - [[https://github.com/jgkamat][github.com/jgkamat]]
-
-* Meet Matt
-#+ATTR_HTML: :width 20%
-[[file:https://i.imgur.com/iED5Z3S.jpg]]
-- Matt Barulic
-  - Masters student in Computer Science
-  - RoboJackets President Emeritus (OOOOLLLLDDD)
-  - Outside RoboJackets:
-    - C++ for fun & profit
-    - Music (drums / piano / bad guitar)
-- How to contact me
-  - Slack: [[https://robojackets.slack.com/messages/@mbarulic/][@mbarulic]]
-  - Email: [[mailto:mbarulic@gatech.edu][mbarulic@gatech.edu]]
+* Meet the Intructors
+- *TODO:* Insert Fall 2018 Instructors
 
 * Why are you here?
 - Learn the basics of software development
 - Get up to speed on technologies and techniques common to most RoboJackets teams
-- Have a go-to place to ask questions ([[https://piazza.com/gatech/fall2017/rjsw/home][Piazza!]])
+
+* Overview of Training
+- Week 0 training (*Insert dates*)
+- *TODO:* Anything we need to add here?
 
 * The Linux terminal
 - Powerful text-based interface for interacting with your computer
-- (Almost) everything is a file
-- Every file is part of one big tree
-- Lots of tiny tools you can chain together to do useful things
+- (Almost) everything is a file or a folder
+- It lets you navigate your folders and manipulate files quickly
+- There are lots of tiny tools and commands you can use to do useful things
+
+* ATTENTION WINDOWS USERS
+- Terminal is not the same as Command Prompt
+- We do not recommend using CMD as it has different commands than Linux
+- Instead use Git bash
+  - *TODO:* Add install/use instructions for git bash
 
 * Basic commands
 #+BEGIN_NOTES
@@ -138,6 +44,7 @@ Explain that a directory is more commonly called a folder. Go to your home direc
 | =rm= | Remove a file |
 | =rmdir= | Remove a directory |
 | =echo= | Write arguments to the standard output |
+- Note: folder = directory
 
 * Basic commands
 #+BEGIN_NOTES
@@ -162,12 +69,9 @@ Copy/paste are generally ctrl+shift+c/ctrl+shift+v, respectively, but varies by 
 - *Ctrl+C:* /NOT COPY!/ Stops the current command.
 - *Ctrl+Z:* /NOT UNDO!/ Sends the current command to the background.
  - Use =fg= to bring it back to the foreground.
+- *Ctrl+Shift+C:* Copy (in Linux)
+- *Ctrl+Shift+V:* Paste (in Linux)
 - *Ctrl+D:* Exit the shell.
-
-* Example code
-- It's all on the software training GitHub repository
-- Same code in 3 different languages - you should be able to understand at least one by now
-- Look at the cpp file and try to understand it if you've never written C++ before
 
 * Git
 #+BEGIN_NOTES
