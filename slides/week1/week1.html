@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <title>Week 1</title>
-<meta name="author" content="(Kristaps Berzinch, Raymond Ortiz)"/>
+<meta name="author" content="(Kristaps Berzinch, Raymond Ortiz, Dallas Downing)"/>
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
@@ -29,275 +29,71 @@
 <section id="sec-title-slide"><h1 class="title">Week 1</h1>
 </section>
 
-<section id="slide-orgfb22992">
-<h2 id="orgfb22992">What are we doing today?</h2>
+<section id="slide-org4ff5ce7">
+<h2 id="org4ff5ce7">What are we doing today?</h2>
 <ul>
 <li>Instructor introductions</li>
 <li>Overview of the RoboJackets software training program</li>
 <li>Navigating and manipulating files and directories in the Linux terminal</li>
 <li>Using Git and GitHub for version control</li>
-<li>Get a simple program running on the training robots</li>
+<li>Do a fun exercise to practice using git</li>
 
 </ul>
 
 </section>
-<section id="slide-org0354279">
-<h2 id="org0354279">Meet Kristaps</h2>
-
-<div class="figure">
-<p><img src="https://i.imgur.com/7gq6xef.jpg" alt="7gq6xef.jpg" width="10%" />
-</p>
-</div>
+<section id="slide-orgd674e6c">
+<h2 id="orgd674e6c">Meet the Intructors</h2>
 <ul>
-<li>Kristaps Berzinch
-<ul>
-<li>Junior, Computer Science (Threads: SysArch, InfoInternetworks)</li>
-<li>Inside RoboJackets: current treasurer, former Outreach assistant PM</li>
-<li>Outside RoboJackets: 2x Capital One intern, Linux Foundation Certified Engineer</li>
-<li>a.k.a. "Mom", I occasionally give good life advice.</li>
-
-</ul></li>
-<li>How to contact me
-<ul>
-<li>Slack: <a href="https://robojackets.slack.com/messages/@kristapsberzinch/">@kristapsberzinch</a></li>
-<li>Email: <a href="mailto:kristaps@robojackets.org">kristaps@robojackets.org</a></li>
-
-</ul></li>
+<li><b>TODO:</b> Insert Fall 2018 Instructors</li>
 
 </ul>
 
 </section>
-<section id="slide-org5dfa866">
-<h2 id="org5dfa866">Meet Sarah</h2>
-
-<div class="figure">
-<p><img src="https://i.imgur.com/NffDOgW.jpg" alt="NffDOgW.jpg" width="20%" />
-</p>
-</div>
-<ul>
-<li>Sarah Storer
-<ul>
-<li>Junior, Computer Science (Threads: Devices, Intelligence)</li>
-<li>Inside RoboJackets: Software Training Coordinator, Former Outreach Project Manager</li>
-<li>Outside RoboJackets: Microsoft Intern and Dog Lover</li>
-<li>a.k.a. "Dad", I dance to Hannah Montana in the shop.</li>
-
-</ul></li>
-<li>How to contact me
-<ul>
-<li>Slack: <a href="https://robojackets.slack.com/messages/@sarahstorer/">@sarahstorer</a></li>
-<li>Email: <a href="mailto:sstorer3@gatech.edu">sstorer3@gatech.edu</a></li>
-
-</ul></li>
-
-</ul>
-
-</section>
-<section id="slide-orgc1967aa">
-<h2 id="orgc1967aa">Meet Jason</h2>
-
-<div class="figure">
-<p><img src="https://i.imgur.com/izC5WWA.jpg" alt="izC5WWA.jpg" width="15%" />
-</p>
-</div>
-<ul>
-<li>Jason Gibson
-<ul>
-<li>Junior, Computer Science (Threads: Devices, Intelligence)</li>
-<li>Inside RoboJackets: Training Chair, IGVC Software Lead</li>
-<li>Outside RoboJackets: Avid lover of dad jokes</li>
-
-</ul></li>
-<li>How to contact me
-<ul>
-<li>Slack: <a href="https://robojackets.slack.com/messages/@jasongibson/">@jasongibson</a></li>
-<li>Email: <a href="mailto:jgibson37@gatech.edu">jgibson37@gatech.edu</a></li>
-
-</ul></li>
-
-</ul>
-
-</section>
-<section id="slide-org3ec4805">
-<h2 id="org3ec4805">Meet Raymond</h2>
-
-<div class="figure">
-<p><img src="https://i.imgur.com/8d43StT.jpg" alt="8d43StT.jpg" width="20%" />
-</p>
-</div>
-<ul>
-<li>Raymond Ortiz
-<ul>
-<li>Senior, Computer Science (Threads: Devices, Intelligence)</li>
-<li>Inside RoboJackets: IGVC Executioner, Former Training Chair</li>
-<li>Outside RoboJackets: CS1332 Head TA, Google Intern</li>
-
-</ul></li>
-<li>How to contact me
-<ul>
-<li>Slack: <a href="https://robojackets.slack.com/messages/@raymond/">@raymond</a></li>
-<li>Email: <a href="mailto:rortiz9@gatech.edu">rortiz9@gatech.edu</a></li>
-
-</ul></li>
-
-</ul>
-
-</section>
-<section id="slide-org629609a">
-<h2 id="org629609a">Meet Sahit</h2>
-
-<div class="figure">
-<p><img src="https://i.imgur.com/aqKGrKm.jpg" alt="aqKGrKm.jpg" width="20%" />
-</p>
-</div>
-<ul>
-<li>Sahit Chintalapudi
-<ul>
-<li>Sophomore, Computer Science (Threads: Intelligence, Theory)</li>
-<li>Roboracing Software Lead &amp; Roboracing PR manager</li>
-<li>S-tier Taylor Swift fanboy</li>
-
-</ul></li>
-<li>How to contact me
-<ul>
-<li>Slack: <a href="https://robojackets.slack.com/messages/@schintalapudi/">@schintalapudi</a></li>
-<li>Email: <a href="mailto:schintalapudi@gatech.edu">schintalapudi@gatech.edu</a></li>
-
-</ul></li>
-
-</ul>
-
-</section>
-<section id="slide-org0d342e2">
-<h2 id="org0d342e2">Meet Josh</h2>
-
-<div class="figure">
-<p><img src="https://i.imgur.com/IahyGXd.jpg" alt="IahyGXd.jpg" width="20%" />
-</p>
-</div>
-<ul>
-<li>Josh Ting
-<ul>
-<li>Senior, Computer Science (Threads: Intelligence, Information Internetworks)</li>
-<li>Inside RoboJackets: RoboCup Fall Software Lead</li>
-<li>Outside RoboJackets: NASA Intern, Magic: The Gathering addict, pianist of 17 years</li>
-
-</ul></li>
-<li>How to contact me
-<ul>
-<li>Slack: <a href="https://robojackets.slack.com/messages/@joshting/">@joshting</a></li>
-<li>Email: <a href="mailto:josh.ting@gatech.edu">josh.ting@gatech.edu</a></li>
-
-</ul></li>
-
-</ul>
-
-</section>
-<section id="slide-org3c0809d">
-<h2 id="org3c0809d">Meet Matthew</h2>
-
-<div class="figure">
-<p><img src="https://imgur.com/nDgF0NX.jpg" alt="nDgF0NX.jpg" width="20%" />
-</p>
-</div>
-<ul>
-<li>Matthew Woodward
-<ul>
-<li>Junior, Computer Engineering</li>
-<li>RoboCup Spring Software Lead</li>
-<li>Outside RoboJackets: Triangle Fraternity and undergrad CS research</li>
-
-</ul></li>
-<li>How to contact me
-<ul>
-<li>Slack: <a href="https://robojackets.slack.com/messages/@chachmu/">@chachmu</a></li>
-<li>Email: <a href="mailto:mwoodward@gatech.edu">mwoodward@gatech.edu</a></li>
-
-</ul></li>
-
-</ul>
-
-</section>
-<section id="slide-org0144be6">
-<h2 id="org0144be6">Meet Jay</h2>
-
-<div class="figure">
-<p><img src="https://i.imgur.com/D5eKGRz.jpg" alt="D5eKGRz.jpg" width="20%" />
-</p>
-</div>
-<ul>
-<li>Jay Kamat
-<ul>
-<li>Senior, Computer Science (Threads: Systems, Intelligence)</li>
-<li>I like contributing to Open Source!</li>
-
-</ul></li>
-<li>Contact
-<ul>
-<li><a href="irc.freenode.net:6697/jgkamat">jgkamat (freenode)</a></li>
-<li>xmpp:jayk@fysh.in</li>
-<li><a href="https://matrix.to/#/@jgkamat:matrix.org">@jgkamat:matrix.org</a></li>
-<li><a href="mailto:jaygkamat@gmail.com">jaygkamat@gmail.com</a></li>
-<li><a href="https://github.com/jgkamat">github.com/jgkamat</a></li>
-
-</ul></li>
-
-</ul>
-
-</section>
-<section id="slide-org16b2c59">
-<h2 id="org16b2c59">Meet Matt</h2>
-
-<div class="figure">
-<p><img src="https://i.imgur.com/iED5Z3S.jpg" alt="iED5Z3S.jpg" width="20%" />
-</p>
-</div>
-<ul>
-<li>Matt Barulic
-<ul>
-<li>Masters student in Computer Science</li>
-<li>RoboJackets President Emeritus (OOOOLLLLDDD)</li>
-<li>Outside RoboJackets:
-<ul>
-<li>C++ for fun &amp; profit</li>
-<li>Music (drums / piano / bad guitar)</li>
-
-</ul></li>
-
-</ul></li>
-<li>How to contact me
-<ul>
-<li>Slack: <a href="https://robojackets.slack.com/messages/@mbarulic/">@mbarulic</a></li>
-<li>Email: <a href="mailto:mbarulic@gatech.edu">mbarulic@gatech.edu</a></li>
-
-</ul></li>
-
-</ul>
-
-</section>
-<section id="slide-org55bbaee">
-<h2 id="org55bbaee">Why are you here?</h2>
+<section id="slide-org7362f00">
+<h2 id="org7362f00">Why are you here?</h2>
 <ul>
 <li>Learn the basics of software development</li>
 <li>Get up to speed on technologies and techniques common to most RoboJackets teams</li>
-<li>Have a go-to place to ask questions (<a href="https://piazza.com/gatech/fall2017/rjsw/home">Piazza!</a>)</li>
 
 </ul>
 
 </section>
-<section id="slide-org657df26">
-<h2 id="org657df26">The Linux terminal</h2>
+<section id="slide-org920acd8">
+<h2 id="org920acd8">Overview of Training</h2>
+<ul>
+<li>Week 0 training (<b>Insert dates</b>)</li>
+<li><b>TODO:</b> Anything we need to add here?</li>
+
+</ul>
+
+</section>
+<section id="slide-orga08308d">
+<h2 id="orga08308d">The Linux terminal</h2>
 <ul>
 <li>Powerful text-based interface for interacting with your computer</li>
-<li>(Almost) everything is a file</li>
-<li>Every file is part of one big tree</li>
-<li>Lots of tiny tools you can chain together to do useful things</li>
+<li>(Almost) everything is a file or a folder</li>
+<li>It lets you navigate your folders and manipulate files quickly</li>
+<li>There are lots of tiny tools and commands you can use to do useful things</li>
 
 </ul>
 
 </section>
-<section id="slide-org075fc1b">
-<h2 id="org075fc1b">Basic commands</h2>
+<section id="slide-org77b9633">
+<h2 id="org77b9633">ATTENTION WINDOWS USERS</h2>
+<ul>
+<li>Terminal is not the same as Command Prompt</li>
+<li>We do not recommend using CMD as it has different commands than Linux</li>
+<li>Instead use Git bash
+<ul>
+<li><b>TODO:</b> Add install/use instructions for git bash</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org9e76bf0">
+<h2 id="org9e76bf0">Basic commands</h2>
 <aside class="notes">
 <p>
 Explain that a directory is more commonly called a folder. Go to your home directory. Create a directory. cd to it. Use echo to create a file. List the files with ls -al. Explain what . and .. are. Remove the file. cd up a level. Remove the directory.
@@ -350,10 +146,14 @@ Explain that a directory is more commonly called a folder. Go to your home direc
 </tr>
 </tbody>
 </table>
+<ul>
+<li>Note: folder = directory</li>
+
+</ul>
 
 </section>
-<section id="slide-orge97e09d">
-<h2 id="orge97e09d">Basic commands</h2>
+<section id="slide-orgc2a85f8">
+<h2 id="orgc2a85f8">Basic commands</h2>
 <aside class="notes">
 <p>
 Create a directory with a file again, copy the file to the same folder with a different name, move the original up a level. Run man grep. Grep your file for a keyword. Run history.
@@ -403,8 +203,8 @@ Create a directory with a file again, copy the file to the same folder with a di
 </table>
 
 </section>
-<section id="slide-orgbd6ff66">
-<h2 id="orgbd6ff66">Basic hotkeys</h2>
+<section id="slide-org440b8f9">
+<h2 id="org440b8f9">Basic hotkeys</h2>
 <aside class="notes">
 <p>
 Copy/paste are generally ctrl+shift+c/ctrl+shift+v, respectively, but varies by shell.
@@ -422,23 +222,15 @@ Copy/paste are generally ctrl+shift+c/ctrl+shift+v, respectively, but varies by 
 <li>Use <code>fg</code> to bring it back to the foreground.</li>
 
 </ul></li>
+<li><b>Ctrl+Shift+C:</b> Copy (in Linux)</li>
+<li><b>Ctrl+Shift+V:</b> Paste (in Linux)</li>
 <li><b>Ctrl+D:</b> Exit the shell.</li>
 
 </ul>
 
 </section>
-<section id="slide-org53a37b0">
-<h2 id="org53a37b0">Example code</h2>
-<ul>
-<li>It's all on the software training GitHub repository</li>
-<li>Same code in 3 different languages - you should be able to understand at least one by now</li>
-<li>Look at the cpp file and try to understand it if you've never written C++ before</li>
-
-</ul>
-
-</section>
-<section id="slide-org7f354fc">
-<h2 id="org7f354fc">Git</h2>
+<section id="slide-orgf006d3b">
+<h2 id="orgf006d3b">Git</h2>
 <aside class="notes">
 <p>
 Time to switch to the Git/GitHub presentation.
