@@ -53,6 +53,17 @@
   - Slack: [[https://robojackets.slack.com/messages/@atuttle7/][@atuttle7]]
   - Email: [[mailto:atuttle7@gatech.edu][atuttle7@gatech.edu]]
 
+* Meet Jason
+#+ATTR_HTML: :width 15%
+[[file:https://i.imgur.com/izC5WWA.jpg]]
+- Jason Gibson
+  - Senior, Computer Science (Threads: Devices, Intelligence)
+  - Inside RoboJackets: President
+  - Outside RoboJackets: Avid lover of dad jokes
+- How to contact me
+  - Slack: [[https://robojackets.slack.com/messages/@Jason_Gibson/][@Jason Gibson]]
+  - Email: [[mailto:jgibson37@gatech.edu][jgibson37@gatech.edu]]
+
 * Why are you here?
 - Learn the basics of software development
 - Get up to speed on technologies and techniques common to most RoboJackets teams
