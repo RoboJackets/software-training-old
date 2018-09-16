@@ -20,6 +20,18 @@
  - Slack: [[https://robojackets.slack.com/team/U2AUQ6669][@Evan Bretl]]
  - Email: [[mailto:evan.bretl@gatech.edu][evan.bretl@gatech.edu]]
 
+* Meet Evan
+#+ATTR_HTML: :width 15%
+[[file:https://i.imgur.com/ol3f6LJ.jpg]]
+- Evan Strat
+ - 2nd year, Computer Science (Intelligence + Mod/Sim threads)
+ - Inside RoboJackets: IT Coordinator, IGVC Software
+ - Outside RoboJackets: Play clarinet in marching band
+ - More robot than human
+- How to contact me
+ - Slack: [[https://robojackets.slack.com/team/U73AJTBPV][@Evan Strat]]
+ - Email: [[mailto:estrat@gatech.edu][estrat@gatech.edu]]
+
 * Why are you here?
 - Learn the basics of software development
 - Get up to speed on technologies and techniques common to most RoboJackets teams
