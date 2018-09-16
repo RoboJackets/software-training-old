@@ -36,7 +36,7 @@
 
 # Meet Dallas
 
-![img](https://https://raw.githubusercontent.com/RoboJackets/software-training/instructor-intros/images/dallas.png)
+![img](https://raw.githubusercontent.com/RoboJackets/software-training/instructor-intros/images/dallas.png)
 
 -   Dallas Downing
     -   3rd year, Computer Science (Intelligence + Media)
@@ -44,7 +44,7 @@
     -   Outside RJ: various random hobbies
 -   How to contact me
     -   Slack: [@dallas-d](https://robojackets.slack.com/team/U2E07GW77)
-    -   Email: [[<mailto:dallas-d@gatech.edu>][dallas-d@gatech.edu]
+    -   Email: [dallas-d@gatech.edu](mailto:dallas-d@gatech.edu)
 
 
 # Meet Andrew

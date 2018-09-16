@@ -28,7 +28,7 @@ array<int, 3> name = {1, 2, 3};
 ```
 
 
-<a id="orged1af39"></a>
+<a id="org28e0951"></a>
 
 # Array methods
 
@@ -63,7 +63,7 @@ Vectors can grow as items are added, whereas arrays are static.
 
 </div>
 
--   Everything from the [arrays slide](#orged1af39), and&#x2026;
+-   Everything from the [arrays slide](#org28e0951), and&#x2026;
 
 | `clear`     | removes all items                   |
 | `insert`    | inserts an item at a specific index |
