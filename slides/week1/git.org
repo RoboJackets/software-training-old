@@ -12,15 +12,6 @@
   challenges that cannot be handled by file sharing systems like Dropbox and
   Google Drive
 
-* Install Git on your computer
-- You can find instructions here: https://www.atlassian.com/git/tutorials/install-git
-- Windows: https://gitforwindows.org/
-- Mac OS:
-    - Install Homebrew first from https://brew.sh/
-    - Then run: ~brew install git~
-- Ubuntu:
-    - Run ~sudo apt install git~
-
 * What is GitHub?
 #+BEGIN_NOTES
 Publicly hosted Git server means that it has a bunch of Git repositories on its computers, just like how you will have Git repositories on your own computer

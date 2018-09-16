@@ -69,8 +69,12 @@
 - Get up to speed on technologies and techniques common to most RoboJackets teams
 
 * Overview of Training
-- Week 0 training (*Insert dates*)
-- *TODO:* Anything we need to add here?
+- Basic C syntax sessions
+ - Useful if you have never used a language with C-style syntax before
+ - We expect you to know C++ loops and basic data types
+- Week 2: C++ essentials, building on basic C syntax
+- Weeks 3-4: C++ Standard Template Library
+- Weeks 5-8: Advanced C++ topics (pointers, references, classes/interfaces)
 
 * The Linux terminal
 - Powerful text-based interface for interacting with your computer
@@ -79,10 +83,9 @@
 - There are lots of tiny tools and commands you can use to do useful things
 
 * ATTENTION WINDOWS USERS
-- Terminal is not the same as Command Prompt
-- You cannot use CMD as it has different commands than Linux
-- Instead use Git bash
-  - https://www.atlassian.com/git/tutorials/install-git
+- The Linux terminal is not the same as Windows Command Prompt
+- You will install Git Bash in order to use Linux commands
+- Installation instructions have been distributed to the training-sw email list
 
 * Basic commands
 #+BEGIN_NOTES
