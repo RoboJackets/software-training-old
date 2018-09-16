@@ -32,6 +32,16 @@
  - Slack: [[https://robojackets.slack.com/team/U73AJTBPV][@Evan Strat]]
  - Email: [[mailto:estrat@gatech.edu][estrat@gatech.edu]]
 
+* Meet Dallas
+[[file:https://https://raw.githubusercontent.com/RoboJackets/software-training/instructor-intros/images/dallas.png]]
+- Dallas Downing
+  - 3rd year, Computer Science (Intelligence + Media)
+  - Inside RJ: IGVC Project Manager, Outreach Mentor, Volunteer, PR Committee
+  - Outside RJ: various random hobbies
+- How to contact me
+  - Slack: [[https://robojackets.slack.com/team/U2E07GW77][@dallas-d]]
+  - Email: [[mailto:dallas-d@gatech.edu][dallas-d@gatech.edu]
+
 * Why are you here?
 - Learn the basics of software development
 - Get up to speed on technologies and techniques common to most RoboJackets teams
