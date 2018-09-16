@@ -7,17 +7,6 @@
 -   Working on different parts of code and then combining them creates unique challenges that cannot be handled by file sharing systems like Dropbox and Google Drive
 
 
-# Install Git on your computer
-
--   You can find instructions here: <https://www.atlassian.com/git/tutorials/install-git>
--   Windows: <https://gitforwindows.org/>
--   Mac OS:
-    -   Install Homebrew first from <https://brew.sh/>
-    -   Then run: `brew install git`
--   Ubuntu:
-    -   Run `sudo apt install git`
-
-
 # What is GitHub?
 
 <div class="NOTES">
