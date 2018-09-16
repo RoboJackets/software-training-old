@@ -7,6 +7,17 @@
 -   Working on different parts of code and then combining them creates unique challenges that cannot be handled by file sharing systems like Dropbox and Google Drive
 
 
+# Install Git on your computer
+
+-   You can find instructions here: <https://www.atlassian.com/git/tutorials/install-git>
+-   Windows: <https://gitforwindows.org/>
+-   Mac OS:
+    -   Install Homebrew first from <https://brew.sh/>
+    -   Then run: `brew install git`
+-   Ubuntu:
+    -   Run `sudo apt install git`
+
+
 # What is GitHub?
 
 <div class="NOTES">
@@ -22,26 +33,28 @@ Publicly hosted Git server means that it has a bunch of Git repositories on its 
 -   As you matriculate through Tech, you'll be building an online portfolio of your work on GitHub
 
 
-# How do you find things on GitHub?
-
--   Repositories are stored at `https://github.com/<ORG-OR-USER-NAME>/<REPO-NAME>`
--   So all of our projects can be found at <https://github.com/RoboJackets>
--   Your personal projects will exist at `https://github.com/<YOUR-GH-USERNAME>`
-
-
 ## Create a GitHub account
 
 -   [https://github.com/join](https://github.com/join%0A)
 -   Please include *at least* your real first name
 
-![img](https://i.imgur.com/0cdXQXW.png)
+![img](https://raw.githubusercontent.com/Dallas-D/software-training/week1-2018/images/join-github.png)
+
+
+# How do you find things on GitHub?
+
+-   The search bar can be used to search GitHub for repositories, code, users, commits, etc.
+-   You can also use it to quickly jump to your personal or starred repositories
+-   Repositories are stored at `https://github.com/<ORG-OR-USER-NAME>/<REPO-NAME>`
+-   Your personal projects will exist at `https://github.com/<YOUR-GH-USERNAME>`
+-   So all of our projects can be found at <https://github.com/RoboJackets/>
 
 
 # Fork and star our repo
 
 -   Navigate to <https://github.com/RoboJackets/software-training>
 
-![img](https://i.imgur.com/3CtCTqj.png)
+![img](https://raw.githubusercontent.com/Dallas-D/software-training/week1-2018/images/git-star-fork.png)
 
 
 # What is a fork?
@@ -51,16 +64,6 @@ Publicly hosted Git server means that it has a bunch of Git repositories on its 
 -   A fork is a copy of a repository that exists on your personal account
 -   Changes made on a fork will not affect the original repository, and vice versa
 -   Your fork will be present on `https://github.com/<YOUR-GH-USERNAME>/software-training`
-
-
-# Install Git on your computer
-
--   Windows: <https://git-scm.com/downloads>
--   Mac OS:
-    -   Install Homebrew first from <https://brew.sh/>
-    -   Then run: `brew install git`
--   Ubuntu:
-    -   Run `sudo apt install git`
 
 
 # Git Config
@@ -81,7 +84,7 @@ git config --get --global user.name
 -   Go back to the webpage for our GitHub repository
 -   Select the clone button, then copy the link displayed
 
-![img](https://i.imgur.com/YjWCoqJ.png)
+![img](https://raw.githubusercontent.com/Dallas-D/software-training/week1-2018/images/git-clone.png)
 
 
 ## Clone the repository
@@ -190,18 +193,31 @@ rj  https://github.com/RoboJackets/software-training.git (push)
 -   This is called "staging" your changes
 
 
+# Before we get too far&#x2026;
+
+-   `git status` is your friend
+-   It will tell you:
+    -   your current branch
+    -   files you have changed but haven't staged
+    -   files staged and ready to commit
+    -   the commands you can use to do these things
+-   When in doubt, use `git status` to see the status of your repo
+
+
 # Git add
 
 ```shell
+git add file.txt
+git add directory
 git add .
+git add *
 ```
 
--   Note that the above command contains a period!
 -   **The add command tells git to keep track of new files added in the directory**
 -   git needs to be told which files to version control. git add puts the files on git's "stage". The stage is where files go before they are saved by git
 -   git add takes in parameters for each file or directory to stage
     -   The period means all files in this directory and its subdirectories
-    -   Generally in bash, a period is shorthand for the current directory
+    -   The asterisks means all files that have changes
 
 
 # Git commit
@@ -214,7 +230,7 @@ git commit -m "Added a file!"
     -   This is making the change "permanent" (more on this later)
 -   `-m "..."`: Commits require commit messages to label them
     -   This is an easy way to specify that message while creating the commit
--   'git status' can show you if you have any unstaged changes and what you can commit
+-   Remember: `git status` can show you if you have any unstaged changes and what you can commit
 
 
 ## Quick note on Cli command options
@@ -253,6 +269,12 @@ git push origin master
     -   This does mean that good commit messages are important
 -   Large files are impractical for Git to track
     -   It's best not to commit large files such as logs and videos.
+
+
+# Good vs bad:
+
+| **Good commit messages**                                                                                   | **Bad commit messages**                                                                                   |
+| ![img](https://raw.githubusercontent.com/Dallas-D/software-training/week1-2018/images/git-good-commit.png) | ![img](https://raw.githubusercontent.com/Dallas-D/software-training/week1-2018/images/git-bad-commit.png) |
 
 
 # Let's Recap
@@ -302,22 +324,14 @@ Call on students to explain each
     -   You can merge from your branch to a remote (push)
 
 
-## Git as a Graph
-
--   Git history is a **graph**
--   A graph is simply a collection of nodes connected by edges
--   Each commit is a node on the graph
--   Subsequent commits are linked by edges
-
-
-## Git as a Graph cont.
+## Visualizing Git
 
 <div class="NOTES">
 These tools are not installed by default.
 
 </div>
 
--   Some useful tools to visualize your repo's git history as a graph:
+-   Some useful tools to visualize your repo's git history:
     -   `gitk`
     -   `git` integrations for your favorite editor!
 
@@ -446,7 +460,7 @@ Do something visual at end to show other branches are unchanged. When the studen
     ```
 -   Locate your fork on GitHub and click "New pull request"
 
-![img](https://i.imgur.com/8xwEajp.jpg)
+![img](https://raw.githubusercontent.com/Dallas-D/software-training/week1-2018/images/git-pull-request.png)
 
 
 ## How to make a pull request (continued)

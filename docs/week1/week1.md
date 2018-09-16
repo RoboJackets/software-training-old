@@ -35,9 +35,9 @@
 # ATTENTION WINDOWS USERS
 
 -   Terminal is not the same as Command Prompt
--   We do not recommend using CMD as it has different commands than Linux
+-   You cannot use CMD as it has different commands than Linux
 -   Instead use Git bash
-    -   **TODO:** Add install/use instructions for git bash
+    -   <https://www.atlassian.com/git/tutorials/install-git>
 
 
 # Basic commands
