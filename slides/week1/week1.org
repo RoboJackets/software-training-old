@@ -11,7 +11,7 @@
 
 * Meet Evan
 #+ATTR_HTML: :width 15%
-[[file:https://raw.githubusercontent.com/robojackets/software-training/master/instructor-intros/evan-bretl-hiking.jpg]]
+[[file:https://raw.githubusercontent.com/RoboJackets/software-training/instructor-intros/images/evan-bretl-hiking.jpg]]
 - Evan Bretl
  - 3rd year, Computer Science (Intelligence + Mod/Sim threads)
  - Inside RoboJackets: Software Training Coordinator, RoboRacing Software Lead, former RoboRacing Project Manager
