@@ -33,6 +33,7 @@
  - Email: [[mailto:estrat@gatech.edu][estrat@gatech.edu]]
 
 * Meet Dallas
+#+ATTR_HTML: :width 15%
 [[file:https://raw.githubusercontent.com/RoboJackets/software-training/instructor-intros/images/dallas.png]]
 - Dallas Downing
   - 3rd year, Computer Science (Intelligence + Media)
