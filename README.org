@@ -24,7 +24,7 @@ I. Git
     2. If it asks for a default text editor, choose something from the list that you know how to use. If you aren’t familiar with any of them, choose “nano”
     3. Leave all other options as the default
   C. To use Git in Linux or Mac, open a terminal. In Windows, you will need to launch the Git Bash program after you install it
-II. Windows only: MinGW (http://mingw.org/wiki/Getting_Started) 
+II. Windows only: [[http://mingw.org/wiki/Getting_Started][MinGW]]
   A. Download mingw-get-setup.exe
   B. Leave the default installation location and related settings
   C. Mark base-bin and gcc-g++-bin for installation
