@@ -9,8 +9,16 @@
 - Using Git and GitHub for version control
 - Do a fun exercise to practice using git
 
-* Meet the Intructors
-- *TODO:* Insert Fall 2018 Instructors
+* Meet Evan
+#+ATTR_HTML: :width 15%
+[[file:https://i.imgur.com/zJ0R4QV.jpg]]
+- Evan Bretl
+ - 3rd year, Computer Science (Intelligence + Mod/Sim threads)
+ - Inside RoboJackets: Software Training Coordinator, RoboRacing Software Lead, former RoboRacing Project Manager
+ - Outside RoboJackets: Volleyball, AI Club
+- How to contact me
+ - Slack: [[https://robojackets.slack.com/team/U2AUQ6669][@Evan Bretl]]
+ - Email: [[mailto:evan.bretl@gatech.edu][evan.bretl@gatech.edu]]
 
 * Why are you here?
 - Learn the basics of software development
