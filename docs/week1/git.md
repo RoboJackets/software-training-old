@@ -27,7 +27,7 @@ Publicly hosted Git server means that it has a bunch of Git repositories on its 
 -   [https://github.com/join](https://github.com/join%0A)
 -   Please include *at least* your real first name
 
-![img](https://raw.githubusercontent.com/Dallas-D/software-training/week1-2018/images/join-github.png)
+![img](https://raw.githubusercontent.com/robojackets/software-training/master/images/join-github.png)
 
 
 # How do you find things on GitHub?
@@ -43,7 +43,7 @@ Publicly hosted Git server means that it has a bunch of Git repositories on its 
 
 -   Navigate to <https://github.com/RoboJackets/software-training>
 
-![img](https://raw.githubusercontent.com/Dallas-D/software-training/week1-2018/images/git-star-fork.png)
+![img](https://raw.githubusercontent.com/robojackets/software-training/master/images/git-star-fork.png)
 
 
 # What is a fork?
@@ -73,7 +73,7 @@ git config --get --global user.name
 -   Go back to the webpage for our GitHub repository
 -   Select the clone button, then copy the link displayed
 
-![img](https://raw.githubusercontent.com/Dallas-D/software-training/week1-2018/images/git-clone.png)
+![img](https://raw.githubusercontent.com/robojackets/software-training/master/images/git-clone.png)
 
 
 ## Clone the repository
@@ -259,11 +259,13 @@ git push origin master
 -   Large files are impractical for Git to track
     -   It's best not to commit large files such as logs and videos.
 
+![img](https://raw.githubusercontent.com/RoboJackets/software-training/master/images/git-add-commit.png)
+
 
 # Good vs bad:
 
-| **Good commit messages**                                                                                   | **Bad commit messages**                                                                                   |
-| ![img](https://raw.githubusercontent.com/Dallas-D/software-training/week1-2018/images/git-good-commit.png) | ![img](https://raw.githubusercontent.com/Dallas-D/software-training/week1-2018/images/git-bad-commit.png) |
+| **Good commit messages**                                                                                  | **Bad commit messages**                                                                                  |
+| ![img](https://raw.githubusercontent.com/RoboJackets/software-training/master/images/git-good-commit.png) | ![img](https://raw.githubusercontent.com/robojackets/software-training/master/images/git-bad-commit.png) |
 
 
 # Let's Recap
@@ -449,7 +451,7 @@ Do something visual at end to show other branches are unchanged. When the studen
     ```
 -   Locate your fork on GitHub and click "New pull request"
 
-![img](https://raw.githubusercontent.com/Dallas-D/software-training/week1-2018/images/git-pull-request.png)
+![img](https://raw.githubusercontent.com/robojackets/software-training/master/images/git-pull-request.png)
 
 
 ## How to make a pull request (continued)
