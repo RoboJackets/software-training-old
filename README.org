@@ -19,7 +19,7 @@ This is the source repository for the 2018 RoboJackets Software training program
 
 I. Git
   A. Ubuntu: “sudo apt install git”
-  A. All other OSes: https://git-scm.com/downloads 
+  B. All other OSes: https://git-scm.com/downloads 
     1. Install to the default location
     2. If it asks for a default text editor, choose something from the list that you know how to use. If you aren’t familiar with any of them, choose “nano”
     3. Leave all other options as the default
