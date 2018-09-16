@@ -30,7 +30,7 @@ Publicly hosted Git server means that it has a bunch of Git repositories on its 
 - Please include /at least/ your real first name
 # Emphasize this requirement is for display name on GitHub, not username
 
-[[file:https://raw.githubusercontent.com/Dallas-D/software-training/week1-2018/images/join-github.png]]
+[[file:https://raw.githubusercontent.com/robojackets/software-training/master/images/join-github.png]]
 
 * How do you find things on GitHub?
 - The search bar can be used to search GitHub for repositories, code, users,
@@ -43,7 +43,7 @@ Publicly hosted Git server means that it has a bunch of Git repositories on its 
 * Fork and star our repo
 - Navigate to https://github.com/RoboJackets/software-training
 
-[[file:https://raw.githubusercontent.com/Dallas-D/software-training/week1-2018/images/git-star-fork.png]]
+[[file:https://raw.githubusercontent.com/robojackets/software-training/master/images/git-star-fork.png]]
 
 * What is a fork?
 - Problem: How do I try something out on a project without affecting the project itself?
@@ -67,7 +67,7 @@ Publicly hosted Git server means that it has a bunch of Git repositories on its 
 * Let's grab some code!
 - Go back to the webpage for our GitHub repository
 - Select the clone button, then copy the link displayed
-[[file:https://raw.githubusercontent.com/Dallas-D/software-training/week1-2018/images/git-clone.png]]
+[[file:https://raw.githubusercontent.com/robojackets/software-training/master/images/git-clone.png]]
 
 ** Clone the repository
 - In your terminal navigate to your workspace
@@ -224,9 +224,11 @@ rj  https://github.com/RoboJackets/software-training.git (push)
 - Large files are impractical for Git to track
   - It's best not to commit large files such as logs and videos.
 
+https://raw.githubusercontent.com/RoboJackets/software-training/master/images/git-add-commit.png
+
 * Good vs bad:
 | *Good commit messages* | *Bad commit messages* |
-| [[file:https://raw.githubusercontent.com/Dallas-D/software-training/week1-2018/images/git-good-commit.png]] | [[file:https://raw.githubusercontent.com/Dallas-D/software-training/week1-2018/images/git-bad-commit.png]] |
+| [[file:https://raw.githubusercontent.com/RoboJackets/software-training/master/images/git-good-commit.png]] | [[file:https://raw.githubusercontent.com/robojackets/software-training/master/images/git-bad-commit.png]] |
 
 * Let's Recap
 #+BEGIN_NOTES
@@ -371,7 +373,7 @@ Do something visual at end to show other branches are unchanged. When the studen
     git push origin stableRj
   #+END_SRC
 - Locate your fork on GitHub and click "New pull request"
-[[file:https://raw.githubusercontent.com/Dallas-D/software-training/week1-2018/images/git-pull-request.png]]
+[[file:https://raw.githubusercontent.com/robojackets/software-training/master/images/git-pull-request.png]]
 
 ** How to make a pull request (continued)
 - Ensure that both repos and branches are correct

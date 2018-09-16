@@ -9,8 +9,60 @@
 - Using Git and GitHub for version control
 - Do a fun exercise to practice using git
 
-* Meet the Intructors
-- *TODO:* Insert Fall 2018 Instructors
+* Meet Evan
+#+ATTR_HTML: :width 15%
+[[file:https://raw.githubusercontent.com/RoboJackets/software-training/instructor-intros/images/evan-bretl-hiking.jpg]]
+- Evan Bretl
+ - 3rd year, Computer Science (Intelligence + Mod/Sim threads)
+ - Inside RoboJackets: Software Training Coordinator, RoboRacing Software Lead, former RoboRacing Project Manager
+ - Outside RoboJackets: Volleyball, AI Club
+- How to contact me
+ - Slack: [[https://robojackets.slack.com/team/U2AUQ6669][@Evan Bretl]]
+ - Email: [[mailto:evan.bretl@gatech.edu][evan.bretl@gatech.edu]]
+
+* Meet Evan
+#+ATTR_HTML: :width 15%
+[[file:https://i.imgur.com/ol3f6LJ.jpg]]
+- Evan Strat
+ - 2nd year, Computer Science (Intelligence + Mod/Sim threads)
+ - Inside RoboJackets: IT Coordinator, IGVC Software
+ - Outside RoboJackets: Play clarinet in marching band
+ - More robot than human
+- How to contact me
+ - Slack: [[https://robojackets.slack.com/team/U73AJTBPV][@Evan Strat]]
+ - Email: [[mailto:estrat@gatech.edu][estrat@gatech.edu]]
+
+* Meet Dallas
+[[file:https://https://raw.githubusercontent.com/RoboJackets/software-training/instructor-intros/images/dallas.png]]
+- Dallas Downing
+  - 3rd year, Computer Science (Intelligence + Media)
+  - Inside RJ: IGVC Project Manager, Outreach Mentor, Volunteer, PR Committee
+  - Outside RJ: various random hobbies
+- How to contact me
+  - Slack: [[https://robojackets.slack.com/team/U2E07GW77][@dallas-d]]
+  - Email: [[mailto:dallas-d@gatech.edu][dallas-d@gatech.edu]
+
+* Meet Andrew
+#+ATTR_HTML: :width 15%
+[[file:https://i.imgur.com/5Qa0VHl.jpg]]
+- Andrew Tuttle
+  - 3rd year, Computer Science (Theory, Intelligence)
+  - Inside RJ: IGVC Software Lead
+  - Outside RJ: Dungeon Master and general geek
+- How to contact me
+  - Slack: [[https://robojackets.slack.com/messages/@atuttle7/][@atuttle7]]
+  - Email: [[mailto:atuttle7@gatech.edu][atuttle7@gatech.edu]]
+
+* Meet Jason
+#+ATTR_HTML: :width 15%
+[[file:https://i.imgur.com/izC5WWA.jpg]]
+- Jason Gibson
+  - Senior, Computer Science (Threads: Devices, Intelligence)
+  - Inside RoboJackets: President
+  - Outside RoboJackets: Avid lover of dad jokes
+- How to contact me
+  - Slack: [[https://robojackets.slack.com/messages/@Jason_Gibson/][@Jason Gibson]]
+  - Email: [[mailto:jgibson37@gatech.edu][jgibson37@gatech.edu]]
 
 * Why are you here?
 - Learn the basics of software development
