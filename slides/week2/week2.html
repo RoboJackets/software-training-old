@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <title>Week 2</title>
-<meta name="author" content="(Kristaps Berzinch, Raymond Ortiz)"/>
+<meta name="author" content="(Evan Bretl)"/>
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
@@ -29,290 +29,373 @@
 <section id="sec-title-slide"><h1 class="title">Week 2</h1>
 </section>
 
-<section id="slide-orgac50d70">
-<h2 id="orgac50d70">What are we doing today?</h2>
+<section id="slide-org744663c">
+<h2 id="org744663c">What are we doing today?</h2>
 <ul>
 <li>Introduction to C++
 <ul>
-<li>What it is</li>
 <li>Functions</li>
-<li>Includes and headers</li>
+<li>Headers and includes</li>
+<li>Namespaces</li>
 <li>Working with strings</li>
 
 </ul></li>
-<li>How to find and read documentation</li>
-<li>Sending and recieving changes from remote Git repositories</li>
-
-</ul>
-
-</section>
-<section id="slide-orgb9800f8">
-<h2 id="orgb9800f8">What is C++?</h2>
-<aside class="notes">
-<p>
-C++ is a more general programming langauge than C. It can have higher levels of abstraction. C is minimalist. C++ also has classes, it is not C with classes.
-</p>
-
-</aside>
+<li>Using the STSL Robot API
 <ul>
-<li>A general-purpose programming language</li>
-<li>Designed with performance, efficiency, and flexibility in mind</li>
-<li>Great for robots!</li>
-
-</ul>
-
-</section>
-<section id="slide-orgc4e5315">
-<h2 id="orgc4e5315">Functions</h2>
-<aside class="notes">
-<p>
-After introducing the concept, write a simple example. Don't go into prototypes yet, we'll cover them in a bit.
-</p>
-
-<p>
-Open the example code on your display and try to stick to that as much as you can.
-</p>
-
-</aside>
-<ul>
-<li>A function is a chunk of code with defined inputs and outputs
-<ul>
-<li>Minimizes copy-and-paste</li>
-<li>Less buggy</li>
-<li>Easier to test than a whole program</li>
+<li>Drive in a square</li>
+<li>Line following</li>
 
 </ul></li>
-<li>These can be chained together for more complex functionality</li>
-<li>You want each function to have a single high-level purpose</li>
 
 </ul>
 
 </section>
-<section id="slide-org1092453">
-<h2 id="org1092453">Anatomy of a function declaration</h2>
+<section id="slide-orge461c69">
+<h2 id="orge461c69">What is C++?</h2>
 <ul>
-<li>C++ lets you have multiple functions with the same name, provided their parameter signatures are different
+<li>Compiled (fast)</li>
+<li>Can be written in many different ways (flexible)</li>
+<li>NOT "C with classes" (much more powerful)</li>
+
+</ul>
+
+</section>
+<section id="slide-orgadec8e5">
+<h2 id="orgadec8e5">Starting notes</h2>
 <ul>
-<li>A function's parameter signature is just the ordered list of its parameter types.</li>
-<li><code>foo(int a, char b)</code> and <code>bar(int x, char z)</code> have the same signature</li>
-<li><code>fizz(int a, char b)</code> and <code>buzz(char x, int z)</code> don't</li>
+<li>We assume some knowledge of the absolute basics of C/C++ syntax (if, for, while, etc)
+<ul>
+<li>There is another "Week 0" training session which will teach these things</li>
 
 </ul></li>
-<li>The compiler will determine which function to actually call depending on the parameters</li>
-<li>(This will come in handy later!)</li>
 
 </ul>
 
 </section>
-<section id="slide-org8b1f14a">
-<h2 id="org8b1f14a">Header files</h2>
-<aside class="notes">
+<section id="slide-orgd96d199">
+<h2 id="orgd96d199">hello-world.cpp</h2>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
+<span class="linenr">2: </span>
+<span class="linenr">3: </span><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+<span class="linenr">4: </span>  <span style="color: #15968D;">std</span>::cout &lt;&lt; <span style="color: #15968D;">"Hello, world!"</span> &lt;&lt; <span style="color: #15968D;">std</span>::endl;
+<span class="linenr">5: </span>}
+</pre>
+</div>
 <p>
-Now you can talk about prototypes!
+<a href="http://cpp.sh/9yupt">http://cpp.sh/9yupt</a>
 </p>
 
-</aside>
+</section>
+<section id="slide-org0b67d2b">
+<h2 id="org0b67d2b">Functions in C++</h2>
 <ul>
-<li>Only contain <i>declarations</i>, also known as prototypes, not definitions
+<li>Review: A function is a chunk of code with inputs and outputs</li>
+<li>C++ functions have 0 or more parameters (inputs) and always have 1 output</li>
+<li>Each parameter has a type and there is a return type</li>
+<li>The special function <code>main()</code> with return type <code>int</code> gets run automatically</li>
+<li>Example
 <ul>
-<li>Function name</li>
-<li>Arguments</li>
+<li>Want to add two integers, x and y, and print their result</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org992a5d1">
+<h2 id="org992a5d1">Functions Example</h2>
+<ol>
+<li>Informative function name</li>
+<li>Input types</li>
 <li>Return type</li>
-<li>No functionality</li>
-<li>Example: <code>int add(int a, int b);</code></li>
 
-</ul></li>
-<li>This enables a lot of different files to "know" about a function but only have one definition for it</li>
-
-</ul>
-
-</section>
-<section id="slide-org0b3a7fb">
-<h2 id="org0b3a7fb">Note about header files</h2>
-<ul>
-<li>C++ has a lot of flexibility; this is a blessing and a curse</li>
-<li>Your code will have little structure unless you organize it well</li>
-<li>Break up your code logically and purposefully
-<ul>
-<li>Readability above all</li>
-
-</ul></li>
-
-</ul>
-
-</section>
-<section id="slide-orgaa4bd4e">
-<h2 id="orgaa4bd4e">Includes</h2>
-<aside class="notes">
-<p>
-After introducing the concept, demo some basic examples of including a file within another file.
-Draw a picture on the board of a.h included in b.h and then b.h included in another file
-</p>
-
-</aside>
-<ul>
-<li>Allows you to use code from other files</li>
-<li>Will literally insert anything in name.h into the file</li>
-
-</ul>
+</ol>
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;name.h&gt;</span>
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">void</span> <span style="color: #2F7BDE;">addAndPrint</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>, <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">y</span>) {
+<span class="linenr">2: </span>
+<span class="linenr">3: </span>}
 </pre>
 </div>
 
 </section>
-<section id="slide-orgc40f99f">
-<h2 id="orgc40f99f">Header guards C style</h2>
-<aside class="notes">
-<p>
-using the previous example include a.h in the final file as well. Show how the same code is copied in twice.
-</p>
-
-</aside>
+<section id="slide-org658220f">
+<h2 id="org658220f">Functions Example</h2>
 <ul>
-<li>header guards prevent the compiler from including the same file multiple times</li>
-<li>will work in all cases
-<ul>
-<li>uses C style macros</li>
-
-</ul></li>
+<li>Perform the addition</li>
 
 </ul>
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">#if</span><span style="color: #598249;">n</span><span style="color: #598249;">def</span> FILENAME_H
-<span class="linenr">2: </span><span style="color: #598249;">#define</span> <span style="color: #2F7BDE;">FILENAME_H</span>
-<span class="linenr">3: </span>    ...
-<span class="linenr">4: </span><span style="color: #598249;">#endif</span>  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">FILENAME_H</span>
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">void</span> <span style="color: #2F7BDE;">addAndPrint</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>, <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">y</span>) {
+<span class="linenr">2: </span>    <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">sum</span> = x + y;
+<span class="linenr">3: </span>}
 </pre>
 </div>
 
 </section>
-<section id="slide-org873be4f">
-<h2 id="org873be4f">#pragma once</h2>
+<section id="slide-org21928bf">
+<h2 id="org21928bf">Functions Example</h2>
 <ul>
-<li>a different method to do header guards
-<ul>
-<li>cleaner</li>
-
-</ul></li>
-<li>most compilers support this</li>
+<li>Print the result</li>
 
 </ul>
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">#pragma</span> once
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">void</span> <span style="color: #2F7BDE;">addAndPrint</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>, <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">y</span>) {
+<span class="linenr">2: </span>    <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">sum</span> = x + y;
+<span class="linenr">3: </span>    <span style="color: #15968D;">std</span>::cout &lt;&lt; sum &lt;&lt; <span style="color: #15968D;">std</span>::endl;
+<span class="linenr">4: </span>}
 </pre>
 </div>
 
 </section>
-<section id="slide-orge7d33b7">
-<h2 id="orge7d33b7">Working with strings</h2>
-<aside class="notes">
+<section id="slide-orgb053222">
+<h2 id="orgb053222">Functions Example</h2>
+<ul>
+<li>We can split up this code to show you real return types</li>
+<li><code>return</code> statement must be used since the return type is not <code>void</code></li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr"> 1: </span><span style="color: #598249;">void</span> <span style="color: #2F7BDE;">addAndPrint</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>, <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">y</span>) {
+<span class="linenr"> 2: </span>    <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">sum</span> = x + y;
+<span class="linenr"> 3: </span>    <span style="color: #15968D;">std</span>::cout &lt;&lt; sum &lt;&lt; <span style="color: #15968D;">std</span>::endl;
+<span class="linenr"> 4: </span>}
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">add</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>, <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">y</span>) {
+<span class="linenr"> 7: </span>    <span style="color: #598249;">return</span> x + y;
+<span class="linenr"> 8: </span>}
+<span class="linenr"> 9: </span>
+<span class="linenr">10: </span><span style="color: #598249;">void</span> <span style="color: #2F7BDE;">print</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">value</span>) {
+<span class="linenr">11: </span>    <span style="color: #15968D;">std</span>::cout &lt;&lt; value &lt;&lt; <span style="color: #15968D;">std</span>::endl;
+<span class="linenr">12: </span>}
+</pre>
+</div>
 <p>
-Write and walk through some example code.
+<code>print(add(3, 4))</code> gives the same result as <code>addAndPrint(3, 4)</code>
+Try it yourself <a href="http://cpp.sh/6lvcn">http://cpp.sh/6lvcn</a>
 </p>
 
-</aside>
+</section>
+<section id="slide-org3c8da12">
+<h2 id="org3c8da12">Forward Declaration</h2>
 <ul>
-<li>A C-style string is stored as an array of characters ending with a NULL (0x0)</li>
-<li>The C++ standard library contains a string class with several useful functions, in <code>&lt;string&gt;</code>
+<li>Declaration = defining the name, parameters, and return type</li>
+<li>Definition = declaration + filling in the function</li>
+<li>Functions have to be declared higher up in the file than when they are used</li>
+<li><a href="http://cpp.sh/4mbgg">http://cpp.sh/4mbgg</a></li>
+
+</ul>
+
+</section>
+<section id="slide-orgebc2fee">
+<h2 id="orgebc2fee">Includes</h2>
 <ul>
-<li>(We'll get to classes later)</li>
-<li>Use this instead of C-style strings unless you have a specific reason not to</li>
+<li>Why do we need <code>#include &lt;iostream&gt;</code>?
+<ul>
+<li><a href="http://cpp.sh/7jb5t">http://cpp.sh/7jb5t</a></li>
 
 </ul></li>
-<li>Use the addition oprator (+) to concatenate strings</li>
-<li>Use <code>to_string</code> to convert other types to strings</li>
-<li>Use <code>sto_</code> functions to parse strings to other types
+<li>Includes let you bring other code into a file</li>
+<li>Use this for
 <ul>
-<li>Ex). <code>stoi</code> to convert string to integer</li>
-<li>Ex). <code>stod</code> to convert string to double</li>
+<li>Standard library functions and data types (anything std::)</li>
+<li>Other installed libraries (e.g. ROS, OpenCV, Qt)</li>
+<li>Splitting up a large program into multiple files</li>
+
+</ul></li>
+<li>Without including anything, C++ is very limited</li>
+
+</ul>
+
+</section>
+<section id="slide-org3fcaa9d">
+<h2 id="org3fcaa9d">Include syntax</h2>
+<ul>
+<li><code>&lt;&gt;</code> gets code from standard library or apt-installed libraries</li>
+<li><code>""</code> gets code from a nearby folder</li>
+<li>If <code>""</code> does not find the file, it reverts to <code>&lt;&gt;</code> behavior</li>
+<li>What's in the <code>&lt;&gt;</code> or <code>""</code> is a file name
+<ul>
+<li>Traditionally the file name has extension ".h" or ".hpp"</li>
+
+</ul></li>
+<li>Examples:</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;string&gt;</span>  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">standard library</span>
+<span class="linenr">2: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;QWidget&gt;</span>  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">file from Qt installed through apt</span>
+<span class="linenr">3: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;ros/ros.h&gt;</span>  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">file from ros installed through apt</span>
+<span class="linenr">4: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">"include/my_interface.hpp"</span>  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">another file in the same project,</span>
+<span class="linenr">5: </span>                                     <span style="color: #5e6263;">// </span><span style="color: #5e6263;">in a folder called "include</span><span style="color: #bd3832; font-weight: bold;">"</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-orgaa0e4bb">
+<h2 id="orgaa0e4bb">Namespaces</h2>
+<ul>
+<li>What happens when two things are assigned the same name?
+<ul>
+<li><a href="http://cpp.sh/24v43">http://cpp.sh/24v43</a></li>
+
+</ul></li>
+<li>Solution: protect your variables and function names with a unique namespace
+<ul>
+<li><a href="http://cpp.sh/66mrj">http://cpp.sh/66mrj</a></li>
+<li>Use keywords from a namespace using the <code>::</code> operator
+<ul>
+<li>types: <code>std::string</code>, <code>my_library::MyClass</code></li>
+<li>functions: <code>std::min_element</code></li>
+<li>static variables: <code>std::string::npos</code></li>
+
+</ul></li>
+
+</ul></li>
+<li>Everything that is included should be in a namespace</li>
+
+</ul>
+
+</section>
+<section id="slide-org98d709c">
+<h2 id="org98d709c">"using namespace" keyword</h2>
+<ul>
+<li><a href="http://cpp.sh/4d5gz">http://cpp.sh/4d5gz</a></li>
+<li>Handy (used in RJ) but also defeats the purpose of namespaces</li>
+<li>Use with caution
+<ul>
+<li>Must be clear, without the namespace, where the function comes from</li>
+<li>In general, use only one external namespace in a file (usually std)</li>
 
 </ul></li>
 
 </ul>
 
 </section>
-<section id="slide-org182dd96">
-<h2 id="org182dd96">String methods</h2>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">Name</th>
-<th scope="col" class="org-left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left"><code>length</code></td>
-<td class="org-left">Returns the length of a string</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>substr</code></td>
-<td class="org-left">Returns a portion (substring) of the string</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>find</code></td>
-<td class="org-left">Returns the position of a substring, if present</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>empty</code></td>
-<td class="org-left">Returns true if length is zero, otherwise false</td>
-</tr>
-</tbody>
-</table>
-
-</section>
-<section id="slide-org0f9fd65">
-<h2 id="org0f9fd65">How to find and read documentation</h2>
-<aside class="notes">
-<p>
-Show how to get to the string documentation
-</p>
-
-</aside>
+<section id="slide-org557f4b8">
+<h2 id="org557f4b8">Strings</h2>
 <ul>
-<li>Most of the last slide was sourced from <a href="http://en.cppreference.com/w/">cppreference.com</a></li>
-<li>Documents standard library functionality</li>
-<li>Great reference for all things C++</li>
+<li>C string (still valid in C++):</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">char</span>[] s = <span style="color: #15968D;">"this is a string"</span>;
+</pre>
+</div>
+<ul>
+<li>C++ string:</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;string&gt;</span>
+<span class="linenr">2: </span><span style="color: #15968D;">std</span>::<span style="color: #598249;">string</span> <span style="color: #2F7BDE;">s1</span>(<span style="color: #15968D;">"this is a string"</span>);  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">constructor</span>
+<span class="linenr">3: </span><span style="color: #15968D;">std</span>::<span style="color: #598249;">string</span> <span style="color: #2F7BDE;">s2</span> = <span style="color: #15968D;">"this is a string"</span>;  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">same effect as constructor</span>
+</pre>
+</div>
+<ul>
+<li>Unlike in C, C++ strings are a class instances and have methods</li>
 
 </ul>
 
 </section>
-<section id="slide-org4e18547">
-<h2 id="org4e18547">Example Code</h2>
-<aside class="notes">
-<p>
-draw the tree structure of the example code files. week2.cpp includes week2.h which includes operator.h. operator.cpp includes operator.cpp.
-</p>
-
-</aside>
-
-</section>
-<section id="slide-orgac9f4b3">
-<h2 id="orgac9f4b3">Git</h2>
-<aside class="notes">
-<p>
-Time to switch to the Git/GitHub presentation.
-</p>
-
-</aside>
+<section id="slide-orgdd071fe">
+<h2 id="orgdd071fe">String Methods</h2>
 <ul>
-<li><a href="git.html">Click here for this week's Git presentation</a></li>
+<li>What methods can I use for a string? (there are lots)
+<ul>
+<li>Google! <a href="https://www.google.com/search?q=c+++std::string">https://www.google.com/search?q=c+++std::string</a></li>
+<li>cppreference.com is comprehensive and up-to-date</li>
+
+</ul></li>
+<li>Adding to end:  + and += operators, <code>append(string)</code>, <code>push_back(char)</code>
+<ul>
+<li><a href="http://cpp.sh/84u76">http://cpp.sh/84u76</a></li>
+
+</ul></li>
+<li>Reading user input:  <code>std::cin &gt;&gt;</code>
+<ul>
+<li><a href="http://cpp.sh/64mc">http://cpp.sh/64mc</a></li>
+
+</ul></li>
+<li>Access characters like an array
+<ul>
+<li><a href="http://cpp.sh/9gb4x">http://cpp.sh/9gb4x</a></li>
+
+</ul></li>
+<li><code>size()</code> and <code>length()</code> each get number of characters</li>
 
 </ul>
+
+</section>
+<section id="slide-org31302e4">
+<h2 id="org31302e4">Excercise</h2>
+<ul>
+<li>Find a buddy (or work alone if you want)</li>
+<li>Write a function <code>make_palindrome</code>
+<ul>
+<li>Input: string</li>
+<li>Output: string with reversed copy attached</li>
+<li><code>make_palindrome("apple")</code> returns <code>"appleelppa"</code></li>
+
+</ul></li>
+<li>Starter code: <a href="http://cpp.sh/844tx">http://cpp.sh/844tx</a></li>
+
+</ul>
+
+</section>
+<section id="slide-orgd26aea4">
+<h2 id="orgd26aea4">Solution</h2>
+<ul>
+<li>Using what we've learned so far
+<ul>
+<li><a href="http://cpp.sh/92y54">http://cpp.sh/92y54</a></li>
+
+</ul></li>
+<li>Preview for next week
+<ul>
+<li><a href="http://cpp.sh/7jmjg">http://cpp.sh/7jmjg</a></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org393509d">
+<h2 id="org393509d">Our Training Robots</h2>
+<ul>
+<li>We have robots for you to use!</li>
+<li>&lt;TODO insert details on robot capabilities&gt;</li>
+
+</ul>
+
+</section>
+<section id="slide-orgb7656d2">
+<h2 id="orgb7656d2">STSL: Robot Control Basics</h2>
+<ul>
+<li>&lt;TODO content&gt;
+<ul>
+<li>STSL functions for writing to motors</li>
+<li>compiling from terminal</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orge2f08e5">
+<h2 id="orge2f08e5">Exercise: Drive in Square</h2>
+
+</section>
+<section id="slide-orgbc3ffc1">
+<h2 id="orgbc3ffc1">Exercise: Line Following</h2>
 </section>
 </section>
 </div>
@@ -338,7 +421,7 @@ height: 800,
 margin: 0.15,
 
 theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+transition: Reveal.getQueryHash().transition || 'None', // default/cube/page/concave/zoom/linear/fade/none
 transitionSpeed: 'fast',
 multiplex: {
     secret: '', // null if client
