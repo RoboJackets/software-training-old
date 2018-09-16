@@ -7,43 +7,14 @@ This is the source repository for the 2017 RoboJackets Software training program
 
 1. Week 1
    + [[https://robojackets.github.io/software-training/slides/week1/git.html][Git Presentation]]
-   + [[https://robojackets.github.io/software-training/slides/week1/week1.html][Code Presentation]]
-
-2. Week 2
-   + [[https://robojackets.github.io/software-training/slides/week2/git.html][Git Presentation]]
-   + [[https://robojackets.github.io/software-training/slides/week2/week2.html][Code Presentation]]
-
-3. Week 3
-   + [[https://robojackets.github.io/software-training/slides/week3/git.html][Git Presentation]]
-   + [[https://robojackets.github.io/software-training/slides/week3/week3.html][Code Presentation]]
-
-4. Week 4
-   + [[https://robojackets.github.io/software-training/slides/week4/week4.html][Code Presentation]]
-
-5. Week 5
-   + [[https://robojackets.github.io/software-training/slides/week5/git.html][Git Presentation]]
-   + [[https://robojackets.github.io/software-training/slides/week5/week5.html][Code Presentation]]
+   + [[https://robojackets.github.io/software-training/slides/week1/week1.html][Presentation]]
 
 # TODO maybe host these MD files in an external way other than GH?
 * Docs
 1. Week 1
-   + [[https://github.com/RoboJackets/software-training/blob/gh-pages/docs/week1/git.md][Git Presentation]]
-   + [[https://github.com/RoboJackets/software-training/blob/gh-pages/docs/week1/week1.md][Code Presentation]]
+   + [[https://github.com/RoboJackets/software-training/tree/master/code/week1][Example Code]]
+   + [[https://github.com/RoboJackets/software-training/blob/gh-pages/docs/week1/week1.md][Presentation]]
 
-2. Week 2
-   + [[https://github.com/RoboJackets/software-training/blob/gh-pages/docs/week2/git.md][Git Presentation]]
-   + [[https://github.com/RoboJackets/software-training/blob/gh-pages/docs/week2/week2.md][Code Presentation]]
-
-3. Week 3
-   + [[https://github.com/RoboJackets/software-training/blob/gh-pages/docs/week3/git.md][Git Presentation]]
-   + [[https://github.com/RoboJackets/software-training/blob/gh-pages/docs/week3/week3.md][Code Presentation]]
-
-4. Week 4
-   + [[https://github.com/RoboJackets/software-training/blob/gh-pages/docs/week4/week4.md][Code Presentation]]
-
-5. Week 5
-   + [[https://github.com/RoboJackets/software-training/blob/gh-pages/docs/week5/git.md][Git Presentation]]
-   + [[https://github.com/RoboJackets/software-training/blob/gh-pages/docs/week5/week5.md][Code Presentation]]
 
 * Building Slides
 
