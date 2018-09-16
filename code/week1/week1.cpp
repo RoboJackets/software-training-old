@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
-
+#include <vector>
 
 // This is a comment!
 /*
@@ -27,13 +27,16 @@ bool isRoboJacketsCool = true;
 //You can do this with any primitive data type
 double gpas[] = {1.0, 2.6, 4.0, 3.6};
 int membersInRoboJackets[200];
-
+using namespace std;
 int main() {
-    using namespace std;
     //Ignore the above line for now we will cover this later
-
     //This is the main function that runs any logic!
     //////////Local Variables/////////
+    
+    vector<double> vec({1,2,3,4});
+    for (double d : vec) {
+    	printf("GPA: %.2f\n", d);
+    }
     int num = 0;
     int length = 0;
     int count = 0;
