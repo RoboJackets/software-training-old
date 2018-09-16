@@ -1,6 +1,6 @@
 #+TITLE: Week 3
-#+AUTHOR: Sahit Chintalapudi
-#+EMAIL: schintalapudi@gatech.edu
+#+AUTHOR: Sahit Chintalapudi, Kristaps Berzinch, Raymond Ortiz
+#+EMAIL: schintalapudi@gatech.edu, kristaps@robojackets.org, rortiz9@gatech.edu
 
 * What are we doing today?
 - An introduction to the /Standard Library/
@@ -32,7 +32,7 @@ initializer lists require c++11 for vectors.
 #+BEGIN_SRC C++
   #include <vector>
 
-  vector<int> name = {1, 2, 3};
+  std::vector<int> numbers = {1, 2, 3};
 #+END_SRC
 - In this example, the vector is passed the type ~int~ as its template
   argumenargument, meaning it can only store ~int~s
@@ -49,6 +49,51 @@ Vectors can grow as items are added, whereas arrays are static.
 | =insert=    | inserts an item at a specific index |
 | =push_back= | adds a given element to the end     |
 | =pop_back=  | removes the last element            |
+
+* Playing with Vectors
+#+BEGIN_SRC C++
+      #include <vector>
+      #include <string>
+      #include <iostream>
+      using namespace std;
+      int main() {
+            vector<string> trainers = {"Evan 1", "Evan 2", "Jason", "Andrew"};
+            cout << "There are: " << trainers.size() << " trainers" << endl;
+            
+            trainers.push_back("Dallas");
+            trainers.push_back("Woodward");
+
+            cout << "Actually, there are: " << trainers.size() << " trainers" << endl;
+      }
+#+END_SRC
+
+* More vector examples
+#+BEGIN_NOTES
+We'll get to begin() and end() later
+#+END_NOTES
+
+#+BEGIN_SRC C++
+      #include <vector>
+      #include <string>
+      #include <iostream>
+      using namespace std;
+     
+      int main() {
+            vector<string> trainers = {"Evan 1", "Evan 2", "Jason", "Andrew"};
+            trainers.push_back("Dallas");
+            trainers.push_back("Woodward");
+
+            //Can't forget about the OG trainer. He goes first
+            trainers.insert(trainers.begin(), "Matt");
+            trainers.insert(trainers.end(), "Sahit");
+
+            //This part is a metaphor for something
+            cout << "There are "  << trainers.size() << " trainers" << endl;
+            cout << "The 1st trainer is " << trainers.at(0) << endl;
+            cout << "The last trainer is " << trainers.at(trainers.size() -1) << endl;
+      }
+#+END_SRC
+
 
 * Iterators
 - An object that lets you access and modify objects in a container
@@ -167,6 +212,37 @@ int main()
 
 * Modifies destination container
 | =copy= | copies elements from one container to another |
+
+* How to use these algorithms
+#+BEGIN_SRC C++
+#include <vector>
+#include <iterator>
+#include <algorithm>
+#include <string>
+#include <iostream>
+using namespace std;
+int main() {
+      vector<string> rr_robots = {"Macaroni", "Bigoli", "Sedani"};
+      vector<string> igvc_robots = {"Woodi", "Jessi"};
+
+      //I hope Bigoli is functional by the time these slides are delivered
+      int working_robots = std::count(igvc_robots.begin(), igvc_robots.end(), "Bigoli");
+      cout << working_robots << endl;
+
+      working_robots = count(rr_robots.begin(), rr_robots.end(), "Bigoli");
+      cout << working_robots << endl;
+
+      //what size is my_list?
+      vector<int> my_list(rr_robots.size() + igvc_robots.size());
+      iota(my_list.begin(), my_list.end(), 0);
+
+      //what do you think is in sum?
+      int sum = accumulate(my_list.begin(), my_list.end(), 0);
+      cout << sum << endl;
+
+}
+
+#+END_SRC
 
 * Robot time!
 - TODO: example of using color detector from STSL
