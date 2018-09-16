@@ -23,13 +23,13 @@ This is the source repository for the 2018 RoboJackets Software training program
     1. Install to the default location
     2. If it asks for a default text editor, choose something from the list that you know how to use. If you aren’t familiar with any of them, choose “nano”
     3. Leave all other options as the default
-  3. To use Git in Linux or Mac, open a terminal. In Windows, you will need to launch the Git Bash program after you install it
+  3. To use Git in Linux or Mac, open a terminal. In Windows, you will need to launch the Git Bash program
 2. Windows only: [[http://mingw.org/wiki/Getting_Started][MinGW]]
   1. Download mingw-get-setup.exe
   2. Leave the default installation location and related settings
   3. Mark base-bin and gcc-g++-bin for installation
   4. Installation -> apply
-3. JetBrains CLion
+3. [[https://www.jetbrains.com/clion/download][JetBrains CLion]]
   1. You can get a JetBrains student account for free, or use the 30-day trial for now
   2. Use the default install settings
   3. Make sure that the build/toolchain plugin can find your C++ compiler, C compiler, and “make” that you installed through MinGW
