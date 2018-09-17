@@ -64,6 +64,17 @@
 - How to contact me
   - Slack: [[https://robojackets.slack.com/messages/@Jason_Gibson/][@Jason Gibson]]
   - Email: [[mailto:jgibson37@gatech.edu][jgibson37@gatech.edu]]
+  
+* Meet Matthew
+#+ATTR_HTML: :width 15%
+[[file:https://imgur.com/nDgF0NX.jpg]]
+- Matthew Woodward
+  - Senior, Computer Engineering
+  - Inside RoboJackets: RoboCup Project Manager
+  - Outside RoboJackets: Triangle Fraternity, GTRI Underwater Robotics
+- How to contact me
+  - Slack: [[https://robojackets.slack.com/messages/@Chachmu/][@Chachmu]]
+  - Email: [[mailto:mwoodward@gatech.edu][mwoodward@gatech.edu]]
 
 * Why are you here?
 - Learn the basics of software development
