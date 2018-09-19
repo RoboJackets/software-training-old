@@ -18,12 +18,5 @@ SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
-if(UNIX AND NOT APPLE)
-    find_package(UDev REQUIRED)
-    set(CMAKE_CXX_STANDARD_LIBRARIES ${UDEV_LIBRARIES})
-endif()
-
-add_subdirectory(week1)
-add_subdirectory(week2)
-add_subdirectory(week3)
-add_subdirectory(week5)
+add_subdirectory(drive_in_square)
+add_subdirectory(drive_in_square_solution)
