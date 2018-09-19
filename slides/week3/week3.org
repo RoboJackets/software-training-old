@@ -26,7 +26,7 @@
 #+BEGIN_NOTES
 initializer lists require c++11 for vectors.
 #+END_NOTES
-- an object that can contain a variable number of other objects
+- an object that can contain a variable number of other objects (like ArrayList in Java)
 - you can keep adding elements to the vector
 - order of insertion is maintained 
 #+BEGIN_SRC C++
@@ -34,14 +34,13 @@ initializer lists require c++11 for vectors.
 
   std::vector<int> numbers = {1, 2, 3};
 #+END_SRC
-- In this example, the vector is passed the type ~int~ as its template
-  argumenargument, meaning it can only store ~int~s
+- In this example, the vector is passed the type ~int~ as its template argument, meaning it can only store ~int~s
 
 * Vector methods
 #+BEGIN_NOTES
 Vectors can grow as items are added, whereas arrays are static.
 #+END_NOTES
-| =at=        | returns the value at a specific index |
+| =at= or =[]= | returns the value at a specific index |
 | =front=     | returns the first item                |
 | =back=      | returns the last item                 |
 | =size=      | returns the number of elements        |
@@ -248,6 +247,5 @@ int main() {
 - TODO: example of using color detector from STSL
 
 * Challenge 
-- Drive over the several gray strips and identify the strip closest to the
-  medmedian intensity
+- Drive over the several gray strips and identify the strip closest to the median intensity
 - Drive back to the strip of median intensity
