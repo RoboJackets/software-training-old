@@ -25,3 +25,5 @@ add_subdirectory(drive_in_square_solution)
 
 add_subdirectory(line_follow)
 add_subdirectory(line_follow_solution)
+
+add_subdirectory(median_line_solution)
