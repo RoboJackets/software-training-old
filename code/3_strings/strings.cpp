@@ -1,8 +1,8 @@
 // make sure to compile with g++
 // to compile do
-//      g++ -o week2.out -std=c++14 *.cpp
+//      g++ -o strings.out -std=c++14 *.cpp
 // to run do
-//      ./week2.out
+//      ./strings.out
 
 // This line includes the week2 header file defined in this directory
 #include "week2.h"
