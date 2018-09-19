@@ -13,6 +13,8 @@ This is the source repository for the 2018 RoboJackets Software training program
 * Docs
 1. Week 1
    + [[https://github.com/RoboJackets/software-training/blob/gh-pages/docs/week1/week1.md][Presentation]]
+   + [[https://github.com/RoboJackets/software-training/blob/master/slides/week1/github-git-cheat-sheet.pdf][Git and Github Cheat Sheet]]
+   + [[https://github.com/RoboJackets/software-training/blob/master/slides/week1/terminal-cheat-sheet.pdf][Terminal Cheat Sheet]]
 
 
 * Installation Instructions
