@@ -1,41 +1,22 @@
 # What are we doing today?
 
--   Data structures and algorithms in C++
--   Branching and merging in Git
--   Using light sensor to count grey squares
+-   An introduction to the *Standard Library*
+    -   Built-in Data Structures
+    -   Built-in Algorithms
+-   Color Detection with the STSL
 
 
-# What is an object?
+# The Standard Library (STL)
 
--   a module of reusable code
-    -   maintains some sort of state
-        -   variables
-    -   have behaviors
-        -   methods
--   can have multiple instances of the same object
+-   "a collection of classes and functions, which are written in the core language and part of the C++ ISO Standard itself" (~~wikipedia~~ The C++ Standard).
+-   Everything we work with is declared under the `std` namespace.
 
 
-# Arrays
+# Containers
 
--   an object that can contain a set number of other objects
--   the size of the array cannot change
-
-```C++
-// creates an array of integers with size 3
-#include <array>
-
-array<int, 3> name = {1, 2, 3};
-```
-
-
-<a id="orgf25a75f"></a>
-
-# Array methods
-
-| `at`    | returns the value at a specific index |
-| `front` | returns the first item                |
-| `back`  | returns the last item                 |
-| `size`  | returns the number of elements        |
+-   Data structures in the STL that store a collection of other objects are called *containters*
+-   Examples of Containers include `std::set`, `std::priority_queue`, or `std::vector`. Today we'll look at the latter
+-   Containers are parameterized by a *template arguments*, which dictate what type of data the container stores.
 
 
 # Vectors
@@ -45,15 +26,17 @@ initializer lists require c++11 for vectors.
 
 </div>
 
--   an object that can contain a variable number of other objects
+-   an object that can contain a variable number of other objects (like ArrayList in Java)
 -   you can keep adding elements to the vector
 -   order of insertion is maintained
 
 ```C++
 #include <vector>
 
-vector<int> name = {1, 2, 3};
+std::vector<int> numbers = {1, 2, 3};
 ```
+
+-   In this example, the vector is passed the type `int` as its template argument, meaning it can only store ~int~s
 
 
 # Vector methods
@@ -63,12 +46,63 @@ Vectors can grow as items are added, whereas arrays are static.
 
 </div>
 
--   Everything from the [arrays slide](#orgf25a75f), and&#x2026;
+| `at` or `[]` | returns the value at a specific index |
+| `front`      | returns the first item                |
+| `back`       | returns the last item                 |
+| `size`       | returns the number of elements        |
+| `clear`      | removes all items                     |
+| `insert`     | inserts an item at a specific index   |
+| `push_back`  | adds a given element to the end       |
+| `pop_back`   | removes the last element              |
 
-| `clear`     | removes all items                   |
-| `insert`    | inserts an item at a specific index |
-| `push_back` | adds a given element to the end     |
-| `pop_back`  | removes the last element            |
+
+# Playing with Vectors
+
+```C++
+#include <vector>
+#include <string>
+#include <iostream>
+using namespace std;
+int main() {
+      vector<string> trainers = {"Evan 1", "Evan 2", "Jason", "Andrew"};
+      cout << "There are: " << trainers.size() << " trainers" << endl;
+
+      trainers.push_back("Dallas");
+      trainers.push_back("Woodward");
+
+      cout << "Actually, there are: " << trainers.size() << " trainers" << endl;
+}
+```
+
+
+# More vector examples
+
+<div class="NOTES">
+We'll get to begin() and end() later
+
+</div>
+
+```C++
+#include <vector>
+#include <string>
+#include <iostream>
+using namespace std;
+
+int main() {
+      vector<string> trainers = {"Evan 1", "Evan 2", "Jason", "Andrew"};
+      trainers.push_back("Dallas");
+      trainers.push_back("Woodward");
+
+      //Can't forget about the OG trainer. He goes first
+      trainers.insert(trainers.begin(), "Matt");
+      trainers.insert(trainers.end(), "Sahit");
+
+      //This part is a metaphor for something
+      cout << "There are "  << trainers.size() << " trainers" << endl;
+      cout << "The 1st trainer is " << trainers.at(0) << endl;
+      cout << "The last trainer is " << trainers.at(trainers.size() -1) << endl;
+}
+```
 
 
 # Iterators
@@ -171,6 +205,35 @@ it += 3;
     -   modifies a destination container
 
 
+# Modifies the container
+
+| `sort`      | sorts a container                                     |
+| `fill`      | fills a container with copies of a given element      |
+| `iota`      | fills a container with sequentially increasing values |
+| `transform` | manipulates each element using a function             |
+| `reverse`   | Reverses the order of the elements                    |
+
+
+# Algorithm examples
+
+```C++
+#include <vector>
+#include <iterator>
+#include <algorithm>
+
+int main()
+{
+      std::vector<int> v{2, 1, 5, 4, 3};
+
+      //this changes v to {1, 2, 3, 4, 5}
+      std::sort(v.begin(), v.end()); 
+
+      //this changes v to {5, 4, 3, 2, 1}
+      std::reverse(v.begin(), v.end());
+}
+```
+
+
 # Does not modify the container
 
 | `count`      | counts the number of items in a container that match a given item  |
@@ -178,16 +241,52 @@ it += 3;
 | `accumulate` | sums all elements in a container                                   |
 
 
-# Modifies the container
-
-| `sort`      | sorts a container                                     |
-| `fill`      | fills a container with copies of a given element      |
-| `iota`      | fills a container with sequentially increasing values |
-| `transform` | manipulates each element using a function             |
-
-
 # Modifies destination container
 
 |       |                                              |
 |------ |--------------------------------------------- |
 | `copy` | copies elements from one container to another |
+
+
+# How to use these algorithms
+
+```C++
+#include <vector>
+#include <iterator>
+#include <algorithm>
+#include <string>
+#include <iostream>
+using namespace std;
+int main() {
+      vector<string> rr_robots = {"Macaroni", "Bigoli", "Sedani"};
+      vector<string> igvc_robots = {"Woodi", "Jessi"};
+
+      //I hope Bigoli is functional by the time these slides are delivered
+      int working_robots = std::count(igvc_robots.begin(), igvc_robots.end(), "Bigoli");
+      cout << working_robots << endl;
+
+      working_robots = count(rr_robots.begin(), rr_robots.end(), "Bigoli");
+      cout << working_robots << endl;
+
+      //what size is my_list?
+      vector<int> my_list(rr_robots.size() + igvc_robots.size());
+      iota(my_list.begin(), my_list.end(), 0);
+
+      //what do you think is in sum?
+      int sum = accumulate(my_list.begin(), my_list.end(), 0);
+      cout << sum << endl;
+
+}
+
+```
+
+
+# Robot time!
+
+-   TODO: example of using color detector from STSL
+
+
+# Challenge
+
+-   Drive over the several gray strips and identify the strip closest to the median intensity
+-   Drive back to the strip of median intensity
