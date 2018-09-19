@@ -206,19 +206,39 @@ std::string s2 = "this is a string";  // same effect as constructor
 
 * Our Training Robots
 - We have robots for you to use!
-- <TODO insert details on robot capabilities>
+- Your code runs on your laptop, sending commands via wifi to the robot
+- Sensors
+  - 2 line
+  - 1 color
+  - 1 ultrasonic
+  - hand proximity / gesture
 
 * STSL: RJRobot API
 #+BEGIN_SRC C++ -n
 RJRobot robot(REAL);  // Make a new robot. Simulation may come later
-robot.SetMotor(Motor::LEFT, -255);
+robot.SetMotor(Motor::LEFT, -255);  //-255 to 255 range on motors
 robot.SetMotor(Motor::RIGHT, 255);
 robot.Wait(1000ms);
 robot.StopMotors();
-int line_brightness = robot.GetLightValue(LightSensor::CENTER);
-double clearance = robot.GetUltrasonicDistance();
+int line_brightness = robot.GetLineValue(LightSensor::CENTER);  // downwards line sensor
+double clearance = robot.GetUltrasonicDistance();  // forwards ultrasonic sensor
+Color ball_color = robot.GetColor();  // forwards color sensor. RED, BLUE, or UNKNOWN
 #+END_SRC
+Full details in [[https://github.com/RoboJackets/stsl/blob/master/include/STSL/RJRobot.h][STSL/RJRobot.h]]
 
-* Exercise: Drive in Square
+* Connecting to the Robot
+- Make sure you have the software-training repo cloned
+- Open CLion
+- Open the existing project software-training/hardware_applications
+- Connect to your robot's wifi network
+- In the Build Configuration menu in the top-right of CLion, select spin_in_place
+- Hit the run button
 
-* Exercise: Line Following
+* Today's coding exercises
+- Drive in a square
+  - modify code in drive_in_square folder
+  - Use a combination of SetMotor, Wait, and StopMotors to drive in a square
+  - You should use a for loop
+- Line Following
+  - Basic algorithm: if black, turn forward-left, else turn forward-right
+  - Implement a better way if you want
