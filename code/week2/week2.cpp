@@ -1,3 +1,6 @@
+//I am awesome
+
+
 // make sure to compile with g++
 // to compile do
 //      g++ -o week2.out -std=c++14 *.cpp
