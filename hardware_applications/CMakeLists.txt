@@ -8,7 +8,8 @@ include(ExternalProject)
 ExternalProject_Add(STSL
         GIT_REPOSITORY https://github.com/RoboJackets/stsl.git
         INSTALL_DIR ${PROJECT_BINARY_DIR}
-        CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>)
+        CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
+        UPDATE_COMMAND "")
 
 set(STSL_LIBS ${PROJECT_BINARY_DIR}/lib/libSTSL.a)
 
