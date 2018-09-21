@@ -45,7 +45,7 @@ g++ hello-world.cpp -o hello-world.out
 
 * Functions in C++
 - Review: A function is a chunk of code with inputs and outputs
-- C++ functions have 0+ parameters (inputs) and have 0 or 1 output
+- C++ functions have 0 or more parameters (inputs) and have 0 or 1 output
 - Each parameter has a type and there is a return type
 - The special function =main()= with return type =int= gets run automatically
 - Example
