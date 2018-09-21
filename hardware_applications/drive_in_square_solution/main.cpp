@@ -13,7 +13,7 @@ int main()
         robot.StopMotors();
 
         robot.SetMotor(Motor::LEFT, 127);
-        robot.Wait(1000ms);
+        robot.Wait(500ms);
         robot.StopMotors();
     }
 }

@@ -3,3 +3,5 @@
 html/
 *.out
 .DS_Store
+
+CMakeFiles/
