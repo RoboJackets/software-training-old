@@ -4,6 +4,7 @@
     -   Functions
     -   Headers and includes
     -   Namespaces
+    -   `auto` keyword
     -   Working with strings
 -   Using the STSL Robot API
     -   Drive in a square
@@ -14,16 +15,19 @@
 
 -   Compiled (fast)
 -   Can be written in many different ways (flexible)
--   NOT "C with classes" (much more powerful)
+-   Not merely "C with classes"
 
 
 # Starting notes
 
--   We assume some knowledge of the absolute basics of C/C++ syntax (if, for, while, etc)
-    -   There is another "Week 0" training session which will teach these things
+-   We assume some knowledge of basic of C/C++ syntax (if, for, while, etc)
+    -   If you are lost today, there is another "Week 0" training session which will teach these things
 
 
 # hello-world.cpp
+
+-   A simple C++ program, we will be explaining what's going on here and more
+-   We will be using cpp.sh for live demos
 
 ```C++
 1  #include <iostream>
@@ -36,21 +40,32 @@
 <http://cpp.sh/9yupt>
 
 
+# Compiling and Running
+
+-   Compiling turns C++ code into an executable program
+-   g++ is a common C++ compiler
+
+```
+g++ hello-world.cpp -o hello-world.out
+./hello-world.out
+```
+
+
 # Functions in C++
 
 -   Review: A function is a chunk of code with inputs and outputs
--   C++ functions have 0 or more parameters (inputs) and always have 1 output
+-   C++ functions have 0 or more parameters (inputs) and have 0 or 1 output
 -   Each parameter has a type and there is a return type
 -   The special function `main()` with return type `int` gets run automatically
 -   Example
     -   Want to add two integers, x and y, and print their result
 
 
-# Functions Example
+# Making a Function
 
 1.  Informative function name
 2.  Input types
-3.  Return type
+3.  Return type (`void` means no return/output)
 
 ```C++
 1  void addAndPrint(int x, int y) {
@@ -59,20 +74,9 @@
 ```
 
 
-# Functions Example
+# Making a Function
 
--   Perform the addition
-
-```C++
-1  void addAndPrint(int x, int y) {
-2      int sum = x + y;
-3  }
-```
-
-
-# Functions Example
-
--   Print the result
+-   Use the parameters to do something
 
 ```C++
 1  void addAndPrint(int x, int y) {
@@ -85,7 +89,7 @@
 # Functions Example
 
 -   We can split up this code to show you real return types
--   `return` statement must be used since the return type is not `void`
+-   `return` statement must be used since the return type is not `void` anymore
 
 ```C++
  1  void addAndPrint(int x, int y) {
@@ -102,20 +106,39 @@
 12  }
 ```
 
-`print(add(3, 4))` gives the same result as `addAndPrint(3, 4)` Try it yourself <http://cpp.sh/6lvcn>
+-   `print(add(3, 4))` gives the same result as `addAndPrint(3, 4)`
+-   Try it yourself <http://cpp.sh/6lvcn>
 
 
 # Forward Declaration
 
 -   Declaration = defining the name, parameters, and return type
+    -   `int foo(int x);` OR
+    -   `int foo(int);`
 -   Definition = declaration + filling in the function
--   Functions have to be declared higher up in the file than when they are used
+    -   `int foo(int x) { return x+1; }`
+-   If you forward-declare a function, you must do it higher up in the file than the definition
 -   <http://cpp.sh/4mbgg>
+
+
+# Overloading
+
+-   Function signature = name + list of parameter types
+-   Each function must have a unique signature. Names can be the same as long as the parameters are different
+
+```C++
+1  // these all have different signatures
+2  int add(int, int);
+3  int add(int, int, int);
+4  double add(double, double);
+5  double add(double, double, double);
+```
 
 
 # Includes
 
 -   Why do we need `#include <iostream>`?
+    -   Many things like std::cout don't exist unless you import them
     -   <http://cpp.sh/7jb5t>
 -   Includes let you bring other code into a file
 -   Use this for
@@ -127,17 +150,16 @@
 
 # Include syntax
 
--   `<>` gets code from standard library or apt-installed libraries
--   `""` gets code from a nearby folder
--   If `""` does not find the file, it reverts to `<>` behavior
+-   `<>` gets code from the standard library or installed libraries
+-   `""` gets code from a nearby folder, or does the same thing as `<>` if it can't find anything
 -   What's in the `<>` or `""` is a file name
     -   Traditionally the file name has extension ".h" or ".hpp"
 -   Examples:
 
 ```C++
 1  #include <string>  // standard library
-2  #include <QWidget>  // file from Qt installed through apt
-3  #include <ros/ros.h>  // file from ros installed through apt
+2  #include <QWidget>  // file installed with Qt
+3  #include <ros/ros.h>  // file installed with ROS
 4  #include "include/my_interface.hpp"  // another file in the same project,
 5  				     // in a folder called "include"
 ```
@@ -145,7 +167,7 @@
 
 # Namespaces
 
--   What happens when two things are assigned the same name?
+-   What happens when two things are assigned the same name (or the same function signature)?
     -   <http://cpp.sh/24v43>
 -   Solution: protect your variables and function names with a unique namespace
     -   <http://cpp.sh/66mrj>
@@ -153,16 +175,34 @@
         -   types: `std::string`, `my_library::MyClass`
         -   functions: `std::min_element`
         -   static variables: `std::string::npos`
--   Everything that is included should be in a namespace
+-   Best practice: everything you write that is included should be in a namespace
 
 
 # "using namespace" keyword
 
 -   <http://cpp.sh/4d5gz>
--   Handy (used in RJ) but also defeats the purpose of namespaces
+-   Handy but also defeats the purpose of namespaces
 -   Use with caution
     -   Must be clear, without the namespace, where the function comes from
     -   In general, use only one external namespace in a file (usually std)
+
+
+# "Auto" Keyword
+
+-   C++ can figure out for you what type something should be
+-   Function `MakeObject()` returns some data of a particular type
+
+```C++
+namespace::MyVeryLongDataTypeName data = MakeObject();
+```
+
+OR
+
+```C++
+auto data = MakeObject();
+```
+
+This can make your code easier or harder to read/maintain, depending on whether you name your variables well
 
 
 # Strings
@@ -212,24 +252,53 @@
 
 -   Using what we've learned so far
     -   <http://cpp.sh/92y54>
--   Preview for next week
+-   Using Standard Template Library (next week's topic)
     -   <http://cpp.sh/7jmjg>
 
 
 # Our Training Robots
 
 -   We have robots for you to use!
--   <TODO insert details on robot capabilities>
+-   Your code runs on your laptop, sending commands via wifi to the robot
+-   Sensors
+    -   2 line
+    -   1 color
+    -   1 ultrasonic
+    -   hand proximity / gesture
 
 
-# STSL: Robot Control Basics
+# STSL: RJRobot API
 
--   <TODO content>
-    -   STSL functions for writing to motors
-    -   compiling from terminal
+```C++
+1  RJRobot robot(REAL);  // Make a new robot. Simulation may come later
+2  robot.SetMotor(Motor::LEFT, -255);  //-255 to 255 range on motors
+3  robot.SetMotor(Motor::RIGHT, 255);
+4  robot.Wait(1000ms);
+5  robot.StopMotors();
+6  int line_brightness = robot.GetLineValue(LightSensor::CENTER);  // downwards line sensor
+7  double clearance = robot.GetUltrasonicDistance();  // forwards ultrasonic sensor
+8  Color ball_color = robot.GetColor();  // forwards color sensor. RED, BLUE, or UNKNOWN
+```
+
+Full details in [STSL/RJRobot.h](https://github.com/RoboJackets/stsl/blob/master/include/STSL/RJRobot.h)
 
 
-# Exercise: Drive in Square
+# Connecting to the Robot
+
+-   Make sure you have the software-training repo cloned
+-   Open CLion
+-   Open the existing project software-training/hardware<sub>applications</sub>
+-   Connect to your robot's wifi network
+-   In the Build Configuration menu in the top-right of CLion, select spin<sub>in</sub><sub>place</sub>
+-   Hit the run button
 
 
-# Exercise: Line Following
+# Today's coding exercises
+
+-   Drive in a square
+    -   modify code in drive<sub>in</sub><sub>square</sub> folder
+    -   Use a combination of SetMotor, Wait, and StopMotors to drive in a square
+    -   You should use a for loop
+-   Line Following
+    -   Basic algorithm: if black, turn forward-left, else turn forward-right
+    -   Implement a better way if you want

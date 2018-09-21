@@ -29,14 +29,15 @@
 <section id="sec-title-slide"><h1 class="title">Week 2</h1>
 </section>
 
-<section id="slide-org405889b">
-<h2 id="org405889b">What are we doing today?</h2>
+<section id="slide-org717985f">
+<h2 id="org717985f">What are we doing today?</h2>
 <ul>
 <li>Introduction to C++
 <ul>
 <li>Functions</li>
 <li>Headers and includes</li>
 <li>Namespaces</li>
+<li><code>auto</code> keyword</li>
 <li>Working with strings</li>
 
 </ul></li>
@@ -50,30 +51,35 @@
 </ul>
 
 </section>
-<section id="slide-org09c2b64">
-<h2 id="org09c2b64">What is C++?</h2>
+<section id="slide-orgdab0975">
+<h2 id="orgdab0975">What is C++?</h2>
 <ul>
 <li>Compiled (fast)</li>
 <li>Can be written in many different ways (flexible)</li>
-<li>NOT "C with classes" (much more powerful)</li>
+<li>Not merely "C with classes"</li>
 
 </ul>
 
 </section>
-<section id="slide-org415e131">
-<h2 id="org415e131">Starting notes</h2>
+<section id="slide-org8397437">
+<h2 id="org8397437">Starting notes</h2>
 <ul>
-<li>We assume some knowledge of the absolute basics of C/C++ syntax (if, for, while, etc)
+<li>We assume some knowledge of basic of C/C++ syntax (if, for, while, etc)
 <ul>
-<li>There is another "Week 0" training session which will teach these things</li>
+<li>If you are lost today, there is another "Week 0" training session which will teach these things</li>
 
 </ul></li>
 
 </ul>
 
 </section>
-<section id="slide-org61bb6f7">
-<h2 id="org61bb6f7">hello-world.cpp</h2>
+<section id="slide-org3c8ec3b">
+<h2 id="org3c8ec3b">hello-world.cpp</h2>
+<ul>
+<li>A simple C++ program, we will be explaining what's going on here and more</li>
+<li>We will be using cpp.sh for live demos</li>
+
+</ul>
 <div class="org-src-container">
 
 <pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
@@ -88,11 +94,24 @@
 </p>
 
 </section>
-<section id="slide-org57632c8">
-<h2 id="org57632c8">Functions in C++</h2>
+<section id="slide-orgc7f2b94">
+<h2 id="orgc7f2b94">Compiling and Running</h2>
+<ul>
+<li>Compiling turns C++ code into an executable program</li>
+<li>g++ is a common C++ compiler</li>
+
+</ul>
+<pre  class="example">
+g++ hello-world.cpp -o hello-world.out
+./hello-world.out
+</pre>
+
+</section>
+<section id="slide-orgba0f7b4">
+<h2 id="orgba0f7b4">Functions in C++</h2>
 <ul>
 <li>Review: A function is a chunk of code with inputs and outputs</li>
-<li>C++ functions have 0 or more parameters (inputs) and always have 1 output</li>
+<li>C++ functions have 0 or more parameters (inputs) and have 0 or 1 output</li>
 <li>Each parameter has a type and there is a return type</li>
 <li>The special function <code>main()</code> with return type <code>int</code> gets run automatically</li>
 <li>Example
@@ -104,12 +123,12 @@
 </ul>
 
 </section>
-<section id="slide-orgd603053">
-<h2 id="orgd603053">Functions Example</h2>
+<section id="slide-org76dafd9">
+<h2 id="org76dafd9">Making a Function</h2>
 <ol>
 <li>Informative function name</li>
 <li>Input types</li>
-<li>Return type</li>
+<li>Return type (<code>void</code> means no return/output)</li>
 
 </ol>
 <div class="org-src-container">
@@ -121,25 +140,10 @@
 </div>
 
 </section>
-<section id="slide-org03daf19">
-<h2 id="org03daf19">Functions Example</h2>
+<section id="slide-orgfc88db8">
+<h2 id="orgfc88db8">Making a Function</h2>
 <ul>
-<li>Perform the addition</li>
-
-</ul>
-<div class="org-src-container">
-
-<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">void</span> <span style="color: #2F7BDE;">addAndPrint</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>, <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">y</span>) {
-<span class="linenr">2: </span>    <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">sum</span> = x + y;
-<span class="linenr">3: </span>}
-</pre>
-</div>
-
-</section>
-<section id="slide-org1552896">
-<h2 id="org1552896">Functions Example</h2>
-<ul>
-<li>Print the result</li>
+<li>Use the parameters to do something</li>
 
 </ul>
 <div class="org-src-container">
@@ -152,11 +156,11 @@
 </div>
 
 </section>
-<section id="slide-orgd5538a5">
-<h2 id="orgd5538a5">Functions Example</h2>
+<section id="slide-orgd2590c4">
+<h2 id="orgd2590c4">Functions Example</h2>
 <ul>
 <li>We can split up this code to show you real return types</li>
-<li><code>return</code> statement must be used since the return type is not <code>void</code></li>
+<li><code>return</code> statement must be used since the return type is not <code>void</code> anymore</li>
 
 </ul>
 <div class="org-src-container">
@@ -175,28 +179,57 @@
 <span class="linenr">12: </span>}
 </pre>
 </div>
-<p>
-<code>print(add(3, 4))</code> gives the same result as <code>addAndPrint(3, 4)</code>
-Try it yourself <a href="http://cpp.sh/6lvcn">http://cpp.sh/6lvcn</a>
-</p>
+<ul>
+<li><code>print(add(3, 4))</code> gives the same result as <code>addAndPrint(3, 4)</code></li>
+<li>Try it yourself <a href="http://cpp.sh/6lvcn">http://cpp.sh/6lvcn</a></li>
+
+</ul>
 
 </section>
-<section id="slide-orge8b05bb">
-<h2 id="orge8b05bb">Forward Declaration</h2>
+<section id="slide-orgfa3a47e">
+<h2 id="orgfa3a47e">Forward Declaration</h2>
 <ul>
-<li>Declaration = defining the name, parameters, and return type</li>
-<li>Definition = declaration + filling in the function</li>
-<li>Functions have to be declared higher up in the file than when they are used</li>
+<li>Declaration = defining the name, parameters, and return type
+<ul>
+<li><code>int foo(int x);</code>  OR</li>
+<li><code>int foo(int);</code></li>
+
+</ul></li>
+<li>Definition = declaration + filling in the function
+<ul>
+<li><code>int foo(int x) { return x+1; }</code></li>
+
+</ul></li>
+<li>If you forward-declare a function, you must do it higher up in the file than the definition</li>
 <li><a href="http://cpp.sh/4mbgg">http://cpp.sh/4mbgg</a></li>
 
 </ul>
 
 </section>
-<section id="slide-org6b3335b">
-<h2 id="org6b3335b">Includes</h2>
+<section id="slide-orgf63900c">
+<h2 id="orgf63900c">Overloading</h2>
+<ul>
+<li>Function signature = name + list of parameter types</li>
+<li>Each function must have a unique signature. Names can be the same as long as the  parameters are different</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #5e6263;">// </span><span style="color: #5e6263;">these all have different signatures</span>
+<span class="linenr">2: </span><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">add</span>(<span style="color: #598249;">int</span>, <span style="color: #598249;">int</span>);
+<span class="linenr">3: </span><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">add</span>(<span style="color: #598249;">int</span>, <span style="color: #598249;">int</span>, <span style="color: #598249;">int</span>);
+<span class="linenr">4: </span><span style="color: #598249;">double</span> <span style="color: #2F7BDE;">add</span>(<span style="color: #598249;">double</span>, <span style="color: #598249;">double</span>);
+<span class="linenr">5: </span><span style="color: #598249;">double</span> <span style="color: #2F7BDE;">add</span>(<span style="color: #598249;">double</span>, <span style="color: #598249;">double</span>, <span style="color: #598249;">double</span>);
+</pre>
+</div>
+
+</section>
+<section id="slide-orgf488aa0">
+<h2 id="orgf488aa0">Includes</h2>
 <ul>
 <li>Why do we need <code>#include &lt;iostream&gt;</code>?
 <ul>
+<li>Many things like std::cout don't exist unless you import them</li>
 <li><a href="http://cpp.sh/7jb5t">http://cpp.sh/7jb5t</a></li>
 
 </ul></li>
@@ -213,12 +246,11 @@ Try it yourself <a href="http://cpp.sh/6lvcn">http://cpp.sh/6lvcn</a>
 </ul>
 
 </section>
-<section id="slide-org0ea70df">
-<h2 id="org0ea70df">Include syntax</h2>
+<section id="slide-org685392c">
+<h2 id="org685392c">Include syntax</h2>
 <ul>
-<li><code>&lt;&gt;</code> gets code from standard library or apt-installed libraries</li>
-<li><code>""</code> gets code from a nearby folder</li>
-<li>If <code>""</code> does not find the file, it reverts to <code>&lt;&gt;</code> behavior</li>
+<li><code>&lt;&gt;</code> gets code from the standard library or installed libraries</li>
+<li><code>""</code> gets code from a nearby folder, or does the same thing as <code>&lt;&gt;</code> if it can't find anything</li>
 <li>What's in the <code>&lt;&gt;</code> or <code>""</code> is a file name
 <ul>
 <li>Traditionally the file name has extension ".h" or ".hpp"</li>
@@ -230,18 +262,18 @@ Try it yourself <a href="http://cpp.sh/6lvcn">http://cpp.sh/6lvcn</a>
 <div class="org-src-container">
 
 <pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;string&gt;</span>  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">standard library</span>
-<span class="linenr">2: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;QWidget&gt;</span>  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">file from Qt installed through apt</span>
-<span class="linenr">3: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;ros/ros.h&gt;</span>  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">file from ros installed through apt</span>
+<span class="linenr">2: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;QWidget&gt;</span>  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">file installed with Qt</span>
+<span class="linenr">3: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;ros/ros.h&gt;</span>  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">file installed with ROS</span>
 <span class="linenr">4: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">"include/my_interface.hpp"</span>  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">another file in the same project,</span>
 <span class="linenr">5: </span>                                     <span style="color: #5e6263;">// </span><span style="color: #5e6263;">in a folder called "include</span><span style="color: #bd3832; font-weight: bold;">"</span>
 </pre>
 </div>
 
 </section>
-<section id="slide-orge17a0c5">
-<h2 id="orge17a0c5">Namespaces</h2>
+<section id="slide-org269f27d">
+<h2 id="org269f27d">Namespaces</h2>
 <ul>
-<li>What happens when two things are assigned the same name?
+<li>What happens when two things are assigned the same name (or the same function signature)?
 <ul>
 <li><a href="http://cpp.sh/24v43">http://cpp.sh/24v43</a></li>
 
@@ -258,16 +290,16 @@ Try it yourself <a href="http://cpp.sh/6lvcn">http://cpp.sh/6lvcn</a>
 </ul></li>
 
 </ul></li>
-<li>Everything that is included should be in a namespace</li>
+<li>Best practice: everything you write that is included should be in a namespace</li>
 
 </ul>
 
 </section>
-<section id="slide-org64553ba">
-<h2 id="org64553ba">"using namespace" keyword</h2>
+<section id="slide-org0510f6e">
+<h2 id="org0510f6e">"using namespace" keyword</h2>
 <ul>
 <li><a href="http://cpp.sh/4d5gz">http://cpp.sh/4d5gz</a></li>
-<li>Handy (used in RJ) but also defeats the purpose of namespaces</li>
+<li>Handy but also defeats the purpose of namespaces</li>
 <li>Use with caution
 <ul>
 <li>Must be clear, without the namespace, where the function comes from</li>
@@ -278,8 +310,33 @@ Try it yourself <a href="http://cpp.sh/6lvcn">http://cpp.sh/6lvcn</a>
 </ul>
 
 </section>
-<section id="slide-org6c8c691">
-<h2 id="org6c8c691">Strings</h2>
+<section id="slide-orge442192">
+<h2 id="orge442192">"Auto" Keyword</h2>
+<ul>
+<li>C++ can figure out for you what type something should be</li>
+<li>Function <code>MakeObject()</code> returns some data of a particular type</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span style="color: #598249;">namespace</span>::<span style="color: #15968D;">MyVeryLongDataTypeName</span> <span style="color: #2F7BDE;">data</span> = MakeObject();
+</pre>
+</div>
+<p>
+OR
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span style="color: #598249;">auto</span> <span style="color: #2F7BDE;">data</span> = MakeObject();
+</pre>
+</div>
+<p>
+This can make your code easier or harder to read/maintain, depending on whether you name your variables well
+</p>
+
+</section>
+<section id="slide-org3e8bc84">
+<h2 id="org3e8bc84">Strings</h2>
 <ul>
 <li>C string (still valid in C++):</li>
 
@@ -306,8 +363,8 @@ Try it yourself <a href="http://cpp.sh/6lvcn">http://cpp.sh/6lvcn</a>
 </ul>
 
 </section>
-<section id="slide-org2f460f5">
-<h2 id="org2f460f5">String Methods</h2>
+<section id="slide-orge28cbe3">
+<h2 id="orge28cbe3">String Methods</h2>
 <ul>
 <li>What methods can I use for a string? (there are lots)
 <ul>
@@ -335,8 +392,8 @@ Try it yourself <a href="http://cpp.sh/6lvcn">http://cpp.sh/6lvcn</a>
 </ul>
 
 </section>
-<section id="slide-org1fe6d98">
-<h2 id="org1fe6d98">Excercise</h2>
+<section id="slide-orgce7dd6e">
+<h2 id="orgce7dd6e">Excercise</h2>
 <ul>
 <li>Find a buddy (or work alone if you want)</li>
 <li>Write a function <code>make_palindrome</code>
@@ -351,15 +408,15 @@ Try it yourself <a href="http://cpp.sh/6lvcn">http://cpp.sh/6lvcn</a>
 </ul>
 
 </section>
-<section id="slide-org3cfc7a9">
-<h2 id="org3cfc7a9">Solution</h2>
+<section id="slide-org375fa05">
+<h2 id="org375fa05">Solution</h2>
 <ul>
 <li>Using what we've learned so far
 <ul>
 <li><a href="http://cpp.sh/92y54">http://cpp.sh/92y54</a></li>
 
 </ul></li>
-<li>Preview for next week
+<li>Using Standard Template Library (next week's topic)
 <ul>
 <li><a href="http://cpp.sh/7jmjg">http://cpp.sh/7jmjg</a></li>
 
@@ -368,34 +425,73 @@ Try it yourself <a href="http://cpp.sh/6lvcn">http://cpp.sh/6lvcn</a>
 </ul>
 
 </section>
-<section id="slide-org75b235b">
-<h2 id="org75b235b">Our Training Robots</h2>
+<section id="slide-org484aec8">
+<h2 id="org484aec8">Our Training Robots</h2>
 <ul>
 <li>We have robots for you to use!</li>
-<li>&lt;TODO insert details on robot capabilities&gt;</li>
-
-</ul>
-
-</section>
-<section id="slide-org65da154">
-<h2 id="org65da154">STSL: Robot Control Basics</h2>
+<li>Your code runs on your laptop, sending commands via wifi to the robot</li>
+<li>Sensors
 <ul>
-<li>&lt;TODO content&gt;
-<ul>
-<li>STSL functions for writing to motors</li>
-<li>compiling from terminal</li>
+<li>2 line</li>
+<li>1 color</li>
+<li>1 ultrasonic</li>
+<li>hand proximity / gesture</li>
 
 </ul></li>
 
 </ul>
 
 </section>
-<section id="slide-orga99bf0f">
-<h2 id="orga99bf0f">Exercise: Drive in Square</h2>
+<section id="slide-org7f20b00">
+<h2 id="org7f20b00">STSL: RJRobot API</h2>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">RJRobot</span> <span style="color: #2F7BDE;">robot</span>(REAL);  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">Make a new robot. Simulation may come later</span>
+<span class="linenr">2: </span>robot.SetMotor(<span style="color: #15968D;">Motor</span>::LEFT, -255);  <span style="color: #5e6263;">//</span><span style="color: #5e6263;">-255 to 255 range on motors</span>
+<span class="linenr">3: </span>robot.SetMotor(<span style="color: #15968D;">Motor</span>::RIGHT, 255);
+<span class="linenr">4: </span>robot.Wait(1000ms);
+<span class="linenr">5: </span>robot.StopMotors();
+<span class="linenr">6: </span><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">line_brightness</span> = robot.GetLineValue(<span style="color: #15968D;">LightSensor</span>::CENTER);  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">downwards line sensor</span>
+<span class="linenr">7: </span><span style="color: #598249;">double</span> <span style="color: #2F7BDE;">clearance</span> = robot.GetUltrasonicDistance();  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">forwards ultrasonic sensor</span>
+<span class="linenr">8: </span><span style="color: #598249;">Color</span> <span style="color: #2F7BDE;">ball_color</span> = robot.GetColor();  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">forwards color sensor. RED, BLUE, or UNKNOWN</span>
+</pre>
+</div>
+<p>
+Full details in <a href="https://github.com/RoboJackets/stsl/blob/master/include/STSL/RJRobot.h">STSL/RJRobot.h</a>
+</p>
 
 </section>
-<section id="slide-org9f66427">
-<h2 id="org9f66427">Exercise: Line Following</h2>
+<section id="slide-orgb524d98">
+<h2 id="orgb524d98">Connecting to the Robot</h2>
+<ul>
+<li>Make sure you have the software-training repo cloned</li>
+<li>Open CLion</li>
+<li>Open the existing project software-training/hardware<sub>applications</sub></li>
+<li>Connect to your robot's wifi network</li>
+<li>In the Build Configuration menu in the top-right of CLion, select spin<sub>in</sub><sub>place</sub></li>
+<li>Hit the run button</li>
+
+</ul>
+
+</section>
+<section id="slide-org33f2697">
+<h2 id="org33f2697">Today's coding exercises</h2>
+<ul>
+<li>Drive in a square
+<ul>
+<li>modify code in drive<sub>in</sub><sub>square</sub> folder</li>
+<li>Use a combination of SetMotor, Wait, and StopMotors to drive in a square</li>
+<li>You should use a for loop</li>
+
+</ul></li>
+<li>Line Following
+<ul>
+<li>Basic algorithm: if black, turn forward-left, else turn forward-right</li>
+<li>Implement a better way if you want</li>
+
+</ul></li>
+
+</ul>
 </section>
 </section>
 </div>
