@@ -1,6 +1,6 @@
 /*
  * to compile
- * g++ -std=c++14 -o week5.out *.cpp
+ * g++ -std=c++14 -o polymorphism.out *.cpp
  */
 #include <iostream>
 #include <memory>

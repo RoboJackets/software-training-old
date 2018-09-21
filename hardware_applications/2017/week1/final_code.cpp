@@ -4,11 +4,11 @@
 using namespace std;
 
 int main() {
-    RJRobot robot;
+    RJRobot robot(RobotType::REAL);
 
     cout << "Robot ready!" << endl;
 
-    robot.SetMotor(MotorPort::B, 200);
+    robot.SetMotor(Motor::LEFT, 200);
 
     for(int i = 0; i < 4; i++) {
         robot.SetMotor(MotorPort::A, 200);

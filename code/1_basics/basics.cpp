@@ -1,8 +1,8 @@
 // make sure to compile with g++
 // to compile do
-//      g++ -o week1.out week1.cpp
+//      g++ -o basics.out basics.cpp
 // to run do
-//      ./week1.out
+//      ./basics.out
 
 // This is including a header file for the standard library
 #include <stdlib.h>

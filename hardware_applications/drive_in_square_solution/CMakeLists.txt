@@ -1,0 +1,3 @@
+add_executable(drive_in_square_solution main.cpp)
+add_dependencies(drive_in_square_solution STSL)
+target_link_libraries(drive_in_square_solution ${STSL_LIBS})

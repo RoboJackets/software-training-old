@@ -1,9 +1,9 @@
 /*
  * to compile
- * g++ -std=c++14 -o week4.out week4.cpp
+ * g++ -std=c++14 -o pointers.out pointers.cpp
 */
 
-#include "week4.h"
+#include "pointers.h"
 
 void no_ptr_method(int num) {
     num = 5;

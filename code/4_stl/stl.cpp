@@ -1,10 +1,10 @@
 // make sure to compile with g++
 // to compile do
-//      g++ -o week3.out -std=c++14 *.cpp
+//      g++ -o stl.out -std=c++14 *.cpp
 // to run do
-//      ./week3.out
+//      ./stl.out
 
-#include "week3.h"
+#include "stl.h"
 
 int main() {
      using namespace std;

@@ -8,7 +8,8 @@ include(ExternalProject)
 ExternalProject_Add(STSL
         GIT_REPOSITORY https://github.com/RoboJackets/stsl.git
         INSTALL_DIR ${PROJECT_BINARY_DIR}
-        CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>)
+        CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
+        UPDATE_COMMAND "")
 
 set(STSL_LIBS ${PROJECT_BINARY_DIR}/lib/libSTSL.a)
 
@@ -18,12 +19,12 @@ SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
-if(UNIX AND NOT APPLE)
-    find_package(UDev REQUIRED)
-    set(CMAKE_CXX_STANDARD_LIBRARIES ${UDEV_LIBRARIES})
-endif()
+add_subdirectory(spin_in_place)
 
-add_subdirectory(week1)
-add_subdirectory(week2)
-add_subdirectory(week3)
-add_subdirectory(week5)
+add_subdirectory(drive_in_square)
+add_subdirectory(drive_in_square_solution)
+
+add_subdirectory(line_follow)
+add_subdirectory(line_follow_solution)
+
+add_subdirectory(median_line_solution)
