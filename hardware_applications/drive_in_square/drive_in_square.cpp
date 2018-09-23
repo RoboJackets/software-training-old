@@ -7,7 +7,7 @@ int main()
     RJRobot robot(RobotType::REAL);
 
     // here are some useful functions:
-    //robot.SetMotor(Motor::LEFT, 127);
+    //robot.SetDriveMotors(127, 127);
     //robot.Wait(1000ms);
     //robot.StopMotors();
 }

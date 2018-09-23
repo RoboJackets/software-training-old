@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5.1)
 project(hardware_applications)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 include(ExternalProject)
 
@@ -20,6 +20,7 @@ SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
 add_subdirectory(spin_in_place)
+add_subdirectory(system_test)
 
 add_subdirectory(drive_in_square)
 add_subdirectory(drive_in_square_solution)
@@ -27,4 +28,5 @@ add_subdirectory(drive_in_square_solution)
 add_subdirectory(line_follow)
 add_subdirectory(line_follow_solution)
 
+add_subdirectory(median_line)
 add_subdirectory(median_line_solution)
