@@ -20,7 +20,6 @@ SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
 add_subdirectory(spin_in_place)
-add_subdirectory(system_test)
 
 add_subdirectory(drive_in_square)
 add_subdirectory(drive_in_square_solution)

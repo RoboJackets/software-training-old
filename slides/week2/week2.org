@@ -20,8 +20,8 @@
 - Not merely "C with classes"
 
 * Starting notes
-- We assume some knowledge of basic of C/C++ syntax (if, for, while, etc)
- - If you are lost today, there is another Basic C Syntax training session which will teach these things. Next Saturday 2-4
+- We assume some knowledge of basic of C/C++ syntax (if, for, while, datatypes, etc)
+ - If you are lost today, there is a catch-up training session which will teach these things. Next Saturday 2-4
 
 * hello-world.cpp
 - A simple C++ program, we will be explaining what's going on here and more
