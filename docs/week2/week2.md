@@ -6,7 +6,7 @@
     -   Namespaces
     -   `auto` keyword
     -   Working with strings
--   Using the STSL Robot API
+-   Using the RJRobot API
     -   Drive in a square
     -   Line following
 
@@ -20,8 +20,8 @@
 
 # Starting notes
 
--   We assume some knowledge of basic of C/C++ syntax (if, for, while, etc)
-    -   If you are lost today, there is another "Week 0" training session which will teach these things
+-   We assume some knowledge of basic of C/C++ syntax (if, for, while, datatypes, etc)
+    -   If you are lost today, there is a catch-up training session which will teach these things. Next Saturday 2-4
 
 
 # hello-world.cpp
@@ -37,7 +37,7 @@
 5  }
 ```
 
-<http://cpp.sh/9yupt>
+[Hello World live example](http://cpp.sh/9yupt)
 
 
 # Compiling and Running
@@ -107,7 +107,7 @@ g++ hello-world.cpp -o hello-world.out
 ```
 
 -   `print(add(3, 4))` gives the same result as `addAndPrint(3, 4)`
--   Try it yourself <http://cpp.sh/6lvcn>
+-   [Verify that this indeed works](http://cpp.sh/8skfr)
 
 
 # Forward Declaration
@@ -118,7 +118,7 @@ g++ hello-world.cpp -o hello-world.out
 -   Definition = declaration + filling in the function
     -   `int foo(int x) { return x+1; }`
 -   If you forward-declare a function, you must do it higher up in the file than the definition
--   <http://cpp.sh/4mbgg>
+-   [Forward Declaration live example](http://cpp.sh/92su4m) <- try removing the declaration
 
 
 # Overloading
@@ -138,8 +138,7 @@ g++ hello-world.cpp -o hello-world.out
 # Includes
 
 -   Why do we need `#include <iostream>`?
-    -   Many things like std::cout don't exist unless you import them
-    -   <http://cpp.sh/7jb5t>
+    -   [Many things like std::cout don't exist unless you import them](http://cpp.sh/7jb5t)
 -   Includes let you bring other code into a file
 -   Use this for
     -   Standard library functions and data types (anything std::)
@@ -168,9 +167,9 @@ g++ hello-world.cpp -o hello-world.out
 # Namespaces
 
 -   What happens when two things are assigned the same name (or the same function signature)?
-    -   <http://cpp.sh/24v43>
+    -   [You get an error](http://cpp.sh/24v43)
 -   Solution: protect your variables and function names with a unique namespace
-    -   <http://cpp.sh/66mrj>
+    -   [Same program, but with namespaces](http://cpp.sh/66mrj)
     -   Use keywords from a namespace using the `::` operator
         -   types: `std::string`, `my_library::MyClass`
         -   functions: `std::min_element`
@@ -180,7 +179,7 @@ g++ hello-world.cpp -o hello-world.out
 
 # "using namespace" keyword
 
--   <http://cpp.sh/4d5gz>
+-   [Hello world, but using std namespace](http://cpp.sh/4d5gz)
 -   Handy but also defeats the purpose of namespaces
 -   Use with caution
     -   Must be clear, without the namespace, where the function comes from
@@ -221,24 +220,24 @@ This can make your code easier or harder to read/maintain, depending on whether 
 3  std::string s2 = "this is a string";  // same effect as constructor
 ```
 
--   Unlike in C, C++ strings are a class instances and have methods
+-   C++ strings are classes and have methods (like Java, unlike C)
 
 
 # String Methods
 
 -   What methods can I use for a string? (there are lots)
-    -   Google! <https://www.google.com/search?q=c%2B%2B+std%3A%3Astring>
-    -   cppreference.com is comprehensive and up-to-date
+    -   [Online documentation!](https://en.cppreference.com/w/cpp/string/basic_string)
+    -   cppreference.com is a very good resource
 -   Adding to end: + and += operators, `append(string)`, `push_back(char)`
-    -   <http://cpp.sh/84u76>
+    -   [Adding to string example](http://cpp.sh/84u76)
 -   Reading user input: `std::cin >>`
-    -   <http://cpp.sh/64mc>
+    -   [Reading user input example](http://cpp.sh/64mc)
 -   Access characters like an array
-    -   <http://cpp.sh/9gb4x>
+    -   [Access chars example](http://cpp.sh/9gb4x)
 -   `size()` and `length()` each get number of characters
 
 
-# Excercise
+# Exercise 1
 
 -   Find a buddy (or work alone if you want)
 -   Write a function `make_palindrome`
@@ -267,12 +266,12 @@ This can make your code easier or harder to read/maintain, depending on whether 
     -   hand proximity / gesture
 
 
-# STSL: RJRobot API
+# RJRobot API
 
 ```C++
 1  RJRobot robot(REAL);  // Make a new robot. Simulation may come later
-2  robot.SetMotor(Motor::LEFT, -255);  //-255 to 255 range on motors
-3  robot.SetMotor(Motor::RIGHT, 255);
+2  robot.SetDriveMotors(200, -200);  //-255 to 255 range on motors
+3  robot.SetLiftMotor(127);
 4  robot.Wait(1000ms);
 5  robot.StopMotors();
 6  int line_brightness = robot.GetLineValue(LightSensor::CENTER);  // downwards line sensor
@@ -280,25 +279,53 @@ This can make your code easier or harder to read/maintain, depending on whether 
 8  Color ball_color = robot.GetColor();  // forwards color sensor. RED, BLUE, or UNKNOWN
 ```
 
-Full details in [STSL/RJRobot.h](https://github.com/RoboJackets/stsl/blob/master/include/STSL/RJRobot.h)
+Full interface defined in [RJRobot.h](https://github.com/RoboJackets/stsl/blob/master/include/STSL/RJRobot.h). Use code completion in CLion as well.
 
 
 # Connecting to the Robot
 
 -   Make sure you have the software-training repo cloned
 -   Open CLion
--   Open the existing project software-training/hardware<sub>applications</sub>
+-   Open the existing project `software-training/hardware_applications`
+-   In the Build Configuration menu in the top-right of CLion, select the program you want to run (e.g. `spin_in_place`)
+-   Hit the build button (hammer), make sure everything compiles
 -   Connect to your robot's wifi network
--   In the Build Configuration menu in the top-right of CLion, select spin<sub>in</sub><sub>place</sub>
--   Hit the run button
+-   Hit the build and run button (green arrow)
+-   Hit the red square button to stop the robot
 
 
-# Today's coding exercises
+# Today's robot challenges
 
 -   Drive in a square
-    -   modify code in drive<sub>in</sub><sub>square</sub> folder
-    -   Use a combination of SetMotor, Wait, and StopMotors to drive in a square
+    -   modify code in `drive_in_square` folder
+    -   Use a combination of SetDriveMotors, Wait, and StopMotors to drive in a square
     -   You should use a for loop
 -   Line Following
     -   Basic algorithm: if black, turn forward-left, else turn forward-right
     -   Implement a better way if you want
+
+
+# Supplemental Challenge 1: "FizzBuzz"
+
+-   Print numbers 1 to n, except:
+    -   If the number is a multiple of 3, print "fizz" instead of the number
+    -   If the number is a multiple of 5, print "buzz" instead of the number
+    -   If the number is a multiple of both 3 and 5, print "fizzbuzz" instead
+-   Example output (n = 8): `1 2 fizz 4 buzz fizz 7 8`
+-   Starter code: <http://cpp.sh/8xuu>
+
+
+# Supplemental Challenge 2: Merge Strings
+
+-   Given two strings s1 and s2, return the string that has elements of s1 and s2 interweaved
+-   "abc", "12345" -> "a1b2c345"
+-   Hint: `<algorithm>` header contains `min` and `max` functions
+    -   `max(4,7) -> 7`
+-   Starter code: <http://cpp.sh/4z5as>
+
+
+# Supplemental Challenge Solutions
+
+-   FizzBuzz <http://cpp.sh/7zrsc>
+-   Merge Strings <http://cpp.sh/2h4eg>
+-   There are many ways to solve each of these

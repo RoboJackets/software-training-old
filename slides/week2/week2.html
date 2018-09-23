@@ -29,8 +29,8 @@
 <section id="sec-title-slide"><h1 class="title">Week 2</h1>
 </section>
 
-<section id="slide-org717985f">
-<h2 id="org717985f">What are we doing today?</h2>
+<section id="slide-org71af821">
+<h2 id="org71af821">What are we doing today?</h2>
 <ul>
 <li>Introduction to C++
 <ul>
@@ -41,7 +41,7 @@
 <li>Working with strings</li>
 
 </ul></li>
-<li>Using the STSL Robot API
+<li>Using the RJRobot API
 <ul>
 <li>Drive in a square</li>
 <li>Line following</li>
@@ -51,8 +51,8 @@
 </ul>
 
 </section>
-<section id="slide-orgdab0975">
-<h2 id="orgdab0975">What is C++?</h2>
+<section id="slide-org42869c6">
+<h2 id="org42869c6">What is C++?</h2>
 <ul>
 <li>Compiled (fast)</li>
 <li>Can be written in many different ways (flexible)</li>
@@ -61,20 +61,20 @@
 </ul>
 
 </section>
-<section id="slide-org8397437">
-<h2 id="org8397437">Starting notes</h2>
+<section id="slide-org58eaab7">
+<h2 id="org58eaab7">Starting notes</h2>
 <ul>
-<li>We assume some knowledge of basic of C/C++ syntax (if, for, while, etc)
+<li>We assume some knowledge of basic of C/C++ syntax (if, for, while, datatypes, etc)
 <ul>
-<li>If you are lost today, there is another "Week 0" training session which will teach these things</li>
+<li>If you are lost today, there is a catch-up training session which will teach these things. Next Saturday 2-4</li>
 
 </ul></li>
 
 </ul>
 
 </section>
-<section id="slide-org3c8ec3b">
-<h2 id="org3c8ec3b">hello-world.cpp</h2>
+<section id="slide-org9fb6f55">
+<h2 id="org9fb6f55">hello-world.cpp</h2>
 <ul>
 <li>A simple C++ program, we will be explaining what's going on here and more</li>
 <li>We will be using cpp.sh for live demos</li>
@@ -90,12 +90,12 @@
 </pre>
 </div>
 <p>
-<a href="http://cpp.sh/9yupt">http://cpp.sh/9yupt</a>
+<a href="http://cpp.sh/9yupt">Hello World live example</a>
 </p>
 
 </section>
-<section id="slide-orgc7f2b94">
-<h2 id="orgc7f2b94">Compiling and Running</h2>
+<section id="slide-orgf770fc8">
+<h2 id="orgf770fc8">Compiling and Running</h2>
 <ul>
 <li>Compiling turns C++ code into an executable program</li>
 <li>g++ is a common C++ compiler</li>
@@ -107,8 +107,8 @@ g++ hello-world.cpp -o hello-world.out
 </pre>
 
 </section>
-<section id="slide-orgba0f7b4">
-<h2 id="orgba0f7b4">Functions in C++</h2>
+<section id="slide-org3aebb6f">
+<h2 id="org3aebb6f">Functions in C++</h2>
 <ul>
 <li>Review: A function is a chunk of code with inputs and outputs</li>
 <li>C++ functions have 0 or more parameters (inputs) and have 0 or 1 output</li>
@@ -123,8 +123,8 @@ g++ hello-world.cpp -o hello-world.out
 </ul>
 
 </section>
-<section id="slide-org76dafd9">
-<h2 id="org76dafd9">Making a Function</h2>
+<section id="slide-org9b7675b">
+<h2 id="org9b7675b">Making a Function</h2>
 <ol>
 <li>Informative function name</li>
 <li>Input types</li>
@@ -140,8 +140,8 @@ g++ hello-world.cpp -o hello-world.out
 </div>
 
 </section>
-<section id="slide-orgfc88db8">
-<h2 id="orgfc88db8">Making a Function</h2>
+<section id="slide-orgc002ef8">
+<h2 id="orgc002ef8">Making a Function</h2>
 <ul>
 <li>Use the parameters to do something</li>
 
@@ -156,8 +156,8 @@ g++ hello-world.cpp -o hello-world.out
 </div>
 
 </section>
-<section id="slide-orgd2590c4">
-<h2 id="orgd2590c4">Functions Example</h2>
+<section id="slide-org68dfc45">
+<h2 id="org68dfc45">Functions Example</h2>
 <ul>
 <li>We can split up this code to show you real return types</li>
 <li><code>return</code> statement must be used since the return type is not <code>void</code> anymore</li>
@@ -181,13 +181,13 @@ g++ hello-world.cpp -o hello-world.out
 </div>
 <ul>
 <li><code>print(add(3, 4))</code> gives the same result as <code>addAndPrint(3, 4)</code></li>
-<li>Try it yourself <a href="http://cpp.sh/6lvcn">http://cpp.sh/6lvcn</a></li>
+<li><a href="http://cpp.sh/8skfr">Verify that this indeed works</a></li>
 
 </ul>
 
 </section>
-<section id="slide-orgfa3a47e">
-<h2 id="orgfa3a47e">Forward Declaration</h2>
+<section id="slide-org0fcc09b">
+<h2 id="org0fcc09b">Forward Declaration</h2>
 <ul>
 <li>Declaration = defining the name, parameters, and return type
 <ul>
@@ -201,13 +201,13 @@ g++ hello-world.cpp -o hello-world.out
 
 </ul></li>
 <li>If you forward-declare a function, you must do it higher up in the file than the definition</li>
-<li><a href="http://cpp.sh/4mbgg">http://cpp.sh/4mbgg</a></li>
+<li><a href="http://cpp.sh/92su4m">Forward Declaration live example</a> &lt;- try removing the declaration</li>
 
 </ul>
 
 </section>
-<section id="slide-orgf63900c">
-<h2 id="orgf63900c">Overloading</h2>
+<section id="slide-org5e614f8">
+<h2 id="org5e614f8">Overloading</h2>
 <ul>
 <li>Function signature = name + list of parameter types</li>
 <li>Each function must have a unique signature. Names can be the same as long as the  parameters are different</li>
@@ -224,13 +224,12 @@ g++ hello-world.cpp -o hello-world.out
 </div>
 
 </section>
-<section id="slide-orgf488aa0">
-<h2 id="orgf488aa0">Includes</h2>
+<section id="slide-org295b1a3">
+<h2 id="org295b1a3">Includes</h2>
 <ul>
 <li>Why do we need <code>#include &lt;iostream&gt;</code>?
 <ul>
-<li>Many things like std::cout don't exist unless you import them</li>
-<li><a href="http://cpp.sh/7jb5t">http://cpp.sh/7jb5t</a></li>
+<li><a href="http://cpp.sh/7jb5t">Many things like std::cout don't exist unless you import them</a></li>
 
 </ul></li>
 <li>Includes let you bring other code into a file</li>
@@ -246,8 +245,8 @@ g++ hello-world.cpp -o hello-world.out
 </ul>
 
 </section>
-<section id="slide-org685392c">
-<h2 id="org685392c">Include syntax</h2>
+<section id="slide-org1138d2a">
+<h2 id="org1138d2a">Include syntax</h2>
 <ul>
 <li><code>&lt;&gt;</code> gets code from the standard library or installed libraries</li>
 <li><code>""</code> gets code from a nearby folder, or does the same thing as <code>&lt;&gt;</code> if it can't find anything</li>
@@ -270,17 +269,17 @@ g++ hello-world.cpp -o hello-world.out
 </div>
 
 </section>
-<section id="slide-org269f27d">
-<h2 id="org269f27d">Namespaces</h2>
+<section id="slide-org785e4b6">
+<h2 id="org785e4b6">Namespaces</h2>
 <ul>
 <li>What happens when two things are assigned the same name (or the same function signature)?
 <ul>
-<li><a href="http://cpp.sh/24v43">http://cpp.sh/24v43</a></li>
+<li><a href="http://cpp.sh/24v43">You get an error</a></li>
 
 </ul></li>
 <li>Solution: protect your variables and function names with a unique namespace
 <ul>
-<li><a href="http://cpp.sh/66mrj">http://cpp.sh/66mrj</a></li>
+<li><a href="http://cpp.sh/66mrj">Same program, but with namespaces</a></li>
 <li>Use keywords from a namespace using the <code>::</code> operator
 <ul>
 <li>types: <code>std::string</code>, <code>my_library::MyClass</code></li>
@@ -295,10 +294,10 @@ g++ hello-world.cpp -o hello-world.out
 </ul>
 
 </section>
-<section id="slide-org0510f6e">
-<h2 id="org0510f6e">"using namespace" keyword</h2>
+<section id="slide-org0156792">
+<h2 id="org0156792">"using namespace" keyword</h2>
 <ul>
-<li><a href="http://cpp.sh/4d5gz">http://cpp.sh/4d5gz</a></li>
+<li><a href="http://cpp.sh/4d5gz">Hello world, but using std namespace</a></li>
 <li>Handy but also defeats the purpose of namespaces</li>
 <li>Use with caution
 <ul>
@@ -310,8 +309,8 @@ g++ hello-world.cpp -o hello-world.out
 </ul>
 
 </section>
-<section id="slide-orge442192">
-<h2 id="orge442192">"Auto" Keyword</h2>
+<section id="slide-org2ffe8f5">
+<h2 id="org2ffe8f5">"Auto" Keyword</h2>
 <ul>
 <li>C++ can figure out for you what type something should be</li>
 <li>Function <code>MakeObject()</code> returns some data of a particular type</li>
@@ -335,8 +334,8 @@ This can make your code easier or harder to read/maintain, depending on whether 
 </p>
 
 </section>
-<section id="slide-org3e8bc84">
-<h2 id="org3e8bc84">Strings</h2>
+<section id="slide-orgfb28a7f">
+<h2 id="orgfb28a7f">Strings</h2>
 <ul>
 <li>C string (still valid in C++):</li>
 
@@ -358,33 +357,33 @@ This can make your code easier or harder to read/maintain, depending on whether 
 </pre>
 </div>
 <ul>
-<li>Unlike in C, C++ strings are a class instances and have methods</li>
+<li>C++ strings are classes and have methods (like Java, unlike C)</li>
 
 </ul>
 
 </section>
-<section id="slide-orge28cbe3">
-<h2 id="orge28cbe3">String Methods</h2>
+<section id="slide-orgcf8a4cd">
+<h2 id="orgcf8a4cd">String Methods</h2>
 <ul>
 <li>What methods can I use for a string? (there are lots)
 <ul>
-<li>Google! <a href="https://www.google.com/search?q=c+++std::string">https://www.google.com/search?q=c+++std::string</a></li>
-<li>cppreference.com is comprehensive and up-to-date</li>
+<li><a href="https://en.cppreference.com/w/cpp/string/basic_string">Online documentation!</a></li>
+<li>cppreference.com is a very good resource</li>
 
 </ul></li>
 <li>Adding to end:  + and += operators, <code>append(string)</code>, <code>push_back(char)</code>
 <ul>
-<li><a href="http://cpp.sh/84u76">http://cpp.sh/84u76</a></li>
+<li><a href="http://cpp.sh/84u76">Adding to string example</a></li>
 
 </ul></li>
 <li>Reading user input:  <code>std::cin &gt;&gt;</code>
 <ul>
-<li><a href="http://cpp.sh/64mc">http://cpp.sh/64mc</a></li>
+<li><a href="http://cpp.sh/64mc">Reading user input example</a></li>
 
 </ul></li>
 <li>Access characters like an array
 <ul>
-<li><a href="http://cpp.sh/9gb4x">http://cpp.sh/9gb4x</a></li>
+<li><a href="http://cpp.sh/9gb4x">Access chars example</a></li>
 
 </ul></li>
 <li><code>size()</code> and <code>length()</code> each get number of characters</li>
@@ -392,8 +391,8 @@ This can make your code easier or harder to read/maintain, depending on whether 
 </ul>
 
 </section>
-<section id="slide-orgce7dd6e">
-<h2 id="orgce7dd6e">Excercise</h2>
+<section id="slide-orga3bbdd4">
+<h2 id="orga3bbdd4">Exercise 1</h2>
 <ul>
 <li>Find a buddy (or work alone if you want)</li>
 <li>Write a function <code>make_palindrome</code>
@@ -408,8 +407,8 @@ This can make your code easier or harder to read/maintain, depending on whether 
 </ul>
 
 </section>
-<section id="slide-org375fa05">
-<h2 id="org375fa05">Solution</h2>
+<section id="slide-org7cfaec1">
+<h2 id="org7cfaec1">Solution</h2>
 <ul>
 <li>Using what we've learned so far
 <ul>
@@ -425,8 +424,8 @@ This can make your code easier or harder to read/maintain, depending on whether 
 </ul>
 
 </section>
-<section id="slide-org484aec8">
-<h2 id="org484aec8">Our Training Robots</h2>
+<section id="slide-org47eef3f">
+<h2 id="org47eef3f">Our Training Robots</h2>
 <ul>
 <li>We have robots for you to use!</li>
 <li>Your code runs on your laptop, sending commands via wifi to the robot</li>
@@ -442,13 +441,13 @@ This can make your code easier or harder to read/maintain, depending on whether 
 </ul>
 
 </section>
-<section id="slide-org7f20b00">
-<h2 id="org7f20b00">STSL: RJRobot API</h2>
+<section id="slide-org921c175">
+<h2 id="org921c175">RJRobot API</h2>
 <div class="org-src-container">
 
 <pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">RJRobot</span> <span style="color: #2F7BDE;">robot</span>(REAL);  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">Make a new robot. Simulation may come later</span>
-<span class="linenr">2: </span>robot.SetMotor(<span style="color: #15968D;">Motor</span>::LEFT, -255);  <span style="color: #5e6263;">//</span><span style="color: #5e6263;">-255 to 255 range on motors</span>
-<span class="linenr">3: </span>robot.SetMotor(<span style="color: #15968D;">Motor</span>::RIGHT, 255);
+<span class="linenr">2: </span>robot.SetDriveMotors(200, -200);  <span style="color: #5e6263;">//</span><span style="color: #5e6263;">-255 to 255 range on motors</span>
+<span class="linenr">3: </span>robot.SetLiftMotor(127);
 <span class="linenr">4: </span>robot.Wait(1000ms);
 <span class="linenr">5: </span>robot.StopMotors();
 <span class="linenr">6: </span><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">line_brightness</span> = robot.GetLineValue(<span style="color: #15968D;">LightSensor</span>::CENTER);  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">downwards line sensor</span>
@@ -457,30 +456,32 @@ This can make your code easier or harder to read/maintain, depending on whether 
 </pre>
 </div>
 <p>
-Full details in <a href="https://github.com/RoboJackets/stsl/blob/master/include/STSL/RJRobot.h">STSL/RJRobot.h</a>
+Full interface defined in <a href="https://github.com/RoboJackets/stsl/blob/master/include/STSL/RJRobot.h">RJRobot.h</a>. Use code completion in CLion as well.
 </p>
 
 </section>
-<section id="slide-orgb524d98">
-<h2 id="orgb524d98">Connecting to the Robot</h2>
+<section id="slide-org7e92041">
+<h2 id="org7e92041">Connecting to the Robot</h2>
 <ul>
 <li>Make sure you have the software-training repo cloned</li>
 <li>Open CLion</li>
-<li>Open the existing project software-training/hardware<sub>applications</sub></li>
+<li>Open the existing project <code>software-training/hardware_applications</code></li>
+<li>In the Build Configuration menu in the top-right of CLion, select the program you want to run (e.g. <code>spin_in_place</code>)</li>
+<li>Hit the build button (hammer), make sure everything compiles</li>
 <li>Connect to your robot's wifi network</li>
-<li>In the Build Configuration menu in the top-right of CLion, select spin<sub>in</sub><sub>place</sub></li>
-<li>Hit the run button</li>
+<li>Hit the build and run button (green arrow)</li>
+<li>Hit the red square button to stop the robot</li>
 
 </ul>
 
 </section>
-<section id="slide-org33f2697">
-<h2 id="org33f2697">Today's coding exercises</h2>
+<section id="slide-orgafc2c97">
+<h2 id="orgafc2c97">Today's robot challenges</h2>
 <ul>
 <li>Drive in a square
 <ul>
-<li>modify code in drive<sub>in</sub><sub>square</sub> folder</li>
-<li>Use a combination of SetMotor, Wait, and StopMotors to drive in a square</li>
+<li>modify code in <code>drive_in_square</code> folder</li>
+<li>Use a combination of SetDriveMotors, Wait, and StopMotors to drive in a square</li>
 <li>You should use a for loop</li>
 
 </ul></li>
@@ -490,6 +491,47 @@ Full details in <a href="https://github.com/RoboJackets/stsl/blob/master/include
 <li>Implement a better way if you want</li>
 
 </ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgbcb0be8">
+<h2 id="orgbcb0be8">Supplemental Challenge 1: "FizzBuzz"</h2>
+<ul>
+<li>Print numbers 1 to n, except:
+<ul>
+<li>If the number is a multiple of 3, print "fizz" instead of the number</li>
+<li>If the number is a multiple of 5, print "buzz" instead of the number</li>
+<li>If the number is a multiple of both 3 and 5, print "fizzbuzz" instead</li>
+
+</ul></li>
+<li>Example output (n = 8): <code>1 2 fizz 4 buzz fizz 7 8</code></li>
+<li>Starter code: <a href="http://cpp.sh/8xuu">http://cpp.sh/8xuu</a></li>
+
+</ul>
+
+</section>
+<section id="slide-org02eb1f3">
+<h2 id="org02eb1f3">Supplemental Challenge 2: Merge Strings</h2>
+<ul>
+<li>Given two strings s1 and s2, return the string that has elements of s1 and s2 interweaved</li>
+<li>"abc", "12345" -&gt; "a1b2c345"</li>
+<li>Hint: <code>&lt;algorithm&gt;</code> header contains <code>min</code> and <code>max</code> functions
+<ul>
+<li><code>max(4,7) -&gt; 7</code></li>
+
+</ul></li>
+<li>Starter code: <a href="http://cpp.sh/4z5as">http://cpp.sh/4z5as</a></li>
+
+</ul>
+
+</section>
+<section id="slide-orga61f1f3">
+<h2 id="orga61f1f3">Supplemental Challenge Solutions</h2>
+<ul>
+<li>FizzBuzz <a href="http://cpp.sh/7zrsc">http://cpp.sh/7zrsc</a></li>
+<li>Merge Strings <a href="http://cpp.sh/2h4eg">http://cpp.sh/2h4eg</a></li>
+<li>There are many ways to solve each of these</li>
 
 </ul>
 </section>
