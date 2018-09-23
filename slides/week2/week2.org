@@ -255,7 +255,8 @@ Full interface defined in [[https://github.com/RoboJackets/stsl/blob/master/incl
 * Supplemental Challenge 2: Merge Strings
 - Given two strings s1 and s2, return the string that has elements of s1 and s2 interweaved
 - "abc", "12345" -> "a1b2c345"
-- Hint: =<algorithm>= header contains =min= and =max= functions. =min(4,7) -> 7=
+- Hint: =<algorithm>= header contains =min= and =max= functions
+  - =max(4,7) -> 7=
 - Starter code: [[http://cpp.sh/4z5as]]
 
 * Supplemental Challenge Solutions
