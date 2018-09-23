@@ -8,21 +8,20 @@ int main()
 {
     RJRobot robot(RobotType::REAL);
 
-    // adjust these as needed
-    const int kBlackThresh = 100;
-    const auto kSamplePeriod = 50ms;
+    // use these and adjust them if you need to
+    const int kBlackThresh = 2000;
+    const auto kSamplePeriod = 50ms;  // the actual type here is a std::chrono::duration, but we don't need to care
 
     vector<int> line_samples;
 
-    robot.SetMotor(Motor::LEFT, 40);
-    robot.SetMotor(Motor::RIGHT, 40);
+    robot.SetDriveMotors(70, 70);
 
     int value;
     do {
         value = robot.GetLineValue(LineSensor::CENTER);
         line_samples.push_back(value);
         robot.Wait(kSamplePeriod);
-    } while (value > kBlackThresh);
+    } while (value < kBlackThresh);
 
     robot.StopMotors();
 
@@ -37,8 +36,7 @@ int main()
     long n_timesteps = line_samples.end() - median_iterator;
     auto reverse_time = kSamplePeriod * n_timesteps;
 
-    robot.SetMotor(Motor::LEFT, -40);
-    robot.SetMotor(Motor::RIGHT, -40);
+    robot.SetDriveMotors(70, 70);
     robot.Wait(reverse_time);
     robot.StopMotors();
 }

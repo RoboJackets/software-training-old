@@ -6,7 +6,7 @@ int main() {
 
     RJRobot robot(RobotType::REAL);
 
-    while(true) {
+    while (true) {
         robot.SetDriveMotors(200, -200);
         robot.Wait(1000ms);
         robot.StopMotors();
