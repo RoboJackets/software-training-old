@@ -13,6 +13,10 @@ ExternalProject_Add(STSL
 
 set(STSL_LIBS ${PROJECT_BINARY_DIR}/lib/libSTSL.a)
 
+if(WIN32)
+    set(STSL_LIBS ${STSL_LIBS} ws2_32)
+endif()
+
 include_directories(${PROJECT_BINARY_DIR}/include)
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
