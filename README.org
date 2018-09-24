@@ -30,16 +30,18 @@ This is the source repository for the 2018 RoboJackets Software training program
     2. If it asks for a default text editor, choose something from the list that you know how to use. If you aren’t familiar with any of them, choose “nano”
     3. Leave all other options as the default
   3. To use Git in Linux or Mac, open a terminal. In Windows, you will need to launch the Git Bash program
-2. Windows only: [[http://mingw.org/wiki/Getting_Started][MinGW]]
-  1. Download mingw-get-setup.exe
-  2. Leave the default installation location and related settings
-  3. Mark base-bin and gcc-g++-bin for installation
-  4. Installation -> apply
+2. Windows only: [[https://mingw-w64.org/doku.php/download/mingw-builds][MinGW-W64]]
+  1. Download the .exe installer
+  2. Settings: 8.1, x86_64, posix, seh, 0
+  3. Leave the default install/destination folder, but make a note of where it is on your computer
 3. [[https://www.jetbrains.com/clion/download][JetBrains CLion]]
   1. You can get a JetBrains student account for free, or use the 30-day trial for now
-  2. Use the default install settings
+  2. When in doubt, use the default install settings
   3. Make sure that the build/toolchain plugin can find your C++ compiler, C compiler, and “make” that you installed through MinGW
-    1. If Windows Defender gets in the way of this, you may have to exclude MinGW from scanning and/or shut off Defender entirely :(
+    1. Settings -> Build, Execution, and Deployment -> Toolchains
+    2. Select "MinGW" as the environment
+    3. In the environment path, set <mingw-w64 install location>\mingw64. For example, "C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64"
+    4. If Windows Defender gets in the way of this, you may have to exclude MinGW from scanning and/or shut off Defender entirely :(
 
 
 * Building Slides
