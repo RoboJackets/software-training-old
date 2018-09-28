@@ -3,15 +3,14 @@
 #+EMAIL: schintalapudi@gatech.edu, kristaps@robojackets.org, rortiz9@gatech.edu
 
 * What are we doing today?
-- An introduction to the /Standard Library/
+- An introduction to the /Standard Template Library/
   - Built-in Data Structures
   - Built-in Algorithms 
-- Color Detection with the STSL
+- Color Detection with the RJRobot
 
-* The Standard Library (STL)
-- "a collection of classes and functions, which are written in the core
-  language and part of the C++ ISO Standard itself" (+wikipedia+ The C++
-  Standard).
+* The Standard Template Library (STL)
+- a collection of general purpose containers and algorithms that are included in C++
+- Containers store things; algorithms perform operations on those things
 - Everything we work with is declared under the ~std~ namespace.
 
 * Containers
@@ -34,20 +33,21 @@ initializer lists require c++11 for vectors.
 
   std::vector<int> numbers = {1, 2, 3};
 #+END_SRC
-- In this example, the vector is passed the type ~int~ as its template argument, meaning it can only store ~int~s
+- In this example, the vector is passed the type ~int~ as its template argument,
+  meaning it can only store type ~int~ 
 
 * Vector methods
 #+BEGIN_NOTES
 Vectors can grow as items are added, whereas arrays are static.
 #+END_NOTES
-| =at= or =[]= | returns the value at a specific index |
-| =front=     | returns the first item                |
-| =back=      | returns the last item                 |
-| =size=      | returns the number of elements        |
-| =clear=     | removes all items                   |
-| =insert=    | inserts an item at a specific index |
-| =push_back= | adds a given element to the end     |
-| =pop_back=  | removes the last element            |
+| =at= or =[]=  | returns the value at a specific index |
+| =front()=     | returns the first item                |
+| =back()=      | returns the last item                 |
+| =size()=      | returns the number of elements        |
+| =clear()=     | removes all items                     |
+| =insert()=    | inserts an item at a specific index   |
+| =push_back()= | adds a given element to the end       |
+| =pop_back()=  | removes the last element              |
 
 * Playing with Vectors
 #+BEGIN_SRC C++
@@ -103,18 +103,23 @@ We'll get to begin() and end() later
 #+BEGIN_NOTES
 picture upcoming. mention that the method should be called on the containing object
 #+END_NOTES
-| =*=      | gets the value at the current index                               |
-| =begin=  | starts at the *first* item and moves *forwards* when incremented  |
-| =end=    | starts at the *last* item and moves *forwards* when incremented   |
-| =rbegin= | starts at the *last* item and moves *backwards* when incremented  |
-| =rend=   | starts at the *first* item and moves *backwards* when incremented |
+| =begin()=  | starts at the *first* item and moves *forwards* when incremented  |
+| =end()=    | starts at the *last* item and moves *forwards* when incremented   |
+| =rbegin()= | starts at the *last* item and moves *backwards* when incremented  |
+| =rend()=   | starts at the *first* item and moves *backwards* when incremented |
+- NOTE: these methods are called on the container
+  - i.e. ~container.begin()~
 
-* Moving iterators
+* Iterator Methods
+[[file:https://i.imgur.com/XOfZ5kf.png]]
+
+* Iterator operations
 #+BEGIN_NOTES
 picture upcoming
 #+END_NOTES
-- =++= increments the iterator forwards
-- =--= decrements the iterator backwards
+| =*=  | gets the value at the current index                               |
+| =++= | increments the iterator forwards
+| =--= | decrements the iterator backwards
 
 * Iterator practice
 #+BEGIN_NOTES
