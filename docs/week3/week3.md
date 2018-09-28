@@ -1,14 +1,15 @@
 # What are we doing today?
 
--   An introduction to the *Standard Library*
+-   An introduction to the *Standard Template Library*
     -   Built-in Data Structures
     -   Built-in Algorithms
--   Color Detection with the STSL
+-   Color Detection with the RJRobot
 
 
-# The Standard Library (STL)
+# The Standard Template Library (STL)
 
--   "a collection of classes and functions, which are written in the core language and part of the C++ ISO Standard itself" (~~wikipedia~~ The C++ Standard).
+-   a collection of general purpose containers and algorithms that are included in C++
+-   Containers store things; algorithms perform operations on those things
 -   Everything we work with is declared under the `std` namespace.
 
 
@@ -36,7 +37,7 @@ initializer lists require c++11 for vectors.
 std::vector<int> numbers = {1, 2, 3};
 ```
 
--   In this example, the vector is passed the type `int` as its template argument, meaning it can only store ~int~s
+-   In this example, the vector is passed the type `int` as its template argument, meaning it can only store type `int`
 
 
 # Vector methods
@@ -46,14 +47,14 @@ Vectors can grow as items are added, whereas arrays are static.
 
 </div>
 
-| `at` or `[]` | returns the value at a specific index |
-| `front`      | returns the first item                |
-| `back`       | returns the last item                 |
-| `size`       | returns the number of elements        |
-| `clear`      | removes all items                     |
-| `insert`     | inserts an item at a specific index   |
-| `push_back`  | adds a given element to the end       |
-| `pop_back`   | removes the last element              |
+| `at()` or `[]` | returns the value at a specific index |
+| `front()`      | returns the first item                |
+| `back()`       | returns the last item                 |
+| `size()`       | returns the number of elements        |
+| `clear()`      | removes all items                     |
+| `insert()`     | inserts an item at a specific index   |
+| `push_back()`  | adds a given element to the end       |
+| `pop_back()`   | removes the last element              |
 
 
 # Playing with Vectors
@@ -119,22 +120,30 @@ picture upcoming. mention that the method should be called on the containing obj
 
 </div>
 
-| `*`      | gets the value at the current index                                   |
-| `begin`  | starts at the **first** item and moves **forwards** when incremented  |
-| `end`    | starts at the **last** item and moves **forwards** when incremented   |
-| `rbegin` | starts at the **last** item and moves **backwards** when incremented  |
-| `rend`   | starts at the **first** item and moves **backwards** when incremented |
+| `begin()`  | starts at the **first** item and moves **forwards** when incremented  |
+| `end()`    | starts at the **last** item and moves **forwards** when incremented   |
+| `rbegin()` | starts at the **last** item and moves **backwards** when incremented  |
+| `rend()`   | starts at the **first** item and moves **backwards** when incremented |
+
+-   NOTE: these methods are called on the container
+    -   i.e. `container.begin()`
 
 
-# Moving iterators
+# Iterator Methods
+
+![img](https://i.imgur.com/XOfZ5kf.png)
+
+
+# Iterator operations
 
 <div class="NOTES">
 picture upcoming
 
 </div>
 
--   `++` increments the iterator forwards
--   `--` decrements the iterator backwards
+| `*`  | gets the value at the current index |
+| `++` | increments the iterator forwards    |
+| `--` | decrements the iterator backwards   |
 
 
 # Iterator practice
@@ -207,11 +216,20 @@ it += 3;
 
 # Modifies the container
 
-| `sort`      | sorts a container                                     |
-| `fill`      | fills a container with copies of a given element      |
-| `iota`      | fills a container with sequentially increasing values |
-| `transform` | manipulates each element using a function             |
-| `reverse`   | Reverses the order of the elements                    |
+| `sort()`        | sorts a container in increasing order            |
+| `nth_element()` | finds the nth smallest element                   |
+| `fill()`        | fills a container with copies of a given element |
+| `transform()`   | manipulates each element using a function        |
+| `reverse()`     | Reverses the order of the elements               |
+
+
+# `nth_element` example
+
+-   `std::nth_element(first, nth, last);`
+-   `first` is an iterator to the beginning
+-   `last` is an iterator to the end
+-   `nth` is an iterator to the element you would want if the container were sorted
+-   [Live example](http://cpp.sh/7o2bk)
 
 
 # Algorithm examples
@@ -236,57 +254,19 @@ int main()
 
 # Does not modify the container
 
-| `count`      | counts the number of items in a container that match a given item  |
-| `find`       | returns an iterator to the first element that matches a given item |
-| `accumulate` | sums all elements in a container                                   |
+| `count()`      | counts the number of items in a container that match a given item  |
+| `find()`       | returns an iterator to the first element that matches a given item |
+| `accumulate()` | sums all elements in a container                                   |
 
-
-# Modifies destination container
-
-|       |                                              |
-|------ |--------------------------------------------- |
-| `copy` | copies elements from one container to another |
-
-
-# How to use these algorithms
-
-```C++
-#include <vector>
-#include <iterator>
-#include <algorithm>
-#include <string>
-#include <iostream>
-using namespace std;
-int main() {
-      vector<string> rr_robots = {"Macaroni", "Bigoli", "Sedani"};
-      vector<string> igvc_robots = {"Woodi", "Jessi"};
-
-      //I hope Bigoli is functional by the time these slides are delivered
-      int working_robots = std::count(igvc_robots.begin(), igvc_robots.end(), "Bigoli");
-      cout << working_robots << endl;
-
-      working_robots = count(rr_robots.begin(), rr_robots.end(), "Bigoli");
-      cout << working_robots << endl;
-
-      //what size is my_list?
-      vector<int> my_list(rr_robots.size() + igvc_robots.size());
-      iota(my_list.begin(), my_list.end(), 0);
-
-      //what do you think is in sum?
-      int sum = accumulate(my_list.begin(), my_list.end(), 0);
-      cout << sum << endl;
-
-}
-
-```
-
-
-# Robot time!
-
--   TODO: example of using color detector from STSL
+-   [How to use these algorithms](http://cpp.sh/73bu)
 
 
 # Challenge
 
--   Drive over the several gray strips and identify the strip closest to the median intensity
--   Drive back to the strip of median intensity
+1.  Drive over the several gray strips, stopping at the black strip
+2.  Determine which strip is the line sensor value
+3.  Drive back to the median strip, to show that you have calculated it
+4.  Notes
+    -   Modify the code in `median_line`
+    -   You don't know ahead of time how many colored sections there are
+    -   This is kind of hard

@@ -29,33 +29,32 @@
 <section id="sec-title-slide"><h1 class="title">Week 3</h1>
 </section>
 
-<section id="slide-orgdb5cc0a">
-<h2 id="orgdb5cc0a">What are we doing today?</h2>
+<section id="slide-org402bdd6">
+<h2 id="org402bdd6">What are we doing today?</h2>
 <ul>
-<li>An introduction to the <i>Standard Library</i>
+<li>An introduction to the <i>Standard Template Library</i>
 <ul>
 <li>Built-in Data Structures</li>
 <li>Built-in Algorithms</li>
 
 </ul></li>
-<li>Color Detection with the STSL</li>
+<li>Color Detection with the RJRobot</li>
 
 </ul>
 
 </section>
-<section id="slide-orgacb8b3e">
-<h2 id="orgacb8b3e">The Standard Library (STL)</h2>
+<section id="slide-org0dfd053">
+<h2 id="org0dfd053">The Standard Template Library (STL)</h2>
 <ul>
-<li>"a collection of classes and functions, which are written in the core
-language and part of the C++ ISO Standard itself" (<del>wikipedia</del> The C++
-Standard).</li>
+<li>a collection of general purpose containers and algorithms that are included in C++</li>
+<li>Containers store things; algorithms perform operations on those things</li>
 <li>Everything we work with is declared under the <code>std</code> namespace.</li>
 
 </ul>
 
 </section>
-<section id="slide-org66ca278">
-<h2 id="org66ca278">Containers</h2>
+<section id="slide-orged55419">
+<h2 id="orged55419">Containers</h2>
 <ul>
 <li>Data structures in the STL that store a collection of other objects are
 called <i>containters</i></li>
@@ -67,8 +66,8 @@ type of data the container stores.</li>
 </ul>
 
 </section>
-<section id="slide-org1e87385">
-<h2 id="org1e87385">Vectors</h2>
+<section id="slide-orgc539179">
+<h2 id="orgc539179">Vectors</h2>
 <aside class="notes">
 <p>
 initializer lists require c++11 for vectors.
@@ -89,13 +88,14 @@ initializer lists require c++11 for vectors.
 </pre>
 </div>
 <ul>
-<li>In this example, the vector is passed the type <code>int</code> as its template argument, meaning it can only store ~int~s</li>
+<li>In this example, the vector is passed the type <code>int</code> as its template argument,
+meaning it can only store type <code>int</code></li>
 
 </ul>
 
 </section>
-<section id="slide-org257924a">
-<h2 id="org257924a">Vector methods</h2>
+<section id="slide-org0c71055">
+<h2 id="org0c71055">Vector methods</h2>
 <aside class="notes">
 <p>
 Vectors can grow as items are added, whereas arrays are static.
@@ -112,50 +112,50 @@ Vectors can grow as items are added, whereas arrays are static.
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left"><code>at</code> or <code>[]</code></td>
+<td class="org-left"><code>at()</code> or <code>[]</code></td>
 <td class="org-left">returns the value at a specific index</td>
 </tr>
 
 <tr>
-<td class="org-left"><code>front</code></td>
+<td class="org-left"><code>front()</code></td>
 <td class="org-left">returns the first item</td>
 </tr>
 
 <tr>
-<td class="org-left"><code>back</code></td>
+<td class="org-left"><code>back()</code></td>
 <td class="org-left">returns the last item</td>
 </tr>
 
 <tr>
-<td class="org-left"><code>size</code></td>
+<td class="org-left"><code>size()</code></td>
 <td class="org-left">returns the number of elements</td>
 </tr>
 
 <tr>
-<td class="org-left"><code>clear</code></td>
+<td class="org-left"><code>clear()</code></td>
 <td class="org-left">removes all items</td>
 </tr>
 
 <tr>
-<td class="org-left"><code>insert</code></td>
+<td class="org-left"><code>insert()</code></td>
 <td class="org-left">inserts an item at a specific index</td>
 </tr>
 
 <tr>
-<td class="org-left"><code>push_back</code></td>
+<td class="org-left"><code>push_back()</code></td>
 <td class="org-left">adds a given element to the end</td>
 </tr>
 
 <tr>
-<td class="org-left"><code>pop_back</code></td>
+<td class="org-left"><code>pop_back()</code></td>
 <td class="org-left">removes the last element</td>
 </tr>
 </tbody>
 </table>
 
 </section>
-<section id="slide-org7e07137">
-<h2 id="org7e07137">Playing with Vectors</h2>
+<section id="slide-orgea060e8">
+<h2 id="orgea060e8">Playing with Vectors</h2>
 <div class="org-src-container">
 
 <pre  class="src src-C++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;vector&gt;</span>
@@ -175,8 +175,8 @@ Vectors can grow as items are added, whereas arrays are static.
 </div>
 
 </section>
-<section id="slide-org725446b">
-<h2 id="org725446b">More vector examples</h2>
+<section id="slide-org04b0871">
+<h2 id="org04b0871">More vector examples</h2>
 <aside class="notes">
 <p>
 We'll get to begin() and end() later
@@ -210,8 +210,8 @@ We'll get to begin() and end() later
 
 
 </section>
-<section id="slide-org88ac9c9">
-<h2 id="org88ac9c9">Iterators</h2>
+<section id="slide-orgd6a309e">
+<h2 id="orgd6a309e">Iterators</h2>
 <ul>
 <li>An object that lets you access and modify objects in a container</li>
 <li>Depending on their type, they will let you read or write data in the container, and move forwards, backwards, or both</li>
@@ -220,11 +220,68 @@ We'll get to begin() and end() later
 </ul>
 
 </section>
-<section id="slide-org8a5a489">
-<h2 id="org8a5a489">Iterator methods</h2>
+<section id="slide-org7b09c15">
+<h2 id="org7b09c15">Iterator methods</h2>
 <aside class="notes">
 <p>
 picture upcoming. mention that the method should be called on the containing object
+</p>
+
+</aside>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><code>begin()</code></td>
+<td class="org-left">starts at the <b>first</b> item and moves <b>forwards</b> when incremented</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>end()</code></td>
+<td class="org-left">starts at the <b>last</b> item and moves <b>forwards</b> when incremented</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>rbegin()</code></td>
+<td class="org-left">starts at the <b>last</b> item and moves <b>backwards</b> when incremented</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>rend()</code></td>
+<td class="org-left">starts at the <b>first</b> item and moves <b>backwards</b> when incremented</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>NOTE: these methods are called on the container
+<ul>
+<li>i.e. <code>container.begin()</code></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org4f0a642">
+<h2 id="org4f0a642">Iterator Methods</h2>
+
+<div class="figure">
+<p><img src="https://i.imgur.com/XOfZ5kf.png" alt="XOfZ5kf.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-org66d6e64">
+<h2 id="org66d6e64">Iterator operations</h2>
+<aside class="notes">
+<p>
+picture upcoming
 </p>
 
 </aside>
@@ -243,45 +300,20 @@ picture upcoming. mention that the method should be called on the containing obj
 </tr>
 
 <tr>
-<td class="org-left"><code>begin</code></td>
-<td class="org-left">starts at the <b>first</b> item and moves <b>forwards</b> when incremented</td>
+<td class="org-left"><code>++</code></td>
+<td class="org-left">increments the iterator forwards</td>
 </tr>
 
 <tr>
-<td class="org-left"><code>end</code></td>
-<td class="org-left">starts at the <b>last</b> item and moves <b>forwards</b> when incremented</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>rbegin</code></td>
-<td class="org-left">starts at the <b>last</b> item and moves <b>backwards</b> when incremented</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>rend</code></td>
-<td class="org-left">starts at the <b>first</b> item and moves <b>backwards</b> when incremented</td>
+<td class="org-left"><code>--</code></td>
+<td class="org-left">decrements the iterator backwards</td>
 </tr>
 </tbody>
 </table>
 
 </section>
-<section id="slide-org0793e94">
-<h2 id="org0793e94">Moving iterators</h2>
-<aside class="notes">
-<p>
-picture upcoming
-</p>
-
-</aside>
-<ul>
-<li><code>++</code> increments the iterator forwards</li>
-<li><code>--</code> decrements the iterator backwards</li>
-
-</ul>
-
-</section>
-<section id="slide-org1c38631">
-<h2 id="org1c38631">Iterator practice</h2>
+<section id="slide-orged7606b">
+<h2 id="orged7606b">Iterator practice</h2>
 <aside class="notes">
 <p>
 requires c++ 11.
@@ -375,8 +407,8 @@ it += 3;
 
 
 </section>
-<section id="slide-org1312bd6">
-<h2 id="org1312bd6">Algorithms</h2>
+<section id="slide-org211240b">
+<h2 id="org211240b">Algorithms</h2>
 <ul>
 <li>algorithms is a header that includes useful operators that can be used on vectors, arrays and other containers</li>
 <li>uses iterators to interact with these containers</li>
@@ -391,8 +423,8 @@ it += 3;
 </ul>
 
 </section>
-<section id="slide-orgbba9c3e">
-<h2 id="orgbba9c3e">Modifies the container</h2>
+<section id="slide-org4db1311">
+<h2 id="org4db1311">Modifies the container</h2>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -403,35 +435,48 @@ it += 3;
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left"><code>sort</code></td>
-<td class="org-left">sorts a container</td>
+<td class="org-left"><code>sort()</code></td>
+<td class="org-left">sorts a container in increasing order</td>
 </tr>
 
 <tr>
-<td class="org-left"><code>fill</code></td>
+<td class="org-left"><code>nth_element()</code></td>
+<td class="org-left">finds the nth smallest element</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>fill()</code></td>
 <td class="org-left">fills a container with copies of a given element</td>
 </tr>
 
 <tr>
-<td class="org-left"><code>iota</code></td>
-<td class="org-left">fills a container with sequentially increasing values</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>transform</code></td>
+<td class="org-left"><code>transform()</code></td>
 <td class="org-left">manipulates each element using a function</td>
 </tr>
 
 <tr>
-<td class="org-left"><code>reverse</code></td>
+<td class="org-left"><code>reverse()</code></td>
 <td class="org-left">Reverses the order of the elements</td>
 </tr>
 </tbody>
 </table>
 
 </section>
-<section id="slide-org1abe482">
-<h2 id="org1abe482">Algorithm examples</h2>
+<section id="slide-orgf98d3e7">
+<h2 id="orgf98d3e7"><code>nth_element</code> example</h2>
+<ul>
+<li><code>std::nth_element(first, nth, last);</code></li>
+<li><code>first</code> is an iterator to the beginning</li>
+<li><code>last</code> is an iterator to the end</li>
+<li><code>nth</code> is an iterator to the element you would want if the container were sorted</li>
+<li><a href="http://cpp.sh/7o2bk">Live example</a></li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgfe42fbf">
+<h2 id="orgfe42fbf">Algorithm examples</h2>
 <div class="org-src-container">
 
 <pre  class="src src-C++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;vector&gt;</span>
@@ -452,8 +497,8 @@ it += 3;
 </div>
 
 </section>
-<section id="slide-orgb0528b9">
-<h2 id="orgb0528b9">Does not modify the container</h2>
+<section id="slide-orga9be156">
+<h2 id="orga9be156">Does not modify the container</h2>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -464,92 +509,44 @@ it += 3;
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left"><code>count</code></td>
+<td class="org-left"><code>count()</code></td>
 <td class="org-left">counts the number of items in a container that match a given item</td>
 </tr>
 
 <tr>
-<td class="org-left"><code>find</code></td>
+<td class="org-left"><code>find()</code></td>
 <td class="org-left">returns an iterator to the first element that matches a given item</td>
 </tr>
 
 <tr>
-<td class="org-left"><code>accumulate</code></td>
+<td class="org-left"><code>accumulate()</code></td>
 <td class="org-left">sums all elements in a container</td>
 </tr>
 </tbody>
 </table>
 
-</section>
-<section id="slide-orgeb5ee5b">
-<h2 id="orgeb5ee5b">Modifies destination container</h2>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left"><code>copy</code></td>
-<td class="org-left">copies elements from one container to another</td>
-</tr>
-</tbody>
-</table>
-
-</section>
-<section id="slide-orgfd7bfca">
-<h2 id="orgfd7bfca">How to use these algorithms</h2>
-<div class="org-src-container">
-
-<pre  class="src src-C++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;vector&gt;</span>
-<span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iterator&gt;</span>
-<span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;algorithm&gt;</span>
-<span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;string&gt;</span>
-<span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
-<span style="color: #598249;">using</span> <span style="color: #598249;">namespace</span> <span style="color: #15968D;">std</span>;
-<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
-      <span style="color: #598249;">vector</span>&lt;<span style="color: #598249;">string</span>&gt; <span style="color: #2F7BDE;">rr_robots</span> = {<span style="color: #15968D;">"Macaroni"</span>, <span style="color: #15968D;">"Bigoli"</span>, <span style="color: #15968D;">"Sedani"</span>};
-      <span style="color: #598249;">vector</span>&lt;<span style="color: #598249;">string</span>&gt; <span style="color: #2F7BDE;">igvc_robots</span> = {<span style="color: #15968D;">"Woodi"</span>, <span style="color: #15968D;">"Jessi"</span>};
-
-      <span style="color: #5e6263;">//</span><span style="color: #5e6263;">I hope Bigoli is functional by the time these slides are delivered</span>
-      <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">working_robots</span> = <span style="color: #15968D;">std</span>::count(igvc_robots.begin(), igvc_robots.end(), <span style="color: #15968D;">"Bigoli"</span>);
-      cout &lt;&lt; working_robots &lt;&lt; endl;
-
-      working_robots = count(rr_robots.begin(), rr_robots.end(), <span style="color: #15968D;">"Bigoli"</span>);
-      cout &lt;&lt; working_robots &lt;&lt; endl;
-
-      <span style="color: #5e6263;">//</span><span style="color: #5e6263;">what size is my_list?</span>
-      <span style="color: #598249;">vector</span>&lt;<span style="color: #598249;">int</span>&gt; <span style="color: #2F7BDE;">my_list</span>(rr_robots.size() + igvc_robots.size());
-      iota(my_list.begin(), my_list.end(), 0);
-
-      <span style="color: #5e6263;">//</span><span style="color: #5e6263;">what do you think is in sum?</span>
-      <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">sum</span> = accumulate(my_list.begin(), my_list.end(), 0);
-      cout &lt;&lt; sum &lt;&lt; endl;
-
-}
-
-</pre>
-</div>
-
-</section>
-<section id="slide-org1ddcaa1">
-<h2 id="org1ddcaa1">Robot time!</h2>
 <ul>
-<li>TODO: example of using color detector from STSL</li>
+<li><a href="http://cpp.sh/73bu">How to use these algorithms</a></li>
 
 </ul>
 
-</section>
-<section id="slide-org7a4947f">
-<h2 id="org7a4947f">Challenge</h2>
-<ul>
-<li>Drive over the several gray strips and identify the strip closest to the median intensity</li>
-<li>Drive back to the strip of median intensity</li>
 
-</ul>
+</section>
+<section id="slide-orga780a41">
+<h2 id="orga780a41">Challenge</h2>
+<ol>
+<li>Drive over the several gray strips, stopping at the black strip</li>
+<li>Determine which strip is the line sensor value</li>
+<li>Drive back to the median strip, to show that you have calculated it</li>
+<li>Notes
+<ul>
+<li>Modify the code in <code>median_line</code></li>
+<li>You don't know ahead of time how many colored sections there are</li>
+<li>This is kind of hard</li>
+
+</ul></li>
+
+</ol>
 </section>
 </section>
 </div>
@@ -575,7 +572,7 @@ height: 800,
 margin: 0.15,
 
 theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+transition: Reveal.getQueryHash().transition || 'None', // default/cube/page/concave/zoom/linear/fade/none
 transitionSpeed: 'fast',
 multiplex: {
     secret: '', // null if client
