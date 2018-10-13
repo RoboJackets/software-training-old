@@ -2,9 +2,8 @@
 
 -   How a program's memory is structured and maintained
 -   References and pointers
+-   Pass by reference/value
 -   How to convert objects between different types
--   No `git` slides this week!
--   Pointer worksheets
 
 
 # What is the output?
@@ -34,14 +33,15 @@ Make sure to emphasize how important memory allocation is for any real program. 
 
 </div>
 
--   At a high level, your program has three kinds of memory
+![img](https://i.imgur.com/5dJ912z.png)
+
+-   All the memory in your computer is a huge, indexable space divided into bytes
+-   Your program has three kinds of memory
     -   **Static memory:** calculated at compile time
     -   **The stack:** managed automatically by the language
     -   **The heap:** your space to do whatever you want
-        -   You can ask for memory from the OS and return it
-            -   The heap is managed at runtime
-        -   You have to keep track of what you've allocated to avoid memory leaks
--   At an even higher level, all the memory in your computer is a huge, indexable, iterable space, divided into bytes
+        -   You can ask for heap memory from the OS
+        -   You have to release/free what you've allocated to avoid memory leaks
 
 
 ## What is a byte
@@ -233,7 +233,7 @@ int main() {
 ```c++
 #include <iostream>
 int main() {
-  int var = 5;
+  int var = 6;
   int* var_ptr = &var;
   var_ptr += 1;
 }
@@ -248,8 +248,8 @@ int main() {
 #include <iostream>
 int main() {
   char rj = 'c';
-  char* rj_ptr = &rj;
-  rj_ptr += 2;
+  char* char_ptr = &rj;
+  char_ptr += 2;
 }
 ```
 
@@ -328,10 +328,11 @@ Each type has an initialization function. Run through examples in 4 slides
 
 </div>
 
--   Wrap a normal pointer to make it easier to manage the lifecycle of objects
+-   A smart pointer object manages a pointer
+-   When the smart pointer is done (e.g. end of function), calls `delete` on its data
 -   You should generally use one of these two types instead of a normal pointer:
-    -   `shared_ptr`: multiple `shared_ptr` s can own a single object
-    -   `unique_ptr`: only one `unique_ptr` can own an object
+    -   `shared_ptr`: multiple `shared_ptr` objects can own a single pointer
+    -   `unique_ptr`: only one `unique_ptr` can own an pointer
 
 
 ## `unique_ptr`
@@ -435,7 +436,7 @@ A* new_var = (A*)old_var;
 
 # Type Safety
 
-```c
+```c++
 char c = 10;                        // this is one byte in memory
 
 int *p = (int*) &c;                 // this is a 4-byte pointer pointing to one byte of
@@ -461,26 +462,3 @@ Really talk about why type safety is good. otherwise you can arbitrarily cast an
     -   `static_cast` is mostly used for basic type conversions, e.g. between different types of numbers
     -   `dynamic_cast` is mostly used for conversions between object types for polymorphism
     -   `reinterpret_cast` works like a C-style cast and generally shouldn't be used unless you know exactly what you're doing
-
-
-# Elite haxors
-
-<div class="NOTES">
-OpenSSL cryptography library bug. no bounds checking allowed for buffer overflow.
-
-</div>
-
--   Heartbleed
--   <https://xkcd.com/1354/>
-
-
-# Questions?
-
-<div class="NOTES">
-run a program that creates a lot of doubles while showing your memory usage. files may corrupt so make sure everything is closed beforehand
-
-</div>
-
--   Ask here or on Piazza!
--   Memory leak demo
-    -   DO NOT TRY THIS AT HOME
