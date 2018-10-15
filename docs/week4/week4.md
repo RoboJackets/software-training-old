@@ -184,19 +184,10 @@ int main() {
 -   gets the value pointed to
     -   here is an address, what is there?
 -   use the **\*** operator in front of a pointer to dereference it
-
-```c++
-#include <iostream>
-int main() {
-  int var = 5;
-  // TYPE* name;
-  int* var_ptr = &var;
-  std::cout << *var_ptr << std::endl;
-}
-```
+-   use the `->` operator behind a pointer to deference and do something else
 
 
-### Example
+## Example
 
 <div class="NOTES">
 Now run through some basic examples
@@ -214,6 +205,30 @@ int main() {
 ```
 
 ![img](https://imgur.com/7alG4QH.png)
+
+
+## Another example
+
+```c++
+#include <iostream>
+#include <string>
+
+int main() {
+  int var = 5;
+  std::string s = "Pointers are fun";
+
+  // TYPE* name;
+  int* var_ptr = &var;
+
+  std::string* str_ptr = &s;
+  str_ptr->push_back('!');
+
+  std::cout << "var_ptr is " << *var_ptr << std::endl;
+  std::cout << "str_ptr has size " << str_ptr->size() << std::endl;
+  std::cout << "Now s is: " << s << std::endl;
+}
+
+```
 
 
 # Pointer arithmatic
@@ -462,3 +477,25 @@ Really talk about why type safety is good. otherwise you can arbitrarily cast an
     -   `static_cast` is mostly used for basic type conversions, e.g. between different types of numbers
     -   `dynamic_cast` is mostly used for conversions between object types for polymorphism
     -   `reinterpret_cast` works like a C-style cast and generally shouldn't be used unless you know exactly what you're doing
+
+
+# Exercise: line following with a twist
+
+-   Modify `line_follow.cpp`
+-   You should make 2 functions `turn_right` and `turn_left`
+-   We can't use the function signature `turn_left(RJRobot r)`
+    -   This copies the RJRobot object, opening a second wifi link to the robot (which doesn't work)
+
+
+# Exercise cont'd
+
+-   You can solve this problem several ways by changing the function signature. For practice, try these three:
+    1.  Pass a reference to the RJRobot
+    2.  Pass a pointer to the RJRobot (a non-smart pointer is fine)
+    3.  Pass no parameters
+        -   Declare a global (outside of any function) `unique_ptr` to an RJRobot
+        -   Don't forget to `make_unique` in `main`
+        -   You can use this `unique_ptr` in any function
+
+-   Line follow algorithm:
+    -   `repeat forever: if (sensor < threshold) then turn_left, else turn_right`

@@ -29,8 +29,8 @@
 <section id="sec-title-slide"><h1 class="title">Week 6</h1>
 </section>
 
-<section id="slide-org6f19154">
-<h2 id="org6f19154">Computer Vision</h2>
+<section id="slide-org589eb3b">
+<h2 id="org589eb3b">Computer Vision</h2>
 <ul>
 <li>We have the knowledge in C++ to describe the logic we might want a robot to
 have. But we need to be able to make sense of what the robot sees and
@@ -43,8 +43,8 @@ classify it before we can act on this logic.</li>
 
 
 </section>
-<section id="slide-orgd7c654e">
-<h2 id="orgd7c654e">What does an Image look like to your computer?</h2>
+<section id="slide-org7a441cb">
+<h2 id="org7a441cb">What does an Image look like to your computer?</h2>
 <ul>
 <li>OpenCV stores images in an object called a <i>Mat</i></li>
 <li>A Mat is an array with rows and columns. In a grayscale image, each element
@@ -60,8 +60,8 @@ row and keep track of your row number by how far you've traversed.</li>
 </ul>
 
 </section>
-<section id="slide-orge4b01a3">
-<h2 id="orge4b01a3">Color Images</h2>
+<section id="slide-org930e1f9">
+<h2 id="org930e1f9">Color Images</h2>
 <ul>
 <li>Color images don't embed the color of a pixel in one element. Often, you'll
 find each pixel represented in BGR (Blue component, Green Component, Red
@@ -73,8 +73,8 @@ row of a black and white image.</li>
 </ul>
 
 </section>
-<section id="slide-org414da7c">
-<h2 id="org414da7c">HSV Images</h2>
+<section id="slide-org64b9a6b">
+<h2 id="org64b9a6b">HSV Images</h2>
 <ul>
 <li>Each Pixel in a color image has a hue, a saturation, and a luminosity.</li>
 <li>Even though our cameras read in images with RGB, converting them to HSV is
@@ -88,8 +88,8 @@ easy with OpenCV</li>
 </div>
 
 </section>
-<section id="slide-orgf304e17">
-<h2 id="orgf304e17">Why do we use HSV</h2>
+<section id="slide-orgae49696">
+<h2 id="orgae49696">Why do we use HSV</h2>
 <ul>
 <li>HSV encodes image data in a way that is resistant to changes in color</li>
 <li>To put it another way, on a sunny day an image will contain more red, more
@@ -101,8 +101,8 @@ colors in the HSV space.</li>
 </ul>
 
 </section>
-<section id="slide-org8a173c7">
-<h2 id="org8a173c7">Finding the blue in an image</h2>
+<section id="slide-orgde958c1">
+<h2 id="orgde958c1">Finding the blue in an image</h2>
 <div class="org-src-container">
 
 <pre  class="src src-c++"><span style="color: #598249;">Mat</span> <span style="color: #2F7BDE;">findBlue</span>(<span style="color: #598249;">const</span> <span style="color: #598249;">Mat</span>&amp; <span style="color: #2F7BDE;">frameBGR</span>) {
@@ -121,8 +121,8 @@ colors in the HSV space.</li>
 </div>
 
 </section>
-<section id="slide-orgba52268">
-<h2 id="orgba52268">Roboracing Computer Vision</h2>
+<section id="slide-orgbb4b0ff">
+<h2 id="orgbb4b0ff">Roboracing Computer Vision</h2>
 <p>
 <a href="https://github.com/RoboJackets/roboracing-software/blob/master/iarrc/src/color_detector/color_detector.cpp">Roboracing
 Color Detector</a>
