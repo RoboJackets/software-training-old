@@ -1,10 +1,10 @@
 #+TITLE: Week 5
-#+AUTHOR: Kristaps Berzinch, Raymond Ortiz
-#+EMAIL: kristaps@robojackets.org, rortiz9@gatech.edu
+#+AUTHOR: Kristaps Berzinch, Raymond Ortiz, Evan Bretl
+#+EMAIL: kristaps@robojackets.org, rortiz9@gatech.edu, evan.bretl@gatech.edu
 
 * What are we doing today?
 - Classes in C++
-- Writing a differential drive class
+- Inheritance and polymorphism
 
 * What are classes?
 - Definitions for objects, i.e. what data and methods they have
@@ -42,15 +42,18 @@ Make sure to explain the different reason for not giving everything public scope
   - Prevents unverified values from being inserted in class variables
     - Can force using getters and setters to interact with data
   - Hides the internals of your classes
+
 ** public
 - Accessible by everyone
 #+BEGIN_SRC c++
-class example {
+class Example {
 public:
     int var;
     void do_something() {std::cout << "doing something" << std::endl;}
 };
 #+END_SRC
+[[https://ideone.com/2pacF2][Run It]]
+
 ** private
 #+BEGIN_NOTES
 try to use the private method and then show them the compiler error. Show an exaple of using the var in the class
@@ -59,35 +62,39 @@ try to use the private method and then show them the compiler error. Show an exa
   - Forces using setters and getters as an abstraction layer
 - implied if no scope is initially set in a class
 #+BEGIN_SRC c++
-class example {
+class Example {
 private:
     int var;
     void do_something() {std::cout << "doing something" << std::endl;}
 };
 #+END_SRC
 #+BEGIN_SRC c++
-class example {
+class Example {
     int var;
     void do_something() {std::cout << "doing something" << std::endl;}
 };
 #+END_SRC
+[[https://ideone.com/huMvVg][Run It]]
+
 ** review
 | Scope Type | Accessible inside the class | Accessible outside the class directly |
 |------------+-----------------------------+---------------------------------------|
 | private    | Yes                         | No                                    |
 | public     | Yes                         | Yes                                   |
+
 * A simple example
 #+BEGIN_NOTES
 A class can have some data and some methods, which can either be public or private. Drop to a terminal and use/modify this class.
 #+END_NOTES
 #+BEGIN_SRC c++
-class example {
+class Example {
     private:         // private is also implied if you don't specify visibility
         int a;
     public:
         int getA() { return a; }
 };
 #+END_SRC
+[[https://ideone.com/eUhSw6][Run It]]
 
 * Constructors and Destructors
 #+BEGIN_NOTES
@@ -97,6 +104,7 @@ DO NOT go into why some constructors might be private.
 - We put the construction code in constructors
 - We put the destruction code in destructors
 - Usually public, scope still applies to these methods
+
 ** Constructors
 #+BEGIN_NOTES
 use this version of the class
@@ -104,23 +112,24 @@ use this version of the class
 - Called whenever an object is created
 - Can have multiple constructors as long as they have different argument lists
 - Contains all of the code to create and initialize all of an object's members
+- =default= constructors initialize all data members to default values (default constructor is used if no custom constructor is given)
 #+BEGIN_SRC c++
-class example {
+class Example {
     private:
         int a;
         // lots of important variables that live on the heap
     public:
         int getA() { return a; }
-        example() {
-            std::cout << "Creating an example" << std::endl;
-            /* allocating all the memory */
-        };
-        example(int a_local) {
+        Example() = default;
+        Example(int a_local) {
             a = a_local;
-            /* allocating all the memory */
+            std::cout << "custom constructor" << std::endl;
+            /* allocating memory, etc. ... */
         }
 };
 #+END_SRC
+[[https://ideone.com/5y5iAk][Run It]]
+
 ** Destructors
 #+BEGIN_NOTES
 use this version of the class. Make sure to destruct the object
@@ -129,16 +138,18 @@ use this version of the class. Make sure to destruct the object
 - Contains all of the code to destory and deallocate all an objects members
 - Can only have one destructor
 #+BEGIN_SRC c++
-class example {
+class Example {
     private:
         int a;
         // lots of important variables from the heap
     public:
         int getA() { return a; }
         // ... constructors
-        ~example() {/* lots of deletes */};
+        ~Example() {/* lots of deletes */};
 };
 #+END_SRC
+[[https://ideone.com/NBki2a][Run It]]
+
 * Static members
 #+BEGIN_NOTES
  Drop to a terminal and use this class.
@@ -149,23 +160,30 @@ class example {
 - Static variables must be initialized before use
   - accessed by the *::* operator
 #+BEGIN_SRC c++
-class static_example {
+class StaticExample {
     private:
         static int a;
     public:
-        static_example() {a++;}
+        void modify_static_var() { a++; }
         static int getA() { return a; }
 };
 // init in implementing class
 int static_example::a = 0;
 #+END_SRC
+[[https://ideone.com/LiGymG][live demo of static]]
+
 * Inheritance
 #+BEGIN_NOTES
 pull up the two classes we have written so far and use the methods of the subclass under different circumstances
 #+END_NOTES
 - Classes can inherit data and methods from other classes
+- Inheritance is an "is" relationship
+#+ATTR_HTML: :width 50%
+[[file:https://i.imgur.com/9cF7NTq.png]]
+
+** Inheritance Example
 #+BEGIN_SRC c++
-class child: public example {
+class Child: public Example {
     // we get `a` and `getA()` from example
     private:
         int b;
@@ -175,22 +193,15 @@ class child: public example {
 };
 #+END_SRC
 
-** Example code
-#+BEGIN_NOTES
-mention that you can go up the class structure but not down
-#+END_NOTES
-#+ATTR_HTML: :width 50%
-[[file:https://i.imgur.com/9cF7NTq.png]]
-
 * Scope and inheritence
 #+BEGIN_NOTES
 make sure to explain every bullet
 #+END_NOTES
 - Scope applies across subclasses
-| scope     | subclasses | externally | internally |
+| scope     | internally | subclasses | externally |
 |-----------+------------+------------+------------|
-| private   | no         | no         | yes        |
-| protected | yes        | no         | yes        |
+| private   | yes        | no         | no         |
+| protected | yes        | yes        | no         |
 | public    | yes        | yes        | yes        |
 
 * Polymorphism
@@ -210,11 +221,12 @@ explain how dynamic cast is used to change what an object is
  #+END_SRC
  #+BEGIN_SRC
  example.cpp: In function ‘int main()’:
- example.cpp:20:38: error: cannot dynamic_cast ‘e’ (of type ‘class example’) to type
+ example.cpp:20:38: error: cannot dynamic_cast ‘e’ (of type ‘class Example’) to type
  ‘class child&’ (source type is not polymorphic)
       child& c = dynamic_cast<child&>(e);
                                       ^
  #+END_SRC
+ [[https://ideone.com/ETJ0uh][Run It]]
 
 * Virtual functions
 #+BEGIN_NOTES
@@ -224,6 +236,4 @@ Show an example using the classes defined in the example code and explained earl
 - Child classes can then implement their own versions of the function
 - The child implementation will be called even from a reference of the type of the parent
  - If the function isn't marked virtual, which implementation is called depends on the type of the reference
-
-* Questions?
-- Ask here or on Piazza!
+[[https://ideone.com/iFqp7I][Run It]]
