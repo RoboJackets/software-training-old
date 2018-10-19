@@ -33,3 +33,6 @@ add_subdirectory(line_follow_solution)
 
 add_subdirectory(median_line)
 add_subdirectory(median_line_solution)
+
+add_subdirectory(inheritance)
+add_subdirectory(inheritance_solution)
