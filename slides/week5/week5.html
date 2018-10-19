@@ -29,8 +29,8 @@
 <section id="sec-title-slide"><h1 class="title">Week 5</h1>
 </section>
 
-<section id="slide-org2b8cd14">
-<h2 id="org2b8cd14">What are we doing today?</h2>
+<section id="slide-org8b054c1">
+<h2 id="org8b054c1">What are we doing today?</h2>
 <ul>
 <li>Classes in C++</li>
 <li>Inheritance and polymorphism</li>
@@ -38,8 +38,8 @@
 </ul>
 
 </section>
-<section id="slide-orgaa275c0">
-<h2 id="orgaa275c0">What are classes?</h2>
+<section id="slide-orgf621de6">
+<h2 id="orgf621de6">What are classes?</h2>
 <ul>
 <li>Definitions for objects, i.e. what data and methods they have
 <ul>
@@ -59,9 +59,10 @@
 </ul></li>
 
 </ul>
+
 </section>
-<section id="slide-org7033c86">
-<h3 id="org7033c86">Structure</h3>
+<section id="slide-org741ed3e">
+<h3 id="org741ed3e">Structure</h3>
 <aside class="notes">
 <p>
 talk about the structure of a class
@@ -78,17 +79,24 @@ talk about the structure of a class
 </ul>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">NAME</span> {
-    <span style="color: #5e6263;">// </span><span style="color: #5e6263;">decleration of variables</span>
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">Example</span> {
+    <span style="color: #5e6263;">// </span><span style="color: #5e6263;">declaration of variables</span>
     <span style="color: #5e6263;">// </span><span style="color: #5e6263;">method prototypes</span>
     <span style="color: #5e6263;">//   </span><span style="color: #5e6263;">can be declared in this file or a seperate cpp file</span>
+    <span style="color: #598249;">void</span> <span style="color: #2F7BDE;">DoThing</span>(<span style="color: #598249;">int</span>);
 };
+<span style="color: #15968D;">Example</span>::<span style="color: #2F7BDE;">DoThing</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>) {
+    <span style="color: #5e6263;">// </span><span style="color: #5e6263;">... implementation of the function</span>
+}
 </pre>
 </div>
+<p>
+<a href="https://ideone.com/jaRQsF">Example</a>
+</p>
 
 </section>
-<section id="slide-org5d87ccf">
-<h2 id="org5d87ccf">Why bother?</h2>
+<section id="slide-orgea197ac">
+<h2 id="orgea197ac">Why bother?</h2>
 <ul>
 <li>Software projects are easier to understand when related data and functions are grouped together</li>
 <li>Abstracting data behind getters/setters allows you to validate inputs from other parts of your application</li>
@@ -98,8 +106,8 @@ talk about the structure of a class
 </ul>
 
 </section>
-<section id="slide-org4d01e62">
-<h2 id="org4d01e62">Scope</h2>
+<section id="slide-orgaf5ee9c">
+<h2 id="orgaf5ee9c">Scope</h2>
 <aside class="notes">
 <p>
 Make sure to explain the different reason for not giving everything public scope
@@ -121,8 +129,8 @@ Make sure to explain the different reason for not giving everything public scope
 </ul>
 
 </section>
-<section id="slide-org939960b">
-<h3 id="org939960b">public</h3>
+<section id="slide-org1050613">
+<h3 id="org1050613">public</h3>
 <ul>
 <li>Accessible by everyone</li>
 
@@ -141,8 +149,8 @@ Make sure to explain the different reason for not giving everything public scope
 </p>
 
 </section>
-<section id="slide-org25e019a">
-<h3 id="org25e019a">private</h3>
+<section id="slide-org4d13288">
+<h3 id="org4d13288">private</h3>
 <aside class="notes">
 <p>
 try to use the private method and then show them the compiler error. Show an exaple of using the var in the class
@@ -180,8 +188,8 @@ try to use the private method and then show them the compiler error. Show an exa
 </p>
 
 </section>
-<section id="slide-org453ac96">
-<h3 id="org453ac96">review</h3>
+<section id="slide-org7008709">
+<h3 id="org7008709">review</h3>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -215,8 +223,8 @@ try to use the private method and then show them the compiler error. Show an exa
 </table>
 
 </section>
-<section id="slide-org346086a">
-<h2 id="org346086a">A simple example</h2>
+<section id="slide-org629fecf">
+<h2 id="org629fecf">A simple example</h2>
 <aside class="notes">
 <p>
 A class can have some data and some methods, which can either be public or private. Drop to a terminal and use/modify this class.
@@ -238,8 +246,8 @@ A class can have some data and some methods, which can either be public or priva
 </p>
 
 </section>
-<section id="slide-orgbcbe455">
-<h2 id="orgbcbe455">Constructors and Destructors</h2>
+<section id="slide-org90a0357">
+<h2 id="org90a0357">Constructors and Destructors</h2>
 <aside class="notes">
 <p>
 DO NOT go into why some constructors might be private.
@@ -255,8 +263,8 @@ DO NOT go into why some constructors might be private.
 </ul>
 
 </section>
-<section id="slide-orgbac9ed9">
-<h3 id="orgbac9ed9">Constructors</h3>
+<section id="slide-org0aeeb68">
+<h3 id="org0aeeb68">Constructors</h3>
 <aside class="notes">
 <p>
 use this version of the class
@@ -292,8 +300,8 @@ use this version of the class
 </p>
 
 </section>
-<section id="slide-org5fa383e">
-<h3 id="org5fa383e">Destructors</h3>
+<section id="slide-org3dabfe4">
+<h3 id="org3dabfe4">Destructors</h3>
 <aside class="notes">
 <p>
 use this version of the class. Make sure to destruct the object
@@ -324,8 +332,8 @@ use this version of the class. Make sure to destruct the object
 </p>
 
 </section>
-<section id="slide-orgb69caa3">
-<h2 id="orgb69caa3">Static members</h2>
+<section id="slide-org192a84d">
+<h2 id="org192a84d">Static members</h2>
 <aside class="notes">
 <p>
 Drop to a terminal and use this class.
@@ -361,8 +369,8 @@ Drop to a terminal and use this class.
 </p>
 
 </section>
-<section id="slide-orgc78a4a4">
-<h2 id="orgc78a4a4">Inheritance</h2>
+<section id="slide-orgca9b4e2">
+<h2 id="orgca9b4e2">Inheritance</h2>
 <aside class="notes">
 <p>
 pull up the two classes we have written so far and use the methods of the subclass under different circumstances
@@ -381,8 +389,8 @@ pull up the two classes we have written so far and use the methods of the subcla
 </div>
 
 </section>
-<section id="slide-org6df932e">
-<h3 id="org6df932e">Inheritance Example</h3>
+<section id="slide-org22e49a0">
+<h3 id="org22e49a0">Inheritance Example</h3>
 <div class="org-src-container">
 
 <pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">Child</span>: <span style="color: #598249;">public</span> <span style="color: #598249;">Example</span> {
@@ -397,8 +405,8 @@ pull up the two classes we have written so far and use the methods of the subcla
 </div>
 
 </section>
-<section id="slide-org945a31b">
-<h2 id="org945a31b">Scope and inheritence</h2>
+<section id="slide-org68ddfe4">
+<h2 id="org68ddfe4">Scope and inheritence</h2>
 <aside class="notes">
 <p>
 make sure to explain every bullet
@@ -454,8 +462,37 @@ make sure to explain every bullet
 </table>
 
 </section>
-<section id="slide-org8b3144f">
-<h2 id="org8b3144f">Polymorphism</h2>
+<section id="slide-orgf57ba40">
+<h3 id="orgf57ba40">Inheritance and constructor chaining</h3>
+<ul>
+<li>The constructor of the parent class is called before the constructor of the child class</li>
+<li>Passing parameters to the parent constructor
+<ul>
+<li>Place <code>: Parent(args)</code> before the opening brace</li>
+
+</ul></li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">Example</span> {
+<span style="color: #598249;">public</span>:
+    <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">a</span>;
+    <span style="color: #2F7BDE;">Example</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">a2</span>) { a = a2; }
+};
+<span style="color: #598249;">class</span> <span style="color: #598249;">Child</span>: <span style="color: #598249;">public</span> <span style="color: #598249;">Example</span> {
+<span style="color: #598249;">public</span>:
+    <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">b</span>;
+    <span style="color: #2F7BDE;">Child</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">a2</span>, <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">b2</span>) : Example(a2) {
+        b = b2;
+    }
+};
+</pre>
+</div>
+
+</section>
+<section id="slide-orga86bd62">
+<h2 id="orga86bd62">Polymorphism</h2>
 <aside class="notes">
 <p>
 explain how dynamic cast is used to change what an object is
@@ -488,16 +525,16 @@ example.cpp:20:38: error: cannot dynamic_cast ‘e’ (of type ‘class Example�
 ‘class child&amp;’ (source type is not polymorphic)
      child&amp; c = dynamic_cast&lt;child&amp;&gt;(e);
 				     ^
-</pre>
-<p>
-<a href="https://ideone.com/ETJ0uh">Run It</a>
-</p></li>
+</pre></li>
 
 </ul>
+<p>
+<a href="https://ideone.com/ETJ0uh">Polymorphism Example</a>
+</p>
 
 </section>
-<section id="slide-org70b77b7">
-<h2 id="org70b77b7">Virtual functions</h2>
+<section id="slide-orgc771f0f">
+<h2 id="orgc771f0f">Virtual functions</h2>
 <aside class="notes">
 <p>
 Show an example using the classes defined in the example code and explained earlier
@@ -517,6 +554,37 @@ Show an example using the classes defined in the example code and explained earl
 <p>
 <a href="https://ideone.com/iFqp7I">Run It</a>
 </p>
+
+</section>
+<section id="slide-org17fa9d0">
+<h3 id="org17fa9d0">Exercise: RJ Robot Extended to drive in square</h3>
+<ul>
+<li>Starter code in <code>hardware_applications/inheritance</code> folder</li>
+<li>File <code>inheritance.cpp</code> is already complete</li>
+<li>Your <code>RJRobotExtended</code> class should have the following:
+<ul>
+<li>Be a subclass of RJRobot</li>
+<li>Have a private data member <code>duration</code> for an amount of time to drive on the edge of the square
+<ul>
+<li>This is a <code>std::chrono::milliseconds</code> type</li>
+<li>You should have a constructor argument for this</li>
+
+</ul></li>
+<li>private methods
+<ul>
+<li><code>DriveEdge()</code>: drive forward for <code>duration</code> milliseconds</li>
+<li><code>DriveCorner()</code>: turn 90 degrees right</li>
+
+</ul></li>
+<li>public methods:
+<ul>
+<li><code>DriveInSquare()</code>: drive in a square, calling your private</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
 </section>
 </section>
 </div>

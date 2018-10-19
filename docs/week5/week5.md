@@ -26,12 +26,18 @@ talk about the structure of a class
     -   This is not a strict rule
 
 ```c++
-class NAME {
-    // decleration of variables
+class Example {
+    // declaration of variables
     // method prototypes
     //   can be declared in this file or a seperate cpp file
+    void DoThing(int);
 };
+Example::DoThing(int x) {
+    // ... implementation of the function
+}
 ```
+
+[Example](https://ideone.com/jaRQsF)
 
 
 # Why bother?
@@ -267,6 +273,28 @@ make sure to explain every bullet
 | public    | yes        | yes        | yes        |
 
 
+## Inheritance and constructor chaining
+
+-   The constructor of the parent class is called before the constructor of the child class
+-   Passing parameters to the parent constructor
+    -   Place `: Parent(args)` before the opening brace
+
+```c++
+class Example {
+public:
+    int a;
+    Example(int a2) { a = a2; }
+};
+class Child: public Example {
+public:
+    int b;
+    Child(int a2, int b2) : Example(a2) {
+	b = b2;
+    }
+};
+```
+
+
 # Polymorphism
 
 <div class="NOTES">
@@ -295,8 +323,8 @@ explain how dynamic cast is used to change what an object is
          child& c = dynamic_cast<child&>(e);
     				     ^
     ```
-    
-    [Run It](https://ideone.com/ETJ0uh)
+
+[Polymorphism Example](https://ideone.com/ETJ0uh)
 
 
 # Virtual functions
@@ -312,3 +340,19 @@ Show an example using the classes defined in the example code and explained earl
     -   If the function isn't marked virtual, which implementation is called depends on the type of the reference
 
 [Run It](https://ideone.com/iFqp7I)
+
+
+## Exercise: RJ Robot Extended to drive in square
+
+-   Starter code in `hardware_applications/inheritance` folder
+-   File `inheritance.cpp` is already complete
+-   Your `RJRobotExtended` class should have the following:
+    -   Be a subclass of RJRobot
+    -   Have a private data member `duration` for an amount of time to drive on the edge of the square
+        -   This is a `std::chrono::milliseconds` type
+        -   You should have a constructor argument for this
+    -   private methods
+        -   `DriveEdge()`: drive forward for `duration` milliseconds
+        -   `DriveCorner()`: turn 90 degrees right
+    -   public methods:
+        -   `DriveInSquare()`: drive in a square, calling your private
