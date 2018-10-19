@@ -14,6 +14,7 @@
  - Data schema is the same across all instances of a class, but values differ
  - A method can treat all instances of an object the same
    - Think of it like a complex, user defined variable type
+
 ** Structure
 #+BEGIN_NOTES
 talk about the structure of a class
@@ -21,12 +22,17 @@ talk about the structure of a class
 - Typically declaration in a .h file with implementation in a cpp file
   - This is not a strict rule
 #+BEGIN_SRC c++
-class NAME {
-    // decleration of variables
+class Example {
+    // declaration of variables
     // method prototypes
     //   can be declared in this file or a seperate cpp file
+    void DoThing(int);
 };
+Example::DoThing(int x) {
+    // ... implementation of the function
+}
 #+END_SRC
+[[https://ideone.com/jaRQsF][Example]]
 
 * Why bother?
 - Software projects are easier to understand when related data and functions are grouped together
@@ -204,6 +210,25 @@ make sure to explain every bullet
 | protected | yes        | yes        | no         |
 | public    | yes        | yes        | yes        |
 
+** Inheritance and constructor chaining
+- The constructor of the parent class is called before the constructor of the child class
+- Passing parameters to the parent constructor
+    - Place =: Parent(args)= before the opening brace
+#+BEGIN_SRC c++
+class Example {
+public:
+    int a;
+    Example(int a2) { a = a2; }
+};
+class Child: public Example {
+public:
+    int b;
+    Child(int a2, int b2) : Example(a2) {
+        b = b2;
+    }
+};
+#+END_SRC
+
 * Polymorphism
 #+BEGIN_NOTES
 explain how dynamic cast is used to change what an object is
@@ -226,7 +251,7 @@ explain how dynamic cast is used to change what an object is
       child& c = dynamic_cast<child&>(e);
                                       ^
  #+END_SRC
- [[https://ideone.com/ETJ0uh][Run It]]
+[[https://ideone.com/ETJ0uh][Polymorphism Example]]
 
 * Virtual functions
 #+BEGIN_NOTES
@@ -237,3 +262,17 @@ Show an example using the classes defined in the example code and explained earl
 - The child implementation will be called even from a reference of the type of the parent
  - If the function isn't marked virtual, which implementation is called depends on the type of the reference
 [[https://ideone.com/iFqp7I][Run It]]
+
+** Exercise: RJ Robot Extended to drive in square
+- Starter code in =hardware_applications/inheritance= folder
+- File =inheritance.cpp= is already complete
+- Your =RJRobotExtended= class should have the following:
+    - Be a subclass of RJRobot
+    - Have a private data member =duration= for an amount of time to drive on the edge of the square
+        - This is a =std::chrono::milliseconds= type
+        - You should have a constructor argument for this
+    - private methods
+        - =DriveEdge()=: drive forward for =duration= milliseconds
+        - =DriveCorner()=: turn 90 degrees right
+    - public methods:
+        - =DriveInSquare()=: drive in a square, calling your private
