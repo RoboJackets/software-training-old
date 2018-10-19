@@ -29,8 +29,8 @@
 <section id="sec-title-slide"><h1 class="title">Week 3</h1>
 </section>
 
-<section id="slide-org7d7d2b7">
-<h2 id="org7d7d2b7">What are we doing today?</h2>
+<section id="slide-org5aa1b9e">
+<h2 id="org5aa1b9e">What are we doing today?</h2>
 <ul>
 <li>An introduction to the <i>Standard Template Library</i>
 <ul>
@@ -43,8 +43,8 @@
 </ul>
 
 </section>
-<section id="slide-orge263640">
-<h2 id="orge263640">The Standard Template Library (STL)</h2>
+<section id="slide-orgf4cc9e5">
+<h2 id="orgf4cc9e5">The Standard Template Library (STL)</h2>
 <ul>
 <li>a collection of general purpose containers and algorithms that are included in C++</li>
 <li>Containers store things; algorithms perform operations on those things</li>
@@ -53,8 +53,8 @@
 </ul>
 
 </section>
-<section id="slide-org4f4e247">
-<h2 id="org4f4e247">Containers</h2>
+<section id="slide-org6d47b61">
+<h2 id="org6d47b61">Containers</h2>
 <ul>
 <li>Data structures in the STL that store a collection of other objects are
 called <i>containters</i></li>
@@ -66,8 +66,8 @@ type of data the container stores.</li>
 </ul>
 
 </section>
-<section id="slide-org8d91784">
-<h2 id="org8d91784">Vectors</h2>
+<section id="slide-orgdc6b5b5">
+<h2 id="orgdc6b5b5">Vectors</h2>
 <aside class="notes">
 <p>
 initializer lists require c++11 for vectors.
@@ -94,8 +94,8 @@ meaning it can only store type <code>int</code></li>
 </ul>
 
 </section>
-<section id="slide-org05f3d2a">
-<h2 id="org05f3d2a">Vector methods</h2>
+<section id="slide-org5434033">
+<h2 id="org5434033">Vector methods</h2>
 <aside class="notes">
 <p>
 Vectors can grow as items are added, whereas arrays are static.
@@ -154,8 +154,8 @@ Vectors can grow as items are added, whereas arrays are static.
 </table>
 
 </section>
-<section id="slide-org2b9510d">
-<h2 id="org2b9510d">Playing with Vectors</h2>
+<section id="slide-org506ebb4">
+<h2 id="org506ebb4">Playing with Vectors</h2>
 <div class="org-src-container">
 
 <pre  class="src src-C++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;vector&gt;</span>
@@ -175,8 +175,8 @@ Vectors can grow as items are added, whereas arrays are static.
 </div>
 
 </section>
-<section id="slide-org992f6ef">
-<h2 id="org992f6ef">More vector examples</h2>
+<section id="slide-orgd1bb59d">
+<h2 id="orgd1bb59d">More vector examples</h2>
 <aside class="notes">
 <p>
 We'll get to begin() and end() later
@@ -210,8 +210,8 @@ We'll get to begin() and end() later
 
 
 </section>
-<section id="slide-org88b8126">
-<h2 id="org88b8126">Iterators</h2>
+<section id="slide-org0b42c9f">
+<h2 id="org0b42c9f">Iterators</h2>
 <ul>
 <li>An object that lets you access and modify objects in a container</li>
 <li>Depending on their type, they will let you read or write data in the container, and move forwards, backwards, or both</li>
@@ -220,8 +220,8 @@ We'll get to begin() and end() later
 </ul>
 
 </section>
-<section id="slide-orgdcf4b6a">
-<h2 id="orgdcf4b6a">Iterator methods</h2>
+<section id="slide-orgfce9590">
+<h2 id="orgfce9590">Iterator methods</h2>
 <aside class="notes">
 <p>
 picture upcoming. mention that the method should be called on the containing object
@@ -268,8 +268,8 @@ picture upcoming. mention that the method should be called on the containing obj
 </ul>
 
 </section>
-<section id="slide-org435a9d8">
-<h2 id="org435a9d8">Iterator Methods</h2>
+<section id="slide-org1a99407">
+<h2 id="org1a99407">Iterator Methods</h2>
 
 <div class="figure">
 <p><img src="https://i.imgur.com/XOfZ5kf.png" alt="XOfZ5kf.png" />
@@ -277,8 +277,8 @@ picture upcoming. mention that the method should be called on the containing obj
 </div>
 
 </section>
-<section id="slide-org448f610">
-<h2 id="org448f610">Iterator operations</h2>
+<section id="slide-org5c15811">
+<h2 id="org5c15811">Iterator operations</h2>
 <aside class="notes">
 <p>
 picture upcoming
@@ -312,8 +312,8 @@ picture upcoming
 </table>
 
 </section>
-<section id="slide-orgb5002b9">
-<h2 id="orgb5002b9">Iterator practice</h2>
+<section id="slide-org46b0780">
+<h2 id="org46b0780">Iterator practice</h2>
 <aside class="notes">
 <p>
 requires c++ 11.
@@ -407,8 +407,8 @@ it += 3;
 
 
 </section>
-<section id="slide-org7665082">
-<h2 id="org7665082">Algorithms</h2>
+<section id="slide-orgaec14d5">
+<h2 id="orgaec14d5">Algorithms</h2>
 <ul>
 <li>algorithms is a header that includes useful operators that can be used on vectors, arrays and other containers</li>
 <li>uses iterators to interact with these containers</li>
@@ -423,8 +423,8 @@ it += 3;
 </ul>
 
 </section>
-<section id="slide-org5f36689">
-<h2 id="org5f36689">Modifies the container</h2>
+<section id="slide-org972888a">
+<h2 id="org972888a">Modifies the container</h2>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -462,8 +462,8 @@ it += 3;
 </table>
 
 </section>
-<section id="slide-orgf026383">
-<h2 id="orgf026383"><code>nth_element</code> example</h2>
+<section id="slide-org96d5c82">
+<h2 id="org96d5c82"><code>nth_element</code> example</h2>
 <ul>
 <li><code>std::nth_element(first, nth, last);</code></li>
 <li><code>first</code> is an iterator to the beginning</li>
@@ -475,8 +475,8 @@ it += 3;
 
 
 </section>
-<section id="slide-org11da990">
-<h2 id="org11da990">Algorithm examples</h2>
+<section id="slide-org5cec8e5">
+<h2 id="org5cec8e5">Algorithm examples</h2>
 <div class="org-src-container">
 
 <pre  class="src src-C++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;vector&gt;</span>
@@ -497,8 +497,8 @@ it += 3;
 </div>
 
 </section>
-<section id="slide-orgda5b55a">
-<h2 id="orgda5b55a">Does not modify the container</h2>
+<section id="slide-org5939b99">
+<h2 id="org5939b99">Does not modify the container</h2>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -532,8 +532,8 @@ it += 3;
 
 
 </section>
-<section id="slide-org54359fe">
-<h2 id="org54359fe">Challenge</h2>
+<section id="slide-orgb438d19">
+<h2 id="orgb438d19">Challenge</h2>
 <ol>
 <li>Drive over the several gray strips, stopping at the black strip</li>
 <li>Determine which strip is the line sensor value</li>

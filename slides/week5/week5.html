@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <title>Week 5</title>
-<meta name="author" content="(Kristaps Berzinch, Raymond Ortiz)"/>
+<meta name="author" content="(Kristaps Berzinch, Raymond Ortiz, Evan Bretl)"/>
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
@@ -29,17 +29,17 @@
 <section id="sec-title-slide"><h1 class="title">Week 5</h1>
 </section>
 
-<section id="slide-org869a2f5">
-<h2 id="org869a2f5">What are we doing today?</h2>
+<section id="slide-org2b8cd14">
+<h2 id="org2b8cd14">What are we doing today?</h2>
 <ul>
 <li>Classes in C++</li>
-<li>Writing a differential drive class</li>
+<li>Inheritance and polymorphism</li>
 
 </ul>
 
 </section>
-<section id="slide-org2ceaeb9">
-<h2 id="org2ceaeb9">What are classes?</h2>
+<section id="slide-orgaa275c0">
+<h2 id="orgaa275c0">What are classes?</h2>
 <ul>
 <li>Definitions for objects, i.e. what data and methods they have
 <ul>
@@ -60,8 +60,8 @@
 
 </ul>
 </section>
-<section id="slide-org6d823af">
-<h3 id="org6d823af">Structure</h3>
+<section id="slide-org7033c86">
+<h3 id="org7033c86">Structure</h3>
 <aside class="notes">
 <p>
 talk about the structure of a class
@@ -87,8 +87,8 @@ talk about the structure of a class
 </div>
 
 </section>
-<section id="slide-org826c716">
-<h2 id="org826c716">Why bother?</h2>
+<section id="slide-org5d87ccf">
+<h2 id="org5d87ccf">Why bother?</h2>
 <ul>
 <li>Software projects are easier to understand when related data and functions are grouped together</li>
 <li>Abstracting data behind getters/setters allows you to validate inputs from other parts of your application</li>
@@ -98,8 +98,8 @@ talk about the structure of a class
 </ul>
 
 </section>
-<section id="slide-orga821821">
-<h2 id="orga821821">Scope</h2>
+<section id="slide-org4d01e62">
+<h2 id="org4d01e62">Scope</h2>
 <aside class="notes">
 <p>
 Make sure to explain the different reason for not giving everything public scope
@@ -119,25 +119,30 @@ Make sure to explain the different reason for not giving everything public scope
 </ul></li>
 
 </ul>
+
 </section>
-<section id="slide-org384a282">
-<h3 id="org384a282">public</h3>
+<section id="slide-org939960b">
+<h3 id="org939960b">public</h3>
 <ul>
 <li>Accessible by everyone</li>
 
 </ul>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">example</span> {
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">Example</span> {
 <span style="color: #598249;">public</span>:
     <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">var</span>;
     <span style="color: #598249;">void</span> <span style="color: #2F7BDE;">do_something</span>() {<span style="color: #15968D;">std</span>::cout &lt;&lt; <span style="color: #15968D;">"doing something"</span> &lt;&lt; <span style="color: #15968D;">std</span>::endl;}
 };
 </pre>
 </div>
+<p>
+<a href="https://ideone.com/2pacF2">Run It</a>
+</p>
+
 </section>
-<section id="slide-orgaa93e40">
-<h3 id="orgaa93e40">private</h3>
+<section id="slide-org25e019a">
+<h3 id="org25e019a">private</h3>
 <aside class="notes">
 <p>
 try to use the private method and then show them the compiler error. Show an exaple of using the var in the class
@@ -155,7 +160,7 @@ try to use the private method and then show them the compiler error. Show an exa
 </ul>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">example</span> {
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">Example</span> {
 <span style="color: #598249;">private</span>:
     <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">var</span>;
     <span style="color: #598249;">void</span> <span style="color: #2F7BDE;">do_something</span>() {<span style="color: #15968D;">std</span>::cout &lt;&lt; <span style="color: #15968D;">"doing something"</span> &lt;&lt; <span style="color: #15968D;">std</span>::endl;}
@@ -164,15 +169,19 @@ try to use the private method and then show them the compiler error. Show an exa
 </div>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">example</span> {
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">Example</span> {
     <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">var</span>;
     <span style="color: #598249;">void</span> <span style="color: #2F7BDE;">do_something</span>() {<span style="color: #15968D;">std</span>::cout &lt;&lt; <span style="color: #15968D;">"doing something"</span> &lt;&lt; <span style="color: #15968D;">std</span>::endl;}
 };
 </pre>
 </div>
+<p>
+<a href="https://ideone.com/huMvVg">Run It</a>
+</p>
+
 </section>
-<section id="slide-orgeb50876">
-<h3 id="orgeb50876">review</h3>
+<section id="slide-org453ac96">
+<h3 id="org453ac96">review</h3>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -204,9 +213,10 @@ try to use the private method and then show them the compiler error. Show an exa
 </tr>
 </tbody>
 </table>
+
 </section>
-<section id="slide-org69da8cc">
-<h2 id="org69da8cc">A simple example</h2>
+<section id="slide-org346086a">
+<h2 id="org346086a">A simple example</h2>
 <aside class="notes">
 <p>
 A class can have some data and some methods, which can either be public or private. Drop to a terminal and use/modify this class.
@@ -215,7 +225,7 @@ A class can have some data and some methods, which can either be public or priva
 </aside>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">example</span> {
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">Example</span> {
     <span style="color: #598249;">private</span>:         <span style="color: #5e6263;">// </span><span style="color: #5e6263;">private is also implied if you don't specify visibility</span>
         <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">a</span>;
     <span style="color: #598249;">public</span>:
@@ -223,10 +233,13 @@ A class can have some data and some methods, which can either be public or priva
 };
 </pre>
 </div>
+<p>
+<a href="https://ideone.com/eUhSw6">Run It</a>
+</p>
 
 </section>
-<section id="slide-org704e3a5">
-<h2 id="org704e3a5">Constructors and Destructors</h2>
+<section id="slide-orgbcbe455">
+<h2 id="orgbcbe455">Constructors and Destructors</h2>
 <aside class="notes">
 <p>
 DO NOT go into why some constructors might be private.
@@ -240,9 +253,10 @@ DO NOT go into why some constructors might be private.
 <li>Usually public, scope still applies to these methods</li>
 
 </ul>
+
 </section>
-<section id="slide-org1931f90">
-<h3 id="org1931f90">Constructors</h3>
+<section id="slide-orgbac9ed9">
+<h3 id="orgbac9ed9">Constructors</h3>
 <aside class="notes">
 <p>
 use this version of the class
@@ -253,30 +267,33 @@ use this version of the class
 <li>Called whenever an object is created</li>
 <li>Can have multiple constructors as long as they have different argument lists</li>
 <li>Contains all of the code to create and initialize all of an object's members</li>
+<li><code>default</code> constructors initialize all data members to default values (default constructor is used if no custom constructor is given)</li>
 
 </ul>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">example</span> {
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">Example</span> {
     <span style="color: #598249;">private</span>:
         <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">a</span>;
         <span style="color: #5e6263;">// </span><span style="color: #5e6263;">lots of important variables that live on the heap</span>
     <span style="color: #598249;">public</span>:
         <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">getA</span>() { <span style="color: #598249;">return</span> a; }
-        <span style="color: #2F7BDE;">example</span>() {
-            <span style="color: #15968D;">std</span>::cout &lt;&lt; <span style="color: #15968D;">"Creating an example"</span> &lt;&lt; <span style="color: #15968D;">std</span>::endl;
-            <span style="color: #5e6263;">/* </span><span style="color: #5e6263;">allocating all the memory */</span>
-        };
-        <span style="color: #2F7BDE;">example</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">a_local</span>) {
+        <span style="color: #2F7BDE;">Example</span>() = <span style="color: #598249;">default</span>;
+        <span style="color: #2F7BDE;">Example</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">a_local</span>) {
             a = a_local;
-            <span style="color: #5e6263;">/* </span><span style="color: #5e6263;">allocating all the memory */</span>
+            <span style="color: #15968D;">std</span>::cout &lt;&lt; <span style="color: #15968D;">"custom constructor"</span> &lt;&lt; <span style="color: #15968D;">std</span>::endl;
+            <span style="color: #5e6263;">/* </span><span style="color: #5e6263;">allocating memory, etc. ... */</span>
         }
 };
 </pre>
 </div>
+<p>
+<a href="https://ideone.com/5y5iAk">Run It</a>
+</p>
+
 </section>
-<section id="slide-orgc58bd47">
-<h3 id="orgc58bd47">Destructors</h3>
+<section id="slide-org5fa383e">
+<h3 id="org5fa383e">Destructors</h3>
 <aside class="notes">
 <p>
 use this version of the class. Make sure to destruct the object
@@ -291,20 +308,24 @@ use this version of the class. Make sure to destruct the object
 </ul>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">example</span> {
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">Example</span> {
     <span style="color: #598249;">private</span>:
         <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">a</span>;
         <span style="color: #5e6263;">// </span><span style="color: #5e6263;">lots of important variables from the heap</span>
     <span style="color: #598249;">public</span>:
         <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">getA</span>() { <span style="color: #598249;">return</span> a; }
         <span style="color: #5e6263;">// </span><span style="color: #5e6263;">... constructors</span>
-        ~<span style="color: #2F7BDE;">example</span>() {<span style="color: #5e6263;">/* </span><span style="color: #5e6263;">lots of deletes */</span>};
+        ~<span style="color: #2F7BDE;">Example</span>() {<span style="color: #5e6263;">/* </span><span style="color: #5e6263;">lots of deletes */</span>};
 };
 </pre>
 </div>
+<p>
+<a href="https://ideone.com/NBki2a">Run It</a>
+</p>
+
 </section>
-<section id="slide-orgc689b59">
-<h2 id="orgc689b59">Static members</h2>
+<section id="slide-orgb69caa3">
+<h2 id="orgb69caa3">Static members</h2>
 <aside class="notes">
 <p>
 Drop to a terminal and use this class.
@@ -324,20 +345,24 @@ Drop to a terminal and use this class.
 </ul>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">static_example</span> {
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">StaticExample</span> {
     <span style="color: #598249;">private</span>:
         <span style="color: #598249;">static</span> <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">a</span>;
     <span style="color: #598249;">public</span>:
-        <span style="color: #2F7BDE;">static_example</span>() {a++;}
+        <span style="color: #598249;">void</span> <span style="color: #2F7BDE;">modify_static_var</span>() { a++; }
         <span style="color: #598249;">static</span> <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">getA</span>() { <span style="color: #598249;">return</span> a; }
 };
 <span style="color: #5e6263;">// </span><span style="color: #5e6263;">init in implementing class</span>
 <span style="color: #598249;">int</span> <span style="color: #15968D;">static_example</span>::<span style="color: #2F7BDE;">a</span> = 0;
 </pre>
 </div>
+<p>
+<a href="https://ideone.com/LiGymG">live demo of static</a>
+</p>
+
 </section>
-<section id="slide-org09e0c88">
-<h2 id="org09e0c88">Inheritance</h2>
+<section id="slide-orgc78a4a4">
+<h2 id="orgc78a4a4">Inheritance</h2>
 <aside class="notes">
 <p>
 pull up the two classes we have written so far and use the methods of the subclass under different circumstances
@@ -346,11 +371,21 @@ pull up the two classes we have written so far and use the methods of the subcla
 </aside>
 <ul>
 <li>Classes can inherit data and methods from other classes</li>
+<li>Inheritance is an "is" relationship</li>
 
 </ul>
+
+<div class="figure">
+<p><img src="https://i.imgur.com/9cF7NTq.png" alt="9cF7NTq.png" width="50%" />
+</p>
+</div>
+
+</section>
+<section id="slide-org6df932e">
+<h3 id="org6df932e">Inheritance Example</h3>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">child</span>: <span style="color: #598249;">public</span> <span style="color: #598249;">example</span> {
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">Child</span>: <span style="color: #598249;">public</span> <span style="color: #598249;">Example</span> {
     <span style="color: #5e6263;">// </span><span style="color: #5e6263;">we get `a` and `getA()` from example</span>
     <span style="color: #598249;">private</span>:
         <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">b</span>;
@@ -362,23 +397,8 @@ pull up the two classes we have written so far and use the methods of the subcla
 </div>
 
 </section>
-<section id="slide-orgc7d1135">
-<h3 id="orgc7d1135">Example code</h3>
-<aside class="notes">
-<p>
-mention that you can go up the class structure but not down
-</p>
-
-</aside>
-
-<div class="figure">
-<p><img src="https://i.imgur.com/9cF7NTq.png" alt="9cF7NTq.png" width="50%" />
-</p>
-</div>
-
-</section>
-<section id="slide-org62a5073">
-<h2 id="org62a5073">Scope and inheritence</h2>
+<section id="slide-org945a31b">
+<h2 id="org945a31b">Scope and inheritence</h2>
 <aside class="notes">
 <p>
 make sure to explain every bullet
@@ -404,24 +424,24 @@ make sure to explain every bullet
 <thead>
 <tr>
 <th scope="col" class="org-left">scope</th>
+<th scope="col" class="org-left">internally</th>
 <th scope="col" class="org-left">subclasses</th>
 <th scope="col" class="org-left">externally</th>
-<th scope="col" class="org-left">internally</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="org-left">private</td>
-<td class="org-left">no</td>
-<td class="org-left">no</td>
 <td class="org-left">yes</td>
+<td class="org-left">no</td>
+<td class="org-left">no</td>
 </tr>
 
 <tr>
 <td class="org-left">protected</td>
 <td class="org-left">yes</td>
-<td class="org-left">no</td>
 <td class="org-left">yes</td>
+<td class="org-left">no</td>
 </tr>
 
 <tr>
@@ -434,8 +454,8 @@ make sure to explain every bullet
 </table>
 
 </section>
-<section id="slide-org9bac978">
-<h2 id="org9bac978">Polymorphism</h2>
+<section id="slide-org8b3144f">
+<h2 id="org8b3144f">Polymorphism</h2>
 <aside class="notes">
 <p>
 explain how dynamic cast is used to change what an object is
@@ -464,17 +484,20 @@ But not the other way around
 </div>
 <pre  class="example">
 example.cpp: In function ‘int main()’:
-example.cpp:20:38: error: cannot dynamic_cast ‘e’ (of type ‘class example’) to type
+example.cpp:20:38: error: cannot dynamic_cast ‘e’ (of type ‘class Example’) to type
 ‘class child&amp;’ (source type is not polymorphic)
      child&amp; c = dynamic_cast&lt;child&amp;&gt;(e);
 				     ^
-</pre></li>
+</pre>
+<p>
+<a href="https://ideone.com/ETJ0uh">Run It</a>
+</p></li>
 
 </ul>
 
 </section>
-<section id="slide-org51a1ef0">
-<h2 id="org51a1ef0">Virtual functions</h2>
+<section id="slide-org70b77b7">
+<h2 id="org70b77b7">Virtual functions</h2>
 <aside class="notes">
 <p>
 Show an example using the classes defined in the example code and explained earlier
@@ -491,14 +514,9 @@ Show an example using the classes defined in the example code and explained earl
 </ul></li>
 
 </ul>
-
-</section>
-<section id="slide-org6418fd1">
-<h2 id="org6418fd1">Questions?</h2>
-<ul>
-<li>Ask here or on Piazza!</li>
-
-</ul>
+<p>
+<a href="https://ideone.com/iFqp7I">Run It</a>
+</p>
 </section>
 </section>
 </div>

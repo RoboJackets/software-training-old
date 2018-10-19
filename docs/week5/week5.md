@@ -1,7 +1,7 @@
 # What are we doing today?
 
 -   Classes in C++
--   Writing a differential drive class
+-   Inheritance and polymorphism
 
 
 # What are classes?
@@ -60,12 +60,14 @@ Make sure to explain the different reason for not giving everything public scope
 -   Accessible by everyone
 
 ```c++
-class example {
+class Example {
 public:
     int var;
     void do_something() {std::cout << "doing something" << std::endl;}
 };
 ```
+
+[Run It](https://ideone.com/2pacF2)
 
 
 ## private
@@ -80,7 +82,7 @@ try to use the private method and then show them the compiler error. Show an exa
 -   implied if no scope is initially set in a class
 
 ```c++
-class example {
+class Example {
 private:
     int var;
     void do_something() {std::cout << "doing something" << std::endl;}
@@ -88,11 +90,13 @@ private:
 ```
 
 ```c++
-class example {
+class Example {
     int var;
     void do_something() {std::cout << "doing something" << std::endl;}
 };
 ```
+
+[Run It](https://ideone.com/huMvVg)
 
 
 ## review
@@ -111,13 +115,15 @@ A class can have some data and some methods, which can either be public or priva
 </div>
 
 ```c++
-class example {
+class Example {
     private:         // private is also implied if you don't specify visibility
 	int a;
     public:
 	int getA() { return a; }
 };
 ```
+
+[Run It](https://ideone.com/eUhSw6)
 
 
 # Constructors and Destructors
@@ -143,24 +149,25 @@ use this version of the class
 -   Called whenever an object is created
 -   Can have multiple constructors as long as they have different argument lists
 -   Contains all of the code to create and initialize all of an object's members
+-   `default` constructors initialize all data members to default values (default constructor is used if no custom constructor is given)
 
 ```c++
-class example {
+class Example {
     private:
 	int a;
 	// lots of important variables that live on the heap
     public:
 	int getA() { return a; }
-	example() {
-	    std::cout << "Creating an example" << std::endl;
-	    /* allocating all the memory */
-	};
-	example(int a_local) {
+	Example() = default;
+	Example(int a_local) {
 	    a = a_local;
-	    /* allocating all the memory */
+	    std::cout << "custom constructor" << std::endl;
+	    /* allocating memory, etc. ... */
 	}
 };
 ```
+
+[Run It](https://ideone.com/5y5iAk)
 
 
 ## Destructors
@@ -175,16 +182,18 @@ use this version of the class. Make sure to destruct the object
 -   Can only have one destructor
 
 ```c++
-class example {
+class Example {
     private:
 	int a;
 	// lots of important variables from the heap
     public:
 	int getA() { return a; }
 	// ... constructors
-	~example() {/* lots of deletes */};
+	~Example() {/* lots of deletes */};
 };
 ```
+
+[Run It](https://ideone.com/NBki2a)
 
 
 # Static members
@@ -201,16 +210,18 @@ Drop to a terminal and use this class.
     -   accessed by the **::** operator
 
 ```c++
-class static_example {
+class StaticExample {
     private:
 	static int a;
     public:
-	static_example() {a++;}
+	void modify_static_var() { a++; }
 	static int getA() { return a; }
 };
 // init in implementing class
 int static_example::a = 0;
 ```
+
+[live demo of static](https://ideone.com/LiGymG)
 
 
 # Inheritance
@@ -221,9 +232,15 @@ pull up the two classes we have written so far and use the methods of the subcla
 </div>
 
 -   Classes can inherit data and methods from other classes
+-   Inheritance is an "is" relationship
+
+![img](https://i.imgur.com/9cF7NTq.png)
+
+
+## Inheritance Example
 
 ```c++
-class child: public example {
+class Child: public Example {
     // we get `a` and `getA()` from example
     private:
 	int b;
@@ -232,16 +249,6 @@ class child: public example {
 	int getAplusB() { return getA() + b; } // we can't use `a` directly since it's private
 };
 ```
-
-
-## Example code
-
-<div class="NOTES">
-mention that you can go up the class structure but not down
-
-</div>
-
-![img](https://i.imgur.com/9cF7NTq.png)
 
 
 # Scope and inheritence
@@ -253,10 +260,10 @@ make sure to explain every bullet
 
 -   Scope applies across subclasses
 
-| scope     | subclasses | externally | internally |
+| scope     | internally | subclasses | externally |
 |--------- |---------- |---------- |---------- |
-| private   | no         | no         | yes        |
-| protected | yes        | no         | yes        |
+| private   | yes        | no         | no         |
+| protected | yes        | yes        | no         |
 | public    | yes        | yes        | yes        |
 
 
@@ -283,11 +290,13 @@ explain how dynamic cast is used to change what an object is
     
     ```
     example.cpp: In function ‘int main()’:
-    example.cpp:20:38: error: cannot dynamic_cast ‘e’ (of type ‘class example’) to type
+    example.cpp:20:38: error: cannot dynamic_cast ‘e’ (of type ‘class Example’) to type
     ‘class child&’ (source type is not polymorphic)
          child& c = dynamic_cast<child&>(e);
     				     ^
     ```
+    
+    [Run It](https://ideone.com/ETJ0uh)
 
 
 # Virtual functions
@@ -302,7 +311,4 @@ Show an example using the classes defined in the example code and explained earl
 -   The child implementation will be called even from a reference of the type of the parent
     -   If the function isn't marked virtual, which implementation is called depends on the type of the reference
 
-
-# Questions?
-
--   Ask here or on Piazza!
+[Run It](https://ideone.com/iFqp7I)
