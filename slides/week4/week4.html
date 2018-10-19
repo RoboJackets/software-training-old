@@ -29,8 +29,8 @@
 <section id="sec-title-slide"><h1 class="title">Week 4</h1>
 </section>
 
-<section id="slide-org755b1e5">
-<h2 id="org755b1e5">What are we doing today?</h2>
+<section id="slide-orgb9684dd">
+<h2 id="orgb9684dd">What are we doing today?</h2>
 <ul>
 <li>How a program's memory is structured and maintained</li>
 <li>References and pointers</li>
@@ -40,8 +40,8 @@
 </ul>
 
 </section>
-<section id="slide-org033380c">
-<h2 id="org033380c">What is the output?</h2>
+<section id="slide-org3c794d9">
+<h2 id="org3c794d9">What is the output?</h2>
 <aside class="notes">
 <p>
 Ask them the output of this code. Then talk about how var and a are not the same place in memory.
@@ -63,8 +63,8 @@ Ask them the output of this code. Then talk about how var and a are not the same
 </div>
 
 </section>
-<section id="slide-org2cfead4">
-<h2 id="org2cfead4">Memory structure</h2>
+<section id="slide-org9448ef0">
+<h2 id="org9448ef0">Memory structure</h2>
 <aside class="notes">
 <p>
 Make sure to emphasize how important memory allocation is for any real program. This is all fundamentally the same RAM, just arranged and managed in a certain way. Static memory is used for static/global variables. A new block is allocated when a function is called, and released when the function exits - this is where your parameters and local variables are stored. Mention memory leaks.
@@ -94,8 +94,8 @@ Make sure to emphasize how important memory allocation is for any real program. 
 </ul>
 
 </section>
-<section id="slide-org01875c3">
-<h3 id="org01875c3">What is a byte</h3>
+<section id="slide-org50c1f78">
+<h3 id="org50c1f78">What is a byte</h3>
 <aside class="notes">
 <p>
 They may never have seen binary before. 00101010 = 26, 00010001 = 17 do not talk about how binary works
@@ -114,8 +114,8 @@ They may never have seen binary before. 00101010 = 26, 00010001 = 17 do not talk
 </ul>
 
 </section>
-<section id="slide-org696b45c">
-<h3 id="org696b45c">Object lifetimes stack</h3>
+<section id="slide-org32b24af">
+<h3 id="org32b24af">Object lifetimes stack</h3>
 <aside class="notes">
 <p>
 Picture on next slide. talk about how in the below example the int is allocated on the stack. mention what stack overflow is
@@ -144,8 +144,8 @@ Picture on next slide. talk about how in the below example the int is allocated 
 </div>
 
 </section>
-<section id="slide-org4048fa6">
-<h4 id="org4048fa6">Stack example</h4>
+<section id="slide-org98185f6">
+<h4 id="org98185f6">Stack example</h4>
 <div class="org-src-container">
 
 <pre  class="src src-c++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
@@ -168,8 +168,8 @@ Picture on next slide. talk about how in the below example the int is allocated 
 </div>
 
 </section>
-<section id="slide-org2707971">
-<h2 id="org2707971">References</h2>
+<section id="slide-orgccb058b">
+<h2 id="orgccb058b">References</h2>
 <aside class="notes">
 <p>
 Parameters are copied into the new block so the function can't modify anything outside of its scope. Explicitly using a reference allows a function to do that.
@@ -191,8 +191,8 @@ Performance can also improve, since you're only copying a memory address instead
 </ul>
 
 </section>
-<section id="slide-org64f9e48">
-<h3 id="org64f9e48">Passing by reference</h3>
+<section id="slide-orga208f72">
+<h3 id="orga208f72">Passing by reference</h3>
 <aside class="notes">
 <p>
 ask them what the output of the code is and then walk them through it
@@ -218,8 +218,8 @@ ask them what the output of the code is and then walk them through it
 </div>
 
 </section>
-<section id="slide-org85fe388">
-<h2 id="org85fe388">Pointers</h2>
+<section id="slide-orgc38359c">
+<h2 id="orgc38359c">Pointers</h2>
 <aside class="notes">
 <p>
 Pointers are great for passing around heap objects, but how do you keep track of what objects are still in use?
@@ -242,8 +242,8 @@ Pointers are great for passing around heap objects, but how do you keep track of
 </ul>
 
 </section>
-<section id="slide-orgd4b036f">
-<h3 id="orgd4b036f">How to get an address</h3>
+<section id="slide-org5144d3b">
+<h3 id="org5144d3b">How to get an address</h3>
 <ul>
 <li>The <b>&amp;</b> operator is used to get an address of a variable</li>
 <li>Use the <b>*</b> operator to denote a pointer variable</li>
@@ -260,8 +260,8 @@ Pointers are great for passing around heap objects, but how do you keep track of
 </div>
 
 </section>
-<section id="slide-orgfa2368e">
-<h4 id="orgfa2368e">Example</h4>
+<section id="slide-org349279b">
+<h4 id="org349279b">Example</h4>
 <div class="org-src-container">
 
 <pre  class="src src-c++"><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
@@ -278,8 +278,8 @@ Pointers are great for passing around heap objects, but how do you keep track of
 </div>
 
 </section>
-<section id="slide-org1ca7595">
-<h3 id="org1ca7595">Dereferencing pointers</h3>
+<section id="slide-org8ddff94">
+<h3 id="org8ddff94">Dereferencing pointers</h3>
 <ul>
 <li>gets the value pointed to
 <ul>
@@ -292,8 +292,8 @@ Pointers are great for passing around heap objects, but how do you keep track of
 </ul>
 
 </section>
-<section id="slide-orgf8e29db">
-<h3 id="orgf8e29db">Example</h3>
+<section id="slide-org3e55354">
+<h3 id="org3e55354">Example</h3>
 <aside class="notes">
 <p>
 Now run through some basic examples
@@ -318,8 +318,8 @@ Now run through some basic examples
 </div>
 
 </section>
-<section id="slide-org5b02b87">
-<h3 id="org5b02b87">Another example</h3>
+<section id="slide-orge42806e">
+<h3 id="orge42806e">Another example</h3>
 <div class="org-src-container">
 
 <pre  class="src src-c++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
@@ -344,8 +344,8 @@ Now run through some basic examples
 </div>
 
 </section>
-<section id="slide-orgd8d0b56">
-<h2 id="orgd8d0b56">Pointer arithmatic</h2>
+<section id="slide-org8b899ad">
+<h2 id="org8b899ad">Pointer arithmatic</h2>
 <ul>
 <li>In c++ different datatypes have different sizes</li>
 <li>A pointer will increment differently based on its datatype's size in bytes</li>
@@ -384,8 +384,8 @@ Now run through some basic examples
 </table>
 
 </section>
-<section id="slide-orgc4f397c">
-<h3 id="orgc4f397c">Example int</h3>
+<section id="slide-orga7e0d8c">
+<h3 id="orga7e0d8c">Example int</h3>
 <div class="org-src-container">
 
 <pre  class="src src-c++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
@@ -403,8 +403,8 @@ Now run through some basic examples
 </div>
 
 </section>
-<section id="slide-org93ead3f">
-<h3 id="org93ead3f">Example char</h3>
+<section id="slide-org9a12868">
+<h3 id="org9a12868">Example char</h3>
 <div class="org-src-container">
 
 <pre  class="src src-c++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
@@ -422,8 +422,8 @@ Now run through some basic examples
 </div>
 
 </section>
-<section id="slide-orga563a9c">
-<h2 id="orga563a9c">New / Delete</h2>
+<section id="slide-org4e3673b">
+<h2 id="org4e3673b">New / Delete</h2>
 <aside class="notes">
 <p>
 do example when you get to the delete slide
@@ -452,8 +452,8 @@ do example when you get to the delete slide
 </ul>
 
 </section>
-<section id="slide-org7886a35">
-<h3 id="org7886a35">New</h3>
+<section id="slide-orgd67a2b6">
+<h3 id="orgd67a2b6">New</h3>
 <div class="org-src-container">
 
 <pre  class="src src-c++"><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
@@ -468,8 +468,8 @@ do example when you get to the delete slide
 </div>
 
 </section>
-<section id="slide-orge0f8d32">
-<h3 id="orge0f8d32">Delete</h3>
+<section id="slide-org312a7b8">
+<h3 id="org312a7b8">Delete</h3>
 <aside class="notes">
 <p>
 use the stuct defined in week4.h, prints when constructed and destructed.
@@ -492,8 +492,8 @@ use the stuct defined in week4.h, prints when constructed and destructed.
 </div>
 
 </section>
-<section id="slide-orgc0dccc5">
-<h4 id="orgc0dccc5">Segfault</h4>
+<section id="slide-org89edb4c">
+<h4 id="org89edb4c">Segfault</h4>
 <aside class="notes">
 <p>
 tell them what a segfault is
@@ -514,8 +514,8 @@ tell them what a segfault is
 </div>
 
 </section>
-<section id="slide-org9711320">
-<h2 id="org9711320">Smart pointers</h2>
+<section id="slide-org3cab2c9">
+<h2 id="org3cab2c9">Smart pointers</h2>
 <aside class="notes">
 <p>
 Each type has an initialization function. Run through examples in 4 slides
@@ -535,8 +535,8 @@ Each type has an initialization function. Run through examples in 4 slides
 </ul>
 
 </section>
-<section id="slide-orgdd805c5">
-<h3 id="orgdd805c5"><code>unique_ptr</code></h3>
+<section id="slide-org37bb493">
+<h3 id="org37bb493"><code>unique_ptr</code></h3>
 <aside class="notes">
 <p>
 object is a struct defined in week4.h. make sure to use it as an example
@@ -557,8 +557,8 @@ object is a struct defined in week4.h. make sure to use it as an example
 </div>
 
 </section>
-<section id="slide-org9796858">
-<h3 id="org9796858"><code>shared_ptr</code></h3>
+<section id="slide-org34aa4a6">
+<h3 id="org34aa4a6"><code>shared_ptr</code></h3>
 <aside class="notes">
 <p>
 object is a struct defined in week4.h. make sure to use it as an example
@@ -584,8 +584,8 @@ object is a struct defined in week4.h. make sure to use it as an example
 </div>
 
 </section>
-<section id="slide-org5b2b5ef">
-<h4 id="org5b2b5ef"><code>shared_ptr</code></h4>
+<section id="slide-org03d33bb">
+<h4 id="org03d33bb"><code>shared_ptr</code></h4>
 <aside class="notes">
 <p>
 object is a struct defined in week4.h. make sure to use it as an example
@@ -611,8 +611,8 @@ object is a struct defined in week4.h. make sure to use it as an example
 </div>
 
 </section>
-<section id="slide-org5bca4f4">
-<h4 id="org5bca4f4"><code>shared_ptr</code></h4>
+<section id="slide-orgd7bd14b">
+<h4 id="orgd7bd14b"><code>shared_ptr</code></h4>
 <aside class="notes">
 <p>
 object is a struct defined in week4.h. make sure to use it as an example
@@ -638,8 +638,8 @@ object is a struct defined in week4.h. make sure to use it as an example
 </div>
 
 </section>
-<section id="slide-org8b5a3d9">
-<h2 id="org8b5a3d9">Ownership</h2>
+<section id="slide-org78e9b10">
+<h2 id="org78e9b10">Ownership</h2>
 <ul>
 <li>be careful about returning a shared pointer from a method
 <ul>
@@ -650,8 +650,8 @@ object is a struct defined in week4.h. make sure to use it as an example
 </ul>
 
 </section>
-<section id="slide-orga9f4e0f">
-<h2 id="orga9f4e0f">Casting, the wrong way</h2>
+<section id="slide-orgb982e78">
+<h2 id="orgb982e78">Casting, the wrong way</h2>
 <ul>
 <li>Sometimes you want to convert a variable to a different type: this is called casting</li>
 <li>In C, you can simply change the type of a variable like so:</li>
@@ -670,8 +670,8 @@ object is a struct defined in week4.h. make sure to use it as an example
 </ul>
 
 </section>
-<section id="slide-org118d3e1">
-<h2 id="org118d3e1">Type Safety</h2>
+<section id="slide-org84030d7">
+<h2 id="org84030d7">Type Safety</h2>
 <div class="org-src-container">
 
 <pre  class="src src-c++"><span style="color: #598249;">char</span> <span style="color: #2F7BDE;">c</span> = 10;                        <span style="color: #5e6263;">// </span><span style="color: #5e6263;">this is one byte in memory</span>
@@ -694,8 +694,8 @@ object is a struct defined in week4.h. make sure to use it as an example
 </ul>
 
 </section>
-<section id="slide-org7b16c6e">
-<h2 id="org7b16c6e">Casting, the right way</h2>
+<section id="slide-org67e98b7">
+<h2 id="org67e98b7">Casting, the right way</h2>
 <aside class="notes">
 <p>
 Really talk about why type safety is good. otherwise you can arbitrarily cast any type to any other. You might not make the mistake but someone else will
@@ -715,8 +715,8 @@ Really talk about why type safety is good. otherwise you can arbitrarily cast an
 
 
 </section>
-<section id="slide-org7233000">
-<h2 id="org7233000">Exercise: line following with a twist</h2>
+<section id="slide-org97624dd">
+<h2 id="org97624dd">Exercise: line following with a twist</h2>
 <ul>
 <li>Modify <code>line_follow.cpp</code></li>
 <li>You should make 2 functions <code>turn_right</code> and <code>turn_left</code></li>
@@ -730,8 +730,8 @@ Really talk about why type safety is good. otherwise you can arbitrarily cast an
 
 
 </section>
-<section id="slide-org4cc363f">
-<h2 id="org4cc363f">Exercise cont'd</h2>
+<section id="slide-org0d348de">
+<h2 id="org0d348de">Exercise cont'd</h2>
 <ul>
 <li>You can solve this problem several ways by changing the function signature. For practice, try these three:
 <ol>
