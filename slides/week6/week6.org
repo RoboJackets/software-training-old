@@ -364,9 +364,9 @@ int main()
     std::transform(s.begin(), s.end(), s.begin(),
         [](char c) { return std::toupper(c); });
 
-	std::cout << "s is: " << s << std::endl;
+    std::cout << "s is: " << s << std::endl;
 
-	return 0;
+    return 0;
 }
 #+END_SRC
 [[https://ideone.com/RTQd7i][Example]]
