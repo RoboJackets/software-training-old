@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <title>Week 6</title>
-<meta name="author" content="(Sahit Chintalapudi)"/>
+<meta name="author" content="(Matthew Woodward)"/>
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
@@ -29,104 +29,631 @@
 <section id="sec-title-slide"><h1 class="title">Week 6</h1>
 </section>
 
-<section id="slide-orgda3ba3e">
-<h2 id="orgda3ba3e">Computer Vision</h2>
+<section id="slide-orgf8fcf0b">
+<h2 id="orgf8fcf0b">What are we doing today?</h2>
 <ul>
-<li>We have the knowledge in C++ to describe the logic we might want a robot to
-have. But we need to be able to make sense of what the robot sees and
-classify it before we can act on this logic.</li>
-<li>Cue OpenCV, an open source computer vision library with bindings for C++
-(and a few other languages)</li>
-<li>I guess our ability to see has been ++'d</li>
-
-</ul>
-
-
-</section>
-<section id="slide-orgd1afc83">
-<h2 id="orgd1afc83">What does an Image look like to your computer?</h2>
+<li>Const Keyword</li>
+<li>Initializer Lists</li>
+<li>Header Guards</li>
+<li>More STL
 <ul>
-<li>OpenCV stores images in an object called a <i>Mat</i></li>
-<li>A Mat is an array with rows and columns. In a grayscale image, each element
-of the Mat is a pixel in the image and its location in the Mat corresponds
-to its location in the image</li>
-<li>If the image is grayscale, then a pixel is an int from 0 (black) to 255
-(white)</li>
-<li>Computers have no concept of "2d", so Images in memory are <i>continuous</i>.
-This means each row of the image is appended onto the end of the last. To
-iterate through a Mat you just get a pointer to the beginning of the first
-row and keep track of your row number by how far you've traversed.</li>
+<li>Functors</li>
+<li>Lambdas</li>
+<li>Predicates</li>
+
+</ul></li>
 
 </ul>
 
 </section>
-<section id="slide-orga6b7976">
-<h2 id="orga6b7976">Color Images</h2>
+<section id="slide-org6e34358">
+<h2 id="org6e34358">Const Keyword</h2>
 <ul>
-<li>Color images don't embed the color of a pixel in one element. Often, you'll
-find each pixel represented in BGR (Blue component, Green Component, Red
-Component) form. So now, each row of a color image is 3 times as long as a
-row of a black and white image.</li>
-<li><img src="https://i.imgur.com/QlokNTv.png" alt="QlokNTv.png" /></li>
-<li>Images don't have to be stored in just BGR format!</li>
+<li>Can be used on both variables and member functions of objects
+<ul>
+<li>Const Variable
+<ul>
+<li>Makes the value <i>constant</i> as the name implies</li>
+<li>Must be initialized when declared</li>
+<li>This can also be applied to the arguments and return type of a function</li>
+
+</ul></li>
+<li>Const Member Function
+<ul>
+<li>Makes the member function read-only</li>
+<li>It can only read and return values, it cannot change any of the members of the class</li>
+
+</ul></li>
+
+</ul></li>
 
 </ul>
 
 </section>
-<section id="slide-orgd2ba2ca">
-<h2 id="orgd2ba2ca">HSV Images</h2>
-<ul>
-<li>Each Pixel in a color image has a hue, a saturation, and a luminosity.</li>
-<li>Even though our cameras read in images with RGB, converting them to HSV is
-easy with OpenCV</li>
-
-</ul>
-
-<div class="figure">
-<p><img src="https://image.slidesharecdn.com/01presentationhuehistograms-150707215651-lva1-app6892/95/about-perception-and-hue-histograms-in-hsv-space-5-638.jpg" alt="about-perception-and-hue-histograms-in-hsv-space-5-638.jpg" />
-</p>
-</div>
-
-</section>
-<section id="slide-orgcfbf30a">
-<h2 id="orgcfbf30a">Why do we use HSV</h2>
-<ul>
-<li>HSV encodes image data in a way that is resistant to changes in color</li>
-<li>To put it another way, on a sunny day an image will contain more red, more
-blue, and more green than on a cloudy day. All three channels are affected.</li>
-<li>On a sunny day, the saturation channel will be largely effected, but we can
-expect hue to remain mainly stable. This makes it easier to do searches for
-colors in the HSV space.</li>
-
-</ul>
-
-</section>
-<section id="slide-org76b4867">
-<h2 id="org76b4867">Finding the blue in an image</h2>
+<section id="slide-orgaacfc64">
+<h3 id="orgaacfc64">Constant Variables</h3>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">Mat</span> <span style="color: #2F7BDE;">findBlue</span>(<span style="color: #598249;">const</span> <span style="color: #598249;">Mat</span>&amp; <span style="color: #2F7BDE;">frameBGR</span>) {
-      <span style="color: #598249;">const</span> <span style="color: #598249;">Scalar</span> <span style="color: #2F7BDE;">blue_low</span>{78, 50, 70};
-      <span style="color: #598249;">const</span> <span style="color: #598249;">Scalar</span> <span style="color: #2F7BDE;">blue_high</span>{138, 255, 255};
-      <span style="color: #598249;">Mat</span> <span style="color: #2F7BDE;">frameBlurred</span>;
-      GaussianBlur(frameBGR, frameBlurred, Size{7,7}, 0);
-      <span style="color: #598249;">Mat</span> <span style="color: #2F7BDE;">frameHSV</span>;
-      cvtColor(frameBlurred, frameHSV, CV_BGR2HSV);
-      <span style="color: #598249;">Mat</span> <span style="color: #2F7BDE;">output_blue</span> = <span style="color: #15968D;">Mat</span>::zeros(frameHSV.height, frameHSV.width, CV_8U);
-      inRange(frameHSV, blue_low, blue_high, output_blue);
-      erode(output_blue, output_blue, erosion_kernel_blue);
-      <span style="color: #598249;">return</span> output_blue;
+<pre  class="src src-c++"><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+    <span style="color: #598249;">const</span> <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>; <span style="color: #5e6263;">// </span><span style="color: #5e6263;">This causes an error</span>
+
+    <span style="color: #598249;">const</span> <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span> = 0; <span style="color: #5e6263;">// </span><span style="color: #5e6263;">This is correct</span>
+
+    <span style="color: #598249;">return</span> 0;
+}
+</pre>
+</div>
+<p>
+<a href="https://ideone.com/4D2EoC">Example</a>
+</p>
+
+</section>
+<section id="slide-orgd9a8c0a">
+<h3 id="orgd9a8c0a">Constant Arguments</h3>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">constantArguments</span>(<span style="color: #598249;">const</span> <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>) {
+    <span style="color: #15968D;">std</span>::cout &lt;&lt; x &lt;&lt; <span style="color: #15968D;">std</span>::endl; <span style="color: #5e6263;">// </span><span style="color: #5e6263;">This is fine</span>
+    x = 5; <span style="color: #5e6263;">// </span><span style="color: #5e6263;">This causes an error</span>
+
+    <span style="color: #598249;">return</span> x;
 }
 </pre>
 </div>
 
 </section>
-<section id="slide-org3e96e85">
-<h2 id="org3e96e85">Roboracing Computer Vision</h2>
+<section id="slide-orgf6f4024">
+<h3 id="orgf6f4024">Constant Member Functions</h3>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">Example</span> {
+<span style="color: #598249;">public</span>:
+    <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>;
+    <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">GetX</span>() <span style="color: #598249;">const</span>; <span style="color: #5e6263;">//</span><span style="color: #5e6263;">GetX is a constant member function</span>
+};
+</pre>
+</div>
 <p>
-<a href="https://github.com/RoboJackets/roboracing-software/blob/master/iarrc/src/color_detector/color_detector.cpp">Roboracing
-Color Detector</a>
+<a href="https://ideone.com/I854Gu">Example</a>
 </p>
+
+</section>
+<section id="slide-org69a4c5e">
+<h3 id="org69a4c5e">Why is this useful?</h3>
+<ul>
+<li>Good coding practice
+<ul>
+<li>Makes it clear what should and should not change</li>
+<li>Prevents others from accidentally changing something</li>
+
+</ul></li>
+<li>More Efficient
+<ul>
+<li>The compiler can optimize aggresively around constant variables since they don't change</li>
+
+</ul></li>
+
+</ul>
+
+
+</section>
+<section id="slide-orga9dc775">
+<h2 id="orga9dc775">Initializer Lists</h2>
+<aside class="notes">
+<p>
+Describe what the below code does. Want to give a basic understanding of what it does
+before trying to explain why they are useful
+</p>
+
+</aside>
+
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">Example</span> {
+<span style="color: #598249;">public</span>:
+    <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>;
+    <span style="color: #598249;">ClassA</span> <span style="color: #2F7BDE;">obj1</span>;
+    <span style="color: #598249;">ClassB</span> <span style="color: #2F7BDE;">obj2</span>;
+
+    <span style="color: #2F7BDE;">Example</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">xValue</span>, <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">arg1</span>, <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">arg2</span>) : x(xValue), obj1(arg2), obj2(arg1, arg2) {
+</pre>
+</div>
+
+
+</section>
+<section id="slide-org1f5609b">
+<h3 id="org1f5609b">Benefits of Initializer Lists</h3>
+<ul>
+<li>Initializes the member variables before the object is constructed
+<ul>
+<li>This allows you to have your member objects initialized before your constructor runs</li>
+<li>It also allows you to have const member variables since they would otherwise error when you try to declare them without a value</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgd54583b">
+<h3 id="orgd54583b">Initiliazing Constant Member Variables</h3>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">Example</span> {
+<span style="color: #598249;">public</span>:
+    <span style="color: #598249;">const</span> <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>;
+    <span style="color: #2F7BDE;">Example</span>() {
+        x = 5; <span style="color: #5e6263;">//</span><span style="color: #5e6263;">This causes an error since you can't "change" the value of a const</span>
+    }
+}
+</pre>
+</div>
+<ul>
+<li>You can't set the value of a constant variable after it has been declared</li>
+
+</ul>
+
+<aside class="notes">
+<p>
+Someone check me on that second statement
+</p>
+
+</aside>
+
+</section>
+<section id="slide-orgedba645">
+<h3 id="orgedba645">Initiliazing Constant Member Variables pt. 2</h3>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">Example</span> {
+<span style="color: #598249;">public</span>:
+    <span style="color: #598249;">const</span> <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>;
+    <span style="color: #2F7BDE;">Example</span>() : x(5);
+}
+</pre>
+</div>
+<ul>
+<li>This works because the initialization chain intializes the constant variable before the object is constructed so it runs before the value of the const is frozen</li>
+<li>This is also preferred over initializing the constant in the declaration of the class (<code>const int x = 5</code>)</li>
+
+</ul>
+</section>
+<section id="slide-org8dcbc2c">
+<h3 id="org8dcbc2c">Default Constructors with Custom Default Values</h3>
+<ul>
+<li>When a default constructor runs it calls the default constructors of all of the member variables</li>
+<li>But sometimes you want your class to have different default values than the standard default constructors of its members</li>
+
+</ul>
+
+</section>
+<section id="slide-org49433ca">
+<h3 id="org49433ca">The Inefficient way to set default values</h3>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">Example</span> {
+<span style="color: #598249;">public</span>:
+    <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>;
+    <span style="color: #598249;">ClassA</span> <span style="color: #2F7BDE;">object1</span>;
+    <span style="color: #2F7BDE;">Example</span>() {
+        x = 5;
+        object1.field1 = 1;
+        object1.field2 = 2;
+    }
+}
+</pre>
+</div>
+<ul>
+<li>This is inefficient because the default constructors of the objects are called first
+<ul>
+<li>This doesn't really matter for a primitive data type like an int but it could have a larger impact when called for more complex classes</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgc43119f">
+<h3 id="orgc43119f">The Efficient way to set default values</h3>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">Example</span> {
+    <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>;
+    <span style="color: #598249;">ClassA</span> <span style="color: #2F7BDE;">object1</span>;
+    <span style="color: #2F7BDE;">Example</span>() : x(5), object1(1,2){}
+}
+</pre>
+</div>
+<ul>
+<li>This is more efficient because the member variables' constructors are called first so the default constructors are not also called
+<ul>
+<li>This does assume that object1 has a constructor to set field1 and field 2 though</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgc09a662">
+<h2 id="orgc09a662">Header Guards</h2>
+<aside class="notes">
+<p>
+Go to the next slide to illustrate the issue
+</p>
+
+</aside>
+
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #5e6263;">//</span><span style="color: #5e6263;">in file: "example.cpp"</span>
+<span style="color: #598249;">class</span> <span style="color: #598249;">Example</span> {
+    <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>;
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #5e6263;">//</span><span style="color: #5e6263;">in file: "b.cpp"</span>
+<span style="color: #598249;">#include</span> <span style="color: #15968D;">"example.cpp"</span>
+<span style="color: #598249;">class</span> <span style="color: #598249;">B</span> {
+    <span style="color: #598249;">Example</span> <span style="color: #2F7BDE;">y</span>;
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #5e6263;">//</span><span style="color: #5e6263;">in file: "main.cpp"</span>
+<span style="color: #598249;">#include</span> <span style="color: #15968D;">"example.cpp"</span>
+<span style="color: #598249;">#include</span> <span style="color: #15968D;">"b.cpp"</span>
+
+<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+    <span style="color: #598249;">Example</span> <span style="color: #2F7BDE;">obj1</span>;
+    <span style="color: #598249;">B</span> <span style="color: #2F7BDE;">obj2</span>;
+
+    <span style="color: #598249;">return</span> 0;
+}
+</pre>
+</div>
+
+<ul>
+<li>Question: Why does this code cause an error?</li>
+
+</ul>
+
+</section>
+<section id="slide-org423844a">
+<h3 id="org423844a">Header Guards pt. 2</h3>
+<aside class="notes">
+<p>
+Include statments aren't "run"&#x2026; anybody have a better term for this?
+</p>
+
+</aside>
+
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #5e6263;">//</span><span style="color: #5e6263;">in file: "main.cpp" after include statments are run</span>
+
+<span style="color: #598249;">class</span> <span style="color: #598249;">Example</span> {
+    <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>;
+}
+
+<span style="color: #598249;">class</span> <span style="color: #598249;">Example</span> {
+    <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>;
+}
+
+<span style="color: #598249;">class</span> <span style="color: #598249;">B</span> {
+    <span style="color: #598249;">Example</span> <span style="color: #2F7BDE;">y</span>;
+}
+
+<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+    <span style="color: #598249;">Example</span> <span style="color: #2F7BDE;">obj1</span>;
+    <span style="color: #598249;">B</span> <span style="color: #2F7BDE;">obj2</span>;
+
+    <span style="color: #598249;">return</span> 0;
+}
+</pre>
+</div>
+
+
+</section>
+<section id="slide-orgc8a7e55">
+<h3 id="orgc8a7e55">Header Guards pt. 3</h3>
+<ul>
+<li>Example is defined twice and the compiler doesn't know which one to use</li>
+<li>Header guards prevent header files (the .h files that we use to declare classes) from conflicting with themselves by only including the code once</li>
+
+</ul>
+
+</section>
+<section id="slide-org3d8bf85">
+<h3 id="org3d8bf85">Header Guard Syntax</h3>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #5e6263;">//</span><span style="color: #5e6263;">in file: "example.h"</span>
+<span style="color: #598249;">#if</span><span style="color: #598249;">n</span><span style="color: #598249;">def</span> EXAMPLE_H
+<span style="color: #598249;">#define</span> <span style="color: #2F7BDE;">EXAMPLE_H</span>
+<span style="color: #598249;">class</span> <span style="color: #598249;">Example</span> {
+    <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>;
+}
+<span style="color: #598249;">#endif</span>
+</pre>
+</div>
+
+<ul>
+<li><code>#</code>   indicates a Preprocessor Directive. These alter the source code as it is passed into the compiler
+<ul>
+<li><code>#include</code>   copies the code from the indicated source and pastes it where the include was called</li>
+<li><code>#ifndef</code>    checks if the given macro is not defined</li>
+<li><code>#define</code>    defines the given macro</li>
+<li><code>#endif</code>     closes the if statement started by #ifndef</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org556a590">
+<h3 id="org556a590">Header Guard Syntax pt. 2</h3>
+<ul>
+<li>Header guards work by only allowing the compiler to see the code inside the ifndef if the given macro is not yet defined.
+After the compiler has processed the .h file once the <code>EXAMPLE_H</code> macro is defined so the next time it attempts to include the file the code is hidden inside the if statement</li>
+<li>Almost every compiler also supports the command  <code>#pragma once</code> which does the same thing as the header guard although it is not technically part of the C++ standard</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgfbf0108">
+<h2 id="orgfbf0108">Functors</h2>
+<ul>
+<li>A functor is basically an object with the operator() which allows it to be called like a function</li>
+<li>This allows us to create a "function" that can store data or use more information than its input arguments would otherwise allow</li>
+
+</ul>
+</section>
+<section id="slide-org3e79501">
+<h3 id="org3e79501">Functor Example</h3>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">class</span> <span style="color: #598249;">increment</span> {
+<span style="color: #598249;">public</span>:
+    <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">num</span>;
+    <span style="color: #2F7BDE;">increment</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">n</span>) : num(n){}
+
+    <span style="color: #5e6263;">// </span><span style="color: #5e6263;">This allows the functor to be called using () like a function</span>
+    <span style="color: #598249;">int</span> <span style="color: #598249;">operator</span> <span style="color: #2F7BDE;">()</span> (<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">numIn</span>) <span style="color: #598249;">const</span> {
+        <span style="color: #598249;">return</span> numIn + num;
+    }
+};
+
+<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+    <span style="color: #598249;">increment</span> <span style="color: #2F7BDE;">exampleFunctor</span>(2);
+    <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span> = 5;
+    <span style="color: #15968D;">std</span>::cout &lt;&lt; exampleFunctor(5) &lt;&lt; <span style="color: #15968D;">std</span>::endl <span style="color: #5e6263;">// </span><span style="color: #5e6263;">Outputs 7</span>
+    <span style="color: #598249;">return</span> 0;
+}
+</pre>
+</div>
+
+</section>
+<section id="slide-orgd4d13a2">
+<h3 id="orgd4d13a2">Lambdas</h3>
+<ul>
+<li>A lambda expression basically writes a short inline function</li>
+<li>Syntax:</li>
+
+</ul>
+<pre  class="example">
+[capture clause] (arguments) -&gt; return-type
+{
+    Definition of method
+}
+</pre>
+</section>
+<section id="slide-orgad824c3">
+<h3 id="orgad824c3">Syntax Breakdown</h3>
+<ul>
+<li>Most of the syntax works as it does in a function</li>
+<li>Arguments: the list of input arguments (ex: int a, double b,&#x2026;)</li>
+<li>Return-type: The type that the function returns (ex: bool)
+<ul>
+<li>Usually the arrow and return-type can be ommited since the compiler can figure it out</li>
+
+</ul></li>
+
+</ul>
+<pre  class="example">
+[capture clause] (arguments) -&gt; return-type
+{
+    Definition of method
+}
+</pre>
+</section>
+<section id="slide-org5b3f79a">
+<h3 id="org5b3f79a">Capture Clauses</h3>
+<ul>
+<li>It is important to note that although the lambda is defined inline the code still accesses it through a normal function call
+<ul>
+<li>This means that variables that were in the local scope before the lambda call are <i>not</i> in this scope</li>
+
+</ul></li>
+<li>In order to access these variables we have to tell the compiler how we want to access them</li>
+
+</ul>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Access Type</th>
+<th scope="col" class="org-left">Capture Clause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">By Reference</td>
+<td class="org-left">[&amp;]</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">By Value</td>
+<td class="org-left">[=]</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Individually specify</td>
+<td class="org-left">[varA, &amp;varB]</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="slide-orge4c64fc">
+<h3 id="orge4c64fc">Lambda Example</h3>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
+
+<span style="color: #598249;">using</span> <span style="color: #598249;">namespace</span> <span style="color: #15968D;">std</span>;
+
+<span style="color: #598249;">void</span> <span style="color: #2F7BDE;">print_sum</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x1</span>, <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x2</span>) {
+  cout &lt;&lt; x1 &lt;&lt; <span style="color: #15968D;">" + "</span> &lt;&lt; x2 &lt;&lt; <span style="color: #15968D;">" = "</span> &lt;&lt; x1 + x2 &lt;&lt; endl;
+}
+
+<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+  <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">calculated_value</span> = 10;
+
+  <span style="color: #598249;">auto</span> <span style="color: #2F7BDE;">print_plus_calculated_val</span> = [&amp;<span style="color: #2F7BDE;">calculated_value</span>](<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>) {
+    print_sum(calculated_value, x);
+  };
+
+  <span style="color: #598249;">for</span> (<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">i</span> = 0; i &lt; 5; i++) {
+    print_plus_calculated_val(i);
+  }
+}
+</pre>
+</div>
+<p>
+<a href="https://ideone.com/i5U6hC">Example</a>
+</p>
+</section>
+<section id="slide-orgc0087c4">
+<h3 id="orgc0087c4">STL and Functors</h3>
+<ul>
+<li>Many STL algorithms accept functors and lambdas as their last argument</li>
+<li>Types of Functors:
+<ul>
+<li>Generator: a Functor that takes no arguments</li>
+<li>Unary Function: a Functor that can be called with one argument</li>
+<li>Binary Function: a Functor that can be called with two arguments</li>
+
+</ul></li>
+
+</ul>
+</section>
+<section id="slide-org0e6338d">
+<h3 id="org0e6338d">Predicates</h3>
+<ul>
+<li>A Predicate is a function or functor that returns a boolean value</li>
+<li>A common use for predicates is to allow an STL algorithm to be applied only to the members of a container that meet the requirement of the Predicate</li>
+
+</ul>
+</section>
+<section id="slide-org5ac889d">
+<h3 id="org5ac889d"><code>count_if</code></h3>
+<ul>
+<li><code>count_if</code> is a STL function that counts the number of elements in a container that match the condition of the unary predicate it is given</li>
+<li><code>count_if(InputIterator first, InputIterator last, UnaryPredicate pred)</code></li>
+
+</ul>
+
+</section>
+<section id="slide-org439bc93">
+<h3 id="org439bc93"><code>count_if</code> example</h3>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
+<span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;vector&gt;</span>
+<span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;algorithm&gt;</span>
+
+<span style="color: #598249;">using</span> <span style="color: #598249;">namespace</span> <span style="color: #15968D;">std</span>;
+
+<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+        <span style="color: #598249;">vector</span>&lt;<span style="color: #598249;">int</span>&gt; <span style="color: #2F7BDE;">x</span>{ 1, 2, 3, 4, 5, 6, 7, 8 };
+
+        <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">numOdd</span> = count_if(x.begin(), x.end(), [] (<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">in</span>) {
+                <span style="color: #598249;">return</span> in%2;
+        });
+
+        <span style="color: #15968D;">std</span>::cout&lt;&lt; <span style="color: #15968D;">"there were "</span> &lt;&lt; numOdd &lt;&lt; <span style="color: #15968D;">" odd numbers"</span> &lt;&lt; <span style="color: #15968D;">std</span>::endl;
+
+        <span style="color: #598249;">return</span> 0;
+}
+</pre>
+</div>
+<p>
+<a href="https://ideone.com/6wBPvF">Example</a>
+</p>
+</section>
+<section id="slide-orgf81e368">
+<h3 id="orgf81e368">transform</h3>
+<ul>
+<li>transform is a STL function that iterates through a given range applying the given Unary function and storing it in a second range
+<ul>
+<li>Useful hint: The output range can be the same as the input range causing transform to just overwrite each value</li>
+
+</ul></li>
+<li>transform(InputIterator first, InputIterator last, OutputIterator start, UnaryOperation op)</li>
+
+</ul>
+
+</section>
+<section id="slide-org28e4a92">
+<h3 id="org28e4a92">transform example</h3>
+<div class="org-src-container">
+
+<pre  class="src src-c++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;algorithm&gt;</span>
+<span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
+<span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;string&gt;</span>
+
+<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>()
+{
+    <span style="color: #15968D;">std</span>::<span style="color: #598249;">string</span> <span style="color: #2F7BDE;">s</span>(<span style="color: #15968D;">"hello world"</span>);
+
+    <span style="color: #15968D;">std</span>::transform(s.begin(), s.end(), s.begin(),
+        [](<span style="color: #598249;">char</span> <span style="color: #2F7BDE;">c</span>) { <span style="color: #598249;">return</span> <span style="color: #15968D;">std</span>::toupper(c); });
+
+    <span style="color: #15968D;">std</span>::cout &lt;&lt; <span style="color: #15968D;">"s is: "</span> &lt;&lt; s &lt;&lt; <span style="color: #15968D;">std</span>::endl;
+
+    <span style="color: #598249;">return</span> 0;
+}
+</pre>
+</div>
+<p>
+<a href="https://ideone.com/RTQd7i">Example</a>
+</p>
+</section>
+<section id="slide-org2a1c889">
+<h2 id="org2a1c889">Exercise: Color Binning</h2>
+<ol>
+<li>Drive the light sensor across the series of strips recording all of the values seen</li>
+<li>Use a STL function to replace each reading with the value of:
+<ul>
+<li>(the reading) / 256</li>
+<li>This will sort the values into 16 categories ("bins")</li>
+
+</ul></li>
+<li>Use a for loop and another STL function to print the number of readings that fell into each category</li>
+
+</ol>
 </section>
 </section>
 </div>
