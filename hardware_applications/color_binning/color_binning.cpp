@@ -26,4 +26,8 @@ int main() {
   // This is easy to do without STL functions, but try to use one for practice here
 
   // Print out the number of readings in each bin. What STL algo does this easily?
+
+
+
+  // After you're done, also consider doing the same task using a vector<int> bin_counts and std::for_each
 }

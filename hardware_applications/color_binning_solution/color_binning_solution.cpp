@@ -29,4 +29,13 @@ int main() {
   for (int i = 0; i < 16; i++) {
     cout << "bin " << i << " has " << count(values.begin(), values.end(), i) << " readings" << endl;
   }
+
+  vector<int> bin_counts;
+  for_each(values.begin(), values.end(), [&bin_counts](int x) {
+    bin_counts[x / 256] += 1;
+  });
+
+  for (int i = 0; i < bin_counts.size(); i++) {
+    cout << "bin " << i << " has " << bin_counts[i] << " readings" << endl;
+  }
 }
