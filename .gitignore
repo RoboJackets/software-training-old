@@ -5,3 +5,6 @@ html/
 .DS_Store
 
 CMakeFiles/
+projects/.c9/*
+*.o
+
