@@ -29,8 +29,8 @@
 <section id="sec-title-slide"><h1 class="title">Week 4</h1>
 </section>
 
-<section id="slide-org7c08bc3">
-<h2 id="org7c08bc3">What are we doing today?</h2>
+<section id="slide-org1aa96c8">
+<h2 id="org1aa96c8">What are we doing today?</h2>
 <ul>
 <li>How a program's memory is structured and maintained</li>
 <li>References and pointers</li>
@@ -40,8 +40,8 @@
 </ul>
 
 </section>
-<section id="slide-orgcb7a468">
-<h2 id="orgcb7a468">What is the output?</h2>
+<section id="slide-org7dfff01">
+<h2 id="org7dfff01">What is the output?</h2>
 <aside class="notes">
 <p>
 Ask them the output of this code. Then talk about how var and a are not the same place in memory.
@@ -50,7 +50,7 @@ Ask them the output of this code. Then talk about how var and a are not the same
 </aside>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
+<pre  class="src src-c++"><code trim><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
 <span style="color: #598249;">void</span> <span style="color: #2F7BDE;">increment</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">a</span>) {
   a = a + 5;
 }
@@ -59,12 +59,12 @@ Ask them the output of this code. Then talk about how var and a are not the same
   increment(var);
   <span style="color: #15968D;">std</span>::cout &lt;&lt; var &lt;&lt; <span style="color: #15968D;">std</span>::endl;
 }
-</pre>
+</code></pre>
 </div>
 
 </section>
-<section id="slide-org5129585">
-<h2 id="org5129585">Memory structure</h2>
+<section id="slide-orgaf6c40b">
+<h2 id="orgaf6c40b">Memory structure</h2>
 <aside class="notes">
 <p>
 Make sure to emphasize how important memory allocation is for any real program. This is all fundamentally the same RAM, just arranged and managed in a certain way. Static memory is used for static/global variables. A new block is allocated when a function is called, and released when the function exits - this is where your parameters and local variables are stored. Mention memory leaks.
@@ -94,8 +94,8 @@ Make sure to emphasize how important memory allocation is for any real program. 
 </ul>
 
 </section>
-<section id="slide-org7f2c2eb">
-<h3 id="org7f2c2eb">What is a byte</h3>
+<section id="slide-orgb02182e">
+<h3 id="orgb02182e">What is a byte</h3>
 <aside class="notes">
 <p>
 They may never have seen binary before. 00101010 = 26, 00010001 = 17 do not talk about how binary works
@@ -114,8 +114,8 @@ They may never have seen binary before. 00101010 = 26, 00010001 = 17 do not talk
 </ul>
 
 </section>
-<section id="slide-orgc845843">
-<h3 id="orgc845843">Object lifetimes stack</h3>
+<section id="slide-org5dee742">
+<h3 id="org5dee742">Object lifetimes stack</h3>
 <aside class="notes">
 <p>
 Picture on next slide. talk about how in the below example the int is allocated on the stack. mention what stack overflow is
@@ -129,7 +129,7 @@ Picture on next slide. talk about how in the below example the int is allocated 
 </ul>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
+<pre  class="src src-c++"><code trim><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
 <span style="color: #598249;">void</span> <span style="color: #2F7BDE;">increment</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">a</span>) {
   <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">c</span> = 5;
   a = a + 5;
@@ -140,15 +140,15 @@ Picture on next slide. talk about how in the below example the int is allocated 
   increment(var);
   <span style="color: #15968D;">std</span>::cout &lt;&lt; var &lt;&lt; <span style="color: #15968D;">std</span>::endl;
 }
-</pre>
+</code></pre>
 </div>
 
 </section>
-<section id="slide-org9a75fe0">
-<h4 id="org9a75fe0">Stack example</h4>
+<section id="slide-orgef72c8f">
+<h4 id="orgef72c8f">Stack example</h4>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
+<pre  class="src src-c++"><code trim><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
 <span style="color: #598249;">void</span> <span style="color: #2F7BDE;">increment</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">a</span>) {
   <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">c</span> = 5;
   a = a + 5;
@@ -159,7 +159,7 @@ Picture on next slide. talk about how in the below example the int is allocated 
   increment(var);
   <span style="color: #15968D;">std</span>::cout &lt;&lt; var &lt;&lt; <span style="color: #15968D;">std</span>::endl;
 }
-</pre>
+</code></pre>
 </div>
 
 <div class="figure">
@@ -168,8 +168,8 @@ Picture on next slide. talk about how in the below example the int is allocated 
 </div>
 
 </section>
-<section id="slide-org34fe7ab">
-<h2 id="org34fe7ab">References</h2>
+<section id="slide-org49bd50f">
+<h2 id="org49bd50f">References</h2>
 <aside class="notes">
 <p>
 Parameters are copied into the new block so the function can't modify anything outside of its scope. Explicitly using a reference allows a function to do that.
@@ -191,8 +191,8 @@ Performance can also improve, since you're only copying a memory address instead
 </ul>
 
 </section>
-<section id="slide-orgf96e4d7">
-<h3 id="orgf96e4d7">Passing by reference</h3>
+<section id="slide-org1aa2da9">
+<h3 id="org1aa2da9">Passing by reference</h3>
 <aside class="notes">
 <p>
 ask them what the output of the code is and then walk them through it
@@ -205,7 +205,7 @@ ask them what the output of the code is and then walk them through it
 </ul>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
+<pre  class="src src-c++"><code trim><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
 <span style="color: #598249;">void</span> <span style="color: #2F7BDE;">increment</span>(<span style="color: #598249;">int</span> &amp;<span style="color: #2F7BDE;">a</span>) {
   a = a + 5;
 }
@@ -214,12 +214,12 @@ ask them what the output of the code is and then walk them through it
   increment(var);
   <span style="color: #15968D;">std</span>::cout &lt;&lt; var &lt;&lt; <span style="color: #15968D;">std</span>::endl;
 }
-</pre>
+</code></pre>
 </div>
 
 </section>
-<section id="slide-orgdfe1971">
-<h2 id="orgdfe1971">Pointers</h2>
+<section id="slide-orgad6182b">
+<h2 id="orgad6182b">Pointers</h2>
 <aside class="notes">
 <p>
 Pointers are great for passing around heap objects, but how do you keep track of what objects are still in use?
@@ -242,8 +242,8 @@ Pointers are great for passing around heap objects, but how do you keep track of
 </ul>
 
 </section>
-<section id="slide-org76f0bd4">
-<h3 id="org76f0bd4">How to get an address</h3>
+<section id="slide-org1d76532">
+<h3 id="org1d76532">How to get an address</h3>
 <ul>
 <li>The <b>&amp;</b> operator is used to get an address of a variable</li>
 <li>Use the <b>*</b> operator to denote a pointer variable</li>
@@ -251,25 +251,25 @@ Pointers are great for passing around heap objects, but how do you keep track of
 </ul>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+<pre  class="src src-c++"><code trim><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
   <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">var</span> = 5;
   <span style="color: #5e6263;">// </span><span style="color: #5e6263;">TYPE* name;</span>
   <span style="color: #598249;">int</span>* <span style="color: #2F7BDE;">var_ptr</span> = &amp;var;
 }
-</pre>
+</code></pre>
 </div>
 
 </section>
-<section id="slide-orga8e1026">
-<h4 id="orga8e1026">Example</h4>
+<section id="slide-org4099545">
+<h4 id="org4099545">Example</h4>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+<pre  class="src src-c++"><code trim><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
   <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">var</span> = 5;
   <span style="color: #5e6263;">// </span><span style="color: #5e6263;">TYPE* name;</span>
   <span style="color: #598249;">int</span>* <span style="color: #2F7BDE;">var_ptr</span> = &amp;var;
 }
-</pre>
+</code></pre>
 </div>
 
 <div class="figure">
@@ -278,8 +278,8 @@ Pointers are great for passing around heap objects, but how do you keep track of
 </div>
 
 </section>
-<section id="slide-org30b83b4">
-<h3 id="org30b83b4">Dereferencing pointers</h3>
+<section id="slide-org06aa22d">
+<h3 id="org06aa22d">Dereferencing pointers</h3>
 <ul>
 <li>gets the value pointed to
 <ul>
@@ -292,8 +292,8 @@ Pointers are great for passing around heap objects, but how do you keep track of
 </ul>
 
 </section>
-<section id="slide-org2860874">
-<h3 id="org2860874">Example</h3>
+<section id="slide-orga8fcf28">
+<h3 id="orga8fcf28">Example</h3>
 <aside class="notes">
 <p>
 Now run through some basic examples
@@ -302,14 +302,14 @@ Now run through some basic examples
 </aside>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
+<pre  class="src src-c++"><code trim><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
 <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
   <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">var</span> = 5;
   <span style="color: #5e6263;">// </span><span style="color: #5e6263;">TYPE* name;</span>
   <span style="color: #598249;">int</span>* <span style="color: #2F7BDE;">var_ptr</span> = &amp;var;
   <span style="color: #15968D;">std</span>::cout &lt;&lt; *var_ptr &lt;&lt; <span style="color: #15968D;">std</span>::endl;
 }
-</pre>
+</code></pre>
 </div>
 
 <div class="figure">
@@ -318,11 +318,11 @@ Now run through some basic examples
 </div>
 
 </section>
-<section id="slide-org99397a2">
-<h3 id="org99397a2">Another example</h3>
+<section id="slide-orgef4f5e1">
+<h3 id="orgef4f5e1">Another example</h3>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
+<pre  class="src src-c++"><code trim><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
 <span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;string&gt;</span>
 
 <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
@@ -340,12 +340,12 @@ Now run through some basic examples
   <span style="color: #15968D;">std</span>::cout &lt;&lt; <span style="color: #15968D;">"Now s is: "</span> &lt;&lt; s &lt;&lt; <span style="color: #15968D;">std</span>::endl;
 }
 
-</pre>
+</code></pre>
 </div>
 
 </section>
-<section id="slide-org436342e">
-<h2 id="org436342e">Pointer arithmatic</h2>
+<section id="slide-orgfeaf59b">
+<h2 id="orgfeaf59b">Pointer arithmatic</h2>
 <ul>
 <li>In c++ different datatypes have different sizes</li>
 <li>A pointer will increment differently based on its datatype's size in bytes</li>
@@ -384,17 +384,17 @@ Now run through some basic examples
 </table>
 
 </section>
-<section id="slide-org70aee11">
-<h3 id="org70aee11">Example int</h3>
+<section id="slide-orgf0451a5">
+<h3 id="orgf0451a5">Example int</h3>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
+<pre  class="src src-c++"><code trim><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
 <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
   <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">var</span> = 6;
   <span style="color: #598249;">int</span>* <span style="color: #2F7BDE;">var_ptr</span> = &amp;var;
   var_ptr += 1;
 }
-</pre>
+</code></pre>
 </div>
 
 <div class="figure">
@@ -403,17 +403,17 @@ Now run through some basic examples
 </div>
 
 </section>
-<section id="slide-org3d4c06e">
-<h3 id="org3d4c06e">Example char</h3>
+<section id="slide-orged77e32">
+<h3 id="orged77e32">Example char</h3>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
+<pre  class="src src-c++"><code trim><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
 <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
   <span style="color: #598249;">char</span> <span style="color: #2F7BDE;">rj</span> = <span style="color: #15968D;">'c'</span>;
   <span style="color: #598249;">char</span>* <span style="color: #2F7BDE;">char_ptr</span> = &amp;rj;
   char_ptr += 2;
 }
-</pre>
+</code></pre>
 </div>
 
 <div class="figure">
@@ -422,8 +422,8 @@ Now run through some basic examples
 </div>
 
 </section>
-<section id="slide-orgfa9d9eb">
-<h2 id="orgfa9d9eb">New / Delete</h2>
+<section id="slide-orgdb51dea">
+<h2 id="orgdb51dea">New / Delete</h2>
 <aside class="notes">
 <p>
 do example when you get to the delete slide
@@ -452,14 +452,14 @@ do example when you get to the delete slide
 </ul>
 
 </section>
-<section id="slide-org69ee84a">
-<h3 id="org69ee84a">New</h3>
+<section id="slide-orgc5bd986">
+<h3 id="orgc5bd986">New</h3>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+<pre  class="src src-c++"><code trim><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
   <span style="color: #598249;">double</span> *<span style="color: #2F7BDE;">a</span> = <span style="color: #598249;">new</span> <span style="color: #598249;">double</span>(10.0);
 }
-</pre>
+</code></pre>
 </div>
 
 <div class="figure">
@@ -468,8 +468,8 @@ do example when you get to the delete slide
 </div>
 
 </section>
-<section id="slide-orgee0f24d">
-<h3 id="orgee0f24d">Delete</h3>
+<section id="slide-org21d43c8">
+<h3 id="org21d43c8">Delete</h3>
 <aside class="notes">
 <p>
 use the stuct defined in week4.h, prints when constructed and destructed.
@@ -478,12 +478,12 @@ use the stuct defined in week4.h, prints when constructed and destructed.
 </aside>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+<pre  class="src src-c++"><code trim><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
   <span style="color: #598249;">double</span> *<span style="color: #2F7BDE;">a</span> = <span style="color: #598249;">new</span> <span style="color: #598249;">double</span>(10.0);
   <span style="color: #5e6263;">// </span><span style="color: #5e6263;">... legit code</span>
   <span style="color: #598249;">delete</span> a;
 }
-</pre>
+</code></pre>
 </div>
 
 <div class="figure">
@@ -492,8 +492,8 @@ use the stuct defined in week4.h, prints when constructed and destructed.
 </div>
 
 </section>
-<section id="slide-org9f14e6b">
-<h4 id="org9f14e6b">Segfault</h4>
+<section id="slide-orge93f487">
+<h4 id="orge93f487">Segfault</h4>
 <aside class="notes">
 <p>
 tell them what a segfault is
@@ -502,7 +502,7 @@ tell them what a segfault is
 </aside>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+<pre  class="src src-c++"><code trim><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
   <span style="color: #598249;">double</span> *<span style="color: #2F7BDE;">a</span> = <span style="color: #598249;">new</span> <span style="color: #598249;">double</span>(10.0);
   <span style="color: #5e6263;">// </span><span style="color: #5e6263;">... legit code</span>
   <span style="color: #598249;">delete</span> a;
@@ -510,12 +510,12 @@ tell them what a segfault is
   *a = 20.0
   <span style="color: #5e6263;">// </span><span style="color: #5e6263;">.. more code</span>
 }
-</pre>
+</code></pre>
 </div>
 
 </section>
-<section id="slide-orgbab119d">
-<h2 id="orgbab119d">Smart pointers</h2>
+<section id="slide-orge18324b">
+<h2 id="orge18324b">Smart pointers</h2>
 <aside class="notes">
 <p>
 Each type has an initialization function. Run through examples in 4 slides
@@ -535,8 +535,8 @@ Each type has an initialization function. Run through examples in 4 slides
 </ul>
 
 </section>
-<section id="slide-org8498eb8">
-<h3 id="org8498eb8"><code>unique_ptr</code></h3>
+<section id="slide-org48b4bbb">
+<h3 id="org48b4bbb"><code>unique_ptr</code></h3>
 <aside class="notes">
 <p>
 object is a struct defined in week4.h. make sure to use it as an example
@@ -545,10 +545,10 @@ object is a struct defined in week4.h. make sure to use it as an example
 </aside>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+<pre  class="src src-c++"><code trim><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
   <span style="color: #598249;">unique_ptr</span>&lt;object&gt; <span style="color: #2F7BDE;">u_ptr</span> = make_unique&lt;object&gt;();
 }
-</pre>
+</code></pre>
 </div>
 
 <div class="figure">
@@ -557,8 +557,8 @@ object is a struct defined in week4.h. make sure to use it as an example
 </div>
 
 </section>
-<section id="slide-org8045563">
-<h3 id="org8045563"><code>shared_ptr</code></h3>
+<section id="slide-org8f14894">
+<h3 id="org8f14894"><code>shared_ptr</code></h3>
 <aside class="notes">
 <p>
 object is a struct defined in week4.h. make sure to use it as an example
@@ -567,7 +567,7 @@ object is a struct defined in week4.h. make sure to use it as an example
 </aside>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+<pre  class="src src-c++"><code trim><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
   <span style="color: #598249;">shared_ptr</span>&lt;object&gt; <span style="color: #2F7BDE;">s_ptr1</span> = make_shared&lt;object&gt;();
   <span style="color: #5e6263;">// </span><span style="color: #5e6263;">&lt;--- HERE</span>
   {
@@ -575,7 +575,7 @@ object is a struct defined in week4.h. make sure to use it as an example
   }
   <span style="color: #598249;">shared_ptr</span>&lt;object&gt; <span style="color: #2F7BDE;">s_ptr3</span> =  s_ptr1;
 }
-</pre>
+</code></pre>
 </div>
 
 <div class="figure">
@@ -584,8 +584,8 @@ object is a struct defined in week4.h. make sure to use it as an example
 </div>
 
 </section>
-<section id="slide-orgfacd6a0">
-<h4 id="orgfacd6a0"><code>shared_ptr</code></h4>
+<section id="slide-org7805f4a">
+<h4 id="org7805f4a"><code>shared_ptr</code></h4>
 <aside class="notes">
 <p>
 object is a struct defined in week4.h. make sure to use it as an example
@@ -594,7 +594,7 @@ object is a struct defined in week4.h. make sure to use it as an example
 </aside>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+<pre  class="src src-c++"><code trim><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
   <span style="color: #598249;">shared_ptr</span>&lt;object&gt; <span style="color: #2F7BDE;">s_ptr1</span> = make_shared&lt;object&gt;();
   {
     <span style="color: #598249;">shared_ptr</span>&lt;object&gt; <span style="color: #2F7BDE;">s_ptr2</span> =  s_ptr1;
@@ -602,7 +602,7 @@ object is a struct defined in week4.h. make sure to use it as an example
   }
   <span style="color: #598249;">shared_ptr</span>&lt;object&gt; <span style="color: #2F7BDE;">s_ptr3</span> =  s_ptr1;
 }
-</pre>
+</code></pre>
 </div>
 
 <div class="figure">
@@ -611,8 +611,8 @@ object is a struct defined in week4.h. make sure to use it as an example
 </div>
 
 </section>
-<section id="slide-org926adf2">
-<h4 id="org926adf2"><code>shared_ptr</code></h4>
+<section id="slide-org2a14604">
+<h4 id="org2a14604"><code>shared_ptr</code></h4>
 <aside class="notes">
 <p>
 object is a struct defined in week4.h. make sure to use it as an example
@@ -621,7 +621,7 @@ object is a struct defined in week4.h. make sure to use it as an example
 </aside>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
+<pre  class="src src-c++"><code trim><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
   <span style="color: #598249;">shared_ptr</span>&lt;object&gt; <span style="color: #2F7BDE;">s_ptr1</span> = make_shared&lt;object&gt;();
   {
     <span style="color: #598249;">shared_ptr</span>&lt;object&gt; <span style="color: #2F7BDE;">s_ptr2</span> =  s_ptr1;
@@ -629,7 +629,7 @@ object is a struct defined in week4.h. make sure to use it as an example
   <span style="color: #598249;">shared_ptr</span>&lt;object&gt; <span style="color: #2F7BDE;">s_ptr3</span> =  s_ptr1;
   <span style="color: #5e6263;">// </span><span style="color: #5e6263;">&lt;--- HERE</span>
 }
-</pre>
+</code></pre>
 </div>
 
 <div class="figure">
@@ -638,8 +638,8 @@ object is a struct defined in week4.h. make sure to use it as an example
 </div>
 
 </section>
-<section id="slide-org4e38182">
-<h2 id="org4e38182">Ownership</h2>
+<section id="slide-org7ebcfd6">
+<h2 id="org7ebcfd6">Ownership</h2>
 <ul>
 <li>be careful about returning a shared pointer from a method
 <ul>
@@ -650,8 +650,8 @@ object is a struct defined in week4.h. make sure to use it as an example
 </ul>
 
 </section>
-<section id="slide-orgd75ed1b">
-<h2 id="orgd75ed1b">Casting, the wrong way</h2>
+<section id="slide-org8c92a4c">
+<h2 id="org8c92a4c">Casting, the wrong way</h2>
 <ul>
 <li>Sometimes you want to convert a variable to a different type: this is called casting</li>
 <li>In C, you can simply change the type of a variable like so:</li>
@@ -659,9 +659,9 @@ object is a struct defined in week4.h. make sure to use it as an example
 </ul>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">B</span>* <span style="color: #2F7BDE;">old_var</span> = <span style="color: #598249;">new</span> <span style="color: #598249;">B</span>(); <span style="color: #5e6263;">// </span><span style="color: #5e6263;">some object</span>
+<pre  class="src src-c++"><code trim><span style="color: #598249;">B</span>* <span style="color: #2F7BDE;">old_var</span> = <span style="color: #598249;">new</span> <span style="color: #598249;">B</span>(); <span style="color: #5e6263;">// </span><span style="color: #5e6263;">some object</span>
 <span style="color: #598249;">A</span>* <span style="color: #2F7BDE;">new_var</span> = (<span style="color: #598249;">A</span>*)old_var;
-</pre>
+</code></pre>
 </div>
 <ul>
 <li>The compiler will now treat the bytes of object <code>old_var</code> as though it was of type <code>A</code></li>
@@ -670,18 +670,18 @@ object is a struct defined in week4.h. make sure to use it as an example
 </ul>
 
 </section>
-<section id="slide-org1f9739d">
-<h2 id="org1f9739d">Type Safety</h2>
+<section id="slide-org7b0b9d2">
+<h2 id="org7b0b9d2">Type Safety</h2>
 <div class="org-src-container">
 
-<pre  class="src src-c++"><span style="color: #598249;">char</span> <span style="color: #2F7BDE;">c</span> = 10;                        <span style="color: #5e6263;">// </span><span style="color: #5e6263;">this is one byte in memory</span>
+<pre  class="src src-c++"><code trim><span style="color: #598249;">char</span> <span style="color: #2F7BDE;">c</span> = 10;                        <span style="color: #5e6263;">// </span><span style="color: #5e6263;">this is one byte in memory</span>
 
 <span style="color: #598249;">int</span> *<span style="color: #2F7BDE;">p</span> = (<span style="color: #598249;">int</span>*) &amp;c;                 <span style="color: #5e6263;">// </span><span style="color: #5e6263;">this is a 4-byte pointer pointing to one byte of</span>
                                     <span style="color: #5e6263;">// </span><span style="color: #5e6263;">memory - it compiles but leads to corrupted memory</span>
                                     <span style="color: #5e6263;">// </span><span style="color: #5e6263;">if you try to write to what p points to</span>
 
 <span style="color: #598249;">int</span> *<span style="color: #2F7BDE;">q</span> = <span style="color: #598249;">static_cast</span>&lt;<span style="color: #598249;">int</span>*&gt;(&amp;c);     <span style="color: #5e6263;">// </span><span style="color: #5e6263;">throws an exception at compile time</span>
-</pre>
+</code></pre>
 </div>
 <ul>
 <li>Our second cast was type-safe, the first one was not</li>
@@ -694,8 +694,8 @@ object is a struct defined in week4.h. make sure to use it as an example
 </ul>
 
 </section>
-<section id="slide-org4c67623">
-<h2 id="org4c67623">Casting, the right way</h2>
+<section id="slide-org5b0ae8a">
+<h2 id="org5b0ae8a">Casting, the right way</h2>
 <aside class="notes">
 <p>
 Really talk about why type safety is good. otherwise you can arbitrarily cast any type to any other. You might not make the mistake but someone else will
@@ -715,8 +715,8 @@ Really talk about why type safety is good. otherwise you can arbitrarily cast an
 
 
 </section>
-<section id="slide-orga321299">
-<h2 id="orga321299">Exercise: line following with a twist</h2>
+<section id="slide-org0105ca6">
+<h2 id="org0105ca6">Exercise: line following with a twist</h2>
 <ul>
 <li>Modify <code>line_follow.cpp</code></li>
 <li>You should make 2 functions <code>turn_right</code> and <code>turn_left</code></li>
@@ -730,8 +730,8 @@ Really talk about why type safety is good. otherwise you can arbitrarily cast an
 
 
 </section>
-<section id="slide-org4042122">
-<h2 id="org4042122">Exercise cont'd</h2>
+<section id="slide-orgfc76050">
+<h2 id="orgfc76050">Exercise cont'd</h2>
 <ul>
 <li>You can solve this problem several ways by changing the function signature. For practice, try these three:
 <ol>
@@ -758,29 +758,12 @@ Really talk about why type safety is good. otherwise you can arbitrarily cast an
 </section>
 </div>
 </div>
-<script src="https://robojackets.github.io/reveal.js/lib/js/head.min.js"></script>
 <script src="https://robojackets.github.io/reveal.js/js/reveal.js"></script>
 
 <script>
 // Full list of configuration options available here:
 // https://github.com/hakimel/reveal.js#configuration
 Reveal.initialize({
-
-controls: false,
-progress: true,
-history: false,
-center: true,
-slideNumber: 'c',
-rollingLinks: false,
-keyboard: true,
-overview: true,
-width: 1440,
-height: 800,
-margin: 0.15,
-
-theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-transition: Reveal.getQueryHash().transition || 'None', // default/cube/page/concave/zoom/linear/fade/none
-transitionSpeed: 'fast',
 multiplex: {
     secret: '', // null if client
     id: '', // id, obtained from socket.io server

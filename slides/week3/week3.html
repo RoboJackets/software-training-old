@@ -29,8 +29,8 @@
 <section id="sec-title-slide"><h1 class="title">Week 3</h1>
 </section>
 
-<section id="slide-org91e9c1a">
-<h2 id="org91e9c1a">What are we doing today?</h2>
+<section id="slide-orgbb337b9">
+<h2 id="orgbb337b9">What are we doing today?</h2>
 <ul>
 <li>An introduction to the <i>Standard Template Library</i>
 <ul>
@@ -43,8 +43,8 @@
 </ul>
 
 </section>
-<section id="slide-org25b381b">
-<h2 id="org25b381b">The Standard Template Library (STL)</h2>
+<section id="slide-orgd4e8da8">
+<h2 id="orgd4e8da8">The Standard Template Library (STL)</h2>
 <ul>
 <li>a collection of general purpose containers and algorithms that are included in C++</li>
 <li>Containers store things; algorithms perform operations on those things</li>
@@ -53,8 +53,8 @@
 </ul>
 
 </section>
-<section id="slide-org92738b2">
-<h2 id="org92738b2">Containers</h2>
+<section id="slide-orgf503055">
+<h2 id="orgf503055">Containers</h2>
 <ul>
 <li>Data structures in the STL that store a collection of other objects are
 called <i>containters</i></li>
@@ -66,8 +66,8 @@ type of data the container stores.</li>
 </ul>
 
 </section>
-<section id="slide-org815eb94">
-<h2 id="org815eb94">Vectors</h2>
+<section id="slide-orge743804">
+<h2 id="orge743804">Vectors</h2>
 <aside class="notes">
 <p>
 initializer lists require c++11 for vectors.
@@ -82,10 +82,10 @@ initializer lists require c++11 for vectors.
 </ul>
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;vector&gt;</span>
+<pre  class="src src-C++"><code trim><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;vector&gt;</span>
 
 <span style="color: #15968D;">std</span>::<span style="color: #598249;">vector</span>&lt;<span style="color: #598249;">int</span>&gt; <span style="color: #2F7BDE;">numbers</span> = {1, 2, 3};
-</pre>
+</code></pre>
 </div>
 <ul>
 <li>In this example, the vector is passed the type <code>int</code> as its template argument,
@@ -94,8 +94,8 @@ meaning it can only store type <code>int</code></li>
 </ul>
 
 </section>
-<section id="slide-orgad37738">
-<h2 id="orgad37738">Vector methods</h2>
+<section id="slide-org850bb82">
+<h2 id="org850bb82">Vector methods</h2>
 <aside class="notes">
 <p>
 Vectors can grow as items are added, whereas arrays are static.
@@ -154,11 +154,11 @@ Vectors can grow as items are added, whereas arrays are static.
 </table>
 
 </section>
-<section id="slide-org769f684">
-<h2 id="org769f684">Playing with Vectors</h2>
+<section id="slide-org80a0141">
+<h2 id="org80a0141">Playing with Vectors</h2>
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;vector&gt;</span>
+<pre  class="src src-C++"><code trim><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;vector&gt;</span>
 <span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;string&gt;</span>
 <span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
 <span style="color: #598249;">using</span> <span style="color: #598249;">namespace</span> <span style="color: #15968D;">std</span>;
@@ -171,12 +171,12 @@ Vectors can grow as items are added, whereas arrays are static.
 
       cout &lt;&lt; <span style="color: #15968D;">"Actually, there are: "</span> &lt;&lt; trainers.size() &lt;&lt; <span style="color: #15968D;">" trainers"</span> &lt;&lt; endl;
 }
-</pre>
+</code></pre>
 </div>
 
 </section>
-<section id="slide-org5fdd090">
-<h2 id="org5fdd090">More vector examples</h2>
+<section id="slide-org2961cc1">
+<h2 id="org2961cc1">More vector examples</h2>
 <aside class="notes">
 <p>
 We'll get to begin() and end() later
@@ -186,7 +186,7 @@ We'll get to begin() and end() later
 
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;vector&gt;</span>
+<pre  class="src src-C++"><code trim><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;vector&gt;</span>
 <span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;string&gt;</span>
 <span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
 <span style="color: #598249;">using</span> <span style="color: #598249;">namespace</span> <span style="color: #15968D;">std</span>;
@@ -205,13 +205,13 @@ We'll get to begin() and end() later
       cout &lt;&lt; <span style="color: #15968D;">"The 1st trainer is "</span> &lt;&lt; trainers.at(0) &lt;&lt; endl;
       cout &lt;&lt; <span style="color: #15968D;">"The last trainer is "</span> &lt;&lt; trainers.at(trainers.size() -1) &lt;&lt; endl;
 }
-</pre>
+</code></pre>
 </div>
 
 
 </section>
-<section id="slide-orga046404">
-<h2 id="orga046404">Iterators</h2>
+<section id="slide-org19d514d">
+<h2 id="org19d514d">Iterators</h2>
 <ul>
 <li>An object that lets you access and modify objects in a container</li>
 <li>Depending on their type, they will let you read or write data in the container, and move forwards, backwards, or both</li>
@@ -220,8 +220,8 @@ We'll get to begin() and end() later
 </ul>
 
 </section>
-<section id="slide-orgfe2e2dd">
-<h2 id="orgfe2e2dd">Iterator methods</h2>
+<section id="slide-org672d1ab">
+<h2 id="org672d1ab">Iterator methods</h2>
 <aside class="notes">
 <p>
 picture upcoming. mention that the method should be called on the containing object
@@ -268,8 +268,8 @@ picture upcoming. mention that the method should be called on the containing obj
 </ul>
 
 </section>
-<section id="slide-orgae83062">
-<h2 id="orgae83062">Iterator Methods</h2>
+<section id="slide-org2b15115">
+<h2 id="org2b15115">Iterator Methods</h2>
 
 <div class="figure">
 <p><img src="https://i.imgur.com/XOfZ5kf.png" alt="XOfZ5kf.png" />
@@ -277,8 +277,8 @@ picture upcoming. mention that the method should be called on the containing obj
 </div>
 
 </section>
-<section id="slide-orgfc59ebb">
-<h2 id="orgfc59ebb">Iterator operations</h2>
+<section id="slide-orgf7f00a1">
+<h2 id="orgf7f00a1">Iterator operations</h2>
 <aside class="notes">
 <p>
 picture upcoming
@@ -312,8 +312,8 @@ picture upcoming
 </table>
 
 </section>
-<section id="slide-org2fa4ded">
-<h2 id="org2fa4ded">Iterator practice</h2>
+<section id="slide-org0e474b4">
+<h2 id="org0e474b4">Iterator practice</h2>
 <aside class="notes">
 <p>
 requires c++ 11.
@@ -322,9 +322,9 @@ requires c++ 11.
 </aside>
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span style="color: #598249;">vector</span>&lt;<span style="color: #598249;">int</span>&gt; <span style="color: #2F7BDE;">vec</span> = {66,89,0,60,17,90,8};
+<pre  class="src src-C++"><code trim><span style="color: #598249;">vector</span>&lt;<span style="color: #598249;">int</span>&gt; <span style="color: #2F7BDE;">vec</span> = {66,89,0,60,17,90,8};
 <span style="color: #15968D;">vector</span>&lt;<span style="color: #598249;">int</span>&gt;::<span style="color: #598249;">iterator</span> <span style="color: #2F7BDE;">it</span> = vec.begin();
-</pre>
+</code></pre>
 </div>
 
 <div class="figure">
@@ -333,13 +333,13 @@ requires c++ 11.
 </div>
 
 </section>
-<section >
+<section id="slide-org0e474b4-split">
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span style="color: #598249;">vector</span>&lt;<span style="color: #598249;">int</span>&gt; <span style="color: #2F7BDE;">vec</span> = {66,89,0,60,17,90,8};
+<pre  class="src src-C++"><code trim><span style="color: #598249;">vector</span>&lt;<span style="color: #598249;">int</span>&gt; <span style="color: #2F7BDE;">vec</span> = {66,89,0,60,17,90,8};
 <span style="color: #15968D;">vector</span>&lt;<span style="color: #598249;">int</span>&gt;::<span style="color: #598249;">iterator</span> <span style="color: #2F7BDE;">it</span> = vec.begin();
 it++;
-</pre>
+</code></pre>
 </div>
 
 <div class="figure">
@@ -348,14 +348,14 @@ it++;
 </div>
 
 </section>
-<section >
+<section id="slide-org0e474b4-split">
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span style="color: #598249;">vector</span>&lt;<span style="color: #598249;">int</span>&gt; <span style="color: #2F7BDE;">vec</span> = {66,89,0,60,17,90,8};
+<pre  class="src src-C++"><code trim><span style="color: #598249;">vector</span>&lt;<span style="color: #598249;">int</span>&gt; <span style="color: #2F7BDE;">vec</span> = {66,89,0,60,17,90,8};
 <span style="color: #15968D;">vector</span>&lt;<span style="color: #598249;">int</span>&gt;::<span style="color: #598249;">iterator</span> <span style="color: #2F7BDE;">it</span> = vec.begin();
 it++;
 it--;
-</pre>
+</code></pre>
 </div>
 
 <div class="figure">
@@ -364,7 +364,7 @@ it--;
 </div>
 
 </section>
-<section >
+<section id="slide-org0e474b4-split">
 <aside class="notes">
 <p>
 ask what is the result of this code. Call someone up to show where it will end up
@@ -373,10 +373,10 @@ ask what is the result of this code. Call someone up to show where it will end u
 </aside>
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span style="color: #598249;">vector</span>&lt;<span style="color: #598249;">int</span>&gt; <span style="color: #2F7BDE;">vec</span> = {66,89,0,60,17,90,8};
+<pre  class="src src-C++"><code trim><span style="color: #598249;">vector</span>&lt;<span style="color: #598249;">int</span>&gt; <span style="color: #2F7BDE;">vec</span> = {66,89,0,60,17,90,8};
 <span style="color: #15968D;">vector</span>&lt;<span style="color: #598249;">int</span>&gt;::<span style="color: #598249;">reverse_iterator</span> <span style="color: #2F7BDE;">it</span> = vec.rbegin();
 it += 3;
-</pre>
+</code></pre>
 </div>
 
 <div class="figure">
@@ -385,7 +385,7 @@ it += 3;
 </div>
 
 </section>
-<section >
+<section id="slide-org0e474b4-split">
 <aside class="notes">
 <p>
 write some for loops using iterators and printing out the numbers
@@ -394,10 +394,10 @@ write some for loops using iterators and printing out the numbers
 </aside>
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span style="color: #598249;">vector</span>&lt;<span style="color: #598249;">int</span>&gt; <span style="color: #2F7BDE;">vec</span> = {66,89,0,60,17,90,8};
+<pre  class="src src-C++"><code trim><span style="color: #598249;">vector</span>&lt;<span style="color: #598249;">int</span>&gt; <span style="color: #2F7BDE;">vec</span> = {66,89,0,60,17,90,8};
 <span style="color: #15968D;">vector</span>&lt;<span style="color: #598249;">int</span>&gt;::<span style="color: #598249;">reverse_iterator</span> <span style="color: #2F7BDE;">it</span> = vec.rbegin();
 it += 3;
-</pre>
+</code></pre>
 </div>
 
 <div class="figure">
@@ -407,8 +407,8 @@ it += 3;
 
 
 </section>
-<section id="slide-orgd1638fb">
-<h2 id="orgd1638fb">Algorithms</h2>
+<section id="slide-org78420a3">
+<h2 id="org78420a3">Algorithms</h2>
 <ul>
 <li>algorithms is a header that includes useful operators that can be used on vectors, arrays and other containers</li>
 <li>uses iterators to interact with these containers</li>
@@ -423,8 +423,8 @@ it += 3;
 </ul>
 
 </section>
-<section id="slide-org6c6a5f1">
-<h2 id="org6c6a5f1">Modifies the container</h2>
+<section id="slide-org44cb086">
+<h2 id="org44cb086">Modifies the container</h2>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -462,8 +462,8 @@ it += 3;
 </table>
 
 </section>
-<section id="slide-org41569ec">
-<h2 id="org41569ec"><code>nth_element</code> example</h2>
+<section id="slide-orgf52f837">
+<h2 id="orgf52f837"><code>nth_element</code> example</h2>
 <ul>
 <li><code>std::nth_element(first, nth, last);</code></li>
 <li><code>first</code> is an iterator to the beginning</li>
@@ -475,11 +475,11 @@ it += 3;
 
 
 </section>
-<section id="slide-org3388cda">
-<h2 id="org3388cda">Algorithm examples</h2>
+<section id="slide-orga4dc382">
+<h2 id="orga4dc382">Algorithm examples</h2>
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;vector&gt;</span>
+<pre  class="src src-C++"><code trim><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;vector&gt;</span>
 <span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iterator&gt;</span>
 <span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;algorithm&gt;</span>
 
@@ -493,12 +493,12 @@ it += 3;
       <span style="color: #5e6263;">//</span><span style="color: #5e6263;">this changes v to {5, 4, 3, 2, 1}</span>
       <span style="color: #15968D;">std</span>::reverse(v.begin(), v.end());
 }
-</pre>
+</code></pre>
 </div>
 
 </section>
-<section id="slide-org8bc8e0e">
-<h2 id="org8bc8e0e">Does not modify the container</h2>
+<section id="slide-org0de1581">
+<h2 id="org0de1581">Does not modify the container</h2>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -532,8 +532,8 @@ it += 3;
 
 
 </section>
-<section id="slide-org6454232">
-<h2 id="org6454232">Challenge</h2>
+<section id="slide-org8218fa4">
+<h2 id="org8218fa4">Challenge</h2>
 <ol>
 <li>Drive over the several gray strips, stopping at the black strip</li>
 <li>Determine which strip is the line sensor value</li>
@@ -551,29 +551,12 @@ it += 3;
 </section>
 </div>
 </div>
-<script src="https://robojackets.github.io/reveal.js/lib/js/head.min.js"></script>
 <script src="https://robojackets.github.io/reveal.js/js/reveal.js"></script>
 
 <script>
 // Full list of configuration options available here:
 // https://github.com/hakimel/reveal.js#configuration
 Reveal.initialize({
-
-controls: false,
-progress: true,
-history: false,
-center: true,
-slideNumber: 'c',
-rollingLinks: false,
-keyboard: true,
-overview: true,
-width: 1440,
-height: 800,
-margin: 0.15,
-
-theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-transition: Reveal.getQueryHash().transition || 'None', // default/cube/page/concave/zoom/linear/fade/none
-transitionSpeed: 'fast',
 multiplex: {
     secret: '', // null if client
     id: '', // id, obtained from socket.io server

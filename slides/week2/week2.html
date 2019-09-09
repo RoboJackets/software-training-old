@@ -29,8 +29,8 @@
 <section id="sec-title-slide"><h1 class="title">Week 2</h1>
 </section>
 
-<section id="slide-orgeddb244">
-<h2 id="orgeddb244">What are we doing today?</h2>
+<section id="slide-org6255372">
+<h2 id="org6255372">What are we doing today?</h2>
 <ul>
 <li>Introduction to C++
 <ul>
@@ -51,8 +51,8 @@
 </ul>
 
 </section>
-<section id="slide-org6c3ff56">
-<h2 id="org6c3ff56">What is C++?</h2>
+<section id="slide-orgeae2901">
+<h2 id="orgeae2901">What is C++?</h2>
 <ul>
 <li>Compiled (fast)</li>
 <li>Can be written in many different ways (flexible)</li>
@@ -61,8 +61,8 @@
 </ul>
 
 </section>
-<section id="slide-org87f17f6">
-<h2 id="org87f17f6">Starting notes</h2>
+<section id="slide-org976cc59">
+<h2 id="org976cc59">Starting notes</h2>
 <ul>
 <li>We assume some knowledge of basic of C/C++ syntax (if, for, while, datatypes, etc)
 <ul>
@@ -73,8 +73,8 @@
 </ul>
 
 </section>
-<section id="slide-org3d1c6d0">
-<h2 id="org3d1c6d0">hello-world.cpp</h2>
+<section id="slide-org56ba72b">
+<h2 id="org56ba72b">hello-world.cpp</h2>
 <ul>
 <li>A simple C++ program, we will be explaining what's going on here and more</li>
 <li>We will be using cpp.sh for live demos</li>
@@ -82,20 +82,20 @@
 </ul>
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
+<pre  class="src src-C++"><code trim><span class="linenr">1: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
 <span class="linenr">2: </span>
 <span class="linenr">3: </span><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
 <span class="linenr">4: </span>  <span style="color: #15968D;">std</span>::cout &lt;&lt; <span style="color: #15968D;">"Hello, world!"</span> &lt;&lt; <span style="color: #15968D;">std</span>::endl;
 <span class="linenr">5: </span>}
-</pre>
+</code></pre>
 </div>
 <p>
 <a href="http://cpp.sh/9yupt">Hello World live example</a>
 </p>
 
 </section>
-<section id="slide-org6c7067b">
-<h2 id="org6c7067b">Compiling and Running</h2>
+<section id="slide-org117e761">
+<h2 id="org117e761">Compiling and Running</h2>
 <ul>
 <li>Compiling turns C++ code into an executable program</li>
 <li>g++ is a common C++ compiler</li>
@@ -107,8 +107,8 @@ g++ hello-world.cpp -o hello-world.out
 </pre>
 
 </section>
-<section id="slide-orgc7d247e">
-<h2 id="orgc7d247e">Functions in C++</h2>
+<section id="slide-orgf8561f5">
+<h2 id="orgf8561f5">Functions in C++</h2>
 <ul>
 <li>Review: A function is a chunk of code with inputs and outputs</li>
 <li>C++ functions have 0 or more parameters (inputs) and have 0 or 1 output</li>
@@ -123,8 +123,8 @@ g++ hello-world.cpp -o hello-world.out
 </ul>
 
 </section>
-<section id="slide-org1360f9c">
-<h2 id="org1360f9c">Making a Function</h2>
+<section id="slide-org1c6abbc">
+<h2 id="org1c6abbc">Making a Function</h2>
 <ol>
 <li>Informative function name</li>
 <li>Input types</li>
@@ -133,31 +133,31 @@ g++ hello-world.cpp -o hello-world.out
 </ol>
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">void</span> <span style="color: #2F7BDE;">addAndPrint</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>, <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">y</span>) {
+<pre  class="src src-C++"><code trim><span class="linenr">1: </span><span style="color: #598249;">void</span> <span style="color: #2F7BDE;">addAndPrint</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>, <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">y</span>) {
 <span class="linenr">2: </span>
 <span class="linenr">3: </span>}
-</pre>
+</code></pre>
 </div>
 
 </section>
-<section id="slide-org309b006">
-<h2 id="org309b006">Making a Function</h2>
+<section id="slide-orgdfd4f48">
+<h2 id="orgdfd4f48">Making a Function</h2>
 <ul>
 <li>Use the parameters to do something</li>
 
 </ul>
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">void</span> <span style="color: #2F7BDE;">addAndPrint</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>, <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">y</span>) {
+<pre  class="src src-C++"><code trim><span class="linenr">1: </span><span style="color: #598249;">void</span> <span style="color: #2F7BDE;">addAndPrint</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>, <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">y</span>) {
 <span class="linenr">2: </span>    <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">sum</span> = x + y;
 <span class="linenr">3: </span>    <span style="color: #15968D;">std</span>::cout &lt;&lt; sum &lt;&lt; <span style="color: #15968D;">std</span>::endl;
 <span class="linenr">4: </span>}
-</pre>
+</code></pre>
 </div>
 
 </section>
-<section id="slide-orgd9d51bf">
-<h2 id="orgd9d51bf">Functions Example</h2>
+<section id="slide-org7a82cfd">
+<h2 id="org7a82cfd">Functions Example</h2>
 <ul>
 <li>We can split up this code to show you real return types</li>
 <li><code>return</code> statement must be used since the return type is not <code>void</code> anymore</li>
@@ -165,7 +165,7 @@ g++ hello-world.cpp -o hello-world.out
 </ul>
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span class="linenr"> 1: </span><span style="color: #598249;">void</span> <span style="color: #2F7BDE;">addAndPrint</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>, <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">y</span>) {
+<pre  class="src src-C++"><code trim><span class="linenr"> 1: </span><span style="color: #598249;">void</span> <span style="color: #2F7BDE;">addAndPrint</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>, <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">y</span>) {
 <span class="linenr"> 2: </span>    <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">sum</span> = x + y;
 <span class="linenr"> 3: </span>    <span style="color: #15968D;">std</span>::cout &lt;&lt; sum &lt;&lt; <span style="color: #15968D;">std</span>::endl;
 <span class="linenr"> 4: </span>}
@@ -177,7 +177,7 @@ g++ hello-world.cpp -o hello-world.out
 <span class="linenr">10: </span><span style="color: #598249;">void</span> <span style="color: #2F7BDE;">print</span>(<span style="color: #598249;">int</span> <span style="color: #2F7BDE;">value</span>) {
 <span class="linenr">11: </span>    <span style="color: #15968D;">std</span>::cout &lt;&lt; value &lt;&lt; <span style="color: #15968D;">std</span>::endl;
 <span class="linenr">12: </span>}
-</pre>
+</code></pre>
 </div>
 <ul>
 <li><code>print(add(3, 4))</code> gives the same result as <code>addAndPrint(3, 4)</code></li>
@@ -186,8 +186,8 @@ g++ hello-world.cpp -o hello-world.out
 </ul>
 
 </section>
-<section id="slide-orgc36a0d7">
-<h2 id="orgc36a0d7">Forward Declaration</h2>
+<section id="slide-org9b86fea">
+<h2 id="org9b86fea">Forward Declaration</h2>
 <ul>
 <li>Declaration = defining the name, parameters, and return type
 <ul>
@@ -206,8 +206,8 @@ g++ hello-world.cpp -o hello-world.out
 </ul>
 
 </section>
-<section id="slide-org818f099">
-<h2 id="org818f099">Overloading</h2>
+<section id="slide-org551841b">
+<h2 id="org551841b">Overloading</h2>
 <ul>
 <li>Function signature = name + list of parameter types</li>
 <li>Each function must have a unique signature. Names can be the same as long as the  parameters are different</li>
@@ -215,17 +215,17 @@ g++ hello-world.cpp -o hello-world.out
 </ul>
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #5e6263;">// </span><span style="color: #5e6263;">these all have different signatures</span>
+<pre  class="src src-C++"><code trim><span class="linenr">1: </span><span style="color: #5e6263;">// </span><span style="color: #5e6263;">these all have different signatures</span>
 <span class="linenr">2: </span><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">add</span>(<span style="color: #598249;">int</span>, <span style="color: #598249;">int</span>);
 <span class="linenr">3: </span><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">add</span>(<span style="color: #598249;">int</span>, <span style="color: #598249;">int</span>, <span style="color: #598249;">int</span>);
 <span class="linenr">4: </span><span style="color: #598249;">double</span> <span style="color: #2F7BDE;">add</span>(<span style="color: #598249;">double</span>, <span style="color: #598249;">double</span>);
 <span class="linenr">5: </span><span style="color: #598249;">double</span> <span style="color: #2F7BDE;">add</span>(<span style="color: #598249;">double</span>, <span style="color: #598249;">double</span>, <span style="color: #598249;">double</span>);
-</pre>
+</code></pre>
 </div>
 
 </section>
-<section id="slide-org9a0d59b">
-<h2 id="org9a0d59b">Includes</h2>
+<section id="slide-org68aa2e5">
+<h2 id="org68aa2e5">Includes</h2>
 <ul>
 <li>Why do we need <code>#include &lt;iostream&gt;</code>?
 <ul>
@@ -245,8 +245,8 @@ g++ hello-world.cpp -o hello-world.out
 </ul>
 
 </section>
-<section id="slide-org73a5cd7">
-<h2 id="org73a5cd7">Include syntax</h2>
+<section id="slide-orgbafeae5">
+<h2 id="orgbafeae5">Include syntax</h2>
 <ul>
 <li><code>&lt;&gt;</code> gets code from the standard library or installed libraries</li>
 <li><code>""</code> gets code from a nearby folder, or does the same thing as <code>&lt;&gt;</code> if it can't find anything</li>
@@ -260,17 +260,17 @@ g++ hello-world.cpp -o hello-world.out
 </ul>
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;string&gt;</span>  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">standard library</span>
+<pre  class="src src-C++"><code trim><span class="linenr">1: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;string&gt;</span>  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">standard library</span>
 <span class="linenr">2: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;QWidget&gt;</span>  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">file installed with Qt</span>
 <span class="linenr">3: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;ros/ros.h&gt;</span>  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">file installed with ROS</span>
 <span class="linenr">4: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">"include/my_interface.hpp"</span>  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">another file in the same project,</span>
-<span class="linenr">5: </span>                                     <span style="color: #5e6263;">// </span><span style="color: #5e6263;">in a folder called "include</span><span style="color: #bd3832; font-weight: bold;">"</span>
-</pre>
+<span class="linenr">5: </span>                                     <span style="color: #5e6263;">// </span><span style="color: #5e6263;">in a folder called "include"</span>
+</code></pre>
 </div>
 
 </section>
-<section id="slide-orgf0cbcdf">
-<h2 id="orgf0cbcdf">Namespaces</h2>
+<section id="slide-org3b643cd">
+<h2 id="org3b643cd">Namespaces</h2>
 <ul>
 <li>What happens when two things are assigned the same name (or the same function signature)?
 <ul>
@@ -294,8 +294,8 @@ g++ hello-world.cpp -o hello-world.out
 </ul>
 
 </section>
-<section id="slide-org75ecd34">
-<h2 id="org75ecd34">"using namespace" keyword</h2>
+<section id="slide-org3cab6bd">
+<h2 id="org3cab6bd">"using namespace" keyword</h2>
 <ul>
 <li><a href="http://cpp.sh/4d5gz">Hello world, but using std namespace</a></li>
 <li>Handy but also defeats the purpose of namespaces</li>
@@ -309,8 +309,8 @@ g++ hello-world.cpp -o hello-world.out
 </ul>
 
 </section>
-<section id="slide-org9fe0108">
-<h2 id="org9fe0108">"Auto" Keyword</h2>
+<section id="slide-org326dffc">
+<h2 id="org326dffc">"Auto" Keyword</h2>
 <ul>
 <li>C++ can figure out for you what type something should be</li>
 <li>Function <code>MakeObject()</code> returns some data of a particular type</li>
@@ -318,32 +318,32 @@ g++ hello-world.cpp -o hello-world.out
 </ul>
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span style="color: #598249;">namespace</span>::<span style="color: #15968D;">MyVeryLongDataTypeName</span> <span style="color: #2F7BDE;">data</span> = MakeObject();
-</pre>
+<pre  class="src src-C++"><code trim><span style="color: #598249;">namespace</span>::<span style="color: #15968D;">MyVeryLongDataTypeName</span> <span style="color: #2F7BDE;">data</span> = MakeObject();
+</code></pre>
 </div>
 <p>
 OR
 </p>
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span style="color: #598249;">auto</span> <span style="color: #2F7BDE;">data</span> = MakeObject();
-</pre>
+<pre  class="src src-C++"><code trim><span style="color: #598249;">auto</span> <span style="color: #2F7BDE;">data</span> = MakeObject();
+</code></pre>
 </div>
 <p>
 This can make your code easier or harder to read/maintain, depending on whether you name your variables well
 </p>
 
 </section>
-<section id="slide-orgce7f661">
-<h2 id="orgce7f661">Strings</h2>
+<section id="slide-org5cb2c50">
+<h2 id="org5cb2c50">Strings</h2>
 <ul>
 <li>C string (still valid in C++):</li>
 
 </ul>
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">char</span>[] s = <span style="color: #15968D;">"this is a string"</span>;
-</pre>
+<pre  class="src src-C++"><code trim><span class="linenr">1: </span><span style="color: #598249;">char</span>[] s = <span style="color: #15968D;">"this is a string"</span>;
+</code></pre>
 </div>
 <ul>
 <li>C++ string:</li>
@@ -351,10 +351,10 @@ This can make your code easier or harder to read/maintain, depending on whether 
 </ul>
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;string&gt;</span>
+<pre  class="src src-C++"><code trim><span class="linenr">1: </span><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;string&gt;</span>
 <span class="linenr">2: </span><span style="color: #15968D;">std</span>::<span style="color: #598249;">string</span> <span style="color: #2F7BDE;">s1</span>(<span style="color: #15968D;">"this is a string"</span>);  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">constructor</span>
 <span class="linenr">3: </span><span style="color: #15968D;">std</span>::<span style="color: #598249;">string</span> <span style="color: #2F7BDE;">s2</span> = <span style="color: #15968D;">"this is a string"</span>;  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">same effect as constructor</span>
-</pre>
+</code></pre>
 </div>
 <ul>
 <li>C++ strings are classes and have methods (like Java, unlike C)</li>
@@ -362,8 +362,8 @@ This can make your code easier or harder to read/maintain, depending on whether 
 </ul>
 
 </section>
-<section id="slide-orga00dddb">
-<h2 id="orga00dddb">String Methods</h2>
+<section id="slide-org3211028">
+<h2 id="org3211028">String Methods</h2>
 <ul>
 <li>What methods can I use for a string? (there are lots)
 <ul>
@@ -391,8 +391,8 @@ This can make your code easier or harder to read/maintain, depending on whether 
 </ul>
 
 </section>
-<section id="slide-org46bf73f">
-<h2 id="org46bf73f">Exercise 1</h2>
+<section id="slide-org1b722e3">
+<h2 id="org1b722e3">Exercise 1</h2>
 <ul>
 <li>Find a buddy (or work alone if you want)</li>
 <li>Write a function <code>make_palindrome</code>
@@ -407,8 +407,8 @@ This can make your code easier or harder to read/maintain, depending on whether 
 </ul>
 
 </section>
-<section id="slide-org1fa65bc">
-<h2 id="org1fa65bc">Solution</h2>
+<section id="slide-org7ede901">
+<h2 id="org7ede901">Solution</h2>
 <ul>
 <li>Using what we've learned so far
 <ul>
@@ -424,8 +424,8 @@ This can make your code easier or harder to read/maintain, depending on whether 
 </ul>
 
 </section>
-<section id="slide-org5a195d5">
-<h2 id="org5a195d5">Our Training Robots</h2>
+<section id="slide-org6cee0ad">
+<h2 id="org6cee0ad">Our Training Robots</h2>
 <ul>
 <li>We have robots for you to use!</li>
 <li>Your code runs on your laptop, sending commands via wifi to the robot</li>
@@ -441,11 +441,11 @@ This can make your code easier or harder to read/maintain, depending on whether 
 </ul>
 
 </section>
-<section id="slide-orgd08ec00">
-<h2 id="orgd08ec00">RJRobot API</h2>
+<section id="slide-org6e096f3">
+<h2 id="org6e096f3">RJRobot API</h2>
 <div class="org-src-container">
 
-<pre  class="src src-C++"><span class="linenr">1: </span><span style="color: #598249;">RJRobot</span> <span style="color: #2F7BDE;">robot</span>(REAL);  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">Make a new robot. Simulation may come later</span>
+<pre  class="src src-C++"><code trim><span class="linenr">1: </span><span style="color: #598249;">RJRobot</span> <span style="color: #2F7BDE;">robot</span>(REAL);  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">Make a new robot. Simulation may come later</span>
 <span class="linenr">2: </span>robot.SetDriveMotors(200, -200);  <span style="color: #5e6263;">//</span><span style="color: #5e6263;">-255 to 255 range on motors</span>
 <span class="linenr">3: </span>robot.SetLiftMotor(127);
 <span class="linenr">4: </span>robot.Wait(1000ms);
@@ -453,15 +453,15 @@ This can make your code easier or harder to read/maintain, depending on whether 
 <span class="linenr">6: </span><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">line_brightness</span> = robot.GetLineValue(<span style="color: #15968D;">LightSensor</span>::CENTER);  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">downwards line sensor</span>
 <span class="linenr">7: </span><span style="color: #598249;">double</span> <span style="color: #2F7BDE;">clearance</span> = robot.GetUltrasonicDistance();  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">forwards ultrasonic sensor</span>
 <span class="linenr">8: </span><span style="color: #598249;">Color</span> <span style="color: #2F7BDE;">ball_color</span> = robot.GetColor();  <span style="color: #5e6263;">// </span><span style="color: #5e6263;">forwards color sensor. RED, BLUE, or UNKNOWN</span>
-</pre>
+</code></pre>
 </div>
 <p>
 Full interface defined in <a href="https://github.com/RoboJackets/stsl/blob/master/include/STSL/RJRobot.h">RJRobot.h</a>. Use code completion in CLion as well.
 </p>
 
 </section>
-<section id="slide-org3e8e6c9">
-<h2 id="org3e8e6c9">Connecting to the Robot</h2>
+<section id="slide-org65b8d53">
+<h2 id="org65b8d53">Connecting to the Robot</h2>
 <ul>
 <li>Make sure you have the software-training repo cloned</li>
 <li>Open CLion</li>
@@ -475,8 +475,8 @@ Full interface defined in <a href="https://github.com/RoboJackets/stsl/blob/mast
 </ul>
 
 </section>
-<section id="slide-org9c0138c">
-<h2 id="org9c0138c">Today's robot challenges</h2>
+<section id="slide-orgd46e2ea">
+<h2 id="orgd46e2ea">Today's robot challenges</h2>
 <ul>
 <li>Drive in a square
 <ul>
@@ -495,8 +495,8 @@ Full interface defined in <a href="https://github.com/RoboJackets/stsl/blob/mast
 </ul>
 
 </section>
-<section id="slide-org944f34f">
-<h2 id="org944f34f">Supplemental Challenge 1: "FizzBuzz"</h2>
+<section id="slide-org1e0423c">
+<h2 id="org1e0423c">Supplemental Challenge 1: "FizzBuzz"</h2>
 <ul>
 <li>Print numbers 1 to n, except:
 <ul>
@@ -511,8 +511,8 @@ Full interface defined in <a href="https://github.com/RoboJackets/stsl/blob/mast
 </ul>
 
 </section>
-<section id="slide-org9c483ac">
-<h2 id="org9c483ac">Supplemental Challenge 2: Merge Strings</h2>
+<section id="slide-orge526ea8">
+<h2 id="orge526ea8">Supplemental Challenge 2: Merge Strings</h2>
 <ul>
 <li>Given two strings s1 and s2, return the string that has elements of s1 and s2 interweaved</li>
 <li>"abc", "12345" -&gt; "a1b2c345"</li>
@@ -526,8 +526,8 @@ Full interface defined in <a href="https://github.com/RoboJackets/stsl/blob/mast
 </ul>
 
 </section>
-<section id="slide-orgcb937c7">
-<h2 id="orgcb937c7">Supplemental Challenge Solutions</h2>
+<section id="slide-org1fe5526">
+<h2 id="org1fe5526">Supplemental Challenge Solutions</h2>
 <ul>
 <li>FizzBuzz <a href="http://cpp.sh/7zrsc">http://cpp.sh/7zrsc</a></li>
 <li>Merge Strings <a href="http://cpp.sh/2h4eg">http://cpp.sh/2h4eg</a></li>
@@ -538,29 +538,12 @@ Full interface defined in <a href="https://github.com/RoboJackets/stsl/blob/mast
 </section>
 </div>
 </div>
-<script src="https://robojackets.github.io/reveal.js/lib/js/head.min.js"></script>
 <script src="https://robojackets.github.io/reveal.js/js/reveal.js"></script>
 
 <script>
 // Full list of configuration options available here:
 // https://github.com/hakimel/reveal.js#configuration
 Reveal.initialize({
-
-controls: false,
-progress: true,
-history: false,
-center: true,
-slideNumber: 'c',
-rollingLinks: false,
-keyboard: true,
-overview: true,
-width: 1440,
-height: 800,
-margin: 0.15,
-
-theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-transition: Reveal.getQueryHash().transition || 'None', // default/cube/page/concave/zoom/linear/fade/none
-transitionSpeed: 'fast',
 multiplex: {
     secret: '', // null if client
     id: '', // id, obtained from socket.io server
