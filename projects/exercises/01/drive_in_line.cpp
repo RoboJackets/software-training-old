@@ -4,10 +4,11 @@ using namespace std;
 
 int main()
 {
-    RJRobot robot(RobotType::REAL); //Initialize a RJ Robot that controls a real robot
+    RJRobot robot(); //Initialize a RJ Robot
     
-    robot.setDriveMotors(127, 127); //Drive both robot motors forward at max speed
-    robot.Wait(2000ms); //Wait for 2000 milliseconds (2 seconds)
-    robot.StopMotors(); //Stop the motors
+    robot.setDriveMotors(1.0, 1.0); //Drive both robot motors forward at max speed
+    robot.wait(2000ms); //Wait for 2000 milliseconds (2 seconds)
+    robot.stopMotors(); //Stop the motors
 
+    return 0;
 }
