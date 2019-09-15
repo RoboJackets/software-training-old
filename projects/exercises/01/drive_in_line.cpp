@@ -1,7 +1,5 @@
 #include <STSL/RJRobot.h>
 
-using namespace std;
-
 int main()
 {
     RJRobot robot(); //Initialize a RJ Robot
