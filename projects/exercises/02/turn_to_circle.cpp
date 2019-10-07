@@ -5,7 +5,7 @@ int tick_time;
 float power;
 int min_size;
 float min_circularity;
-int min_value;
+int max_value;
 
 
 // direction: < 0 will turn counter-clockwise, > 0 will turn clockwise. 0 does nothing
@@ -65,7 +65,7 @@ int main(int argc, char** argv) {
     power = std::atof(argv[2]);
     min_size = std::atoi(argv[3]);
     min_circularity = std::atof(argv[4]);
-    min_value = std::atoi(argv[5]);
+    max_value = std::atoi(argv[5]);
 
     RJRobot robot;
 
