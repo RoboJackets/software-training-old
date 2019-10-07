@@ -29,8 +29,8 @@
 <section id="sec-title-slide"><h1 class="title">Week 6</h1>
 </section>
 
-<section id="slide-orgf4231a5">
-<h2 id="orgf4231a5">What are we doing today?</h2>
+<section id="slide-org986b1ae">
+<h2 id="org986b1ae">What are we doing today?</h2>
 <ul>
 <li>Const Keyword</li>
 <li>Initializer Lists</li>
@@ -46,8 +46,8 @@
 </ul>
 
 </section>
-<section id="slide-orgf5fe760">
-<h2 id="orgf5fe760">Const Keyword</h2>
+<section id="slide-orgbfe2f32">
+<h2 id="orgbfe2f32">Const Keyword</h2>
 <ul>
 <li>Can be used on both variables and member functions of objects
 <ul>
@@ -70,8 +70,8 @@
 </ul>
 
 </section>
-<section id="slide-orgeaed74a">
-<h3 id="orgeaed74a">Constant Variables</h3>
+<section id="slide-org0b03909">
+<h3 id="org0b03909">Constant Variables</h3>
 <div class="org-src-container">
 
 <pre  class="src src-c++"><code trim><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">main</span>() {
@@ -88,8 +88,8 @@
 </p>
 
 </section>
-<section id="slide-org892752f">
-<h3 id="org892752f">Constant Arguments</h3>
+<section id="slide-org343578b">
+<h3 id="org343578b">Constant Arguments</h3>
 <div class="org-src-container">
 
 <pre  class="src src-c++"><code trim><span style="color: #598249;">int</span> <span style="color: #2F7BDE;">constantArguments</span>(<span style="color: #598249;">const</span> <span style="color: #598249;">int</span> <span style="color: #2F7BDE;">x</span>) {
@@ -102,8 +102,8 @@
 </div>
 
 </section>
-<section id="slide-org24f82d0">
-<h3 id="org24f82d0">Constant Member Functions</h3>
+<section id="slide-org145c6ae">
+<h3 id="org145c6ae">Constant Member Functions</h3>
 <div class="org-src-container">
 
 <pre  class="src src-c++"><code trim><span style="color: #598249;">class</span> <span style="color: #598249;">Example</span> {
@@ -118,8 +118,8 @@
 </p>
 
 </section>
-<section id="slide-org2e93fca">
-<h3 id="org2e93fca">Why is this useful?</h3>
+<section id="slide-org9215847">
+<h3 id="org9215847">Why is this useful?</h3>
 <ul>
 <li>Good coding practice
 <ul>
@@ -137,8 +137,8 @@
 
 
 </section>
-<section id="slide-orgbf200a1">
-<h2 id="orgbf200a1">Initializer Lists</h2>
+<section id="slide-orgbc2af89">
+<h2 id="orgbc2af89">Initializer Lists</h2>
 <aside class="notes">
 <p>
 Describe what the below code does. Want to give a basic understanding of what it does
@@ -161,8 +161,8 @@ before trying to explain why they are useful
 
 
 </section>
-<section id="slide-orgca225ce">
-<h3 id="orgca225ce">Benefits of Initializer Lists</h3>
+<section id="slide-orgd493621">
+<h3 id="orgd493621">Benefits of Initializer Lists</h3>
 <ul>
 <li>Initializes the member variables before the object is constructed
 <ul>
@@ -174,8 +174,8 @@ before trying to explain why they are useful
 </ul>
 
 </section>
-<section id="slide-org4f17d30">
-<h3 id="org4f17d30">Initiliazing Constant Member Variables</h3>
+<section id="slide-org9880da8">
+<h3 id="org9880da8">Initiliazing Constant Member Variables</h3>
 <div class="org-src-container">
 
 <pre  class="src src-c++"><code trim><span style="color: #598249;">class</span> <span style="color: #598249;">Example</span> {
@@ -200,8 +200,8 @@ Someone check me on that second statement
 </aside>
 
 </section>
-<section id="slide-orgffd066e">
-<h3 id="orgffd066e">Initiliazing Constant Member Variables pt. 2</h3>
+<section id="slide-org923ac8d">
+<h3 id="org923ac8d">Initiliazing Constant Member Variables pt. 2</h3>
 <div class="org-src-container">
 
 <pre  class="src src-c++"><code trim><span style="color: #598249;">class</span> <span style="color: #598249;">Example</span> {
@@ -217,8 +217,8 @@ Someone check me on that second statement
 
 </ul>
 </section>
-<section id="slide-org38feacb">
-<h3 id="org38feacb">Default Constructors with Custom Default Values</h3>
+<section id="slide-orgc9471ce">
+<h3 id="orgc9471ce">Default Constructors with Custom Default Values</h3>
 <ul>
 <li>When a default constructor runs it calls the default constructors of all of the member variables</li>
 <li>But sometimes you want your class to have different default values than the standard default constructors of its members</li>
@@ -226,8 +226,8 @@ Someone check me on that second statement
 </ul>
 
 </section>
-<section id="slide-org44f1313">
-<h3 id="org44f1313">The Inefficient way to set default values</h3>
+<section id="slide-org6beaee4">
+<h3 id="org6beaee4">The Inefficient way to set default values</h3>
 <div class="org-src-container">
 
 <pre  class="src src-c++"><code trim><span style="color: #598249;">class</span> <span style="color: #598249;">Example</span> {
@@ -252,8 +252,8 @@ Someone check me on that second statement
 </ul>
 
 </section>
-<section id="slide-org6939c92">
-<h3 id="org6939c92">The Efficient way to set default values</h3>
+<section id="slide-orge069a99">
+<h3 id="orge069a99">The Efficient way to set default values</h3>
 <div class="org-src-container">
 
 <pre  class="src src-c++"><code trim><span style="color: #598249;">class</span> <span style="color: #598249;">Example</span> {
@@ -273,8 +273,8 @@ Someone check me on that second statement
 </ul>
 
 </section>
-<section id="slide-org30bc5d8">
-<h2 id="org30bc5d8">Header Guards</h2>
+<section id="slide-orga970dc1">
+<h2 id="orga970dc1">Header Guards</h2>
 <aside class="notes">
 <p>
 Go to the next slide to illustrate the issue
@@ -322,8 +322,8 @@ Go to the next slide to illustrate the issue
 </ul>
 
 </section>
-<section id="slide-org9c1bb06">
-<h3 id="org9c1bb06">Header Guards pt. 2</h3>
+<section id="slide-org92b2ecc">
+<h3 id="org92b2ecc">Header Guards pt. 2</h3>
 <aside class="notes">
 <p>
 Include statments aren't "run"&#x2026; anybody have a better term for this?
@@ -358,8 +358,8 @@ Include statments aren't "run"&#x2026; anybody have a better term for this?
 
 
 </section>
-<section id="slide-orgdc3c2d2">
-<h3 id="orgdc3c2d2">Header Guards pt. 3</h3>
+<section id="slide-org275cc45">
+<h3 id="org275cc45">Header Guards pt. 3</h3>
 <ul>
 <li>Example is defined twice and the compiler doesn't know which one to use</li>
 <li>Header guards prevent header files (the .h files that we use to declare classes) from conflicting with themselves by only including the code once</li>
@@ -367,8 +367,8 @@ Include statments aren't "run"&#x2026; anybody have a better term for this?
 </ul>
 
 </section>
-<section id="slide-org8704401">
-<h3 id="org8704401">Header Guard Syntax</h3>
+<section id="slide-org95fe964">
+<h3 id="org95fe964">Header Guard Syntax</h3>
 <div class="org-src-container">
 
 <pre  class="src src-c++"><code trim><span style="color: #5e6263;">//</span><span style="color: #5e6263;">in file: "example.h"</span>
@@ -394,8 +394,8 @@ Include statments aren't "run"&#x2026; anybody have a better term for this?
 </ul>
 
 </section>
-<section id="slide-org077b08f">
-<h3 id="org077b08f">Header Guard Syntax pt. 2</h3>
+<section id="slide-org0405ddf">
+<h3 id="org0405ddf">Header Guard Syntax pt. 2</h3>
 <ul>
 <li>Header guards work by only allowing the compiler to see the code inside the ifndef if the given macro is not yet defined.
 After the compiler has processed the .h file once the <code>EXAMPLE_H</code> macro is defined so the next time it attempts to include the file the code is hidden inside the if statement</li>
@@ -405,16 +405,16 @@ After the compiler has processed the .h file once the <code>EXAMPLE_H</code> mac
 
 
 </section>
-<section id="slide-orgd1e463c">
-<h2 id="orgd1e463c">Functors</h2>
+<section id="slide-org4d8be4e">
+<h2 id="org4d8be4e">Functors</h2>
 <ul>
 <li>A functor is basically an object with the operator() which allows it to be called like a function</li>
 <li>This allows us to create a "function" that can store data or use more information than its input arguments would otherwise allow</li>
 
 </ul>
 </section>
-<section id="slide-org5f7b499">
-<h3 id="org5f7b499">Functor Example</h3>
+<section id="slide-org7269944">
+<h3 id="org7269944">Functor Example</h3>
 <div class="org-src-container">
 
 <pre  class="src src-c++"><code trim><span style="color: #598249;">class</span> <span style="color: #598249;">increment</span> {
@@ -438,8 +438,8 @@ After the compiler has processed the .h file once the <code>EXAMPLE_H</code> mac
 </div>
 
 </section>
-<section id="slide-org7ddba06">
-<h3 id="org7ddba06">Lambdas</h3>
+<section id="slide-orgabe1eea">
+<h3 id="orgabe1eea">Lambdas</h3>
 <ul>
 <li>A lambda expression basically writes a short inline function</li>
 <li>Syntax:</li>
@@ -452,8 +452,8 @@ After the compiler has processed the .h file once the <code>EXAMPLE_H</code> mac
 }
 </pre>
 </section>
-<section id="slide-org55e6d85">
-<h3 id="org55e6d85">Syntax Breakdown</h3>
+<section id="slide-org89ef786">
+<h3 id="org89ef786">Syntax Breakdown</h3>
 <ul>
 <li>Most of the syntax works as it does in a function</li>
 <li>Arguments: the list of input arguments (ex: int a, double b,&#x2026;)</li>
@@ -471,8 +471,8 @@ After the compiler has processed the .h file once the <code>EXAMPLE_H</code> mac
 }
 </pre>
 </section>
-<section id="slide-orgd9b7914">
-<h3 id="orgd9b7914">Capture Clauses</h3>
+<section id="slide-org3544b23">
+<h3 id="org3544b23">Capture Clauses</h3>
 <ul>
 <li>It is important to note that although the lambda is defined inline the code still accesses it through a normal function call
 <ul>
@@ -516,8 +516,8 @@ After the compiler has processed the .h file once the <code>EXAMPLE_H</code> mac
 </tbody>
 </table>
 </section>
-<section id="slide-org30643db">
-<h3 id="org30643db">Lambda Example</h3>
+<section id="slide-org6836e59">
+<h3 id="org6836e59">Lambda Example</h3>
 <div class="org-src-container">
 
 <pre  class="src src-c++"><code trim><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
@@ -545,8 +545,8 @@ After the compiler has processed the .h file once the <code>EXAMPLE_H</code> mac
 <a href="https://ideone.com/i5U6hC">Example</a>
 </p>
 </section>
-<section id="slide-org3fb2015">
-<h3 id="org3fb2015">STL and Functors</h3>
+<section id="slide-orgaf9759b">
+<h3 id="orgaf9759b">STL and Functors</h3>
 <ul>
 <li>Many STL algorithms accept functors and lambdas as their last argument</li>
 <li>Types of Functors:
@@ -559,16 +559,16 @@ After the compiler has processed the .h file once the <code>EXAMPLE_H</code> mac
 
 </ul>
 </section>
-<section id="slide-org4598c97">
-<h3 id="org4598c97">Predicates</h3>
+<section id="slide-orgfaa9829">
+<h3 id="orgfaa9829">Predicates</h3>
 <ul>
 <li>A Predicate is a function or functor that returns a boolean value</li>
 <li>A common use for predicates is to allow an STL algorithm to be applied only to the members of a container that meet the requirement of the Predicate</li>
 
 </ul>
 </section>
-<section id="slide-org7d31e46">
-<h3 id="org7d31e46"><code>count_if</code></h3>
+<section id="slide-org3e81a15">
+<h3 id="org3e81a15"><code>count_if</code></h3>
 <ul>
 <li><code>count_if</code> is a STL function that counts the number of elements in a container that match the condition of the unary predicate it is given</li>
 <li><code>count_if(InputIterator first, InputIterator last, UnaryPredicate pred)</code></li>
@@ -576,8 +576,8 @@ After the compiler has processed the .h file once the <code>EXAMPLE_H</code> mac
 </ul>
 
 </section>
-<section id="slide-org3003288">
-<h3 id="org3003288"><code>count_if</code> example</h3>
+<section id="slide-org597f210">
+<h3 id="org597f210"><code>count_if</code> example</h3>
 <div class="org-src-container">
 
 <pre  class="src src-c++"><code trim><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;iostream&gt;</span>
@@ -603,8 +603,8 @@ After the compiler has processed the .h file once the <code>EXAMPLE_H</code> mac
 <a href="https://ideone.com/6wBPvF">Example</a>
 </p>
 </section>
-<section id="slide-org2a35139">
-<h3 id="org2a35139">transform</h3>
+<section id="slide-org00d565e">
+<h3 id="org00d565e">transform</h3>
 <ul>
 <li>transform is a STL function that iterates through a given range applying the given Unary function and storing it in a second range
 <ul>
@@ -616,8 +616,8 @@ After the compiler has processed the .h file once the <code>EXAMPLE_H</code> mac
 </ul>
 
 </section>
-<section id="slide-org128393b">
-<h3 id="org128393b">transform example</h3>
+<section id="slide-org2c1007b">
+<h3 id="org2c1007b">transform example</h3>
 <div class="org-src-container">
 
 <pre  class="src src-c++"><code trim><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;algorithm&gt;</span>
@@ -641,8 +641,8 @@ After the compiler has processed the .h file once the <code>EXAMPLE_H</code> mac
 <a href="https://ideone.com/RTQd7i">Example</a>
 </p>
 </section>
-<section id="slide-org8eda8a1">
-<h2 id="org8eda8a1">Exercise: Color Binning</h2>
+<section id="slide-orgc64331d">
+<h2 id="orgc64331d">Exercise: Color Binning</h2>
 <ol>
 <li>Drive the light sensor across the series of strips recording all of the values seen</li>
 <li>Use a STL function to replace each reading with the value of:
