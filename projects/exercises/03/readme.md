@@ -8,7 +8,9 @@ The PID controller is an algoirthm that minimizes the error between the target a
 
 output = (kp * error) + ki * integral(error) + kd * derivative(error)
 
-Where the error is the difference between the target velocity and the measured velocity.
+Where the error is the difference between the target velocity and the measured velocity. kp, ki, and kd are what we call "gains" they are constants that we need to tune to get the proper response of your system. i.e. to make the ouput match the target. So what do we do after we have the "ouput"? We need to apply that to the motors. 
+
+The motors can only take an input between -1 and 1, so you can imagine that if you make any of your gains high, you will easily go out of that range. When a system is limited in terms of its input like this, we call it saturation. We should make sure that our pid output is saturated to below 1 and above -1. This will prevent us from passing an invalid number into our motor outputs.
 
 If we want the robot to travel in a straight line, then we want both wheel velocities to be the same. This means that you will need two different wheel velocity PID controllers: one for the right wheel and one for the left wheel.
 
@@ -35,8 +37,8 @@ Part of making a PID controller is tuning the kp, ki, and kd gains in the contro
 
 ## 4. Add advanced functionality to the PID Class
 
-Remember that an integrator constatnly sums the error. This can be an issue if your integrator gets to be so large that it completly dominates the PID loop. So we can use something call antiwindup. There are many implementations, but the main idea is that we never let the integrator get to big - we never let it "windup". One simple implementation is to just stop summing the integrator if we are over a certain threshold. Attempt to impement this in the PID controller.
+Remember that an integrator constatnly sums the error. This can be an issue if there is saturation in your system. What can happen is you are apply maximum effort, but do to saturation you are still not adding enough effort. So your integrator will contiue to grow and grow, otherwise known as "integrator windup". So we can use something call antiwindup. There are many implementations, but the main idea is that we never let the integrator get to big - we never let it "windup". One simple implementation is to just stop summing the integrator if we are over a certain threshold and subtract a small amount from it to get it below the threshold. Attempt to impement this in the PID controller.
 
 ## Bonus:
 
-Make the PID controller distance based rather than velocity based.
+Make the PID controller distance based rather than velocity based. This will require you to convert the encoder velocities to positions through integration. Good Luck!
