@@ -6,11 +6,11 @@
     "export LD_LIBRARY_PATH=/opt/opencv-4.1.1/lib:/usr/local/lib:$LD_LIBRARY_PATH",
     "if [ \"$debug\" == true ]; then ",
     "echo 'DEBUG MODE'",
-    "/usr/bin/g++ -ggdb3 -std=c++14 $file_path/*.cpp -o runnable.out -L/usr/lib -lrobotcontrol -L/usr/local/lib -lSTSL -lpthread",
+    "/usr/bin/g++ -ggdb3 -std=c++14 $file_path/*.cpp -o runnable.out -L/usr/lib -lrobotcontrol -L/usr/local/lib -lSTSL `pkg-config --cflags --libs opencv` -lpthread",
     "chmod 755 runnable.out",
     "node $HOME/.c9/bin/c9gdbshim.js runnable.out $args",
     "else",
-    "/usr/bin/g++ -std=c++14 $file_path/*.cpp -o runnable.out -L/usr/lib -lrobotcontrol -L/usr/local/lib -lSTSL -lpthread",
+    "/usr/bin/g++ -std=c++14 $file_path/*.cpp -o runnable.out -L/usr/lib -lrobotcontrol -L/usr/local/lib -lSTSL `pkg-config --cflags --libs opencv` -lpthread",
     "chmod 755 runnable.out",
     "./runnable.out $args",
     "fi"
