@@ -20,9 +20,13 @@ float PID::update(float target, float current)
     float error = target - current;
     
     
-    if (integrator < antiwindup)
+    if (std::abs(integrator) < antiwindup)
     {
         integrator += error * dt;
+    }
+    else
+    {
+        integrator -= 0.05; 
     }
 
     float derivative = (error - prev_error) / dt;
