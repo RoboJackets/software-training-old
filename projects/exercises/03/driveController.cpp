@@ -2,7 +2,6 @@
 #include "pid.h"
 #include <ctime>
 #include <unistd.h>
-#include <thread>
 
 int main()
 {
@@ -16,7 +15,8 @@ int main()
     
     auto prev_time = std::chrono::system_clock::now();
     
-    std::this_thread::sleep_for (std::chrono::seconds(1));
+    //robot.wait(1000);
+    //std::this_thread::sleep_for (std::chrono::seconds(1));
    // usleep(10000);
 
     auto curr_time = std::chrono::system_clock::now();
