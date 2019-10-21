@@ -29,8 +29,8 @@
 <section id="sec-title-slide"><h1 class="title">Week 3</h1>
 </section>
 
-<section id="slide-orgeb191d8">
-<h2 id="orgeb191d8">What are we doing today?</h2>
+<section id="slide-org85f4fc0">
+<h2 id="org85f4fc0">What are we doing today?</h2>
 <ul>
 <li>An introduction to the <i>Standard Template Library</i>
 <ul>
@@ -43,8 +43,8 @@
 </ul>
 
 </section>
-<section id="slide-org27c0415">
-<h2 id="org27c0415">The Standard Template Library (STL)</h2>
+<section id="slide-org9ebab20">
+<h2 id="org9ebab20">The Standard Template Library (STL)</h2>
 <ul>
 <li>a collection of general purpose containers and algorithms that are included in C++</li>
 <li>Containers store things; algorithms perform operations on those things</li>
@@ -53,8 +53,8 @@
 </ul>
 
 </section>
-<section id="slide-org4d7dc90">
-<h2 id="org4d7dc90">Containers</h2>
+<section id="slide-orga57e784">
+<h2 id="orga57e784">Containers</h2>
 <ul>
 <li>Data structures in the STL that store a collection of other objects are
 called <i>containters</i></li>
@@ -66,8 +66,8 @@ type of data the container stores.</li>
 </ul>
 
 </section>
-<section id="slide-org92aeeb9">
-<h2 id="org92aeeb9">Vectors</h2>
+<section id="slide-orgf13ae2a">
+<h2 id="orgf13ae2a">Vectors</h2>
 <aside class="notes">
 <p>
 initializer lists require c++11 for vectors.
@@ -94,8 +94,8 @@ meaning it can only store type <code>int</code></li>
 </ul>
 
 </section>
-<section id="slide-orgb1688c2">
-<h2 id="orgb1688c2">Vector methods</h2>
+<section id="slide-orgf599b2a">
+<h2 id="orgf599b2a">Vector methods</h2>
 <aside class="notes">
 <p>
 Vectors can grow as items are added, whereas arrays are static.
@@ -154,8 +154,8 @@ Vectors can grow as items are added, whereas arrays are static.
 </table>
 
 </section>
-<section id="slide-org8c72495">
-<h2 id="org8c72495">Playing with Vectors</h2>
+<section id="slide-org7cb8380">
+<h2 id="org7cb8380">Playing with Vectors</h2>
 <div class="org-src-container">
 
 <pre  class="src src-C++"><code trim><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;vector&gt;</span>
@@ -175,8 +175,8 @@ Vectors can grow as items are added, whereas arrays are static.
 </div>
 
 </section>
-<section id="slide-orgea6853a">
-<h2 id="orgea6853a">More vector examples</h2>
+<section id="slide-org8b5df43">
+<h2 id="org8b5df43">More vector examples</h2>
 <aside class="notes">
 <p>
 We'll get to begin() and end() later
@@ -210,8 +210,8 @@ We'll get to begin() and end() later
 
 
 </section>
-<section id="slide-org4939122">
-<h2 id="org4939122">Iterators</h2>
+<section id="slide-org4a38860">
+<h2 id="org4a38860">Iterators</h2>
 <ul>
 <li>An object that lets you access and modify objects in a container</li>
 <li>Depending on their type, they will let you read or write data in the container, and move forwards, backwards, or both</li>
@@ -220,8 +220,8 @@ We'll get to begin() and end() later
 </ul>
 
 </section>
-<section id="slide-orgdc5a3e6">
-<h2 id="orgdc5a3e6">Iterator methods</h2>
+<section id="slide-orga286c32">
+<h2 id="orga286c32">Iterator methods</h2>
 <aside class="notes">
 <p>
 picture upcoming. mention that the method should be called on the containing object
@@ -268,8 +268,8 @@ picture upcoming. mention that the method should be called on the containing obj
 </ul>
 
 </section>
-<section id="slide-org3531eb7">
-<h2 id="org3531eb7">Iterator Methods</h2>
+<section id="slide-org8eb3a4a">
+<h2 id="org8eb3a4a">Iterator Methods</h2>
 
 <div class="figure">
 <p><img src="https://i.imgur.com/XOfZ5kf.png" alt="XOfZ5kf.png" />
@@ -277,8 +277,8 @@ picture upcoming. mention that the method should be called on the containing obj
 </div>
 
 </section>
-<section id="slide-orgd29f76b">
-<h2 id="orgd29f76b">Iterator operations</h2>
+<section id="slide-org13422a0">
+<h2 id="org13422a0">Iterator operations</h2>
 <aside class="notes">
 <p>
 picture upcoming
@@ -312,8 +312,8 @@ picture upcoming
 </table>
 
 </section>
-<section id="slide-orgea38374">
-<h2 id="orgea38374">Iterator practice</h2>
+<section id="slide-org91e3729">
+<h2 id="org91e3729">Iterator practice</h2>
 <aside class="notes">
 <p>
 requires c++ 11.
@@ -333,7 +333,7 @@ requires c++ 11.
 </div>
 
 </section>
-<section id="slide-orgea38374-split">
+<section id="slide-org91e3729-split">
 <div class="org-src-container">
 
 <pre  class="src src-C++"><code trim><span style="color: #598249;">vector</span>&lt;<span style="color: #598249;">int</span>&gt; <span style="color: #2F7BDE;">vec</span> = {66,89,0,60,17,90,8};
@@ -348,7 +348,7 @@ it++;
 </div>
 
 </section>
-<section id="slide-orgea38374-split">
+<section id="slide-org91e3729-split">
 <div class="org-src-container">
 
 <pre  class="src src-C++"><code trim><span style="color: #598249;">vector</span>&lt;<span style="color: #598249;">int</span>&gt; <span style="color: #2F7BDE;">vec</span> = {66,89,0,60,17,90,8};
@@ -364,7 +364,7 @@ it--;
 </div>
 
 </section>
-<section id="slide-orgea38374-split">
+<section id="slide-org91e3729-split">
 <aside class="notes">
 <p>
 ask what is the result of this code. Call someone up to show where it will end up
@@ -385,7 +385,7 @@ it += 3;
 </div>
 
 </section>
-<section id="slide-orgea38374-split">
+<section id="slide-org91e3729-split">
 <aside class="notes">
 <p>
 write some for loops using iterators and printing out the numbers
@@ -407,8 +407,8 @@ it += 3;
 
 
 </section>
-<section id="slide-org6e255bd">
-<h2 id="org6e255bd">Algorithms</h2>
+<section id="slide-org2fb2e8c">
+<h2 id="org2fb2e8c">Algorithms</h2>
 <ul>
 <li>algorithms is a header that includes useful operators that can be used on vectors, arrays and other containers</li>
 <li>uses iterators to interact with these containers</li>
@@ -423,8 +423,8 @@ it += 3;
 </ul>
 
 </section>
-<section id="slide-org081300b">
-<h2 id="org081300b">Modifies the container</h2>
+<section id="slide-org4f0b88c">
+<h2 id="org4f0b88c">Modifies the container</h2>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -462,8 +462,8 @@ it += 3;
 </table>
 
 </section>
-<section id="slide-org5520b6b">
-<h2 id="org5520b6b"><code>nth_element</code> example</h2>
+<section id="slide-orga271d9f">
+<h2 id="orga271d9f"><code>nth_element</code> example</h2>
 <ul>
 <li><code>std::nth_element(first, nth, last);</code></li>
 <li><code>first</code> is an iterator to the beginning</li>
@@ -475,8 +475,8 @@ it += 3;
 
 
 </section>
-<section id="slide-org80b84e6">
-<h2 id="org80b84e6">Algorithm examples</h2>
+<section id="slide-org1ed469e">
+<h2 id="org1ed469e">Algorithm examples</h2>
 <div class="org-src-container">
 
 <pre  class="src src-C++"><code trim><span style="color: #598249;">#include</span> <span style="color: #15968D;">&lt;vector&gt;</span>
@@ -497,8 +497,8 @@ it += 3;
 </div>
 
 </section>
-<section id="slide-org323291e">
-<h2 id="org323291e">Does not modify the container</h2>
+<section id="slide-org50499dc">
+<h2 id="org50499dc">Does not modify the container</h2>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -532,8 +532,8 @@ it += 3;
 
 
 </section>
-<section id="slide-org1804792">
-<h2 id="org1804792">Challenge</h2>
+<section id="slide-orgf0e0543">
+<h2 id="orgf0e0543">Challenge</h2>
 <ol>
 <li>Drive over the several gray strips, stopping at the black strip</li>
 <li>Determine which strip is the line sensor value</li>
