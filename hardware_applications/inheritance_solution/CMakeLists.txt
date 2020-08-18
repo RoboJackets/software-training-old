@@ -1,3 +1,0 @@
-add_executable(inheritance_solution inheritance_soln.cpp RJRobotExtended_solution.h RJRobotExtended.cpp)
-add_dependencies(inheritance_solution STSL)
-target_link_libraries(inheritance_solution ${STSL_LIBS})

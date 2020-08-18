@@ -1,3 +1,0 @@
-add_executable(color_binning_solution color_binning_solution.cpp)
-add_dependencies(color_binning_solution STSL)
-target_link_libraries(color_binning_solution ${STSL_LIBS})
