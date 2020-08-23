@@ -8,3 +8,7 @@ CMakeFiles/
 projects/.c9/*
 *.o
 
+*.idea
+cmake-build-debug
+build
+
