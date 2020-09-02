@@ -172,6 +172,7 @@ Now try to run the program and test that the array gets reversed!
         }
     }
   ```
+  
 </details>
 
 6. In the loop, increment `left` and decrement `right` so that `left` will iterate forwards over the first half and `right` will iterate backwards over the second half
