@@ -128,4 +128,8 @@ Our controller always allows cars going north or south to proceed if they are wa
 going north-south is uncommon turns out to be incorrect, what problem might this behavior cause? How would you change
 the state machine for the controller to address this problem?
 
-**TODO:** Add more reflection questions
+Do you feel that structuring this code using a class helped you understand the code better? Why or why not?
+
+Did you use access specifiers (public, private, etc.) to protect your class's internal data? If not, how do you make
+sure that your state variable only changes in accordance with your transition rules? Would you be certain of that
+guarantee if you handed your class over to someone else to use (and potentially abuse)?
