@@ -1,5 +1,5 @@
 # Exercise 1.2
-Welcome to your second exercise of RoboJackets software training! This exercise will be testing your knowledge of basic C++ syntax and vector manipulation. For this exercise we expect you to have watched or know the content of the Codecademy C++ course up through vectors, as well as our own video about types.
+Welcome to your second exercise of RoboJackets software training! This exercise will be testing your knowledge of basic C++ syntax and array manipulation. For this exercise we expect you to have watched or know the content of the Codecademy C++ course up through vectors, as well as our own video about types.
 
 # Exercise Objective
 In this exercise, you will be reversing an array and checking if a string is a palindrome. The purpose of this exercise is to get you familar with working with arrays. This exercise should help solidify your knowledge of loops, variables, conditionals, and arrays.
@@ -165,7 +165,7 @@ Now try to run the program and test that the array gets reversed!
   ```c++
     while (h > l)
     {
-        if (str[l++] != str[h--])
+        if (str[l] != str[h])
         {
             isPalindrome = false;
             break;
@@ -173,9 +173,26 @@ Now try to run the program and test that the array gets reversed!
     }
   ```
 
+6. In the loop, increment `left` and decrement `right` so that `left` will iterate forwards over the first half and `right` will iterate backwards over the second half
+<details>
+  <summary>Answer</summary>
+
+  ```c++
+    while (left < right)
+    {
+        if (str[left] != str[right])
+        {
+            isPalindrome = false;
+            break;
+        }
+        left++;
+        right--;
+    }
+  ```
+
 </details>
 
-6. Print out the results (ex. <str\> is (NOT) a palindrome)
+7. Print out the results (ex. <str\> is (NOT) a palindrome)
 <details>
   <summary>Answer</summary>
 
