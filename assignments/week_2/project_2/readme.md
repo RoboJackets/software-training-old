@@ -1,22 +1,22 @@
 # Project 2: Traffic Light State Machine
 
 In this project, you'll be creating software to control the traffic lights for a road intersection. State machines are
-actually super useful for traffic lights! Instead of having to manage all of the possible conditions that might control 
+actually super useful for traffic lights! Instead of having to manage all of the possible conditions that might control
 when any given light is lit up, the entire intersection can be governed by a small number of legal light states and
-transitions between them. This makes it easy to verify safety specifications. If none of the states turn on 
-perpendicular green lights, we can be confident that the light controller won't cause a crash by showing green lights 
+transitions between them. This makes it easy to verify safety specifications. If none of the states turn on
+perpendicular green lights, we can be confident that the light controller won't cause a crash by showing green lights
 to every direction.
 
 For this project, we'll be modelling a four-way intersection between a large road (running east-west) and a smaller road
 running north-south). Because the smaller road see much less traffic than the larger road, sensors have been installed
-under the stop lines for the smaller road. Each sensor reads high (1) when a car is waiting at that spot, and low (0) 
-if no car is waiting at that spot. This lets the light controller make informed decisions about which road to 
+under the stop lines for the smaller road. Each sensor reads high (1) when a car is waiting at that spot, and low (0)
+if no car is waiting at that spot. This lets the light controller make informed decisions about which road to
 allow through on every cycle, prioritizing the larger road when no cars are waiting at the smaller road.
 
-**TODO:** Add figure of intersection here!
+![Intersection diagram](intersection_diagram.png)
 
 Our intersection will use fixed-length cycles, so the controller doesn't need to worry about responding immediately to
-sensor inputs. Each light state will last for a certain duration, and the controller will only need to check the sensors 
+sensor inputs. Each light state will last for a certain duration, and the controller will only need to check the sensors
 to decide which direction to turn green. There are no turns allowed at this intersection, so we don't need to worry
 about turn signals.
 
@@ -33,9 +33,9 @@ Here is a summary of our desired light behavior:
 
 Each second of simulated time is indicated by a new line of input sent to the program's standard input. Each line of
 input contains two binary digits. The first digit is the reading from the north sensor, and the second digit is the
-reading from the south sensor. 
+reading from the south sensor.
 
-Your program should respond to each line of input with a line of output describing which lights your controller would 
+Your program should respond to each line of input with a line of output describing which lights your controller would
 like to turn on. This output should be six binary digits. These digits should encode the light outputs as follows
 
 1. Red lights for north-south road
@@ -50,14 +50,14 @@ is "001100".
 
 A full cycle that allows the east-west road to travel would look like this:
 
-100100 // Start cycle with all red lights  
-100001 // Green lights for east-west  
-100001  
-100001  
-100001  
-100001  // Green lights have now been on for 5 seconds  
-100010  // Yellow lights for east-west  
-100010  // Yellow lights have now been on for 2 seconds  
+100100 // Start cycle with all red lights
+100001 // Green lights for east-west
+100001
+100001
+100001
+100001  // Green lights have now been on for 5 seconds
+100010  // Yellow lights for east-west
+100010  // Yellow lights have now been on for 2 seconds
 100100  // Back to red to complete the cycle
 
 When the controller is ready to turn on green lights to start a cycle, it must check the car sensors. If either sensor
@@ -75,24 +75,24 @@ yourself. This is here to help you along if you really, truly get stuck.
 
 <details>
 <summary>Solution</summary>
-    
-**TODO:** Add state machine figure here
-    
+
+![Example state machine](state_machine.png)
+
 </details>
 
 ## Code Setup
 
-You have been given a small bit of starter code to help you get going on this project. This starter code simply takes 
+You have been given a small bit of starter code to help you get going on this project. This starter code simply takes
 input from `std::cin` one line at a time. When it finds a line whose length is not 2, the program ends. Take a moment
 to read and understand this starter code. Remember, you can always check cppreference.com for any standard library
 features you're not familiar with (ie. [std::getline()](https://en.cppreference.com/w/cpp/string/basic_string/getline)).
 
 While there are many ways to capture state machine-like behavior in a C++ program, we want you to practice the tools
-you've been learning this week. We suggest making a class for your state machine. 
+you've been learning this week. We suggest making a class for your state machine.
 
 Your class should probably have a constructor for initialization, some way of accepting sensor/time inputs, and some way
-of returning light outputs. The inputs and outputs can be handled in one function 
-(ie. `OutputStruct Controller::update(InputStruct input)`) or split into different functions (ie. 
+of returning light outputs. The inputs and outputs can be handled in one function
+(ie. `OutputStruct Controller::update(InputStruct input)`) or split into different functions (ie.
 `void Controller::putInput(InputStruct input)` and `OutputStruct Controller::getOutput()`).
 
 You may want to add private functions to your class to split the work it has to do into meaningful sections.
@@ -103,7 +103,7 @@ it's all captured as private member variables of your class.
 
 ## Testing Your Code
 
-A selection of test cases have been provided in the `test_cases` folder for this project along with a script, 
+A selection of test cases have been provided in the `test_cases` folder for this project along with a script,
 `runner.sh`. When you build your code, this script and test cases directory will be copied to your build folder. Within
 that folder, you can use the runner script to test your controller program against a specific test case. For example, to
 run the first test case:
@@ -112,16 +112,16 @@ run the first test case:
 $ ./runner.sh test_cases/test_case_1.txt
 ```
 
-The runner script will show the output of your program at each time step, highlight any errors, and print a final 
+The runner script will show the output of your program at each time step, highlight any errors, and print a final
 message telling you whether or not that run succeeded.
 
-Once you've got your program passing all of these test cases, take a look at the reflection questions in the next 
+Once you've got your program passing all of these test cases, take a look at the reflection questions in the next
 section.
 
 ## Reflection Questions
 
 Congrats on completing your second training project! The following questions are to help guide you through digesting
-the work you've done on this project and the things you've learned. These are questions you can think through on your 
+the work you've done on this project and the things you've learned. These are questions you can think through on your
 own or discuss with your teammates.
 
 Our controller always allows cars going north or south to proceed if they are waiting. If our expectation that traffic
