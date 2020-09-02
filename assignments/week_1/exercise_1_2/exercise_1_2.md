@@ -12,7 +12,6 @@ We have already given you a main() function to write your code in and have inclu
 #include <stdio.h>
 #include <string.h>
 #include <iostream>
-using namespace std;
 
 int main()
 {
@@ -21,20 +20,19 @@ int main()
     int n = sizeof(arr) / sizeof(arr[0]);
 
     // Print original array
-    cout << "Original Array: ";
+    std::cout << "Original Array: ";
     for (int i = 0; i < n; i++)
-        cout << arr[i] << " ";
-    cout << endl;
+        std::cout << arr[i] << " ";
+    std::cout << std::endl;
 
     // Reverse Array
     // WRITE YOUR STRING REVERSAL HERE
 
     // Print the Reversed array
-    cout << "Reversed Array: ";
+    std::cout << "Reversed Array: ";
     for (int i = 0; i < n; i++)
-        cout << arr[i] << " ";
-    cout << endl;
-
+        std::cout << arr[i] << " ";
+    std::cout << std::endl;
 
     // Part 2: Palindrome Check
     char str[] = "abbcdcbba";
@@ -200,9 +198,9 @@ Now try to run the program and test that the array gets reversed!
 
   ```c++
     if (isPalindrome)
-        cout << str << " is a palindrome" << endl;
+        std::cout << str << " is a palindrome" << std::endl;
     else
-        cout << str << " is NOT a palindrome" << endl;
+        std::cout << str << " is NOT a palindrome" << std::endl;
   ```
 
 </details>

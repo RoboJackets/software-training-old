@@ -3,8 +3,6 @@
 #include <string.h>
 #include <iostream>
 
-using namespace std;
-
 int main()
 {
     // Part 1: Array Reversal
@@ -12,20 +10,19 @@ int main()
     int n = sizeof(arr) / sizeof(arr[0]);
 
     // Print original array
-    cout << "Original Array: ";
+    std::cout << "Original Array: ";
     for (int i = 0; i < n; i++)
-        cout << arr[i] << " ";
-    cout << endl;
+        std::cout << arr[i] << " ";
+    std::cout << std::endl;
 
     // Reverse Array
     // WRITE YOUR STRING REVERSAL HERE
-
+    
     // Print the Reversed array
-    cout << "Reversed Array: ";
+    std::cout << "Reversed Array: ";
     for (int i = 0; i < n; i++)
-        cout << arr[i] << " ";
-    cout << endl;
-
+        std::cout << arr[i] << " ";
+    std::cout << std::endl;
 
     // Part 2: Palindrome Check
     char str[] = "abbcdcbba";
