@@ -1,57 +1,55 @@
 # Exercise 1.2
-Welcome to your second exercise of RoboJackets software training! This exercise will be testing your knowledge of basic C++ syntax and array manipulation. For this exercise we expect you to have watched or know the content of the Codecademy C++ course up through vectors.
+Welcome to your second exercise of RoboJackets software training! This exercise will be testing your knowledge of basic C++ syntax and vector manipulation. For this exercise we expect you to have watched or know the content of the Codecademy C++ course up through vectors.
 
 # Exercise Objective
-In this exercise, you will be reversing an array and checking if a string is a palindrome. The purpose of this exercise is to get you familar with working with arrays. This exercise should help solidify your knowledge of loops, variables, conditionals, and arrays.
+In this exercise, you will be reversing an vector and checking if a string is a palindrome. The purpose of this exercise is to get you familar with working with vectors and strings. This exercise should help solidify your knowledge of loops, variables, conditionals, and vectors. We aren't going to be using any new C++ standard library functions in the instructions, but feel free to you them if you want.
 
 # Starting Code
 We have already given you a main() function to write your code in and have included the proper libraries for you to use. We have also set up most of variable initilization and commented where you will write your code.
 
+
+### Part 1: Vector Reversal
 ```c++
-// Iterative C++ program to reverse an array and check if string is palindrome
-#include <stdio.h>
-#include <string.h>
 #include <iostream>
+#include <vector>
 
 int main()
 {
-    // Part 1: Array Reversal
-    int arr[] = {1, 2, 3, 4, 5, 6};
-    int n = sizeof(arr) / sizeof(arr[0]);
+    // Part 1: Vector Reversal
 
-    // Print original array
-    std::cout << "Original Array: ";
-    for (int i = 0; i < n; i++)
-        std::cout << arr[i] << " ";
+    // Input vector from command-line
+    std::vector<int> list;
+    int input;
+    std::cout << "Input List Of Numbers (end list with non-integer):" << std::endl;
+    while (std::cin >> input)
+        list.push_back(input);
+
+    // Print original vector
+    std::cout << "Original Vector: ";
+    for (int v : list)
+        std::cout << v << " ";
     std::cout << std::endl;
 
-    // Reverse Array
-    // WRITE YOUR STRING REVERSAL HERE
+    // Reverse Vector
+    // WRITE YOUR VECTOR REVERSAL HERE
 
-    // Print the Reversed array
-    std::cout << "Reversed Array: ";
-    for (int i = 0; i < n; i++)
-        std::cout << arr[i] << " ";
+    // Print the Reversed vector
+    std::cout << "Reversed Vector: ";
+    for (int v : list)
+        std::cout << v << " ";
     std::cout << std::endl;
-
-    // Part 2: Palindrome Check
-    char str[] = "abbcdcbba";
-
-    // Palindrome Check
-    // WRITE YOUR PALINDROME CHECK HERE
 
     return 0;
 }
 ```
 
-#### Array Reversal
-1. Create variables for the array's `start` and `end` indices
+1. Create variables for the vector's `start` and `end` indices
 <details>
   <summary>Answer</summary>
 
   ```c++
     int start = 0;
-    int end = n - 1;
+    int end = list.size() - 1;
   ```
 
 </details>
@@ -85,16 +83,16 @@ int main()
 
 </details>
 
-4. In the loop, swap the elements at `start` and `end` with each other so `arr[start]` -> `arr[end]` and `arr[end]` -> `arr[start]`
+4. In the loop, swap the elements at `start` and `end` with each other so `list[start]` -> `list[end]` and `list[end]` -> `list[start]`
 <details>
   <summary>Answer</summary>
 
   ```c++
     while (start < end)
     {
-        int temp = arr[start];
-        arr[start] = arr[end];
-        arr[end] = temp;
+        int temp = list[start];
+        list[start] = list[end];
+        list[end] = temp;
         start++;
         end--;
     }
@@ -102,17 +100,40 @@ int main()
 
 </details>
 
-Now try to run the program and test that the array gets reversed!
+Now try to run the program and test that the vector gets reversed!
 
 
-#### Palindrome Check
-1. Create variables for the array's leftmost and rightmost indices (`left` and `right`)
+### Part 2: Palindrome Check
+```c++
+#include <iostream>
+#include <vector>
+
+int main()
+#include <iostream>
+
+int main()
+{
+    // Part 2: Palindrome Check
+
+    // Input string from command-line
+    std::string str;
+    std::cout << "Ender String:" << std::endl;
+    std::cin >> str;
+
+    // Palindrome Check
+    // WRITE YOUR PALINDROME CHECK HERE
+
+    return 0;
+}
+```
+
+1. Create variables for the string's leftmost and rightmost indices (`left` and `right`)
 <details>
   <summary>Answer</summary>
 
   ```c++
     int left = 0;
-    int right = strlen(str) - 1;
+    int right = str.length() - 1;
   ```
 
 </details>
@@ -206,3 +227,9 @@ Now try to run the program and test that the array gets reversed!
 </details>
 
 Now run the program and test multiple strings to check your program works!
+
+# Review
+Great Job! You successfully manipulated a vector and string in this exercise. Although, these intructions explains one method to do vector reversal and palindrome
+checking, there exists much easier ways to do this operations using C++ standard library functions. For example, `std::reverse(list.begin(), list.end());` would
+reversal the vector in just one line without any hassle! Also, `str == string(str.rbegin(), str.rend())` would check if `str` is a palindrome in one line as well.
+The standard library is powerful tool for writing C++ code and as you progress through this week's exercises you become more and more familiar with them!
