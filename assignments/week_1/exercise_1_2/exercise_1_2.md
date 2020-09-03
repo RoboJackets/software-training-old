@@ -101,8 +101,7 @@ int main()
 </details>
 
 ##### Expected Output
-_Note: Make sure you end your list of integers with a non-interger character (in these examples we are using '.')_
-
+_Note: Make sure you end your list of integers with a non-interger character (in these examples we are using '.')_ <br>
 **Example**:
   - **Input**: 1 2 3 4 5 .
   - **Output**: 5 4 3 2 1
