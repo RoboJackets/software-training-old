@@ -2,7 +2,7 @@
 Welcome to your second exercise of RoboJackets software training! This exercise will be testing your knowledge of basic C++ syntax and vector manipulation. For this exercise we expect you to have watched or know the content of the Codecademy C++ course up through vectors.
 
 # Exercise Objective
-In this exercise, you will be reversing an vector and checking if a string is a palindrome. The purpose of this exercise is to get you familar with working with vectors and strings. This exercise should help solidify your knowledge of loops, variables, conditionals, and vectors. We aren't going to be using any new C++ standard library functions in the instructions, but feel free to you them if you want.
+In this exercise, you will be reversing an vector and checking if a string is a palindrome. The purpose of this exercise is to get you familar with working with vectors and strings. This exercise should help solidify your knowledge of loops, variables, conditionals, and vectors. _We aren't going to be using any new C++ standard library functions in the instructions, but feel free to use them if you want._
 
 # Starting Code
 We have already given you a main() function to write your code in and have included the proper libraries for you to use. We have also set up most of variable initilization and commented where you will write your code.
@@ -230,6 +230,6 @@ Now run the program and test multiple strings to check your program works!
 
 # Review
 Great Job! You successfully manipulated a vector and string in this exercise. Although, these intructions explains one method to do vector reversal and palindrome
-checking, there exists much easier ways to do this operations using C++ standard library functions. For example, `std::reverse(list.begin(), list.end());` would
+checking, there exists much easier ways to do these operations using C++ standard library functions. For example, `std::reverse(list.begin(), list.end());` would
 reversal the vector in just one line without any hassle! Also, `str == string(str.rbegin(), str.rend())` would check if `str` is a palindrome in one line as well.
-The standard library is powerful tool for writing C++ code and as you progress through this week's exercises you become more and more familiar with them!
+The standard library is powerful tool for writing C++ code and as you progress through future weeks' exercises you become more and more familiar with it!
