@@ -106,10 +106,6 @@ Now try to run the program and test that the vector gets reversed!
 ### Part 2: Palindrome Check
 ```c++
 #include <iostream>
-#include <vector>
-
-int main()
-#include <iostream>
 
 int main()
 {
