@@ -102,18 +102,18 @@ int main()
 
 ##### Expected Output
 _Note: Make sure you end your list of integers with a non-interger character (in these examples we are using '.')_
-*Example*:
-  - *Input*: 1 2 3 4 5 .
-  - *Output*: 5 4 3 2 1
+**Example**:
+  - **Input**: 1 2 3 4 5 .
+  - **Output**: 5 4 3 2 1
 
-  - *Input*: 4 3 5 6 9 .
-  - *Output*: 9 6 5 3 4
+  - **Input**: 4 3 5 6 9 .
+  - **Output**: 9 6 5 3 4
 
 Now try to run the program and test that the vector gets reversed!
 
 
 ### Part 2: Palindrome Check
-A *palindrome* is a word, number, phrase, or other sequence of characters which reads the same backward as forward (such as _madam_ and _racecar_). Therefore, a string is said to be palindrome if the reverse of the string is the same as the string.
+A **palindrome** is a word, number, phrase, or other sequence of characters which reads the same backward as forward (such as _madam_ and _racecar_). Therefore, a string is said to be palindrome if the reverse of the string is the same as the string.
 
 ```c++
 #include <iostream>
@@ -234,12 +234,12 @@ int main()
 </details>
 
 ##### Expected Output
-*Example*:
-  - *Input*: abcdcba
-  - *Output*: abcdcba is a palindrome
+**Example**:
+  - **Input**: abcdcba
+  - **Output**: abcdcba is a palindrome
 
-  - *Input*: pineapple
-  - *Output*: pineapple is NOT a palindrome
+  - **Input**: pineapple
+  - **Output**: pineapple is NOT a palindrome
 
 Now run the program and test multiple strings to check your program works!
 
