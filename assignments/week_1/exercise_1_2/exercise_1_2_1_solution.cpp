@@ -7,7 +7,7 @@ int main()
 
     // Input vector from command-line
     std::vector<int> list;
-    int input;
+    int input = 0;
     std::cout << "Input List Of Numbers (end list with non-integer):" << std::endl;
     while (std::cin >> input)
         list.push_back(input);

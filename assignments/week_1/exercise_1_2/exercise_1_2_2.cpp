@@ -6,7 +6,7 @@ int main()
 
     // Input string from command-line
     std::string str;
-    std::cout << "Ender String:" << std::endl;
+    std::cout << "Enter String:" << std::endl;
     std::cin >> str;
 
     // Palindrome Check

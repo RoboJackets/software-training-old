@@ -6,7 +6,7 @@ int main()
 
     // Input string from command-line
     std::string str;
-    std::cout << "Ender String:" << std::endl;
+    std::cout << "Enter String:" << std::endl;
     std::cin >> str;
 
     // Palindrome Check
@@ -14,19 +14,19 @@ int main()
     int left = 0;
     int right = str.length() - 1;
 
-    bool isPalindrome = true;
+    bool is_palindrome = true;
     while (left < right)
     {
         if (str[left] != str[right])
         {
-            isPalindrome = false;
+            is_palindrome = false;
             break;
         }
         left++;
         right--;
     }
 
-    if (isPalindrome)
+    if (is_palindrome)
         std::cout << str << " is a palindrome" << std::endl;
     else
         std::cout << str << " is NOT a palindrome" << std::endl;

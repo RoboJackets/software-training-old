@@ -100,10 +100,21 @@ int main()
 
 </details>
 
+##### Expected Output
+_Note: Make sure you end your list of integers with a non-interger character (in these examples we are using '.')
+Example:
+  - Input: 1 2 3 4 5 .
+  - Output: 5 4 3 2 1
+
+  - Input: 4 3 5 6 9 .
+  - Output: 9 6 5 3 4
+
 Now try to run the program and test that the vector gets reversed!
 
 
 ### Part 2: Palindrome Check
+A *palindrome* is a word, number, phrase, or other sequence of characters which reads the same backward as forward (such as _madam_ and _racecar_). Therefore, a string is said to be palindrome if the reverse of the string is the same as the string.
+
 ```c++
 #include <iostream>
 
@@ -113,7 +124,7 @@ int main()
 
     // Input string from command-line
     std::string str;
-    std::cout << "Ender String:" << std::endl;
+    std::cout << "Enter String:" << std::endl;
     std::cin >> str;
 
     // Palindrome Check
@@ -134,12 +145,12 @@ int main()
 
 </details>
 
-2. Create a variable (`isPalindrome`) that will store the result of the palindrome check
+2. Create a variable (`is_palindrome`) that will store the result of the palindrome check
 <details>
   <summary>Answer</summary>
 
   ```c++
-    bool isPalindrome = true;
+    bool is_palindrome = true;
   ```
 
 </details>
@@ -173,7 +184,7 @@ int main()
 
 </details>
 
-5. If the elements are different, then the string should be marked are not a palindrome and you should leave the loop
+5. If the characters are different, you should set `is_palindrome` to false and leave the loop.
 <details>
   <summary>Answer</summary>
 
@@ -182,7 +193,7 @@ int main()
     {
         if (str[l] != str[h])
         {
-            isPalindrome = false;
+            is_palindrome = false;
             break;
         }
     }
@@ -199,7 +210,7 @@ int main()
     {
         if (str[left] != str[right])
         {
-            isPalindrome = false;
+            is_palindrome = false;
             break;
         }
         left++;
@@ -214,7 +225,7 @@ int main()
   <summary>Answer</summary>
 
   ```c++
-    if (isPalindrome)
+    if (is_palindrome)
         std::cout << str << " is a palindrome" << std::endl;
     else
         std::cout << str << " is NOT a palindrome" << std::endl;
@@ -222,10 +233,37 @@ int main()
 
 </details>
 
+##### Expected Output
+Example:
+  - Input: abcdcba
+  - Output: abcdcba is a palindrome
+
+  - Input: pineapple
+  - Output: pineapple is NOT a palindrome
+
 Now run the program and test multiple strings to check your program works!
 
 # Review
-Great Job! You successfully manipulated a vector and string in this exercise. Although, these intructions explains one method to do vector reversal and palindrome
-checking, there exists much easier ways to do these operations using C++ standard library functions. For example, `std::reverse(list.begin(), list.end());` would
-reversal the vector in just one line without any hassle! Also, `str == string(str.rbegin(), str.rend())` would check if `str` is a palindrome in one line as well.
-The standard library is powerful tool for writing C++ code and as you progress through future weeks' exercises you become more and more familiar with it!
+Great Job! You successfully manipulated a vector and string in this exercise. Although, these instructions explain one method to do vector reversal and palindrome checking, there are much easier ways to do these operations using C++ standard library functions.
+
+For example, [`std::reverse()`](https://en.cppreference.com/w/cpp/algorithm/reverse) lets you easily reverse any standard container.
+
+```c++
+std::reverse(list.begin(), list.end());
+```
+
+For palindrome checking, there are multiple one-line solutions using the standard library features. Standard containers (including `std::string`) have reverse iterators that let you iterate over the container in reverse order. So the palindrome check could be written like this:
+
+```c++
+bool is_palindrome = ( str == string(str.rbegin(), str.rend()) );
+```
+
+Or even in a way that's generic for any standard container:
+
+```c++
+bool is_palindrome = std::equal(str.begin(), str.begin() + str.size()/2, str.rbegin());
+```
+
+Checkout [`std::string::rbegin()`](https://en.cppreference.com/w/cpp/string/basic_string/rbegin) and [`std::string::rend()`](https://en.cppreference.com/w/cpp/string/basic_string/rend) for documentation.
+
+The standard library is a powerful tool for writing C++ code. As you progress through future weeks' exercises, you'll become more and more familiar with it!
