@@ -5,7 +5,7 @@ Welcome to your second exercise of RoboJackets software training! This exercise 
 In this exercise, you will be reversing an vector and checking if a string is a palindrome. The purpose of this exercise is to get you familar with working with vectors and strings. This exercise should help solidify your knowledge of loops, variables, conditionals, and vectors. _We aren't going to be using any new C++ standard library functions in the instructions, but feel free to use them if you want._
 
 # Starting Code
-We have already given you a main() function to write your code in and have included the proper libraries for you to use. We have also set up most of variable initilization and commented where you will write your code.
+We have already given you a `main()` function to write your code in and have included the proper libraries for you to use. We have also set up most of variable initilization and commented where you will write your code.
 
 
 ### Part 1: Vector Reversal
