@@ -1,5 +1,5 @@
 # Exercise 1.1
-Welcome to your first exercise of RoboJackets software training! Exercises are shorter an simpler assignments where you will be walked through how to write certain code. This exercise will be testing your knowledge of basic C++ syntax as well as basic programming concepts. For this exercise we expect you to have watched or know the content of the Codecademy C++ course up through vectors, as well as our own video about types.
+Welcome to your first exercise of RoboJackets software training! Exercises are shorter and simpler assignments where you will be walked through how to write certain code. This exercise will be testing your knowledge of basic C++ syntax as well as basic programming concepts. For this exercise we expect you to have watched or know the content of the Codecademy C++ course up through vectors.
 
 # Exercise Objective
 In this exercise you will be controlling the movements of a robot with 4 wheels via the command line. The goal is to create a system that will move a robot left, right, forwards or backwards depending on input by the user. Every time the direction of the robot is inputted by the user, the robot should print out the speed each wheel is going. The robot should also continuously check for user input until it is told to stop by the user.
