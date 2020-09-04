@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
             keep_going = false;
         }
         else {
-            std::cout << "Sorry I didn't get that, try again" << std::endl;
+            std::cout << "Sorry, I didn't get that. Try again." << std::endl;
         }
 
         for (int i = 0; i < 4; i++) {
