@@ -40,7 +40,7 @@ dataiter = iter(trainloader)
 images, labels = dataiter.next()
 
 ## show images
-#imshow(torchvision.utils.make_grid(images)) TODO
+imshow(torchvision.utils.make_grid(images))
 
 # ====================================================================
 

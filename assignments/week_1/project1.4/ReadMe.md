@@ -82,6 +82,11 @@ the performance starts to degrade significantly.
 
 You should be getting accuracy above 90%.
 
+<details>
+  <summary>Answer</summary>
+  A learning rate of 1e-3 seems to work well in practice with 3 epochs.
+</details>
+
 ## Part 4
 Now that we have a beautiful neural network for the current dataset let us try
 something a little more difficult. We will be using KMNIST, a dataset very similar to MNIST.
