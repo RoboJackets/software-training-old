@@ -14,9 +14,9 @@ convolutional neural network in order to effectively process the image data.
 We will be using something called Google Colab. This allows you to run a python notebook
 on google servers using their GPU's. Often GPU setup is nontrivial and this allows us to
 get up an running almost immediately. You would not want to use this for more general
-work unless you do not have another option. Open up the file here and click the button
-to add it to your own drive. There is also a complete version of the code that can be found
-here in script form.
+work unless you do not have another option. Open up the file [here](https://colab.research.google.com/drive/1IihcgCl13Nbui1NNhlwiv4ekWD808CRI?usp=sharing)
+and click the button to add it to your own drive. There is also a complete
+version of the code that can be foundhere in script form.
 
 Today we will be using Python but you *DO NOT NEED TO KNOW PYTHON*. A lot of machine
 learning libraries are implemented with python wrappers, hence why we are using python.
