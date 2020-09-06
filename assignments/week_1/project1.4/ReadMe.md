@@ -91,8 +91,6 @@ You should be getting accuracy above 90%.
 Now that we have a beautiful neural network for the current dataset let us try
 something a little more difficult. We will be using KMNIST, a dataset very similar to MNIST.
 
-TODO include graphic
-
 Go back to the section where we loaded in the dataset and change the lines to be
 
 ````python
