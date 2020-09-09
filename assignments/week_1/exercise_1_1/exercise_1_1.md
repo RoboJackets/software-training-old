@@ -73,57 +73,57 @@ int main(int argc, char** argv) {
   
 </details>
 
-4. Within the else if statement for ‘w’, create a for loop which increases each float in wheel_speed by 1. The for loop should count from 0 to 3 and use the counter with square brackets as the index for wheel_speeds.
+4. Within the else if statement for ‘w’, create a for loop which sets each float in wheel_speeds to 1. The for loop should count from 0 to 3 and use the counter with square brackets as the index for wheel_speeds.
 <details>
   <summary>Answer</summary>
   
   ```c++
   for (int i = 0; i < 4; i++) {
-    wheel_speeds[i]++; 
+    wheel_speeds[i] = 1; 
   }
   ```
   
 </details>
 
-5. Within the else if statement for ‘a’, decrement the floats at indices 0 and 1 by 0.5 and increment the floats at indices 2 and 3 by 0.5 in the wheel_speeds vector. Do this by individually accessing each index using square brackets ```[]```.
+5. Within the else if statement for ‘a’, set the floats at indices 0 and 2 to 0.5 and set the floats at indices 1 and 3 to 1 in the wheel_speeds vector. Do this by individually accessing each index using square brackets ```[]```.
 <details>
   <summary>Answer</summary>
 
   ```c++
-  wheel_speeds[0] -= 0.5;
-  wheel_speeds[2] -= 0.5;
-  wheel_speeds[1] += 1;
-  wheel_speeds[3] += 1;
+  wheel_speeds[0] = 0.5;
+  wheel_speeds[2] = 0.5;
+  wheel_speeds[1] = 1;
+  wheel_speeds[3] = 1;
   ```
   
 </details>
 
-6. Within the else if statement for ‘s’, create a for loop which decreases each float in wheel_speeds by 1.
+6. Within the else if statement for ‘s’, create a for loop which sets each float in wheel_speeds to -1.
 <details>
   <summary>Answer</summary>
 
   ```c++
   for (int i = 0; i < 4; i++) {
-    wheel_speeds[i]--;
+    wheel_speeds[i] = -1;
   }
   ```
   
 </details>
 
-7. Within the if else statement for ‘d’, decrement the floats at indices 2 and 3 by 0.5 and increment the floats at indices 0 and 1 by 0.5 in the wheel_speeds vector.
+7. Within the if else statement for ‘d’, set the floats at indices 1 and 3 to 0.5 and set the floats at indices 0 and 2 to 0.5 in the wheel_speeds vector.
 <details>
   <summary>Answer</summary>
 
   ```c++
-  wheel_speeds[0] += 1;
-  wheel_speeds[2] += 1;
-  wheel_speeds[1] -= 0.5;
-  wheel_speeds[3] -= 0.5;
+  wheel_speeds[0] = 1;
+  wheel_speeds[2] = 1;
+  wheel_speeds[1] = 0.5;
+  wheel_speeds[3] = 0.5;
   ```
   
 </details>
 
-8. Within the if else statement for ‘e’, create a for loop which SETS all wheel speeds to 0, then create a print statement that prints “Shutting Down” and set the the keep_going boolean to false to stop the while loop from continuing.
+8. Within the if else statement for ‘e’, create a for loop which sets all wheel speeds to 0, then create a print statement that prints “Shutting Down” and set the the keep_going boolean to false to stop the while loop from continuing.
 <details>
   <summary>Answer</summary>
 
