@@ -1,5 +1,4 @@
-//Do not edit the next 5 lines
-#include <stdlib.h>
+//Do not edit the next 4 lines
 #include <iostream>
 #include <vector>
 
