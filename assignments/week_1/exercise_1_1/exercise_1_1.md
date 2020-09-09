@@ -4,7 +4,7 @@ Welcome to your first exercise of RoboJackets software training! Exercises are s
 # Exercise Objective
 In this exercise you will be controlling the movements of a car like robot with 4 wheels via the command line. The robot looks like a simple car with 4 wheels, each numbered as shown below. All 4 wheel speeds are controlled independently of each other and can move either forward (positive speed) or backward (negative speed). Since the wheels do not pivot, to turn left the left wheels must be moving slower than the right wheels. Similarly to turn right the right wheels must be going slower than the left wheels. The goal is to create a system that will let the robot move forward, backward, and turn left or right while moving forward. Every time the direction of the robot is inputted by the user, the robot should print out the speed each wheel is going. The robot should also continuously check for user input until it is told to stop by the user. 
 
-![alt text](https://github.com/HussainGynai/software-training/blob/master/exercise_1.1_robot.PNG)
+![alt text](exercise_1.1_robot.PNG)
 
 # Starting Code
 We have already given you a main() function to write your code in and have included the proper libraries for you to use. We have also set up most of the while loop where you will write most of your code; the keep_going boolean will be used to trigger then end of the while loop, so you will need to change its value at some point. We have also set up the user input which is stored in the char variable, direction; this is the variable that you need to check for what was inputted.
