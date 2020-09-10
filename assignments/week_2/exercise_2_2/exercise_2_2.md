@@ -12,7 +12,7 @@ We are looking at a commandline implementation of a tic tac toe game that you ca
 The first thing you will want to do is find out where the main function is. Since
 this is the first method run it can usually give you some clue to the structure
 of the code and you can start tracing from there. Now for this example it is
-pretty easy to find.
+pretty easy to find, just look at the bottom on main.cpp.
 
 So it looks there are a couple helper methods in this file. Just based off of the
 method names we can begin to guess what these methods might do.
@@ -58,8 +58,6 @@ and then making sure they are valid before making that move.
 
 ```c++
 char charForMarker(Marker m) {
-  // TODO add the other cases
-  // Marker::X and Marker::O
   switch (m) {
     case Marker::Empty:
       return ' ';
@@ -150,6 +148,11 @@ Finally the main decides the winner
 from this code we can see that it is using the winner marker to determine which
 player has won. That mean the markers are unique to each player.
 
+# Board class
+Now that we have looked at the main file and have a general idea of what is happening
+we should look at the Board object itself. A good place to start is the
+header file
+
 ## Looking at the header file
 Hopefully the person who wrote the code properly documented it and left some
 useful comments in the header file. Let's open up the Board.h file.
@@ -208,8 +211,137 @@ with a 3x3 board.
   std::array<Marker,9> data;
 ```
 
-# Implement your own computer strategy
-Now let us see if we can make a better way to play tic tac toe. We are going to
-implement some simple blocking procedures to make it more difficult for the human
-player to win.
+## Looking at Board.cpp
+
+Unfortunately it looks like this class is missing some key functionality. There
+are a lot of TODO's. The rest of this exercise will be filling in those missing
+methods.
+
+Starting off with the constructor
+
+```c++
+/**
+ * constructor
+ *  - Fill data array with Empty Markers
+ *  - Set winner to Empty
+ */
+Board::Board() {
+  // TODO
+}
+```
+
+Now our class has a member variable winner. This is the marker that was last used
+so we know who the winner is (the last person to move into a winning condition is the winner).
+The comments tell us we need to fill our board (array) with empty markers, and
+we need to set the winner to empty.
+
+Let's test what we have by running the code
+
+```bash
+    mkdir build
+    cd build
+    cmake ..
+    make
+    ./exercise_2_2
+```
+
+<details>
+  <summary>Answer</summary>
+
+  ```c++
+    std::fill(data.begin(), data.end(), Marker::Empty);
+    winner = Marker::Empty;
+  ```
+</details>
+
+Next we have the method to get a marker
+
+```c++
+/**
+ * getMarker
+ * @param r  integer, row coordinate of place to read
+ * @param c  integer, column coordinate of place to read
+ * @return marker contained at <r,c>
+ */
+Marker Board::getMarker(int r, int c) {
+  // TODO using the helper return the marker at that location data[index]
+  // TODO use helper method locationToIndex
+}
+```
+
+So this method should get the marker value at the correct location in the
+std::array<Marker> data. There is a helper method to convert a row and col into
+a index in that array. This should method should just be accessing the array
+at that point. Now let's look at that helper method.
+
+```c++
+/**
+ * locationToIndex
+ * @param r  integer, row coordinate
+ * @param c  integer, column coordinate
+ * @return index (of type size_t) for data array corresponding to <r,c>
+ * @note data should be row-ordered, so each row of the board should be
+ *       saved contiguously in data immediately following the row above it.
+ */
+size_t Board::locationToIndex(int r, int c) {
+  // TODO what is the formula for the index into data based off of row and col?
+  // indexes of the board are
+  // data[0], data[1], data[2]
+  // data[3], data[4], data[5]
+  // data[6], data[7], data[8]
+  return 0;
+}
+
+```
+
+
+<details>
+  <summary>Answer getMarker</summary>
+
+  ```c++
+    return data[locationToIndex(r,c)];
+  ```
+</details>
+
+
+<details>
+  <summary>Answer locationToIndex</summary>
+
+  ```c++
+    return ( r * 3 ) + c;
+  ```
+</details>
+
+Now we can see that we need to find a formula for how to convert a row and col
+into the correct location in a flattened 1d array.
+
+```c++
+/**
+ * isOver
+ * @return true if the game is over, false otherwise
+ * @note The game is over if no more moves can be made or if one player has won the game
+ */
+bool Board::isOver() {
+  // TODO
+}
+```
+
+Finally we need to check if the game has ended. There are a couple conditions
+listed in the comments. See if you can figure out a good way to test your methods.
+
+
+<details>
+  <summary>Answer</summary>
+
+  ```c++
+      if(std::count(data.begin(), data.end(), Marker::Empty) == 0) {
+        return true;
+      } else if(getWinner() != Marker::Empty) {
+        return true;
+      } else {
+        return false;
+      }
+  ```
+</details>
+
 
