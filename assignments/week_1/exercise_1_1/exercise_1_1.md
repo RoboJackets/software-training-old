@@ -130,7 +130,7 @@ int main() {
   for (int i = 0; i < 4; i++) {
     wheel_speeds[i] = 0;
   }
-  std::cout << "Shutting down\n";
+  std::cout << "Shutting down" << std::endl;
   keep_going = false;
   ```
   
