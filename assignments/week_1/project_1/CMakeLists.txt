@@ -1,5 +1,6 @@
-get_filename_component(EXECUTABLE_NAME "${CMAKE_CURRENT_SOURCE_DIR}" NAME)
+cmake_minimum_required(VERSION 3.17)
+project(project_1_3 C CXX)
 
-file(GLOB SRCS *.cpp)
+set(CMAKE_CXX_STANDARD 20)
 
-add_executable(${EXECUTABLE_NAME} ${SRCS})
+add_executable(project_1_3 project_1.cpp)
