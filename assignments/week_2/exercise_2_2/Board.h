@@ -34,11 +34,11 @@ public:
 
   bool placeMarker(int r, int c, Marker marker);
 
-  Marker getMarker(int r, int c) const;
+  Marker getMarker(int r, int c);
 
-  bool isOver() const;
+  bool isOver();
 
-  Marker getWinner() const;
+  Marker getWinner();
 
 private:
 
@@ -46,9 +46,9 @@ private:
 
   Marker winner;
 
-  size_t locationToIndex( int r,  int c) const;
+  size_t locationToIndex( int r,  int c);
 
-  void updateWinner( int last_r,  int last_c);
+  void updateWinner(int last_r, int last_c);
 
 };
 

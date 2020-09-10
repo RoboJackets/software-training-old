@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void generateComputerMove(const Board &board,  int &r_out, int &c_out) {
+void generateComputerMove(Board &board, int &r_out, int &c_out) {
 
 
 
@@ -19,7 +19,7 @@ void generateComputerMove(const Board &board,  int &r_out, int &c_out) {
   } while(board.getMarker(r_out, c_out) != Marker::Empty);
 }
 
-void getMoveFromPlayer( int &r_out, int &c_out) {
+void getMoveFromPlayer(int &r_out, int &c_out) {
   static regex coordinate_pattern("[0-2],[0-2]");
   do {
     cout << "Your move (r,c): ";
@@ -47,7 +47,7 @@ char charForMarker(Marker m) {
   }
 }
 
-void printBoard(const Board &board) {
+void printBoard(Board &board) {
   std::string layout;
   auto n = 3;
   for(int r = 0; r < n; r++) {

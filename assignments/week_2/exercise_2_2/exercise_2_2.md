@@ -70,7 +70,7 @@ char charForMarker(Marker m) {
 ```
 
 This method looks like it is just return what character we should use for the
-different configurations we could possibly be in.
+different markers that could be at that location on the board.
 
 ```c++
 void printBoard(const Board &board) {
