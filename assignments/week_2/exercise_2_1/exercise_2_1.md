@@ -19,10 +19,6 @@ std::vector<double> readInVector(std::string s) {
   std::vector<double> result;
   while(s.find(',', prev_location) != std::string::npos) {
     next_location = s.find(',', prev_location);
-    //std::cout << "prev_location: " << prev_location << std::endl;
-    //std::cout << "next_location: " << next_location << std::endl;
-    // substr [,]
-    //std::cout << s.substr(prev_location, next_location - prev_location) << std::endl;
     result.push_back(std::stod(s.substr(prev_location, next_location - prev_location)));
     next_location++;
     prev_location = next_location;
@@ -92,7 +88,8 @@ int main() {
 ```
 
 # Writing a method
-First we will convert it to a method in the same file we already have.
+First we will convert it to a method in the same file we already have. You should copy
+the above code or your own version into the exercise_2_1.cpp file.
 
 Your method signature should be something similar to
 
@@ -171,3 +168,17 @@ Finally compile and run the code yourself. Your output should be the same as bef
 {17, 30, 43, 56, 69, 82, 47}
 {19, 30, 43, 56, 69, 82, 89}
 ```
+
+# Writing another function
+We are reusing code to print out the vector at the end. You should write a method
+that takes in a std::vector<double> and prints out the vector in the same format.
+
+Your prototype should be something like
+
+```c++
+void printVector(std::vector<double> vec);
+```
+
+Now use that method to refactor your code. You should revel in the amount of code (and therefore bugs)
+you have averted by using methods effectively. If you ever see yourself copy pasting
+code, stop and see if you can find a way to reuse the first version.
