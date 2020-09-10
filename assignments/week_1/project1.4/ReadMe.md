@@ -7,7 +7,7 @@ I hope you enjoy this one
 # Project Objective
 During this project we will be training a Neural Network on the MNIST dataset.
 This is the canonical hello world of the machine learning world. The goal is to
-classify images of handwritten digits into what it is. We will be using a
+classify images of handwritten digits into digits they represent. We will be using a
 convolutional neural network in order to effectively process the image data.
 
 # Starter Code
