@@ -23,7 +23,7 @@ int main() {
    
     // Do not edit the next 5 lines
     bool keep_going = true;
-    char direction;
+    char direction = 0;
 
     while (keep_going) {
         std::cin >> direction; //At the begining of every iteration look for an input from the user
