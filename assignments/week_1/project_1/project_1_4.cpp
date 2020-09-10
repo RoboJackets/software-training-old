@@ -35,6 +35,14 @@ int main() {
   std::cin >> s;
   w = readInVector(s);
 
+  // TODO write your code here
+  // =========== START =========
+
+
+
+
+  // =========== END ===========
+
   return 0;
 }
 

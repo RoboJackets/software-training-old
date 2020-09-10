@@ -40,6 +40,8 @@ Y[3] = 56
 Y[6] = 47
 ```
 
+<img src="https://miro.medium.com/max/2340/1*Fw-ehcNBR9byHtho-Rxbtw.gif" width="1170" height="849" />
+
 # Starter Code
 You are given the following as starter code. You are given some basic code to read from cin.
 
@@ -85,7 +87,7 @@ int main() {
 
 # Implementation
 Now take the main.cpp file and create your own version of applying this kernel.
-Print out the result Y vector in the format `{Y[0], Y[1], Y[2], Y[3], Y[4], Y[5], Y[6]}`
+Print out the result Y vector in the format `{Y[0], Y[1], Y[2], ..., Y[Y.size()-2], Y[Y.size()-1]}`
 
 Let's print out the input and output vectors in the format we are looking for.
 You need to run the command
