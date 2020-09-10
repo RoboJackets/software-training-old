@@ -32,9 +32,9 @@ public:
 
   Board();
 
-  bool placeMarker(unsigned int r, unsigned int c, Marker marker);
+  bool placeMarker(int r, int c, Marker marker);
 
-  Marker getMarker(unsigned int r, unsigned int c) const;
+  Marker getMarker(int r, int c) const;
 
   bool isOver() const;
 
@@ -46,9 +46,9 @@ private:
 
   Marker winner;
 
-  size_t locationToIndex(unsigned int r, unsigned int c) const;
+  size_t locationToIndex( int r,  int c) const;
 
-  void updateWinner(unsigned int last_r, unsigned int last_c);
+  void updateWinner( int last_r,  int last_c);
 
 };
 

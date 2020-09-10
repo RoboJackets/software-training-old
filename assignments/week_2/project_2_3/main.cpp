@@ -5,17 +5,21 @@
 
 using namespace std;
 
-void generateComputerMove(const Board &board, unsigned int &r_out, unsigned int &c_out) {
+void generateComputerMove(const Board &board,  int &r_out, int &c_out) {
+
+
+
+
   static random_device rand_dev;
   static default_random_engine engine(rand_dev());
-  static uniform_int_distribution<unsigned int> uniform_dist(0,2);
+  static uniform_int_distribution< int> uniform_dist(0,2);
   do {
     r_out = uniform_dist(engine);
     c_out = uniform_dist(engine);
   } while(board.getMarker(r_out, c_out) != Marker::Empty);
 }
 
-void getMoveFromPlayer(unsigned int &r_out, unsigned int &c_out) {
+void getMoveFromPlayer( int &r_out, int &c_out) {
   static regex coordinate_pattern("[0-2],[0-2]");
   do {
     cout << "Your move (r,c): ";
@@ -23,8 +27,8 @@ void getMoveFromPlayer(unsigned int &r_out, unsigned int &c_out) {
     cin >> input;
     if(regex_match(input,coordinate_pattern)) {
       auto comma_loc = input.find(',');
-      r_out = static_cast<unsigned int>(stoi(input.substr(0,comma_loc)));
-      c_out = static_cast<unsigned int>(stoi(input.substr(comma_loc+1)));
+      r_out = static_cast< int>(stoi(input.substr(0,comma_loc)));
+      c_out = static_cast< int>(stoi(input.substr(comma_loc+1)));
       return;
     } else {
       cout << "Sorry, I couldn't understand your coordinates!" << endl;
@@ -32,21 +36,22 @@ void getMoveFromPlayer(unsigned int &r_out, unsigned int &c_out) {
   } while(true);
 }
 
+char charForMarker(Marker m) {
+  switch (m) {
+    case Marker::Empty:
+      return ' ';
+    case Marker::X:
+      return 'X';
+    case Marker::O:
+      return 'O';
+  }
+}
+
 void printBoard(const Board &board) {
-  auto charForMarker = [](const Marker &m) {
-    switch(m) {
-      case Marker::Empty:
-        return ' ';
-      case Marker::X:
-        return 'X';
-      case Marker::O:
-        return 'O';
-    }
-  };
   std::string layout;
   auto n = 3;
-  for(auto r = 0; r < n; r++) {
-    for(auto c = 0; c < n; c++) {
+  for(int r = 0; r < n; r++) {
+    for(int c = 0; c < n; c++) {
       layout += charForMarker(board.getMarker(r,c));
       if(c != (n-1)) {
         layout += "|";
@@ -68,8 +73,8 @@ int main() {
 
   while(!board.isOver()) {
     printBoard(board);
-    unsigned int r_move;
-    unsigned int c_move;
+    int r_move;
+    int c_move;
     do {
       r_move = 0;
       c_move = 0;

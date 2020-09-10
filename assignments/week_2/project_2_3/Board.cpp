@@ -14,15 +14,15 @@ Board::Board() {
 
 /**
  * placeMarker
- * @param r unsigned integer, row coordinate where marker should be placed
- * @param c unsigned integer, column coordinate where marker should be placed
+ * @param r  integer, row coordinate where marker should be placed
+ * @param c  integer, column coordinate where marker should be placed
  * @param marker Marker, marker to be placed
  *
  * @return true, if <r,c> was Empty and now contains marker; false otherwise
  *
  * @note Be sure to call updateWinner after placing the marker
  */
-bool Board::placeMarker(unsigned int r, unsigned int c, Marker marker) {
+bool Board::placeMarker( int r,  int c, Marker marker) {
   auto &space = data[locationToIndex(r,c)];
 
   if(space != Marker::Empty) {
@@ -38,11 +38,11 @@ bool Board::placeMarker(unsigned int r, unsigned int c, Marker marker) {
 
 /**
  * getMarker
- * @param r unsigned integer, row coordinate of place to read
- * @param c unsigned integer, column coordinate of place to read
+ * @param r  integer, row coordinate of place to read
+ * @param c  integer, column coordinate of place to read
  * @return marker contained at <r,c>
  */
-Marker Board::getMarker(unsigned int r, unsigned int c) const {
+Marker Board::getMarker( int r,  int c) const {
   return data[locationToIndex(r,c)];
 }
 
@@ -71,20 +71,20 @@ Marker Board::getWinner() const {
 
 /**
  * locationToIndex
- * @param r unsigned integer, row coordinate
- * @param c unsigned integer, column coordinate
+ * @param r  integer, row coordinate
+ * @param c  integer, column coordinate
  * @return index (of type size_t) for data array corresponding to <r,c>
  * @note data should be row-ordered, so each row of the board should be
  *       saved contiguously in data immediately following the row above it.
  */
-size_t Board::locationToIndex(unsigned int r, unsigned int c) const {
+size_t Board::locationToIndex( int r,  int c) const {
   return ( r * 3 ) + c;
 }
 
 /**
  * updateWinner
- * @param last_r unsigned integer, row coordinate of last move
- * @param last_c unsigned integer, column coordinate of last move
+ * @param last_r  integer, row coordinate of last move
+ * @param last_c  integer, column coordinate of last move
  * @note pseudo-code algorithm:
  *       col=row=diag=rdiag=0
  *       winner=Empty
@@ -95,13 +95,13 @@ size_t Board::locationToIndex(unsigned int r, unsigned int c) const {
  *         if cell[i,2-i]=player then rdiag++
  *       if row=n or col=n or diag=n or rdiag=n then winner=player
  */
-void Board::updateWinner(unsigned int last_r, unsigned int last_c) {
+void Board::updateWinner( int last_r,  int last_c) {
   auto hor = 0;
   auto ver = 0;
   auto diag1 = 0;
   auto diag2 = 0;
   auto player = getMarker(last_r, last_c);
-  for(unsigned int i = 0; i < 3; i++) {
+  for( int i = 0; i < 3; i++) {
     if (getMarker(last_r, i) == player)
       hor++;
     if (getMarker(i,last_c) == player)
