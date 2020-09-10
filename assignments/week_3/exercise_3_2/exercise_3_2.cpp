@@ -2,29 +2,29 @@
 #include <iostream>
 
 LinkedList::LinkedList() {
-	head = NULL;
+    head = NULL;
 }
 
 void LinkedList::add_to_front(std::string name) {
-	return;
+    return;
 }
 
 void LinkedList::add_to_back(std::string name){
-	return;
+    return;
 }
 
 void LinkedList::add_at_index(std::string name, int index) {
-	return;
+    return;
 }
 
 void LinkedList::remove_from_front() {
-	return;
+    return;
 }
 
 void LinkedList::remove_from_back() {
-	return;
+    return;
 }
 
 void LinkedList::print_names() {
-	return;
+    return;
 }

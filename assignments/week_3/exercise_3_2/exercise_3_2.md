@@ -19,30 +19,30 @@ We have given you a linked_list.hpp header file which contains the class definit
 
 class Node {
 public:
-	std::string name;
-	Node *next;
+    std::string name;
+    Node *next;
 };
 
 class LinkedList {
 private:
-	Node *head;
+    Node *head;
 public:
 
-	LinkedList();
+    LinkedList();
 
-	void add_to_front(std::string name);
+    void add_to_front(std::string name);
 
-	void add_to_back(std::string name);
+    void add_to_back(std::string name);
 
-	void add_at_index(std::string name, int index);
+    void add_at_index(std::string name, int index);
 
-	void remove_from_front();
+    void remove_from_front();
 
-	void remove_from_back();
+    void remove_from_back();
 
-	void remove_at_index(int index);
+    void remove_at_index(int index);
 
-	void print_names();
+    void print_names();
 
 };
 ```
@@ -94,13 +94,13 @@ public:
 # Expected Results:
 After compiling and running main.cpp (remember to link the other files) the following should be printed onto the terminal:
 ```
-Kyle	
-Daniel	Kyle	
-Hussain	Daniel	Kyle	
-Hussain	Kyle	
-Hussain	Kyle	Oswin	
-Hussain	Kyle	Jason	Oswin	
-Hussain	Kyle	Jason	
-Hussain	Kyle	Jason	Woodward	
-Kyle	Jason	Woodward	
+Kyle    
+Daniel  Kyle    
+Hussain Daniel  Kyle    
+Hussain Kyle    
+Hussain Kyle    Oswin   
+Hussain Kyle    Jason   Oswin   
+Hussain Kyle    Jason   
+Hussain Kyle    Jason   Woodward    
+Kyle    Jason   Woodward    
 ```
