@@ -136,12 +136,12 @@ int main() {
   
 </details>
 
-9. Within the else statement create a print statement which prints “Sorry I didn’t get that, try again” on a line by itself.
+9. Within the else statement create a print statement which prints “Sorry, I didn’t get that. Try again.” on a line by itself.
 <details>
   <summary>Answer</summary>
 
   ```c++
-  std::cout << "Sorry I didn't get that, try again" << std::endl;
+  std::cout << "Sorry, I didn't get that.  Try again." << std::endl;
   ```
   
 </details>
