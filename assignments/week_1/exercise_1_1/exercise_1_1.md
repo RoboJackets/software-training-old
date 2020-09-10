@@ -10,8 +10,7 @@ In this exercise you will be controlling the movements of a car like robot with 
 We have already given you a main() function to write your code in and have included the proper libraries for you to use. We have also set up most of the while loop where you will write most of your code; the keep_going boolean will be used to trigger then end of the while loop, so you will need to change its value at some point. We have also set up the user input which is stored in the char variable, direction; this is the variable that you need to check for what was inputted.
 
 ```c++
-//Do not edit the next 5 lines
-#include <stdlib.h>
+//Do not edit the next 4 lines
 #include <iostream>
 #include <vector>
 
