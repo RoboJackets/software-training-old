@@ -1,4 +1,4 @@
-# Project 1.4
+# Project 1.3
 Welcome to the first project for software training. Projects are more involved than
 exercises. This is taking what you learn in the videos and exercises and applying it
 to a nontrivial task. At this point you should have finished all the videos and exercises
@@ -92,7 +92,7 @@ Print out the result Y vector in the format `{Y[0], Y[1], Y[2], ..., Y[Y.size()-
 Let's print out the input and output vectors in the format we are looking for.
 You need to run the command
 ```bash
-cat ../assignments/week_1/project_1/example1.txt | ./assignments/week_1/project_1/project_1
+cat ../example1.txt | ./project_1_3
 ```
 
 You should write to see the output below
