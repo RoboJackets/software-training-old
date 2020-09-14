@@ -1,0 +1,64 @@
+
+* RoboJackets Virtual Machine Setup Guide
+
+This document will help you get started using the RoboJackets Software Virtualbox Image
+
+1. Install VirtualBox
+
+   Install VirtualBox from the [[https://www.virtualbox.org/wiki/Downloads][VirtualBox downloads page]].
+
+2. Ensure you have Virtualization turned on in your BIOS
+
+   [[http://www.howtogeek.com/213795/how-to-enable-intel-vt-x-in-your-computers-bios-or-uefi-firmware/][This]] is a simple guide of how to do this.
+   While this is not 100% necessary, it will make your VM *much* faster.
+
+   On a Windows host, you may need to turn off Hyper-V as well.
+
+3. Get a Copy of the built Image
+
+   First start by downloading the [[https://cloud.robojackets.org/f/342830][prebuilt image]].
+
+4. Import Image into VirtualBox
+
+   1. Go to =File->Import Appliance=
+
+      [[file:https://i.imgur.com/MbxOAH7.png]]
+
+   2. Select the =.box= file you extracted earlier
+
+      [[file:https://i.imgur.com/LbBx78G.png]]
+
+   3. Check the Amount of Memory and CPU's
+
+      Increase the Memory/CPU to your computer's specs. Don't allocate too much memory/cpus or it will cause severe performance issues.
+      (A good rule of thumb is half of your overall memory if you have at least 4 GB and half of your total CPU's)
+
+      [[file:https://i.imgur.com/4O0l8hN.png]]
+   4. Hit =Import=!
+      
+5. Boot your new VM
+
+   Double Click the Entry, or Right Click -> Start -> Normal Start
+
+6. Credentials
+
+   |---------+----------|
+   | User    | Password |
+   |---------+----------|
+   | vagrant | vagrant  |
+   |---------+----------|
+
+   The sudo password is =vagrant=.
+
+7. You Made It! :tada:
+    If you are having issues see the troubleshooting section below
+    
+** Troubleshooting Steps
+
+1. If you get =Unable to import OVA with error NS_ERROR_INVALID_ARG= it could be caused by not having enough hard drive space to unpack the image.
+
+2. Check the resources allocated to your Virtual Machine
+    1. If you are having graphical issues check how much VRAM is allocated by right clicking the virtualbox entry and hitting =Settings=. Then, go to the =Display= tab and confirm that =VRAM= is set to 128 MB and the =Enable 3D Acceleration= checkbox is checked. 
+        
+    2. Check to see if too much memory/cpu's have been allocated to the virtual machine by right clicking the virtualbox entry and hitting =Settings=. Then, go to the =System= tab and check that the=Memory= slider on the =Motherboard= tab is set to around half of your total system RAM. Finally, go to the =Processor= tab and check that the =Processor(s)= slider is set to between 1 and half of your total system CPU cores and that the =Exectuion Cap= is set to 100%.
+    
