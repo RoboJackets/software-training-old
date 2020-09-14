@@ -24,7 +24,7 @@ This document will help you get started using the RoboJackets Software Virtualbo
 
       [[file:https://i.imgur.com/MbxOAH7.png]]
 
-   2. Select the =.box= file you extracted earlier
+   2. Select the =.ova= file you downloaded earlier
 
       [[file:https://i.imgur.com/LbBx78G.png]]
 
