@@ -70,11 +70,23 @@ Before you start writing any code, design the state machine that your controller
 about what states your controller needs to have. What transitions need to exist between these states? How can you keep
 track of time in this state machine?
 
-We've included an example solution state machine here, but make sure you take time to try to work through this part
-yourself. This is here to help you along if you really, truly get stuck.
+We've included two hints for this project below. The first is the list of states we're using in our solution. The
+second is our complete state machine design. Make sure you take time to try to work through this part
+yourself if you can. These are here to help you along if you really, truly get stuck.
 
 <details>
-<summary>Solution</summary>
+<summary>List of States</summary>
+
+- All Red (Both directions have red lights)
+- Green E/W (E/W road has green lights, N/S has red lights)
+- Yellow E/W (E/W road has yellow lights, N/S has red lights)
+- Green N/S (N/S road has green lights, E/W has red lights)
+- Yellow N/S (N/S road has yellow lights, E/W has red lights)
+
+</details>
+
+<details>
+<summary>Full State Machine</summary>
 
 ![Example state machine](state_machine.png)
 
@@ -87,13 +99,17 @@ input from `std::cin` one line at a time. When it finds a line whose length is n
 to read and understand this starter code. Remember, you can always check cppreference.com for any standard library
 features you're not familiar with (ie. [std::getline()](https://en.cppreference.com/w/cpp/string/basic_string/getline)).
 
+Included in the starter code are two structures `LightInputs` and `LightOutputs`. We'd like to encourage you to parse
+the inputs from the `input` variable into an instance of `LightInputs`. It's a good idea to keep code organized, and
+separating your input/output code from your state machine code should help keep each part simple.
+
 While there are many ways to capture state machine-like behavior in a C++ program, we want you to practice the tools
 you've been learning this week. We suggest making a class for your state machine.
 
 Your class should probably have a constructor for initialization, some way of accepting sensor/time inputs, and some way
 of returning light outputs. The inputs and outputs can be handled in one function
-(ie. `OutputStruct Controller::update(InputStruct input)`) or split into different functions (ie.
-`void Controller::putInput(InputStruct input)` and `OutputStruct Controller::getOutput()`).
+(ie. `LightOutputs Controller::update(LightInputs input)`) or split into different functions (ie.
+`void Controller::putInput(LightInputs input)` and `LightOutputs Controller::getOutput()`).
 
 You may want to add private functions to your class to split the work it has to do into meaningful sections.
 
