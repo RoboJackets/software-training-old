@@ -10,15 +10,25 @@ This is the canonical hello world of the machine learning world. The goal is to
 classify images of handwritten digits into digits they represent. We will be using a
 convolutional neural network in order to effectively process the image data.
 
+## Dataset
+MNIST is made up of a lot of handwritten digits. They are put into 28x28 pixel images.
+There are 10 output classes that represent the digit the image corresponds to.
+
+<img src="https://3qeqpr26caki16dnhd19sv6by6v-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/Plot-of-a-Subset-of-Images-from-the-MNIST-Dataset.png" width="1280" height="960" />
+
+## Convolutions
+<img src="https://miro.medium.com/max/2340/1*Fw-ehcNBR9byHtho-Rxbtw.gif" width="1170" height="849" />
+
 # Starter Code
 We will be using something called Google Colab. This allows you to run a python notebook
 on google servers using their GPU's. Often GPU setup is nontrivial and this allows us to
 get up an running almost immediately. You would not want to use this for more general
-work unless you do not have another option. Open up the file [here](https://colab.research.google.com/drive/1IihcgCl13Nbui1NNhlwiv4ekWD808CRI?usp=sharing)
+work unless you do not have another option. Open up the file
+[here](https://colab.research.google.com/drive/1IihcgCl13Nbui1NNhlwiv4ekWD808CRI?usp=sharing)
 and click the button to add it to your own drive. There is also a complete
-version of the code that can be foundhere in script form.
+version of the code that can be found here in script form.
 
-Today we will be using Python but you *DO NOT NEED TO KNOW PYTHON*. A lot of machine
+Today we will be using Python but you **DO NOT NEED TO KNOW PYTHON**. A lot of machine
 learning libraries are implemented with python wrappers, hence why we are using python.
 Don't worry though, you won't have to edit any of the code that isn't very explicit.
 
@@ -29,9 +39,11 @@ The results from each section are kept in memory, this allows you to run a furth
 along section of the code multiple times without constantly rerunning the initial sections.
 If you change a section above another you will have to rerun it.
 
-## Part 1
+## Part 1 Running The Code
 For this section you should run the entire notebook step by step. I would recommend
 using the button at the top pictured here in order to make it easier on yourself.
+
+<img src="https://i.imgur.com/L9S8vF7.png" width="1200" height="688.5" />
 
 You should see output similar to this, the instructions inside the notebook should
 cover any questions you might have about what each section of code is doing.
@@ -41,7 +53,23 @@ it and I barely know how it works).
 
 You should see a graph similar to the one below at the final output.
 
-## Part 2
+## Part 2 Overfitting and Underfitting
+
+<img src="https://user-images.githubusercontent.com/9097872/92522161-60648e00-f1ec-11ea-8083-34954585f2fd.png" width="1416" height="378" />
+
+### Overfitting
+Overfitting is the common word used for when you being to use features in the training
+dataset that does not represent the test set. The graphic shows a great example.
+Our model fits the data perfectly but it does not follow the general trendline at all.
+
+### Underfitting
+Underfitting is when the model does not have enough complexity to fit the data. Here
+we have something close to x^2, but we are trying to use a linear function to fit it.
+We can get okay results, but we will never be close to the actual function because
+it is not well approximated with a linear funciton.
+
+### Implementation
+
 Now that we can train a simple model we want to try to increase out accuracy. Remember
 how we discussed underfitting the model previously. Now our model has enough room to
 accurate model the data (trust me on this one). So what else could we look at in order to
@@ -73,7 +101,7 @@ num_epochs = 3       # <=================== CHANGE ME HERE range:[1, 20]
     the number of epochs would significantly improve out network.
 </details>
 
-## Part 3
+## Part 3 Speed Up Results
 Now that we have gotten better results could we have gotten here faster? Try
 thinking about what we should change in order to converge faster. Let's really put
 the speed to the test and use the lower upper limit here. Are your results any better?
@@ -87,11 +115,18 @@ You should be getting accuracy above 90%.
   A learning rate of 1e-3 seems to work well in practice with 3 epochs.
 </details>
 
-## Part 4
+## Part 4 KMNIST
 Now that we have a beautiful neural network for the current dataset let us try
 something a little more difficult. We will be using KMNIST, a dataset very similar to MNIST.
+The basics of the dataset are indentical in input. in order to get 10 classes they use
+one character to represent each of the 10 rows of Hiragana when creating Kuzushiji-MNIST.
+Examples of the correct classifcations are shown below.
 
-Go back to the section where we loaded in the dataset and change the lines to be
+<img src="https://storage.googleapis.com/tfds-data/visualization/fig/kmnist-3.0.1.png" width="900" height="900" />
+
+
+### Implementation
+Go back to the section where we loaded in the dataset and change the lines to be (just adding a K).
 
 ````python
 ## download and load training dataset
