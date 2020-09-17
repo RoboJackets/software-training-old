@@ -57,8 +57,9 @@ This document will help you get started using the RoboJackets Software Virtualbo
 
 1. If you get =Unable to import OVA with error NS_ERROR_INVALID_ARG= it could be caused by not having enough hard drive space to unpack the image.
 
-2. Check the resources allocated to your Virtual Machine
-    1. If you are having graphical issues check how much VRAM is allocated by right clicking the virtualbox entry and hitting =Settings=. Then, go to the =Display= tab and confirm that =VRAM= is set to 128 MB and the =Enable 3D Acceleration= checkbox is checked. 
+2. Check the Virtual Machine Settings
+    1. If you are getting a black screen when attempting to run gazebo or other 3D applications try disabling 3D Acceleration by right clicking the virtualbox entry and hitting =Settings=. Then, go to the =Display= tab and uncheck the =Enable 3D Acceleration= box. 
+    2. If you are having other graphical issues check how much VRAM is allocated by right clicking the virtualbox entry and hitting =Settings=. Then, go to the =Display= tab and confirm that =VRAM= is set to 128 MB and the =Enable 3D Acceleration= checkbox is checked. 
         
-    2. Check to see if too much memory/cpu's have been allocated to the virtual machine by right clicking the virtualbox entry and hitting =Settings=. Then, go to the =System= tab and check that the=Memory= slider on the =Motherboard= tab is set to around half of your total system RAM. Finally, go to the =Processor= tab and check that the =Processor(s)= slider is set to between 1 and half of your total system CPU cores and that the =Exectuion Cap= is set to 100%.
+    3. Check to see if too much memory/cpu's have been allocated to the virtual machine by right clicking the virtualbox entry and hitting =Settings=. Then, go to the =System= tab and check that the=Memory= slider on the =Motherboard= tab is set to around half of your total system RAM. Finally, go to the =Processor= tab and check that the =Processor(s)= slider is set to between 1 and half of your total system CPU cores and that the =Exectuion Cap= is set to 100%.
     
