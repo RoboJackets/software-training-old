@@ -58,7 +58,9 @@ This document will help you get started using the RoboJackets Software Virtualbo
 
 1. If you get =Unable to import OVA with error NS_ERROR_INVALID_ARG= it could be caused by not having enough hard drive space to unpack the image.
 
-2. Check the Virtual Machine Settings
+2. If you get a =Kernel Driver not installed= error try the instructions here: https://www.howtogeek.com/658047/how-to-fix-virtualboxs-%E2%80%9Ckernel-driver-not-installed-rc-1908-error/
+
+3. Check the Virtual Machine Settings
     1. If you are getting a black screen when attempting to run gazebo or other 3D applications try disabling 3D Acceleration by right clicking the virtualbox entry and hitting =Settings=. Then, go to the =Display= tab and uncheck the =Enable 3D Acceleration= box. 
     2. If you are having other graphical issues check how much VRAM is allocated by right clicking the virtualbox entry and hitting =Settings=. Then, go to the =Display= tab and confirm that =VRAM= is set to 128 MB and the =Enable 3D Acceleration= checkbox is checked. 
         
