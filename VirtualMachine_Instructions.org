@@ -7,9 +7,10 @@ This document will help you get started using the RoboJackets Software Virtualbo
 
    Install VirtualBox from the [[https://www.virtualbox.org/wiki/Downloads][VirtualBox downloads page]].
 
-2. Ensure you have Virtualization turned on in your BIOS
+2. If you are on Windows ensure you have Virtualization turned on in your BIOS
 
-   [[http://www.howtogeek.com/213795/how-to-enable-intel-vt-x-in-your-computers-bios-or-uefi-firmware/][This]] is a simple guide of how to do this.
+   If you are on a Mac you should not need to do this.
+   If you are on Windows [[http://www.howtogeek.com/213795/how-to-enable-intel-vt-x-in-your-computers-bios-or-uefi-firmware/][This]] is a simple guide of how to do this.
    While this is not 100% necessary, it will make your VM *much* faster.
 
    On a Windows host, you may need to turn off Hyper-V as well.
