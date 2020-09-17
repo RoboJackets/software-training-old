@@ -7,7 +7,9 @@ Welcome to exercise 3.2. This exercise will test your ability to create and use 
 In this exercise you will finish writing the code needed to create a linked list. A linked list is a data structure that holds data, similar to a vector. A linked list is made up of nodes in a line each which contains two pieces of information:
 1. Whatever data you want to store in the linked list (in this case a string)
 2. A pointer to the next data
-However, the linked list itself does not keep track of the pointer of each piece of data, but instead only keeps track of the first, or head, node. From the head pointer it is possible to iterate through and access the entire list. You will be creating some functions that help use a linked list, this includes functions that remove data and add new data at specific locations and also one to print the whole list out. 
+However, the linked list itself does not keep track of the pointer of each piece of data, but instead only keeps track of the first, or head, node. From the head pointer it is possible to iterate through and access the entire list. You will be creating some functions that help use a linked list, this includes functions that remove data and add new data at specific locations and also one to print the whole list out. Here is a graphical representation of a linked list below.
+
+![](https://www.geeksforgeeks.org/wp-content/uploads/gq/2013/03/Linkedlist.png)
 
 # Starting Off
 
@@ -104,3 +106,6 @@ Hussain Kyle    Jason
 Hussain Kyle    Jason   Woodward    
 Kyle    Jason   Woodward    
 ```
+
+# More on Linked Lists:
+Linked lists are very basic data structures and if you ever end up taking a class about data structures, will likely be one of the first data structures you will learn about. As you may have noticed with how they are strucutured, linked lists are actually not that useful generally. You can see through your implementation that to change or access data somewhere you must iterate through the entire linked list to get there. While this might not seem so bad for smaller linked lists like the example here, for large data bases, the inefficencey is blatant. Imagine something like a data base of all of a bank's customers, it would have millions of entries, if it were strucutred as a linked list it would be very inneficient for the bank to access information on someone becauase they would have to iterate through large portions of the enitre data base. There are some optimizations you can make to a linked list however, which while not really making them that much more useable do make them more efficient. For example, here we programmed a singly linked list, but you could have made a doubly linked list where each node contains a next and previous pointer so you can move back and forward through the list, which makes the method of adding and removing nodes a bit simpler. You can also add a tail pointer which is like the head pointer except it points to the back of the list, however you would also need a size variable to make it useful, since you would need to see if the index you are accessing is closer to begining or end. There are some other optimizations as well as types of linked lists which you may want to look into if you are interested or even other types of data structures like arrays, hash maps, or trees.
