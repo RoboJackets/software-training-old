@@ -11,4 +11,5 @@ projects/.c9/*
 *.idea
 cmake-build-debug
 build
+data
 
