@@ -18,6 +18,6 @@ std::vector<double> readInVector(std::string s) {
   return result;
 }
 
-int main()
-{
+int main() {
+
 }

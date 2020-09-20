@@ -4,7 +4,7 @@ of numbers. Likely you have heard of binary and hexidecimal. Our goal is to writ
 a class that will allow you to convert between the different types of numbers.
 
 # Background
-There are a lot of different representations of numbers. The standrd way we represent
+There are a lot of different representations of numbers. The standard way we represent
 numbers are in base 10, the digits 0-9 are used in sequence to represent larger numbers.
 You could write out a large number like 25 as the following
 
@@ -17,10 +17,10 @@ We will be using the same approach but with different base numbers in this exerc
 ## Binary
 
 Binary is when you represent the number as only {1,0} this is a base two representation.
-If we take the number
+If we take the number (the preceding b lets us know it is in binary)
 
 ```
-11001
+b11001
 ```
 
 that can bet written out as
@@ -33,8 +33,8 @@ that can bet written out as
 
 Hex has a representation of numbers in base 16, now we only have 10 digits to represent numbers
 with, so we will need to include some letters to represent the actual number.
-Here we use the letters {a,b,c,d,e,f} to represent {10,11,12,13,14,15,16}.
-All hex numbers are prefeced with **0x** like below1
+Here we use the letters {a,b,c,d,e,f} to represent {10,11,12,13,14,15}.
+All hex numbers are typically prefaced with **0x** like below1
 
 ```
 0x19 = 9 * 16^0 + 1*16^1 = 9 + 16 = 25
@@ -44,15 +44,13 @@ All hex numbers are prefeced with **0x** like below1
 
 Today we will be writing a class from scratch in order to convert between the
 different formats of the numbers. Furthermore, we will be keeping track of
-how many conversions we do between each type inside out class. During this implementation
-we will be keeping it simple so you will not have to worry about the 0x or b prepend to show
-what kind of number you have.
+how many conversions we do between each type inside our class.
 
 ## Starter Code
 There are two methods that have been implemented for you, they are below.
 They use the actual ASCII numbers of the different characters to convert
 hex to digits and digits to hex characters. Don't worry about how this works.
-Here we name out class NumberConverter, you can name it whatever you want.
+Here we name our class NumberConverter, you can name it whatever you want.
 
 ```c++
 /**
@@ -88,7 +86,16 @@ char NumberConvereter::numberToHexChar(int input) {
 ```
 
 There are multiple online resources to convert between the three types of numbers.
-Here are some known conversions to check your code
+I would just hard code an example
+
+## Part 0 Creating a class
+
+create a .h and .cpp called whatever you would like, then you will need to add the .cpp
+to the cmake file like so (ours is named NumberConverter.cpp)
+
+```cmake
+add_executable(exercise_2_3 exercise_2_3.cpp NumberConverter.cpp)
+```
 
 ## Part 1 To Decimal
 Converting from binary and hex to decimal is straightforward. Implement two methods
@@ -96,6 +103,23 @@ that take in strings and output an integer that is the decimal representation of
 the input. Remember you should be using the hexCharToNumber helper function to
 convert each digit. Think about how we were writing out the numbers earlier to help
 you along in your implementation.
+
+### Tips
+
+There is a function implemented called [std::pow()](https://en.cppreference.com/w/cpp/numeric/math/pow).
+This will make it easier to arbitrary powers.
+
+Here are the headers from the solution code
+
+```c++
+#include <string>
+#include <iostream>
+#include <cmath>
+#include <algorithm>
+#include <vector>
+```
+
+Don't forget to include your class in the exercise_2_3.cpp.
 
 ## Part 2 To Hex
 Now we will be writing two methods that convert from binary and decimal to hex.
@@ -110,6 +134,7 @@ There is an elegant exploit to convert from decimal to hex. Let us say we have t
 ```
 
 What do we get if we use the modulus operator (%)
+
 ```
 679 % 16 = 7
 ```
