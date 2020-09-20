@@ -97,6 +97,16 @@ to the cmake file like so (ours is named NumberConverter.cpp)
 add_executable(exercise_2_3 exercise_2_3.cpp NumberConverter.cpp)
 ```
 
+to build and run your code call this in the directory with your code
+
+```bash
+mkdir build
+cd build
+cmake ..
+make
+./exercise_2_3
+```
+
 ## Part 1 To Decimal
 Converting from binary and hex to decimal is straightforward. Implement two methods
 that take in strings and output an integer that is the decimal representation of
