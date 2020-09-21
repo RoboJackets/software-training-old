@@ -2,7 +2,9 @@ cmake_minimum_required(VERSION 3.0.2)
 project(week_4_exercises)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
+
+find_package(OpenCV REQUIRED)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -10,6 +12,9 @@ project(week_4_exercises)
 find_package(catkin REQUIRED
              roscpp
              std_msgs
+             nav_msgs
+             cv_bridge
+             image_transport
         )
 
 ## System dependencies are found with CMake's conventions
@@ -116,8 +121,10 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
 # include
-# ${catkin_INCLUDE_DIRS}
+ ${catkin_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS}
 )
+
+add_subdirectory(exercise_4_2)
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
