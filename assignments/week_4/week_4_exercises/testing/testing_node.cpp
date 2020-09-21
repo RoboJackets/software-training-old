@@ -42,4 +42,5 @@ int main(int argc, char** argv){
             // exercise 3
             break;
     }
+    return 0;
 }
