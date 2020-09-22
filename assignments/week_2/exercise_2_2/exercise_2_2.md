@@ -165,9 +165,8 @@ enum class Marker {
 };
 ```
 
-This is a definition of an enum, think of it like a special variable type with
-only the listed values as possibilities. This allows you to convey semantic meaning
-in code.
+This is a definition of an enum, think of it like a special variable type that can only hold
+one of the listed options as a value.
 
 ```c++
 class Board {
@@ -343,5 +342,4 @@ listed in the comments. See if you can figure out a good way to test your method
       }
   ```
 </details>
-
 
