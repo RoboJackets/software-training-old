@@ -1,16 +1,16 @@
 #include "NumberConverter.h"
 
 
-NumberConvereter::NumberConvereter(std::vector<int> vec) {
-  num_decimal_inputs_ = vec[0];
-  num_binary_inputs_ = vec[1];
-  num_hex_inputs_ = vec[2];
-  num_decimal_outputs_ = vec[3];
-  num_binary_outputs_ = vec[4];
-  num_hex_outputs_ = vec[5];
+NumberConverter::NumberConverter(std::vector<int> previous_counts) {
+  num_decimal_inputs_ = previous_counts[0];
+  num_binary_inputs_ = previous_counts[1];
+  num_hex_inputs_ = previous_counts[2];
+  num_decimal_outputs_ = previous_counts[3];
+  num_binary_outputs_ = previous_counts[4];
+  num_hex_outputs_ = previous_counts[5];
 }
 
-NumberConvereter::~NumberConvereter() {
+NumberConverter::~NumberConverter() {
 
   std::cout << "decimal_inputs: " << num_decimal_inputs_ << std::endl;
   std::cout << "binary_inputs: " << num_binary_inputs_ << std::endl;
@@ -27,7 +27,7 @@ NumberConvereter::~NumberConvereter() {
  * @param input
  * @return
  */
-int NumberConvereter::hexCharToNumber(char input) {
+int NumberConverter::hexCharToNumber(char input) {
   // this means it is [A,B,C,D,E,F]
   if(input > 57) {
     return input - (65 - 10);
@@ -43,7 +43,7 @@ int NumberConvereter::hexCharToNumber(char input) {
  * @param input
  * @return
  */
-char NumberConvereter::numberToHexChar(int input) {
+char NumberConverter::numberToHexChar(int input) {
   if(input < 10) {
     // it is a digit
     return input + 48;
@@ -52,7 +52,7 @@ char NumberConvereter::numberToHexChar(int input) {
   }
 }
 
-int NumberConvereter::binaryToDecimal(std::string input, bool inc) {
+int NumberConverter::binaryToDecimal(std::string input, bool inc) {
   if(inc) {
     num_binary_inputs_++;
     num_decimal_outputs_++;
@@ -68,7 +68,7 @@ int NumberConvereter::binaryToDecimal(std::string input, bool inc) {
   return result;
 }
 
-int NumberConvereter::hexToDecimal(std::string input, bool inc) {
+int NumberConverter::hexToDecimal(std::string input, bool inc) {
   if(inc) {
     num_hex_inputs_++;
     num_decimal_outputs_++;
@@ -82,7 +82,7 @@ int NumberConvereter::hexToDecimal(std::string input, bool inc) {
   return result;
 }
 
-std::string NumberConvereter::decimalToHex(int input, bool inc) {
+std::string NumberConverter::decimalToHex(int input, bool inc) {
   if(inc) {
     num_decimal_inputs_++;
     num_hex_outputs_++;
@@ -98,7 +98,7 @@ std::string NumberConvereter::decimalToHex(int input, bool inc) {
   return result;
 }
 
-std::string NumberConvereter::binaryToHex(std::string input, bool inc) {
+std::string NumberConverter::binaryToHex(std::string input, bool inc) {
   if(inc) {
     num_binary_inputs_++;
     num_hex_outputs_++;
@@ -123,7 +123,7 @@ std::string NumberConvereter::binaryToHex(std::string input, bool inc) {
   return result;
 }
 
-std::string NumberConvereter::decimalToBinary(int input, bool inc) {
+std::string NumberConverter::decimalToBinary(int input, bool inc) {
   if(inc) {
     num_decimal_inputs_++;
     num_binary_outputs_++;
@@ -139,7 +139,7 @@ std::string NumberConvereter::decimalToBinary(int input, bool inc) {
   return result;
 }
 
-std::string NumberConvereter::hexToBinary(std::string input, bool inc) {
+std::string NumberConverter::hexToBinary(std::string input, bool inc) {
   if(inc) {
     num_hex_inputs_++;
     num_binary_outputs_++;

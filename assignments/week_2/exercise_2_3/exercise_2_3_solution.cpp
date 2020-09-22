@@ -27,7 +27,7 @@ int main() {
   std::cin >> output_type;
   std::cin >> num_input;
 
-  NumberConvereter conv(input);
+  NumberConverter conv(input);
 
   bool hex = num_input.size() > 2 && num_input[1] == 'x';
   bool binary = num_input.size() > 1 && num_input[0] == 'b';

@@ -7,7 +7,7 @@
 #include <vector>
 
 
-class NumberConvereter {
+class NumberConverter {
   int number_conversions_ = 0;
   int num_binary_inputs_ = 0;
   int num_hex_inputs_ = 0;
@@ -19,8 +19,8 @@ class NumberConvereter {
   int hexCharToNumber(char input);
   char numberToHexChar(int input);
 public:
-  NumberConvereter(std::vector<int> input);
-  ~NumberConvereter();
+  NumberConverter(std::vector<int> input);
+  ~NumberConverter();
 
   int binaryToDecimal(std::string input, bool inc = true);
   std::string binaryToHex(std::string input, bool inc = true);

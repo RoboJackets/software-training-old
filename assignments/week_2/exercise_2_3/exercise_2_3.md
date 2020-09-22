@@ -46,7 +46,31 @@ Today we will be writing a class from scratch in order to convert between the
 different formats of the numbers. Furthermore, we will be keeping track of
 how many conversions we do between each type inside our class.
 
-## Starter Code
+## Part 0 Creating a class
+
+create a .h and .cpp called whatever you would like, then you will need to add the .cpp
+to the cmake file like so (ours is named NumberConverter.cpp)
+
+```cmake
+add_executable(exercise_2_3 exercise_2_3.cpp NumberConverter.cpp)
+```
+
+to build and run your code call this in the directory with your code
+
+```bash
+mkdir build
+cd build
+cmake ..
+make
+./exercise_2_3
+```
+
+Now if you make changes to your cmake (you will when creating your new class), you
+will need to rerun only the ```cmake ..``` and then ```make``` again. Everytime
+you change your code you will need to rerun ```make``` in order to recompile.
+
+
+### Starter Code
 There are two methods that have been implemented for you, they are below.
 They use the actual ASCII numbers of the different characters to convert
 hex to digits and digits to hex characters. Don't worry about how this works.
@@ -88,24 +112,6 @@ char NumberConvereter::numberToHexChar(int input) {
 There are multiple online resources to convert between the three types of numbers.
 I would just hard code an example
 
-## Part 0 Creating a class
-
-create a .h and .cpp called whatever you would like, then you will need to add the .cpp
-to the cmake file like so (ours is named NumberConverter.cpp)
-
-```cmake
-add_executable(exercise_2_3 exercise_2_3.cpp NumberConverter.cpp)
-```
-
-to build and run your code call this in the directory with your code
-
-```bash
-mkdir build
-cd build
-cmake ..
-make
-./exercise_2_3
-```
 
 ## Part 1 To Decimal
 Converting from binary and hex to decimal is straightforward. Implement two methods
@@ -117,7 +123,7 @@ you along in your implementation.
 ### Tips
 
 There is a function implemented called [std::pow()](https://en.cppreference.com/w/cpp/numeric/math/pow).
-This will make it easier to arbitrary powers.
+This will make it easier to compute arbitrary powers.
 
 Here are the headers from the solution code
 
@@ -138,7 +144,7 @@ take in an int and return a string.
 
 ### Decimal To Hex Tips
 
-There is an elegant exploit to convert from decimal to hex. Let us say we have the number
+There is a straight forward way to convert from decimal to hex. Let us say we have the number
 ```
 0x2A7 = 7 * 16^0 + 10 * 16^1 + 2*16^2 = 7 + 160 + 512 = 679
 ```
