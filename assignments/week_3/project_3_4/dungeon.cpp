@@ -1,5 +1,3 @@
-// C++ program to print DFS traversal from
-// a given vertex in a given graph
 #include <string>
 #include <iostream>
 #include <sstream>
@@ -22,7 +20,8 @@ std::vector<T> getInputLine()
     return std::vector<T>(std::istream_iterator<T>(this_line), std::istream_iterator<T>());
 }
 
-std::vector<std::vector<std::string>> loadGrid() {
+std::vector<std::vector<std::string>> loadGrid()
+{
     int lines = getInputLine<int>()[0];
     std::vector<std::vector<std::string>> grid;
     for (int i = 0; i < lines; i++)
@@ -35,7 +34,8 @@ std::vector<std::vector<std::string>> loadGrid() {
 int main(int argc, char **argv)
 {
     // Ensure command-line args are correct (ex. ./dungeon.out DFA True)
-    if (argc != 3) {
+    if (argc != 3)
+    {
         std::cout << "Incorrect Arguement Length (ex. ./dungeon DFA True)" << std::endl;
         return 1;
     }
