@@ -9,12 +9,10 @@
 
 #include "graph_search.hpp"
 
-using namespace std;
-
 template <class T>
 std::vector<T> getInputLine()
 {
-    string line;
+    std::string line;
     std::getline(std::cin, line);
     std::istringstream this_line(line);
     return std::vector<T>(std::istream_iterator<T>(this_line), std::istream_iterator<T>());
@@ -44,12 +42,12 @@ int main(int argc, char **argv)
     std::string verbose_type = argv[2];
     if (!(search_type == "DFS" || search_type == "BFS"))
     {
-        std::cout << "Search Type [" << argv[1] << "] Not Reecognized (DFS or BFS)" << std::endl;
+        std::cout << "Search Type [" << argv[1] << "] Not Recognized (DFS or BFS)" << std::endl;
         return 1;
     }
     else if (verbose_type != "True" && verbose_type != "False")
     {
-        std::cout << "Verbose Type [" << argv[2] << "] Not Reecognized (True or False)" << std::endl;
+        std::cout << "Verbose Type [" << argv[2] << "] Not Recognized (True or False)" << std::endl;
         return 1;
     }
     bool verbose = verbose_type == "True";
