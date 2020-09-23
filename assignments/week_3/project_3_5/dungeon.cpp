@@ -19,8 +19,7 @@ std::vector<T> getInputLine()
     std::istringstream this_line(line);
     return std::vector<T>(std::istream_iterator<T>(this_line), std::istream_iterator<T>());
 }
-// C++ program to print DFS traversal from
-// a given vertex in a given graph
+
 std::vector<std::vector<std::string>> loadGrid()
 {
     int lines = getInputLine<int>()[0];
@@ -30,8 +29,7 @@ std::vector<std::vector<std::string>> loadGrid()
         grid.push_back(getInputLine<std::string>());
     }
     return grid;
-} // C++ program to print DFS traversal from
-// a given vertex in a given graph
+}
 
 int main(int argc, char **argv)
 {
