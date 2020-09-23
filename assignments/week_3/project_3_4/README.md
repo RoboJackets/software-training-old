@@ -1,4 +1,4 @@
-# Project 3
+# Project 3.4
 Welcome to project 3! In this week's project we will be going into graph search algorithms (breadth-first and depth-first search). These algoritms are an important graph search algorithm that can be used to solve many problems including finding the shortest path in a graph and solving puzzle games (such as Rubik's Cubes). Many problems in computer science can be thought of in terms of graphs. For example, analyzing networks, mapping routes, and scheduling are graph problems.
 
 # Introduction To Graph Search Algorithms (Optional Read)
