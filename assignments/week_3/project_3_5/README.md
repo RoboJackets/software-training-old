@@ -88,7 +88,7 @@ The dungeon has a size of R x C where R is number of rows and c is number of col
 
 ![Dungeon](images/grid_solved.png)
 
-It our goal find the safest path that leads to the exit by using A*.
+It is our goal to find the safest path that leads to the exit by using A*.
 
 ## Code Setup
 You have been given a decent amount bit of starter code to help you get going on this project.
