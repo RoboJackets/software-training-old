@@ -9,12 +9,10 @@
 
 #include "graph_search_solution.hpp"
 
-using namespace std;
-
 template <class T>
 std::vector<T> getInputLine()
 {
-    string line;
+    std::string line;
     std::getline(std::cin, line);
     std::istringstream this_line(line);
     return std::vector<T>(std::istream_iterator<T>(this_line), std::istream_iterator<T>());
@@ -33,23 +31,26 @@ std::vector<std::vector<std::string>> loadGrid()
 
 int main(int argc, char **argv)
 {
-    // Ensure command-line args are correct
+    // Ensure command-line args are correct (ex. ./dungeon.out True)
     if (argc != 2)
     {
-        std::cout << "Incorrect Arguement Length (ex. ./graph_search.out True)" << std::endl;
+        std::cout << "Incorrect Arguement Length (ex. ./dungeon.out True)" << std::endl;
         return 1;
     }
 
     std::string verbose_type = argv[1];
     if (verbose_type != "True" && verbose_type != "False")
     {
-        std::cout << "Verbose Type [" << argv[1] << "] Not Reecognized (True or False)" << std::endl;
+        std::cout << "Verbose Type [" << argv[1] << "] Not Recognized (True or False)" << std::endl;
         return 1;
     }
     bool verbose = verbose_type == "True";
 
+    // Load Dungeon Map
     std::cout << "Please Input Grid Map:" << std::endl;
     GridGraph graph(loadGrid());
+
+    // Run Graph Search
     std::vector<Node *> instructions = graph.A_star(verbose);
     if (!instructions.empty())
         for (Node *node : instructions)
