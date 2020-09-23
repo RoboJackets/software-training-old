@@ -117,7 +117,6 @@ public:
         }
     }
 
-
     int heuristic(Node *node, Node *goal)
     {
         // Make the heuristic just be the Manhattan distance between the node and goal

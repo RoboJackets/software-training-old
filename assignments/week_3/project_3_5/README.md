@@ -99,7 +99,9 @@ You have been given a decent amount bit of starter code to help you get going on
 ## Test Your Code
 A selection of test cases have been provided in the `test_cases` folder for this project.
 Example of running your code:
+
 ```$ ./dungeon True ```
+
 Then simply copy/paste one of test_cases text into the terminal and watch it run!
 
 **Note:** When you mark a node as visited, make sure to set the corresponding grid cell to "*" so you can debug as you go. Also once you reach the exit node, iterate through the path nodes and set the corresponding grid cell to "+" for debugging.
