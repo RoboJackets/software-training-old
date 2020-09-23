@@ -1,5 +1,3 @@
-// C++ program to print DFS traversal from
-// a given vertex in a given graph
 #include <string>
 #include <iostream>
 #include <sstream>
@@ -9,7 +7,7 @@
 #include <algorithm>
 #include <vector>
 
-#include "graph.hpp"
+#include "graph_search_solution.hpp"
 
 using namespace std;
 
@@ -21,8 +19,10 @@ std::vector<T> getInputLine()
     std::istringstream this_line(line);
     return std::vector<T>(std::istream_iterator<T>(this_line), std::istream_iterator<T>());
 }
-
-std::vector<std::vector<std::string>> loadGrid() {
+// C++ program to print DFS traversal from
+// a given vertex in a given graph
+std::vector<std::vector<std::string>> loadGrid()
+{
     int lines = getInputLine<int>()[0];
     std::vector<std::vector<std::string>> grid;
     for (int i = 0; i < lines; i++)
@@ -30,12 +30,14 @@ std::vector<std::vector<std::string>> loadGrid() {
         grid.push_back(getInputLine<std::string>());
     }
     return grid;
-}
+} // C++ program to print DFS traversal from
+// a given vertex in a given graph
 
 int main(int argc, char **argv)
 {
     // Ensure command-line args are correct
-    if (argc != 2) {
+    if (argc != 2)
+    {
         std::cout << "Incorrect Arguement Length (ex. ./graph_search.out True)" << std::endl;
         return 1;
     }
@@ -50,7 +52,7 @@ int main(int argc, char **argv)
 
     std::cout << "Please Input Grid Map:" << std::endl;
     GridGraph graph(loadGrid());
-    std::vector<Node *> instructions =  graph.A_star(verbose);
+    std::vector<Node *> instructions = graph.A_star(verbose);
     if (!instructions.empty())
         for (Node *node : instructions)
             std::cout << node->name << std::endl;

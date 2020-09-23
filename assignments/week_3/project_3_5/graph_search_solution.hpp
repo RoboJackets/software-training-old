@@ -1,14 +1,7 @@
 #include <string>
 #include <iostream>
-#include <sstream>
-#include <utility>
-#include <iterator>
-#include <numeric>
-#include <algorithm>
 #include <vector>
-#include <tuple>
 #include <map>
-#include <set>
 #include <queue>
 #include <unistd.h>
 
@@ -18,7 +11,7 @@ struct Node
     int r;
     int c;
     int cost;
-    std::vector<Node*> neighbors;
+    std::vector<Node *> neighbors;
 };
 
 template <typename T, typename priority_t>
@@ -47,11 +40,12 @@ struct PriorityQueue
     }
 };
 
-class GridGraph {
-    std::vector<Node> adjecency_list_;
+class GridGraph
+{
+    std::vector<Node> adjecencyList_;
     std::vector<std::vector<std::string>> grid_;
-    Node* start_node_;
-    Node* end_node_;
+    Node *startNode_;
+    Node *exitNode_;
     const int TIME_DELAY = 100000; // micro sec
 
 private:
@@ -64,7 +58,7 @@ private:
     {
         if (0 <= r && 0 <= c && r < grid_.size() && c < grid_[0].size() && grid_[r][c] != "#")
         {
-            neighbors.push_back(&adjecency_list_[getIndex(r, c)]);
+            neighbors.push_back(&adjecencyList_[getIndex(r, c)]);
         }
     }
 
@@ -91,12 +85,11 @@ private:
         std::cout << std::endl;
     }
 
-
 public:
     GridGraph(const std::vector<std::vector<std::string>> grid)
     {
         grid_ = grid;
-        adjecency_list_.resize(grid_.size() * grid_[0].size());
+        adjecencyList_.resize(grid_.size() * grid_[0].size());
 
         // Populate Node adjacency list
         for (int r = 0; r < grid_.size(); r++)
@@ -104,51 +97,65 @@ public:
             for (int c = 0; c < grid_[0].size(); c++)
             {
                 std::string cell = grid_[r][c];
-                if (cell != "#") {
+                if (cell != "#")
+                {
                     std::string name = std::to_string(r) + ", " + std::to_string(c);
                     int cost = (cell == "S" || cell == "E") ? 0 : std::stoi(grid_[r][c]);
-                    std::vector<Node*> neighbors;
+                    std::vector<Node *> neighbors;
                     addIfValid(neighbors, r - 1, c);
                     addIfValid(neighbors, r + 1, c);
                     addIfValid(neighbors, r, c - 1);
                     addIfValid(neighbors, r, c + 1);
-                    adjecency_list_[getIndex(r, c)] = Node{name, r, c, cost, neighbors};
+                    adjecencyList_[getIndex(r, c)] = Node{name, r, c, cost, neighbors};
                 }
 
                 if (cell == "S")
-                    start_node_ = &adjecency_list_[getIndex(r, c)];
+                    startNode_ = &adjecencyList_[getIndex(r, c)];
                 else if (cell == "E")
-                    end_node_ = &adjecency_list_[getIndex(r, c)];
+                    exitNode_ = &adjecencyList_[getIndex(r, c)];
             }
         }
     }
 
-    int heuristic(Node *node, Node *goal){
-        return 10 * (std::abs(node->r - goal->r) + std::abs(node->c - goal->c));
-        }
+
+    int heuristic(Node *node, Node *goal)
+    {
+        // Make the heuristic just be the Manhattan distance between the node and goal
+        return std::abs(node->r - goal->r) + std::abs(node->c - goal->c);
+    }
 
     std::vector<Node *> A_star(bool verbose)
     {
-        PriorityQueue<Node*, int> queue;
-        std::map<Node *, int> pathCost;
-        std::map<Node *, Node *> parent;
+        // openSet will be min-heap priority queue
+        // gScore[n] will be the cheapest path cost to n currently known
+        // cameFrom[n] will be n's parent for cheapest path currently known
+        PriorityQueue<Node *, int> openSet;
+        std::map<Node *, int> gScore;
+        std::map<Node *, Node *> cameFrom;
 
-        // Mark the current node as visited and enqueue it
-        queue.put(start_node_, 0);
-        pathCost[start_node_] = 0;
-        parent[start_node_] = start_node_;
+        // Queue start node, add it to path cost map, and mark its cameFrom
+        openSet.put(startNode_, 0);
+        gScore[startNode_] = 0;
+        cameFrom[startNode_] = startNode_;
 
-        while (!queue.empty())
+        while (!openSet.empty())
         {
-            Node *currNode = queue.get();
+            // Dequeued front path from queue
+            // DEBUGGING: Set visited cell in grid to "*" so they are different color when displaying
+            Node *currNode = openSet.get();
+            grid_[currNode->r][currNode->c] = "*";
 
-            if (currNode == end_node_)
+            // Leave if current node is exit node
+            // Find path from start to exit by iterating over parents of nodes
+            // DEBUGGING: Iterate though nodes in solution path and set path grid cells (grid_) to "+" and print grid (displayGrid)
+            if (currNode == exitNode_)
             {
                 std::vector<Node *> path = {currNode};
-                Node * parentNode = currNode;
-                while (parentNode != start_node_){
-                    parentNode = parent[parentNode];
-                    path.insert(path.begin(), parentNode);
+                Node *parent = currNode;
+                while (parent != startNode_)
+                {
+                    parent = cameFrom[parent];
+                    path.insert(path.begin(), parent);
                 }
                 if (verbose)
                 {
@@ -159,22 +166,28 @@ public:
                 return path;
             }
 
+            // Get all adjacent nodes of the current node (use currNode->neighbors)
+            // Calculate tentative_gScore := gScore[current] + cost(neighbor)
+            // If tentative_gScore < gScore[neighbor], then
+            // update cameFrom[neighbor] and gScore[neighbor], then
+            // with fScore := tentative_gScore + heuristic(neighbor, goal)
+            // update openSet
             for (Node *neighbor : currNode->neighbors)
             {
-                int newPathCost = pathCost[currNode] + neighbor->cost;
-                if (pathCost.find(neighbor) == pathCost.end() || newPathCost < pathCost[neighbor])
+                int tentative_gScore = gScore[currNode] + neighbor->cost;
+                if (gScore.find(neighbor) == gScore.end() || tentative_gScore < gScore[neighbor])
                 {
-                    pathCost[neighbor] = newPathCost;
-                    int priority = newPathCost + heuristic(neighbor, end_node_);
-                    queue.put(neighbor, priority);
-                    parent[neighbor] = currNode;
-                    grid_[neighbor->r][neighbor->c] = "*";
+                    cameFrom[neighbor] = currNode;
+                    gScore[neighbor] = tentative_gScore;
+                    int fScore = gScore[neighbor] + heuristic(neighbor, exitNode_);
+                    openSet.put(neighbor, fScore);
                 }
             }
+
             if (verbose)
             {
                 displayGrid();
-                usleep(TIME_DELAY); // micro sec
+                usleep(TIME_DELAY);
             }
         }
         return std::vector<Node *>{};
