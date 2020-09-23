@@ -9,12 +9,12 @@ Graphs are mathematical structures that represent pairwise relationships between
 - Adjacency − Two node or vertices are adjacent if they are connected to each other through an edge. In the following example, B is adjacent to A, C is adjacent to B, and so on.
 - Path − Path represents a sequence of edges between the two vertices. In the following example, ABCD represents a path from A to D.
 
-![Graph](graph.jpg)
+![Graph](images/graph.jpg)
 
 ## Breadth-First Search (BFS)
 Breadth-first search (BFS) is an algorithm for traversing or searching tree or graph data structures. It starts at an initial node and explores all of the neighbor nodes at the present depth prior to moving on to the nodes at the next depth level. Below is an example that shows the order in which the nodes would be expanded into within BFS:
 
-![BFS Order](bfs_order.png)
+![BFS Order](images/bfs_order.png)
 
 A standard BFS implementation puts each vertex of the graph into one of two categories: visited and not visited. The purpose of the algorithm is to mark each vertex as visited while avoiding cycles. The algorithm works as follows:
 1. Start by putting any one of the graph's vertices at the back of a **queue**.
@@ -41,7 +41,7 @@ Pseudo Code:
 ## Depth-First Search (DFS)
 Depth-first search (DFS) also is an algorithm for traversing or searching tree or graph data structures. The algorithm starts at an initial node and explores as far as possible along each branch before backtracking. Below is an example that shows the order in which the nodes would be expanded into within DFS:
 
-![BFS Order](dfs_order.png)
+![BFS Order](images/dfs_order.png)
 
 A standard DFS implementation puts each vertex of the graph into one of two categories: visited and not visited. The purpose of the algorithm is to mark each vertex as visited while avoiding cycles. The DFS (iterative) algorithm works as follows:
 1. Start by putting any one of the graph's vertices on top of a **stack**.
@@ -75,11 +75,11 @@ DFS
 # Problem
 Suppose you are trapped in a 2D dungeon and you have to find the easiest way out. Hold on, we have some obstacles too. The dungeon is composed of unit cubes which may or may not be filled with rocks. It would take exactly one minute to move either east, west, south or north. You can’t move diagonally as the maze is tightly packed with solid rocks.
 
-![Dungeon](dungeon.png)
+![Dungeon](images/dungeon.png)
 
 The dungeon has a size of R x C where R is number of rows and c is number of columns. We have to start at cell ‘S’ and we have an exit at cell ‘E’. The number (#) symbol depicts the roadblocks in the route and period (.) shows an open route.
 
-![Dungeon Path](dungeon_path.png)
+![Dungeon Path](images/dungeon_path.png)
 
 In the given setup, one solution could be drawn as above in the green route. It is going to be your goal to find a path to the exit so you can escape the dungeon.
 
@@ -97,4 +97,4 @@ Then simply copy/paste one of test_cases text into the terminal and watch it run
 
 **Note:** When you mark a node as visited, make sure to set the corresponding grid cell to "*" so you can debug as you go. Also once you reach the exit node, iterate through the path nodes and set the corresponding grid cell to "+" for debugging.
 
-![Dungeon Debug Example Path](dungeon_bfs.png)
+![Dungeon Debug Example Path](images/dungeon_bfs.png)
