@@ -11,14 +11,15 @@ struct Node
     std::string name;
     int r;
     int c;
-    std::vector<Node*> neighbors;
+    std::vector<Node *> neighbors;
 };
 
-class GridGraph {
+class GridGraph
+{
     std::vector<Node> adjecencyList_;
     std::vector<std::vector<std::string>> grid_;
-    Node* startNode_;
-    Node* exitNode_;
+    Node *startNode_;
+    Node *exitNode_;
     const int TIME_DELAY = 100000; // micro sec
 
 private:
@@ -69,9 +70,10 @@ public:
         {
             for (int c = 0; c < grid_[0].size(); c++)
             {
-                if (grid_[r][c] != "#") {
+                if (grid_[r][c] != "#")
+                {
                     std::string name = std::to_string(r) + ", " + std::to_string(c);
-                    std::vector<Node*> neighbors;
+                    std::vector<Node *> neighbors;
                     addIfValid(neighbors, r - 1, c);
                     addIfValid(neighbors, r + 1, c);
                     addIfValid(neighbors, r, c - 1);
@@ -91,7 +93,7 @@ public:
     {
         // visited set will be visited nodes
         // queue will be queue of paths
-        std::set<Node*> visited;
+        std::set<Node *> visited;
         std::queue<std::vector<Node *>> queue;
 
         // Mark the start node as visited and enqueue it
@@ -118,7 +120,7 @@ public:
                 usleep(TIME_DELAY);
             }
         }
-        return std::vector<Node*>{};
+        return std::vector<Node *>{};
     }
 
     std::vector<Node *> DFS(bool verbose)
