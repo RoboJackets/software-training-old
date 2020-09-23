@@ -1,4 +1,4 @@
-# Project 3
+# Project 3.5
 Welcome to project 3! In this week's project we will be going into an informed graph search algorithms: A*. A* (pronounced "A-star") is a graph traversal and path search algorithm, which is often used in many fields of computer science due to its completeness, optimality, and optimal efficiency.
 
 # Introduction To A* Search Algorithm

@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <vector>
 
-#include "graph_search_solution.hpp"
+#include "graph_search.hpp"
 
 template <class T>
 std::vector<T> getInputLine()
