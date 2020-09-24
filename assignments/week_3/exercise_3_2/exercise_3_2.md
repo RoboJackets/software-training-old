@@ -6,7 +6,7 @@ Welcome to exercise 3.2. This exercise will test your ability to create and use 
 
 In this exercise you will finish writing the code needed to create a linked list. A linked list is a data structure that holds data, similar to a vector. A linked list is made up of nodes in a line each which contains two pieces of information:
 1. Whatever data you want to store in the linked list (in this case a string)
-2. A pointer to the next data
+2. A pointer to the next node
 However, the linked list itself does not keep track of the pointer of each piece of data, but instead only keeps track of the first, or head, node. From the head pointer it is possible to iterate through and access the entire list. You will be creating some functions that help use a linked list, this includes functions that remove data and add new data at specific locations and also one to print the whole list out. Here is a graphical representation of a linked list below.
 
 ![](https://www.geeksforgeeks.org/wp-content/uploads/gq/2013/03/Linkedlist.png)
@@ -72,7 +72,7 @@ public:
 6. Outside of the loop in the if statement set the new node’s next pointer to curr’s next pointer
 7. In the if statement set curr’s next pointer to the new node pointer
 8. In the else statement use the same technique in add to front to make the new node pointer the head
-9. remove_from_front:
+### remove_from_front:
 10. Create an if statement that checks that the linked list is not empty
 11. Within the if statement set head to head’s next pointer
 ### remove_from_back:
