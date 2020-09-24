@@ -52,7 +52,7 @@ public:
 # Steps
 ### add_to_front:
 1. Create a new variable that is a pointer to a Node
-2. Set the name of the name of the new node to the name parameter passed into the function
+2. Set the name of the new node to the name parameter passed into the function by changing the string variable called name to the passed in value
 3. Set the new node’s next variable to the head pointer of the linked list
 4. Set the head of the linked list to the new node pointer
 ### add_to_back:
