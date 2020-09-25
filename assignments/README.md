@@ -6,6 +6,20 @@ The following links will use GitHub classroom to create repositories for each of
  - [Week 2 Practical Programming](https://classroom.github.com/a/goq5FDdZ)
  - Week 2 Robotics (_Coming soon_)
  
+## Pre-Meeeting Content
+### Week 0 (Before week 1 meeting)
+Complete [Codecademy](https://www.codecademy.com/learn/learn-c-plus-plus) (up through vectors).
+
+### Week 1
+Complete [Codecademy](https://www.codecademy.com/learn/learn-c-plus-plus) (up through classes and objects).
+
+### Week 2
+Complete [Codecademy](https://www.codecademy.com/learn/learn-c-plus-plus) (everything).
+
+Watch the following playlists:
+ - [ROS Videos](https://www.youtube.com/playlist?list=PL1R5gSylLha3i1nbDdmpkJ6wBVudIJheI)
+ - [C++ Supplement](https://www.youtube.com/playlist?list=PL1R5gSylLha1t7D1HKpHB49ZG8oC0fERh) (only videos 1 and 2 are required)
+ 
 ## Assignment Matrix
 
 | Assignment | Exercise | Solution | Due Date |
@@ -20,3 +34,6 @@ The following links will use GitHub classroom to create repositories for each of
 | Exercise 2.2 | [Instructions](https://github.com/RoboJackets/software-training/blob/master/assignments/week_2/exercise_2_2/exercise_2_2.md) | N/A | 10/1
 | Exercise 2.3 | [Instructions](https://github.com/RoboJackets/software-training/blob/master/assignments/week_2/exercise_2_3/exercise_2_3.md) | N/A | 10/1
 | (Robotics) Exercise 2.4 | [Instructions](https://github.com/RoboJackets/software-training/tree/master/assignments/week_2/project_2_4) | N/A | 10/1
+
+## Session Recordings
+Session recordings can be found at the following playlist: https://www.youtube.com/playlist?list=PL1R5gSylLha1PojhnHFFD4b9LzSTNG66j.
