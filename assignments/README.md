@@ -1,9 +1,12 @@
 # RoboJackets Software Training Assignments
 
+## Assignment setup
 The following links will use GitHub classroom to create repositories for each of the sessions' projects:
  - [Week 1 Practical Programming](https://classroom.github.com/a/HkIuITsO)
  - [Week 2 Practical Programming](https://classroom.github.com/a/goq5FDdZ)
  - Week 2 Robotics (_Coming soon_)
+ 
+## Assignment Matrix
 
 | Assignment | Exercise | Solution | Due Date |
 |---|---|---|---|
