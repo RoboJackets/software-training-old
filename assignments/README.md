@@ -37,3 +37,6 @@ Watch the following playlists:
 
 ## Session Recordings
 Session recordings can be found at the following playlist: https://www.youtube.com/playlist?list=PL1R5gSylLha1PojhnHFFD4b9LzSTNG66j.
+
+## Other Resources
+### [Git game](https://learngitbranching.js.org/)
