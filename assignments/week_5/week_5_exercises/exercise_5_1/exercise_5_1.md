@@ -4,13 +4,13 @@ This exercise covers how to create a launch file for node.
 # Exercise Objective
 Create a `.launch` file which starts the `printing_node`, which is already created for you.
 
-A launch file structured similarly to HTML: it is composed of tags, which have attributes and 
+A launch file structured with XML (like HTML): it is composed of tags, which have attributes and 
 can contain variables and other tags.
 
 # Structure of a launch file
 Every launch file needs `<launch>` tags surrounding all it's contents:
 
-```html
+```xml
 <launch>
 
 </launch>
@@ -23,10 +23,13 @@ The node tag requires three attributes:
 * `name`: the name of this individual node. There can be multiple nodes with the same type,
 but no two nodes can have the same name.
 
+There is also an optional attribute `output`, which determines where the node should
+print messages. For this exercise, you want `output="screen"`
+
 The complete tag should look something like this:
 
-```html
-<node pkg="package_name" type="node_type" name="descriptive name">
+```xml
+<node pkg="package_name" type="node_type" name="descriptive name" output="screen">
 
 </node>
 ```

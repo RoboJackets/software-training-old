@@ -25,12 +25,12 @@ include_directories(
 ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(node exercise_5_1/printing_node.cpp)
-add_dependencies(node ${catkin_EXPORTED_TARGETS})
-target_link_libraries(node ${catkin_LIBRARIES})
+add_executable(printing_node exercise_5_1/printing_node.cpp)
+add_dependencies(printing_node ${catkin_EXPORTED_TARGETS})
+target_link_libraries(printing_node ${catkin_LIBRARIES})
 
 install(
-        TARGETS node
+        TARGETS printing_node
         ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
         LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
         RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}

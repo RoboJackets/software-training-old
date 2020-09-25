@@ -10,7 +10,7 @@ These values would be better suited as launch parameters, and not hardcoded.
 
 # Parameters in a launch file
 To add a parameter to a launch file, you use a `param` tag:
-```html
+```xml
 <param name="parameter_name" value="parameter_value"/>
 ```
 (The `/>` ending just signifies that this tag doesn't have a closing pair, it's just a single tag)
@@ -33,8 +33,9 @@ simply the name of the parameter.
 Here is an example of `getParam` in action:
 ```c++
 int number;
-p_nh.getParam("/number_parameter", number);
+p_nh.getParam("number_parameter", number);
 ```
 
 Declare two variables, the string and the number of prints, and use `getParam` to assign
-them the values you used in the launch file.
+them the values you used in the launch file. Use these variables in the print loop, and 
+test changing the parameters to see that it works.
