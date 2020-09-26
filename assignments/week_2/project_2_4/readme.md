@@ -50,6 +50,7 @@ is "001100".
 
 A full cycle that allows the east-west road to travel would look like this:
 
+```
 100100 // Start cycle with all red lights
 100001 // Green lights for east-west
 100001
@@ -59,6 +60,7 @@ A full cycle that allows the east-west road to travel would look like this:
 100010  // Yellow lights for east-west
 100010  // Yellow lights have now been on for 2 seconds
 100100  // Back to red to complete the cycle
+```
 
 When the controller is ready to turn on green lights to start a cycle, it must check the car sensors. If either sensor
 is reading high (1), the controller should turn on the green lights for the north-south road. If both sensors are low
