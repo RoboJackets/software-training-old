@@ -4,7 +4,7 @@
 The following links will use GitHub classroom to create repositories for each of the sessions' projects:
  - [Week 1 Practical Programming](https://classroom.github.com/a/HkIuITsO)
  - [Week 2 Practical Programming](https://classroom.github.com/a/goq5FDdZ)
- - Week 2 Robotics (_Coming soon_)
+ - [Week 2 Robotics Fundamentals](https://classroom.github.com/a/euIyNH9J)
  
 ## Pre-Meeeting Content
 ### Week 0 (Before week 1 meeting)
@@ -37,6 +37,14 @@ Watch the following playlists:
 
 ## Session Recordings
 Session recordings can be found at the following playlist: https://www.youtube.com/playlist?list=PL1R5gSylLha1PojhnHFFD4b9LzSTNG66j.
+
+## Slides
+ - Practical Programming
+    - [Week 1 (C++ Control Flow)](https://docs.google.com/presentation/d/1RS7rACqkAK302b8EHbmua6fdw4CejuzRodIEGPReJn0/edit?usp=sharing)
+    - [Week 2 (C++ Program Organization)](https://docs.google.com/presentation/d/1dBRXK34k6EfZsPH-osEa8K1WdB2qDh890UXY5BPFqq8/edit?usp=sharing)
+ - Robotics Fundamentals
+    - [Week 1 (Intro to Machine Learning)](https://docs.google.com/presentation/d/1I3VZPxjHIDAsbaU-VmcZpUjGdTNTg0DQTiC-Wh28Wks/edit?usp=sharing)
+    - [Week 2 (Sensors and Coordinate Transforms)](https://docs.google.com/presentation/d/10XG177crZjNxN25UKXuz4DFdurWaYbVyf3OOjuakuJo/edit?usp=sharing)
 
 ## Other Resources
 ### [Git game](https://learngitbranching.js.org/)
