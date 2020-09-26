@@ -1,15 +1,16 @@
 #include <string>
 #include <vector>
+#include <memory>
 
 class Node {
 public:
     std::string name;
-    Node *next;
+    std::unique_ptr<Node> next;
 };
 
 class LinkedList {
 private:
-    Node *head;
+    std::unique_ptr<Node> head;
 public:
 
     LinkedList();

@@ -1,5 +1,6 @@
 #include "exersice_3_2.hpp"
 #include <iostream>
+#include <memory>
 
 LinkedList::LinkedList() {
     head = NULL;
