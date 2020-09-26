@@ -1,9 +1,8 @@
-#include "exersice_3_2.hpp"
+#include "exercise_3_2.hpp"
 #include <iostream>
-#include <memory>
 
 LinkedList::LinkedList() {
-    head = NULL;
+    head = nullptr;
 }
 
 void LinkedList::add_to_front(std::string name) {
