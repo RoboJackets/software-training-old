@@ -6,7 +6,7 @@ Welcome to exercise 3.2. This exercise will test your ability to create and use 
 
 In this exercise you will finish writing the code needed to create a linked list. A linked list is a data structure that holds data, similar to a vector. A linked list is made up of nodes in a line each which contains two pieces of information:
 1. Whatever data you want to store in the linked list (in this case a string)
-2. A pointer to the next data
+2. A pointer to the next node
 However, the linked list itself does not keep track of the pointer of each piece of data, but instead only keeps track of the first, or head, node. From the head pointer it is possible to iterate through and access the entire list. You will be creating some functions that help use a linked list, this includes functions that remove data and add new data at specific locations and also one to print the whole list out. Here is a graphical representation of a linked list below.
 
 ![](https://www.geeksforgeeks.org/wp-content/uploads/gq/2013/03/Linkedlist.png)
@@ -91,10 +91,17 @@ public:
 
 # Steps
 ### add_to_front:
+<<<<<<< HEAD
 1. Create a new variable that is a unique pointer to a Node using std::make_unique<>()
 2. Set the name of the name of the new node to the name parameter passed into the function using -> to access the name member
 3. Set the new node’s next variable to the head pointer of the linked list by using std::move() on the head of the linked list
 4. Set the head of the linked list to the new node pointer again using std::move() except on the new node pointer
+=======
+1. Create a new variable that is a pointer to a Node
+2. Set the name of the new node to the name parameter passed into the function by changing the string variable called name to the passed in value
+3. Set the new node’s next variable to the head pointer of the linked list
+4. Set the head of the linked list to the new node pointer
+>>>>>>> c4a26f46a69facebfa221f102a8a03265523d555
 ### add_to_back:
 1. Create a new variable that is a unique pointer to a Node
 2. Set the name of new node pointer to be the name parameter and set its next pointer to nullptr
