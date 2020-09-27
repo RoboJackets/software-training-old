@@ -91,17 +91,10 @@ public:
 
 # Steps
 ### add_to_front:
-<<<<<<< HEAD
 1. Create a new variable that is a unique pointer to a Node using std::make_unique<>()
-2. Set the name of the name of the new node to the name parameter passed into the function using -> to access the name member
+2. Set the name of the new node to the name parameter passed into the function by changing the string variable called name to the passed in value by using -> to access the name member of the Node
 3. Set the new node’s next variable to the head pointer of the linked list by using std::move() on the head of the linked list
 4. Set the head of the linked list to the new node pointer again using std::move() except on the new node pointer
-=======
-1. Create a new variable that is a pointer to a Node
-2. Set the name of the new node to the name parameter passed into the function by changing the string variable called name to the passed in value
-3. Set the new node’s next variable to the head pointer of the linked list
-4. Set the head of the linked list to the new node pointer
->>>>>>> c4a26f46a69facebfa221f102a8a03265523d555
 ### add_to_back:
 1. Create a new variable that is a unique pointer to a Node
 2. Set the name of new node pointer to be the name parameter and set its next pointer to nullptr
