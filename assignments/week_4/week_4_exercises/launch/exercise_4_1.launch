@@ -1,0 +1,6 @@
+<launch>
+    <node pkg="week_4_exercises" type="your_node" name="your_node" output="screen"/>
+    <node pkg="week_4_exercises" type="testing_node" name="testing_node" output="screen">
+        <param name="/exercise" value="1"/>
+    </node>
+</launch>
