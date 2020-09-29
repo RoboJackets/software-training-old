@@ -100,10 +100,10 @@ You have been given a decent amount bit of starter code to help you get going on
 - test_cases/* [ CAN EDIT ]: Some dungeon testcases we provide, you can just copy/paste it into terminal when it asks to input dungeon map
 
 ## Test Your Code
-A selection of test cases have been provided in the `test_cases` folder for this project.
-Example of running your code:
-```$ ./dungeon <verbose := True/False ```
-so an example command would be:
+A selection of test cases have been provided in the `test_cases` folder for this project. <br />
+Example of running your code: <br />
+```$ ./dungeon <verbose := True/False ``` <br />
+so an example command would be: <br /> 
 ```$ ./dungeon True ```
 
 Then simply copy/paste one of test_cases text into the terminal and watch it run!
