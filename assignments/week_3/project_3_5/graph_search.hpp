@@ -119,8 +119,18 @@ public:
 
     int heuristic(Node *node, Node *goal)
     {
+        // IMPLEMENT CODE HERE!
+
         // Make the heuristic just be the Manhattan distance between the node and goal
         return 0;
+    }
+
+    std::vector<Node *> reconstruct_path(std::map<Node *, Node *> cameFrom, Node *currNode)
+    {
+        // IMPLEMENT CODE HERE!
+
+        // Construct path from the current node to the top most parent (startNode_)
+        return std::vector<Node *>{};
     }
 
     std::vector<Node *> A_star(bool verbose)
@@ -139,6 +149,8 @@ public:
 
         while (!openSet.empty())
         {
+            // IMPLEMENT CODE HERE!
+
             // Dequeued front path from queue
             // DEBUGGING: Set visited cell in grid to "*" so they are different color when displaying
 
@@ -154,7 +166,6 @@ public:
             // update cameFrom[neighbor] and gScore[neighbor], then
             // with fScore := tentative_gScore + heuristic(neighbor, goal)
             // update openSet
-
 
             if (verbose)
             {

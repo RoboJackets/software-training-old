@@ -123,6 +123,19 @@ public:
         return std::abs(node->r - goal->r) + std::abs(node->c - goal->c);
     }
 
+    std::vector<Node *> reconstruct_path(std::map<Node *, Node *> cameFrom, Node *currNode)
+    {
+        // Construct path from the current node to the top most parent (startNode_)
+        std::vector<Node *> path = {currNode};
+        Node *parent = currNode;
+        while (parent != startNode_)
+        {
+            parent = cameFrom[parent];
+            path.insert(path.begin(), parent);
+        }
+        return path;
+    }
+
     std::vector<Node *> A_star(bool verbose)
     {
         // openSet will be min-heap priority queue
@@ -149,13 +162,7 @@ public:
             // DEBUGGING: Iterate though nodes in solution path and set path grid cells (grid_) to "+" and print grid (displayGrid)
             if (currNode == exitNode_)
             {
-                std::vector<Node *> path = {currNode};
-                Node *parent = currNode;
-                while (parent != startNode_)
-                {
-                    parent = cameFrom[parent];
-                    path.insert(path.begin(), parent);
-                }
+                std::vector<Node *> path = reconstruct_path(cameFrom, currNode);
                 if (verbose)
                 {
                     for (Node *n : path)

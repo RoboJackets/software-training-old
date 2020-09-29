@@ -94,12 +94,16 @@ It is our goal to find the safest path that leads to the exit by using A*.
 You have been given a decent amount bit of starter code to help you get going on this project.
 - dungeon.cpp [ DO NOT EDIT ]: Loads dungeon map and prints path
 - graph_search.cpp [ EDIT ]: Where you will write your A* implementation
+    - Implement A* function (__A_star()__)
+    - Implement heuristic function (__heuristic()__)
+    - Implement reconstruct_path function (__reconstruct_path()__)
 - test_cases/* [ CAN EDIT ]: Some dungeon testcases we provide, you can just copy/paste it into terminal when it asks to input dungeon map
 
 ## Test Your Code
 A selection of test cases have been provided in the `test_cases` folder for this project.
 Example of running your code:
-
+```$ ./dungeon <verbose := True/False ```
+so an example command would be:
 ```$ ./dungeon True ```
 
 Then simply copy/paste one of test_cases text into the terminal and watch it run!
