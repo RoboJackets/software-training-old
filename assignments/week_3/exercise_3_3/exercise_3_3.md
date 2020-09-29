@@ -2,14 +2,7 @@
 Welcome to your first ROS exercise! We will first give a brief overview of what ROS is,
 then we will learn the basics of ROS nodes and learn how to launch nodes, and some commandline tools.
 
-## What is ROS?
-ROS stands for Robotic Operating System. It's a very convenient framework for programming robots.
-
-That was a short and probably not very useful explanation of what ROS is, but throughout
-the coming exercises we'll learn more about what ROS is by using its core features, and
-hopefully you'll gain a better understanding of what it is, but for now:
-
-## How does ROS work?
+## Baclground on ROS
 The core of ROS deals with multiple small programs, called __nodes__, which communicate
 with each other. The important thing is that each node is only responsible for one aspect
 of the robot, which helps make the entire stack much cleaner.
@@ -34,9 +27,7 @@ Then we need to run 'roscore', still in catkin_ws:
 ```bash
 roscore
 ```
-
-Don't worry about what `roscore` is. You can think of it as something that handles all the ros functionality behind the
-scenes. Without launching `roscore` first, you'll see an error along the lines of:
+Without launching `roscore` first, you'll see an error along the lines of:
 ```
 [ERROR] [1567021515.828919061]: [registerPublisher] Failed to contact master at [localhost:11311].  Retrying...
 ```
@@ -62,12 +53,6 @@ you're using zsh):
 ```bash
 cd catkin_ws # Or wherever your catkin_ws is located
 source devel/setup.bash
-```
-
-You can do the following to have the command run for you automatically, replacing `catkin_ws` with the path to where
-your `catkin_ws` is located.
-```bash
-echo "source catkin_ws/devel/setup.bash" >> ~/.bashrc
 ```
 
 After launching the node, you should see the simulator window open up:
