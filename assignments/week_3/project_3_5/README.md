@@ -102,8 +102,8 @@ You have been given a decent amount bit of starter code to help you get going on
 ## Test Your Code
 A selection of test cases have been provided in the `test_cases` folder for this project. <br />
 Example of running your code: <br />
-```$ ./dungeon <verbose := True/False ``` <br />
-so an example command would be: <br /> 
+```$ ./dungeon <verbose := True/False> ``` <br />
+so an example command would be: <br />
 ```$ ./dungeon True ```
 
 Then simply copy/paste one of test_cases text into the terminal and watch it run!
