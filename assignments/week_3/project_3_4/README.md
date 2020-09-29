@@ -16,7 +16,7 @@ Breadth-first search (BFS) is an algorithm for traversing or searching tree or g
 
 ![BFS Order](images/bfs_order.png)
 
-A standard BFS implementation puts each vertex of the graph into one of two categories: visited and not visited. The purpose of the algorithm is to mark each vertex as visited while avoiding cycles. The algorithm works as follows:
+A standard BFS implementation puts each vertex of the graph into one of two categories: visited and not visited. The algorithm works as follows:
 1. Start by putting any one of the graph's vertices at the back of a **queue**.
 2. Take the front item of the queue and add it to the visited list.
 3. Create a list of that vertex's adjacent nodes. Add the ones which aren't in the visited list to the back of the queue.
@@ -37,13 +37,14 @@ Pseudo Code:
                  w.parent := v
                  Q.enqueue(w)
 ```
+* Note: For those of you that don't know what a queue is, a queue is a linear structure which follows a particular order in which the operations are performed. The order is First In First Out (FIFO).  A good example of a queue is any queue of consumers for a resource where the consumer that came first is served first.
 
 ## Depth-First Search (DFS)
 Depth-first search (DFS) also is an algorithm for traversing or searching tree or graph data structures. The algorithm starts at an initial node and explores as far as possible along each branch before backtracking. Below is an example that shows the order in which the nodes would be expanded into within DFS:
 
 ![BFS Order](images/dfs_order.png)
 
-A standard DFS implementation puts each vertex of the graph into one of two categories: visited and not visited. The purpose of the algorithm is to mark each vertex as visited while avoiding cycles. The DFS (iterative) algorithm works as follows:
+A standard DFS implementation puts each vertex of the graph into one of two categories: visited and not visited. The DFS (iterative) algorithm works as follows:
 1. Start by putting any one of the graph's vertices on top of a **stack**.
 2. Take the top item of the stack and add it to the visited list.
 3. Create a list of that vertex's adjacent nodes. Add the ones which aren't in the visited list to the top of the stack.
@@ -60,6 +61,7 @@ procedure DFS(G, v) is
             for all edges from v to w in G.adjacentEdges(v) do
                 S.push(w)
 ```
+* Note: For those of you that don't know what a stack is, a stack is a linear data structure which follows a particular order in which the operations are performed. The order is First In Last Out (FILO). A good example of a stack is plates stacked over one another in the canteen where the plate which is at the top is the first one to be removed.
 
 ## BFS vs. DFS
 BFS
@@ -86,12 +88,18 @@ In the given setup, one solution could be drawn as above in the green route. It 
 ## Code Setup
 You have been given a decent amount bit of starter code to help you get going on this project.
 - dungeon.cpp [ DO NOT EDIT ]: Loads dungeon map and prints path
-- graph_search.cpp [ EDIT ]: Where you will write your BFS & DFS implementation
-- test_cases/* [ DO NOT EDIT ]: Some dungeon testcases we provide, you can just copy/paste it into terminal when it asks to input dungeon map
+- graph_search.cpp [ EDIT ]: Where you will write BFS & DFS implementations
+  - Implement BFS function (_BFS()_)
+  - Implement DFS function (_DFS()_)
+- test_cases/* [ DO NOT EDIT ]: Some dungeon testcases we provide, you can just copy/paste it into terminal when program asks for input dungeon map
 
 ## Test Your Code
 A selection of test cases have been provided in the `test_cases` folder for this project.
 Example of running your code:
+```
+$ ./dungeon <Search Type := BFS/DFS> <Verbose := True/False>
+```
+so an example command would be:
 ```
 $ ./dungeon BFS True
 ```

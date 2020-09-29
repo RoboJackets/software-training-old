@@ -53,7 +53,7 @@ int main(int argc, char **argv)
     bool verbose = verbose_type == "True";
 
     // Load Dungeon Map
-    std::cout << "Please Input Dungeon Map:" << std::endl;
+    std::cout << "Please Input Dungeon Map: <Copy/Paste Text from test_case/*.txt>" << std::endl;
     GridGraph graph(loadGrid());
 
     // Run Graph Search
