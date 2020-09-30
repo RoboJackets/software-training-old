@@ -2,3 +2,4 @@
 
 This is repository contains resources for the RoboJackets Software Training program.
 
+# thanks for your visit
