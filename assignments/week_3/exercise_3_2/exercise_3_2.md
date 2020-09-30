@@ -90,6 +90,9 @@ public:
 ```
 
 # Steps
+The algorthms for most of the functions below can be found here: https://visualgo.net/en/list.
+This should also give you a good visualization about what is happening in each of these methods.
+It should also be noted that the code the visualization shows is just pseudo code and should NOT be used for this exercise, this tool is just to help you understnad the add and remove algormthms for linked lists.
 ### add_to_front:
 1. Create a new variable that is a unique pointer to a Node using std::make_unique<>()
 2. Set the name of the new node to the name parameter passed into the function by changing the string variable called name to the passed in value by using -> to access the name member of the Node
