@@ -65,7 +65,7 @@ Fix the program so that it prints "Hello, world!" to the console.
 ## Building and running
 We use a build system called CMake to build our code. In Codecademy, you typed in `g++` commands every time you wanted to recompile the code. This is easy when you have a program consisting of a single file, but for big programs the compilation process ends up being much more complicated. CMake is a way of organizing this.
 
-To use CMake, first make sure you are in `/home/robojackets/week-1-programming-exercise-<name>/exercise_1_0`. The shell should display this by default, but you can also check your working directory using the `cwd` command.
+To use CMake, first make sure you are in `/home/robojackets/week-1-programming-exercise-<name>/exercise_1_0`. The shell should display this by default, but you can also check your working directory using the `pwd` command.
 
 CMake requires a _build directory_. This is where all of the finished (compiled) programs will go, as well as any temporary output required by the compiler. Go ahead and make a build directory using:
 ```bash
