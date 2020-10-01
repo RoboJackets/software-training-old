@@ -1,0 +1,10 @@
+what,code,a,b,pa,pb,temp
+a is 5,,5,,,,
+b is 20,,5,20,,,
+create pointer pa to a,,5,20,&a,,
+create pointer pb to b,,5,20,&a,&b,
+set  a to 10,,10,20,&a,&b,
+set a to 30 using pa,,30,20,&a,&b,
+make pa point at b,,,,,,
+use pb to make b 5,,,,,,
+"swap  a and b using only pointers, address of and temp",,,,,,
