@@ -55,37 +55,36 @@ public:
 
 Starter Code:
 ```c++
-#include <string>
-#include <vector>
-#include <memory>
+#include "exercise_3_2.hpp"
+#include <iostream>
 
-class Node {
-public:
-    std::string name;
-    std::unique_ptr<Node> next;
-};
+LinkedList::LinkedList() {
+    head = nullptr;
+}
 
-class LinkedList {
-private:
-    std::unique_ptr<Node> head;
-public:
+void LinkedList::add_to_front(std::string name) {
+    return;
+}
 
-    LinkedList();
+void LinkedList::add_to_back(std::string name){
+    return;
+}
 
-    void add_to_front(std::string name);
+void LinkedList::add_at_index(std::string name, int index) {
+    return;
+}
 
-    void add_to_back(std::string name);
+void LinkedList::remove_from_front() {
+    return;
+}
 
-    void add_at_index(std::string name, int index);
+void LinkedList::remove_from_back() {
+    return;
+}
 
-    void remove_from_front();
-
-    void remove_from_back();
-
-    void remove_at_index(int index);
-
-    void print_names();
-
+void LinkedList::print_names() {
+    return;
+}
 };
 ```
 
