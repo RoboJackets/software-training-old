@@ -33,9 +33,9 @@ Watch the following playlists:
 | Exercise 2.1 | [Instructions](https://github.com/RoboJackets/software-training/blob/master/assignments/week_2/exercise_2_1/exercise_2_1.md) | N/A | 10/1 |
 | Exercise 2.2 | [Instructions](https://github.com/RoboJackets/software-training/blob/master/assignments/week_2/exercise_2_2/exercise_2_2.md) | N/A | 10/1 |
 | Exercise 2.3 | [Instructions](https://github.com/RoboJackets/software-training/blob/master/assignments/week_2/exercise_2_3/exercise_2_3.md) | N/A | 10/1 |
-| Exercise 3.1 | [Instructions](https://github.com/RoboJackets/software-training/tree/master/assignments/week_3/exercise_3_1) | N/A | 10/8 |
-| Exercise 3.2 | [Instructions](https://github.com/RoboJackets/software-training/tree/master/assignments/week_3/exercise_3_2) | N/A | 10/8 |
-| Exercise 3.3 | [Instructions](https://github.com/RoboJackets/software-training/tree/master/assignments/week_3/exercise_3_3) | N/A | 10/8 |
+| Exercise 3.1 | [Instructions](https://github.com/RoboJackets/software-training/blob/master/assignments/week_3/exercise_3_1/Exercise_3_1.md) | N/A | 10/8 |
+| Exercise 3.2 | [Instructions](https://github.com/RoboJackets/software-training/tree/master/assignments/week_3/exercise_3_2/exercise_3_2.md) | N/A | 10/8 |
+| Exercise 3.3 | [Instructions](https://github.com/RoboJackets/software-training/tree/master/assignments/week_3/exercise_3_3/exercise_3_3.md) | N/A | 10/8 |
 
 ## Session Recordings
 Session recordings can be found at the following playlist: https://www.youtube.com/playlist?list=PL1R5gSylLha1PojhnHFFD4b9LzSTNG66j.
