@@ -6,6 +6,7 @@ The following links will use GitHub classroom to create repositories for each of
  - [Week 2 Practical Programming](https://classroom.github.com/a/goq5FDdZ)
  - [Week 2 Robotics Fundamentals](https://classroom.github.com/a/euIyNH9J)
  - [Week 3 Practical Programming](https://classroom.github.com/a/o2692-9w)
+ - [Week 3 Robotics Fundamentals](https://classroom.github.com/a/lyOlorTJ)
  
 ## Pre-Meeeting Content
 ### Week 0 (Before week 1 meeting)
