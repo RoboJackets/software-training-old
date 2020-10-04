@@ -37,6 +37,8 @@ Watch the following playlists:
 | Exercise 3.1 | [Instructions](https://github.com/RoboJackets/software-training/blob/master/assignments/week_3/exercise_3_1/Exercise_3_1.md) | N/A | 10/8 |
 | Exercise 3.2 | [Instructions](https://github.com/RoboJackets/software-training/tree/master/assignments/week_3/exercise_3_2/exercise_3_2.md) | N/A | 10/8 |
 | Exercise 3.3 | [Instructions](https://github.com/RoboJackets/software-training/tree/master/assignments/week_3/exercise_3_3/exercise_3_3.md) | N/A | 10/8 |
+| (Robotics) Project 3.4 | [Instructions](https://github.com/RoboJackets/software-training/tree/master/assignments/week_3/project_3_4/project_3_4.md) | N/A | 10/10 |
+| (Robotics) Project 3.5 | [Instructions](https://github.com/RoboJackets/software-training/tree/master/assignments/week_3/project_3_5/project_3_5.md) | N/A | 10/10 |
 
 ## Session Recordings
 Session recordings can be found at the following playlist: https://www.youtube.com/playlist?list=PL1R5gSylLha1PojhnHFFD4b9LzSTNG66j.
