@@ -54,3 +54,6 @@ Session recordings can be found at the following playlist: https://www.youtube.c
 
 ## Other Resources
 ### [Git game](https://learngitbranching.js.org/)
+### [Machine Learning Resources](https://docs.google.com/document/d/10f75qIEoydtrtnnZ16mB3Qr-KiTv-_9EeUJgQvcAY90/edit?usp=sharing)
+### [Sensors/Coordinate Transforms/State Machine Resources](https://docs.google.com/document/d/1ywg7DQty-xkKA20u2jZabeuJOWlBavrAlr881-CaBvg/edit?usp=sharing)
+### [Motion Planning Resources](https://docs.google.com/document/d/16EmyzQXcN0gxSK9oD3LXHLyXR6YgjFvv1qQVpf_wqRg/edit?usp=sharing)
