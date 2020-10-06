@@ -1,4 +1,4 @@
-# project 4.4
+# Project 4.4
 Welcome to Week 4 of robotics training exercises! We'll be learning about *PID*, *launch files* and get to work with the
 simulator while we're at it and have some fun.
 
