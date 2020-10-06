@@ -7,5 +7,7 @@
 
     <node pkg="week_4_exercises" type="pid_node" name="pid_node" output="screen">
         <param name="Kp" value="1.0" />
+        <!-- <param name="Ki" value="0.0" /> -->
+        <!-- <param name="Kd" value="0.0" /> -->
     </node>
 </launch>
