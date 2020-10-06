@@ -334,6 +334,3 @@ We've learnt about:
 - [Written our own PID controller](#exercise-implementing-a-proportional-controller-in-ros)
     + Implementing something we just learnt about in theory!
     + And it works!
-
-[Next week](week4.md) we'll learn
-about reference frames, the IMU, and localization with dead reckoning by integrating IMU data.
