@@ -12,6 +12,7 @@ find_package(OpenCV REQUIRED)
 find_package(catkin REQUIRED
              roscpp
              std_msgs
+             geometry_msgs
              nav_msgs
              cv_bridge
              image_transport
@@ -128,3 +129,4 @@ include_directories(
 add_subdirectory(testing)
 add_subdirectory(exercise_4_1)
 add_subdirectory(exercise_4_2)
+add_subdirectory(project_4_4)
