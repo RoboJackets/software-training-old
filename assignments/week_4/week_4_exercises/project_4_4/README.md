@@ -37,6 +37,16 @@ Here the *control* (the throttle) is __proportional__ to the *error* (the distan
 
 (`K_p` is just a constant and `e(t)` is a function of time. In the car example, `e(t)` would get smaller as the car approached the destination.)
 
+### Compiling the Packages
+To compile the `week_4_exercises` package, we need to put it into a catkin workspace. To compile the package, do the following:
+
+- make a copy `week_4_exercises` and put it in your workspace's src directory.
+- open a terminal and change directory to the workspace
+- run `catkin_make`
+The package should be compiled! If you run into problems, be sure to double check all your changes.
+
+**NOTE:** Make sure that you compiled the `buzzsim` package as well. This can be done by putting the `buzzsim` package into the same workspace's `src` directory. You can clone [Buzzsim](https://github.com/RoboJackets/buzzsim.git) in your workspace if you don't have it by default in your VM.
+
 ### Exercise: Implementing a Proportional controller in ROS
 Let's take the proportional controller that we've just learnt, and implement it in ROS. We'll be using the `buzzsim` simulator
 that we installed at the beginning to showcase this.
