@@ -249,8 +249,8 @@ It should look like this:
 <launch>
     <node pkg="buzzsim" type="buzzsim" name="buzzsim">
         <param name="config_path" value="$(find buzzsim)/config/world.yml" />
-        <param name="world_name" value="stationary" />
-       <!-- <param name="world_name" value="moving" /> -->
+        <!-- <param name="world_name" value="stationary" /> -->
+        <param name="world_name" value="moving" />
     </node>
 
     <node pkg="week_4_exercises" type="pid_node" name="pid_node" output="screen">
