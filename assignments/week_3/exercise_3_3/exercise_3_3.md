@@ -56,6 +56,7 @@ source devel/setup.bash
 ```
 
 After launching the node, you should see the simulator window open up:
+
 ![buzzsim](https://github.com/RoboJackets/ros-training/blob/master/code/instructions/buzzsim.png)
 
 ## ROS Topics and Keyboard Teleop
@@ -84,6 +85,7 @@ rosrun teleop_twist_keyboard teleop_twist_keyboard.py cmd_vel:=/oswin/velocity
 
 Ignore the details of the syntax for now, but this launches the `teleop_twist_keyboard` node from the
 `teleop_twist_keyboard` package. You should see something like this in the terminal window:
+
 ![keyboard_teleop](https://github.com/RoboJackets/ros-training/blob/master/code/instructions/keyboard_teleop.png)
 
 Try pressing the keys in the image. You should see the turtle in the simulator start to move around.
