@@ -10,9 +10,12 @@ ros::Publisher error_pub_;    // Publisher for error
 geometry_msgs::PoseStamped kyle_pose_; // Pose of top turtle
 ros::Time last_msg_time_;              // Last time callback was called (to calculate delta t)
 
-double Kp_, Kd_, Ki_; // Kp coefficient for Proportional controller
 double integral_, pre_error_;
 
+// PID Global Variables
+double Kp_ = 1;
+double Kd_ = 0;
+double Ki_ = 0;
 
 /**
  * Callback for Kyle (top turtle). Saves the position of the top turtle into the global
@@ -74,9 +77,7 @@ int main(int argc, char **argv)
 
     // IMPLEMENT!
 
-    // Create nodehandles (global and private)
-
-    // Create private parameter for kp, ki, kd
+    // Create global nodehandle
 
     // Advertise "/oswin/velocity" to control the bottom turtle and "/error" for visualization
 

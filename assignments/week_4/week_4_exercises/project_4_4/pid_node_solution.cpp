@@ -10,8 +10,12 @@ ros::Publisher error_pub_;    // Publisher for error
 geometry_msgs::PoseStamped kyle_pose_; // Pose of top turtle
 ros::Time last_msg_time_;              // Last time callback was called (to calculate delta t)
 
-double Kp_, Kd_, Ki_; // Kp coefficient for Proportional controller
 double integral_, pre_error_;
+
+// PID Global Variables
+double Kp_ = 1;
+double Kd_ = 0;
+double Ki_ = 0;
 
 
 /**
@@ -85,14 +89,8 @@ int main(int argc, char **argv)
 {
     ros::init(argc, argv, "pid_node");
 
-    // For creating Publisher / Subscribers
+    // Create global nodehandle
     ros::NodeHandle nh;
-    ros::NodeHandle nhp("~");
-
-    // Create private parameter for kp, ki, kd
-    nhp.getParam("Kp", Kp_);
-    nhp.getParam("Ki", Ki_);
-    nhp.getParam("Kd", Kd_);
 
     // Advertise "/oswin/velocity" to control the bottom turtle and "/error" for visualization
     velocity_pub_ = nh.advertise<geometry_msgs::Twist>("oswin/velocity", 1);

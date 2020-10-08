@@ -55,40 +55,15 @@ that we installed at the beginning to showcase this.
 Before we start though, we've been using `rosrun` to launch all our nodes before, but this time we'll use `roslaunch`
 to launch the simulator.
 ```bash
-roslaunch week_4_exercises project_4_4.launch
+roslaunch week_4_exercises project_4_4_stationary.launch
 ```
 
 You'll notice that the syntax here is quite similar to the syntax that we've used before with `rosrun` -
 its got the package name `week_4_exercises`. However, instead of specifying the name of the node `buzzsim`, we
-instead specify a `project_4_4.launch`.
-
-#### `.launch` files
-What's this `project_4_4.launch`? `.launch` files are convenient to "launch" your ROS code.  Looking in the file, we see the following:
-
-```launch
-<launch>
-    <node pkg="buzzsim" type="buzzsim" name="buzzsim">
-        <param name="config_path" value="$(find buzzsim)/config/world.yml" />
-        <param name="world_name" value="stationary" />
-       <!-- <param name="world_name" value="moving" /> -->
-    </node>
-
-    <node pkg="week_4_exercises" type="pid_node" name="pid_node" output="screen">
-        <param name="Kp" value="1.0" />
-    </node>
-</launch>
-```
-
-You'll notice that there are two `<node>` tags. Each `<node>` tag specifies one node to launch. In this case we are
-launching the nodes `buzzsim` from the `buzzsim` package and `pid_node` from the `week_4_exercises` package.
-
-Also, notice that the `buzzsim` node has three `<param>` tags defined, one of which is commented with `<!-- -->`. We'll
-get to these `<param>` tags later.
-
-Basically a `.launch` file lets you define multiple nodes to launch and also allows you to define parameters.
+instead specify a `project_4_4_stationary.launch`.
 
 #### The `buzzsim` environment for the exercise
-After doing `roslaunch week_4_exercises project_4_4.launch`, you should see `buzzsim` open looking something like below:
+After doing `roslaunch week_4_exercises project_4_4_stationary.launch`, you should see `buzzsim` open looking something like below:
 ![buzzsim](buzzsim.png)
 
 Notice that there are two turtles. For this exercise, the goal will be to control the bottom turtle to minimize the
@@ -147,44 +122,6 @@ top turtle is.
 Try experimenting with different values of `Kp` to see what happens. Try `Kp = 10`, what happens? Note that you'll need to recompile every time you
 change the value.
 
-#### ROS parameters
-It's a pain to need to recompile every time you change a coefficient. This is where ROS parameters and the `<param>`
-tag you saw earlier come into play. ROS parameters allow you to change parameters by specifying them in a `.launch` file
-and not need to recompile your code.
-
-To do this, `ros::NodeHandle` has a `param` method you can call, which will give you the value of a parameter. For
-example, to make `Kp` a parameter, we can do the following:
-
-```c++
-double Kp_;
-...
-int main(int argc, char** argv)
-{
-  ros::init(argc, argv, "pid_node");
-
-  ros::NodeHandle nhp{"~"};
-  nhp.getParam("Kp", Kp_);
-  ROS_INFO_STREAM("Kp: " << Kp_);
-}
-```
-CLion should show the names for each parameter, but the first is the key for the parameter, and the second
-is the variable where the parameter gets stored.
-
-Note that we pass in `"~"` as a parameter to the `ros::NodeHandle` constructor. This makes the `ros::NodeHandle` refer
-to the node's __private namespace__. Don't worry about this for now, just know that you need to this to refer to the
-parameters that are placed between the `<node>` tags in a `.launch` file.
-
-Now that we're reading parameters in the node, we need to set the parameters in the `.launch` file. Add a `<param>` tag
-between the `<node>` tag that launches the `pid_node` node like below:
-
-```launch
-    <node pkg="week_4_exercises" type="pid_node" name="pid_node" output="screen">
-        <param name="Kp" value="1.0" />
-    </node>
-```
-
-If you launch the node now, you should see that the the correct value of the `Kp` parameter is printed and you can change
-the value in the `project_4_4.launch` and the node should use the new value without needing to recompile.
 
 #### Visualizing data with `rqt_plot`
 It would be useful to be able to visualize the error by plotting a graph of it. Create a publisher of type
@@ -241,24 +178,7 @@ or calculating recursively
 </p>
 
 ### Exercise: A moving target, and implementing an integral controller
-Let's try a moving target this time. Do this by using Ctrl-/ and commenting the `<param name="world_name" value="stationary" />` line
-and uncommenting the line below in the [project_4_4.launch](../launch/project_4_4.launch) file.
-
-It should look like this:
-```launch
-<launch>
-    <node pkg="buzzsim" type="buzzsim" name="buzzsim">
-        <param name="config_path" value="$(find buzzsim)/config/world.yml" />
-        <!-- <param name="world_name" value="stationary" /> -->
-        <param name="world_name" value="moving" />
-    </node>
-
-    <node pkg="week_4_exercises" type="pid_node" name="pid_node" output="screen">
-        <param name="Kp" value="1.0" />
-    </node>
-</launch>
-
-```
+Let's try a moving target this time. Do this by running `roslaunch week_4_exercises project_4_4_moving.launch`
 
 Now if you `roslaunch` again, you should see the top turtle start to move. Does your proportional controller work?
 Verify what you're seeing by checking `rqt_plot`.
@@ -335,12 +255,6 @@ We've learnt about:
     + Controlling a **Process Variable** to equal some **Set Point**
     + The **P**roportional **I**ntegral **D**erivative algorithm as a simple controller
     + Understanding what a controller does in the context of a car
-- [`roslaunch` and `.launch` files](#launching-buzzsim-with-roslaunch)
-    + Using `roslaunch <ros package> <launch file>` to launch a `.roslaunch` file
-    + `<node>` tags to define ROS nodes to be launched in a `.roslaunch` file
-- [ROS parameters](#ros-parameters)
-    + Using `nh.getParam` to get parameters defined in a launch file
-    + Adding parameters to the launch file with the `<launch>` tag
 - [Written our own PID controller](#exercise-implementing-a-proportional-controller-in-ros)
     + Implementing something we just learnt about in theory!
     + And it works!
