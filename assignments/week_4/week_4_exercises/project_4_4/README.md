@@ -89,7 +89,7 @@ Implement the proportional controller in [pid_node.cpp](pid_node.cpp).
 
 ##### Subscribe to the ground truth topics for both turtles
 The first thing we need to do is to subscribe to the `/oswin/ground_truth` and `/kyle/ground_truth` topics. For the
-message from `/kyle/ground_truth`, save the message to a global variable called `g_kyle_pose`, so that you can use the
+message from `/kyle/ground_truth`, save the message to a global variable called `kyle_pose_`, so that you can use the
 information in the callback for `/oswin/ground_truth`. For now, use `ROS_INFO_STREAM` in both callbacks to print out the
 x coordinate of each turtle to double-check that your callbacks are working.
 
@@ -98,7 +98,7 @@ auto-correct should help you here.
 
 ##### Publish to the `/oswin/velocity` topic to control the bottom turtle
 The next task is to create a `ros::Publisher` for the `/oswin/velocity` topic so that we can control the bottom turtle.
-Put this publisher in the global variable `g_velocity_pub` so that we can access it in the callback for
+Put this publisher in the global variable `velocity_pub_` so that we can access it in the callback for
 `/oswin/ground_truth`.
 
 ##### Implement a proportional controller in the callback for `/oswin/ground_truth`
@@ -192,8 +192,7 @@ to solve this.
   the time between the current message and the past message. The ros::Time type and ros::Time::now() should be helpful.
   You will need to create a global variable to store the previous time.')
   [Hint 2](#spoiler 'The ros::Time variable initializes with all zeros, which is the wrong time. You can use a global
-  boolean like g_initialized, and then set your previous_time variable to the current time if its not initialized')
-  [Hint 3](#spoiler 'Make ki a parameter so that you can tune its value without recompiling.')
+  boolean like last_msg_time_, and then set your previous_time variable to the current time if its not initialized')
 
   You should be able to eliminate the steady state error now.
 </details>
