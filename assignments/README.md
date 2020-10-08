@@ -6,6 +6,7 @@ The following links will use GitHub classroom to create repositories for each of
  - [Week 2 Practical Programming](https://classroom.github.com/a/goq5FDdZ)
  - [Week 2 Robotics Fundamentals](https://classroom.github.com/a/euIyNH9J)
  - [Week 3 Practical Programming](https://classroom.github.com/a/o2692-9w)
+ - [Week 3 Robotics Fundamentals](https://classroom.github.com/a/lyOlorTJ)
  
 ## Pre-Meeeting Content
 ### Week 0 (Before week 1 meeting)
@@ -37,6 +38,8 @@ Watch the following playlists:
 | Exercise 3.1 | [Instructions](https://github.com/RoboJackets/software-training/blob/master/assignments/week_3/exercise_3_1/Exercise_3_1.md) | N/A | 10/8 |
 | Exercise 3.2 | [Instructions](https://github.com/RoboJackets/software-training/tree/master/assignments/week_3/exercise_3_2/exercise_3_2.md) | N/A | 10/8 |
 | Exercise 3.3 | [Instructions](https://github.com/RoboJackets/software-training/tree/master/assignments/week_3/exercise_3_3/exercise_3_3.md) | N/A | 10/8 |
+| (Robotics) Project 3.4 | [Instructions](https://github.com/RoboJackets/software-training/tree/master/assignments/week_3/project_3_4/README.md) | N/A | 10/10 |
+| (Robotics) Project 3.5 | [Instructions](https://github.com/RoboJackets/software-training/tree/master/assignments/week_3/project_3_5/README.md) | N/A | 10/10 |
 
 ## Session Recordings
 Session recordings can be found at the following playlist: https://www.youtube.com/playlist?list=PL1R5gSylLha1PojhnHFFD4b9LzSTNG66j.
@@ -51,3 +54,6 @@ Session recordings can be found at the following playlist: https://www.youtube.c
 
 ## Other Resources
 ### [Git game](https://learngitbranching.js.org/)
+### [Machine Learning Resources](https://docs.google.com/document/d/10f75qIEoydtrtnnZ16mB3Qr-KiTv-_9EeUJgQvcAY90/edit?usp=sharing)
+### [Sensors/Coordinate Transforms/State Machine Resources](https://docs.google.com/document/d/1ywg7DQty-xkKA20u2jZabeuJOWlBavrAlr881-CaBvg/edit?usp=sharing)
+### [Motion Planning Resources](https://docs.google.com/document/d/16EmyzQXcN0gxSK9oD3LXHLyXR6YgjFvv1qQVpf_wqRg/edit?usp=sharing)
