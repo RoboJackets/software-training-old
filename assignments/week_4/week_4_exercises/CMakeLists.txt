@@ -16,6 +16,7 @@ find_package(catkin REQUIRED
              nav_msgs
              cv_bridge
              image_transport
+             message_generation
         )
 
 ## System dependencies are found with CMake's conventions
@@ -98,6 +99,8 @@ find_package(catkin REQUIRED
 #   cfg/DynReconf2.cfg
 # )
 
+#add_subdirectory(msgs) # <======== UNCOMMENT THIS FOR 4.3
+
 ###################################
 ## catkin specific configuration ##
 ###################################
@@ -120,13 +123,16 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
+message("+++++++"${catkin_INCLUDE_DIRS})
 include_directories(
 # include
  ${catkin_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS}
 )
+include_directories(${CATKIN_DEVEL_PREFIX}/include)
 
 
 add_subdirectory(testing)
 add_subdirectory(exercise_4_1)
 add_subdirectory(exercise_4_2)
+add_subdirectory(exercise_4_3)
 add_subdirectory(project_4_4)
