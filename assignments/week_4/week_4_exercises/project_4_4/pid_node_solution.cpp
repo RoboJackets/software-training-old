@@ -46,6 +46,9 @@ double pid(double error, double dt) {
     double derivative = (error - pre_error_) / dt;
     double Dout = Kd_ * derivative;
 
+    // Save error to previous error
+    pre_error_ = error;
+
     // Calculate total output
     double output = Pout + Iout + Dout;
     return output;
