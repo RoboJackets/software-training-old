@@ -14,8 +14,8 @@ double integral_, pre_error_;
 
 // PID Global Variables
 double Kp_ = 1;
-double Kd_ = 0;
 double Ki_ = 0;
+double Kd_ = 0;
 
 /**
  * Callback for Kyle (top turtle). Saves the position of the top turtle into the global

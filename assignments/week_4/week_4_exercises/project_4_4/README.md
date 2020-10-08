@@ -105,9 +105,6 @@ Put this publisher in the global variable `g_velocity_pub` so that we can access
 Now its time to implement a controller. We'll start with the proportional controller.
 <ol>
 <li>Calculate the error in x-coordinate between the two turtles.</li>
-<li>Create a variable `Kp` to store the
-<img src="https://latex.codecogs.com/svg.latex?\inline&space;K_p" title="K_p" />
-coefficient.</li>
 <li>Calculate
 <img src="https://latex.codecogs.com/svg.latex?\inline&space;P_{out}&space;=&space;K_p&space;\,&space;e(t)" title="P_{out} = K_p \, e(t)" />
 </li>
