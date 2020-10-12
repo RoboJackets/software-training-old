@@ -9,7 +9,7 @@ RoboJackets' software teams use Linux (an operating system, like Windows or MacO
 
 > Note: if you already have a Linux install or dual-boot setup, you can use it if and only if you are running Ubuntu 20.04. However, we do not support this use case as you will not have any of the software we require pre-installed.
 
-The instructions for the VM are available [here]().
+The instructions for the VM are available [here](https://github.com/RoboJackets/software-training/blob/master/VirtualMachine_Instructions.org).
 
 ## GitHub classroom
 GitHub classroom links each week's assignments to your GitHub account. We will use this feature to release new exercises each week and to track your progress in the course.
