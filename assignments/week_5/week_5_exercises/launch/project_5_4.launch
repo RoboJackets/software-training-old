@@ -1,0 +1,11 @@
+<launch>
+    <node pkg="buzzsim" type="buzzsim" name="particle_filter_buzzsim" output="screen">
+        <param name="config_path" value="$(find week_5_exercises)/config/world.yaml" />
+        <param name="world_name" value="imu_test" />
+    </node>
+
+    <node pkg="week_5_exercises" type="buzzsim_helper" name="buzzsim_helper" output="screen">
+        <param name="mean" value="0"/>
+        <param name="variance" value="1.0"/>
+    </node>
+</launch>

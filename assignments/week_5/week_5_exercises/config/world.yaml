@@ -1,0 +1,71 @@
+
+publish_imu: &publish_imu
+    imu: true
+
+
+limits: &limits
+    acceleration:
+        linear: 5
+        angular: 5
+    twist:
+        linear: 2
+        angular: 2
+
+imu_covariances: &imu_covariances
+    accelerometer: 0.01
+    gyro: 0.1
+    magnetometer: 0.002
+
+noisy_imu: &noisy_imu
+    accelerometer: 0.1
+    gyro: 0.1
+    magnetometer: 0.02
+
+oswin: &oswin
+    imu_covariances: *imu_covariances
+    state:
+        pose:
+            position:
+                x: 0
+                y: 0
+        twist:
+            linear: 0
+            angular: 0
+    limits: *limits
+    publishers: *publish_imu
+
+noisy_oswin: &noisy_oswin
+    imu_covariances: *noisy_imu
+    state:
+        pose:
+            position:
+                x: 0
+                y: 0
+        twist:
+            linear: 0
+            angular: 0
+    limits: *limits
+    publishers: *publish_imu
+
+publish_pose: &publish_pose
+    pose: true
+
+pose_oswin: &pose_oswin
+    state:
+        pose:
+            position:
+                x: 0
+                y: 0
+        twist:
+            linear: 0
+            angular: 0
+    limits: *limits
+    publishers: *publish_pose
+
+worlds:
+    imu_test:
+        turtles:
+            oswin: *oswin
+    noisy_imu:
+        turtles:
+            oswin: *noisy_oswin

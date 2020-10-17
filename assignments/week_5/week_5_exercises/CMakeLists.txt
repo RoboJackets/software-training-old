@@ -9,6 +9,7 @@ project(week_5_exercises)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED
         roscpp
+        buzzsim
 )
 
 catkin_package(
@@ -28,6 +29,8 @@ ${catkin_INCLUDE_DIRS}
 add_executable(printing_node exercise_5_1/printing_node.cpp)
 add_dependencies(printing_node ${catkin_EXPORTED_TARGETS})
 target_link_libraries(printing_node ${catkin_LIBRARIES})
+
+add_subdirectory(project_5_4)
 
 install(
         TARGETS printing_node
