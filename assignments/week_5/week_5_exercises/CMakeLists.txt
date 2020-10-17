@@ -31,6 +31,7 @@ add_dependencies(printing_node ${catkin_EXPORTED_TARGETS})
 target_link_libraries(printing_node ${catkin_LIBRARIES})
 
 add_subdirectory(project_5_4)
+add_subdirectory(project_5_5)
 
 install(
         TARGETS printing_node
