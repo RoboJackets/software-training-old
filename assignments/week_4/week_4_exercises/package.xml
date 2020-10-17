@@ -52,6 +52,11 @@
 
   <depend>roscpp</depend>
   <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>cv_bridge</depend>
+  <depend>image_transport</depend>
+  <depend>message_generation</depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

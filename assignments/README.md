@@ -2,9 +2,13 @@
 
 ## Assignment setup
 The following links will use GitHub classroom to create repositories for each of the sessions' projects:
- - [Week 1 Practical Programming](https://classroom.github.com/a/HkIuITsO)
- - [Week 2 Practical Programming](https://classroom.github.com/a/goq5FDdZ)
- - [Week 2 Robotics Fundamentals](https://classroom.github.com/a/euIyNH9J)
+ - [Week 1 Practical Programming](https://classroom.github.com/a/HkIuITsO) (Basic C++)
+ - [Week 2 Practical Programming](https://classroom.github.com/a/goq5FDdZ) (C++ Classes/Functions)
+ - [Week 2 Robotics Fundamentals](https://classroom.github.com/a/euIyNH9J) (State Machines)
+ - [Week 3 Practical Programming](https://classroom.github.com/a/o2692-9w) (Pointers/References, Intro to ROS)
+ - [Week 3 Robotics Fundamentals](https://classroom.github.com/a/lyOlorTJ) (Search Algorithms for Planning)
+ - [Week 4 Practical Programming](https://classroom.github.com/a/LeHV5EB5) (ROS in C++)
+ - [Week 4 Robotics Fundamentals](https://classroom.github.com/a/zaVdG8Nc) (PID Controller)
  
 ## Pre-Meeeting Content
 ### Week 0 (Before week 1 meeting)
@@ -17,8 +21,20 @@ Complete [Codecademy](https://www.codecademy.com/learn/learn-c-plus-plus) (up th
 Complete [Codecademy](https://www.codecademy.com/learn/learn-c-plus-plus) (everything).
 
 Watch the following playlists:
- - [ROS Videos](https://www.youtube.com/playlist?list=PL1R5gSylLha3i1nbDdmpkJ6wBVudIJheI)
+ - [ROS Videos](https://www.youtube.com/playlist?list=PL1R5gSylLha3i1nbDdmpkJ6wBVudIJheI) (Introduction, Command Line Tools, rqt)
  - [C++ Supplement](https://www.youtube.com/playlist?list=PL1R5gSylLha1t7D1HKpHB49ZG8oC0fERh) (only videos 1 and 2 are required)
+ 
+### Week 3
+Watch the following videos from the [ROS Videos](https://www.youtube.com/playlist?list=PL1R5gSylLha3i1nbDdmpkJ6wBVudIJheI) playlist:
+ - Packages & Catkin
+ - roscpp Basics
+ - Messages
+ 
+### Week 4
+Watch the following videos from the [ROS Videos](https://www.youtube.com/playlist?list=PL1R5gSylLha3i1nbDdmpkJ6wBVudIJheI) playlist:
+ - Parameters
+ - Gazebo
+ - rviz
  
 ## Assignment Matrix
 
@@ -33,7 +49,15 @@ Watch the following playlists:
 | Exercise 2.1 | [Instructions](https://github.com/RoboJackets/software-training/blob/master/assignments/week_2/exercise_2_1/exercise_2_1.md) | N/A | 10/1 |
 | Exercise 2.2 | [Instructions](https://github.com/RoboJackets/software-training/blob/master/assignments/week_2/exercise_2_2/exercise_2_2.md) | N/A | 10/1 |
 | Exercise 2.3 | [Instructions](https://github.com/RoboJackets/software-training/blob/master/assignments/week_2/exercise_2_3/exercise_2_3.md) | N/A | 10/1 |
-| (Robotics) Exercise 2.4 | [Instructions](https://github.com/RoboJackets/software-training/tree/master/assignments/week_2/project_2_4) | N/A | 10/3 |
+| Exercise 3.1 | [Instructions](https://github.com/RoboJackets/software-training/blob/master/assignments/week_3/exercise_3_1/Exercise_3_1.md) | N/A | 10/8 |
+| Exercise 3.2 | [Instructions](https://github.com/RoboJackets/software-training/tree/master/assignments/week_3/exercise_3_2/exercise_3_2.md) | N/A | 10/8 |
+| Exercise 3.3 | [Instructions](https://github.com/RoboJackets/software-training/tree/master/assignments/week_3/exercise_3_3/exercise_3_3.md) | N/A | 10/8 |
+| (Robotics) Project 3.4 | [Instructions](https://github.com/RoboJackets/software-training/tree/master/assignments/week_3/project_3_4/README.md) | N/A | 10/10 |
+| (Robotics) Project 3.5 | [Instructions](https://github.com/RoboJackets/software-training/tree/master/assignments/week_3/project_3_5/README.md) | N/A | 10/10 |
+| Exercise 4.1 | [Instructions](https://github.com/RoboJackets/software-training/blob/master/assignments/week_4/week_4_exercises/exercise_4_1/exercise_4_1.md) | N/A | 10/15 |
+| Exercise 4.2 | [Instructions](https://github.com/RoboJackets/software-training/blob/master/assignments/week_4/week_4_exercises/exercise_4_2/exercise_4_2.md) | N/A | 10/15 |
+| Exercise 4.3 | [Instructions](https://github.com/RoboJackets/software-training/blob/master/assignments/week_4/week_4_exercises/exercise_4_3/exercise_4_3.md) | N/A | 10/15 |
+| (Robotics) Project 4.4 | [Instructions](https://github.com/RoboJackets/software-training/blob/master/assignments/week_4/week_4_exercises/project_4_4/README.md) | N/A | 10/17 |
 
 ## Session Recordings
 Session recordings can be found at the following playlist: https://www.youtube.com/playlist?list=PL1R5gSylLha1PojhnHFFD4b9LzSTNG66j.
@@ -42,9 +66,17 @@ Session recordings can be found at the following playlist: https://www.youtube.c
  - Practical Programming
     - [Week 1 (C++ Control Flow)](https://docs.google.com/presentation/d/1RS7rACqkAK302b8EHbmua6fdw4CejuzRodIEGPReJn0/edit?usp=sharing)
     - [Week 2 (C++ Program Organization)](https://docs.google.com/presentation/d/1dBRXK34k6EfZsPH-osEa8K1WdB2qDh890UXY5BPFqq8/edit?usp=sharing)
+    - [Week 3 (C++ Pointers and ROS)](https://docs.google.com/presentation/d/1spqslSD-iorxuNAzIY0BSNGDuVntWP8UuoT4yPl20Hc/edit?usp=sharing)
+    - [Week 4 (Using C++ with ROS)](https://docs.google.com/presentation/d/1EPMqYvWlvHj654Dz6f3QgS0_dL33TlYJ-Nvz6Ngv9xg/edit?usp=sharing)
  - Robotics Fundamentals
     - [Week 1 (Intro to Machine Learning)](https://docs.google.com/presentation/d/1I3VZPxjHIDAsbaU-VmcZpUjGdTNTg0DQTiC-Wh28Wks/edit?usp=sharing)
     - [Week 2 (Sensors and Coordinate Transforms)](https://docs.google.com/presentation/d/10XG177crZjNxN25UKXuz4DFdurWaYbVyf3OOjuakuJo/edit?usp=sharing)
+    - [Week 3 (Motion Planning)](https://docs.google.com/presentation/d/1AB9QyDpCWT3789ADbo_qyG0x2RAi9bZS70DGigwY6iE/edit?usp=sharing)
+    - [Week 4 (Motion Control)](https://docs.google.com/presentation/d/1gcBE5dqtp8WcaGv3TBKpXl7_uFQK0-NFm9xfRzZl7QI/edit?usp=sharing)
 
 ## Other Resources
 ### [Git game](https://learngitbranching.js.org/)
+### [Machine Learning Resources](https://docs.google.com/document/d/10f75qIEoydtrtnnZ16mB3Qr-KiTv-_9EeUJgQvcAY90/edit?usp=sharing)
+### [Sensors/Coordinate Transforms/State Machine Resources](https://docs.google.com/document/d/1ywg7DQty-xkKA20u2jZabeuJOWlBavrAlr881-CaBvg/edit?usp=sharing)
+### [Motion Planning Resources](https://docs.google.com/document/d/16EmyzQXcN0gxSK9oD3LXHLyXR6YgjFvv1qQVpf_wqRg/edit?usp=sharing)
+### [Motion Control Resources](https://docs.google.com/document/d/1clr6obP2kW4DcjtYu4ofSQiTp2Mz6m34Me4QIJTbfmw/edit?usp=sharing)

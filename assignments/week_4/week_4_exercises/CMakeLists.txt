@@ -2,7 +2,9 @@ cmake_minimum_required(VERSION 3.0.2)
 project(week_4_exercises)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
+
+find_package(OpenCV REQUIRED)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -10,6 +12,11 @@ project(week_4_exercises)
 find_package(catkin REQUIRED
              roscpp
              std_msgs
+             geometry_msgs
+             nav_msgs
+             cv_bridge
+             image_transport
+             message_generation
         )
 
 ## System dependencies are found with CMake's conventions
@@ -92,6 +99,8 @@ find_package(catkin REQUIRED
 #   cfg/DynReconf2.cfg
 # )
 
+#add_subdirectory(msgs) # <======== UNCOMMENT THIS FOR 4.3
+
 ###################################
 ## catkin specific configuration ##
 ###################################
@@ -114,29 +123,16 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
+message("+++++++"${catkin_INCLUDE_DIRS})
 include_directories(
 # include
-${catkin_INCLUDE_DIRS}
+ ${catkin_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS}
 )
+include_directories(${CATKIN_DEVEL_PREFIX}/include)
 
-add_executable(your_node exercise_4_1/your_node.cpp)
-add_dependencies(your_node ${catkin_EXPORTED_TARGETS})
-target_link_libraries(your_node ${catkin_LIBRARIES})
 
-install(
-        TARGETS your_node
-        ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-        RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-
-add_executable(testing_node testing/testing_node.cpp)
-add_dependencies(testing_node ${catkin_EXPORTED_TARGETS})
-target_link_libraries(testing_node ${catkin_LIBRARIES})
-
-install(
-        TARGETS testing_node
-        ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-        RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+add_subdirectory(testing)
+add_subdirectory(exercise_4_1)
+add_subdirectory(exercise_4_2)
+add_subdirectory(exercise_4_3)
+add_subdirectory(project_4_4)
