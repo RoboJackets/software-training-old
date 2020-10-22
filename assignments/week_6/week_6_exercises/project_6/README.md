@@ -257,17 +257,21 @@ Which just means that the return kernel is a rectangle of _x_ by _y_.
 **Dilate:**
 The dilatation makes the object in white bigger.
 `cv::dilate(frame_binary, frame_binary, kernel(3, 3));`
+
 **Erode:**
 The erosion makes the object in white smaller.
 `cv::erode(frame_binary, frame_binary, kernel(3, 3));`
+
 **Opening:**
 Opening is just another name of erosion followed by dilation. It is
 useful in removing noise, as we explained above.
 `cv::morphologyEx(frame_binary, frame_binary, cv::MORPH_OPEN, kernel(3, 3));`
+
 **Closing:**
 Closing is reverse of Opening, Dilation followed by Erosion. It is useful
 in closing small holes inside the foreground objects, or small black points on the object.
 `cv::morphologyEx(frame_binary, frame_binary, cv::MORPH_CLOSE, kernel(3, 3));`
+
 <table style="width:100%">
    <tr>
     <th><img src="https://docs.opencv.org/trunk/j.png" alt></th>
