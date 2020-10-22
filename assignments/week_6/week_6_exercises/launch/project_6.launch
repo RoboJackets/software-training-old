@@ -1,0 +1,11 @@
+<launch>
+    <node pkg="rosbag" type="play" name="player"
+          args="--clock $(find week_6_exercises)/bag/start_light.bag /out/compressed:=/camera/compressed -l"/>
+
+    <node name="republish" type="republish" pkg="image_transport" output="screen"
+          args="compressed in:=/camera raw out:=/camera/image" />
+
+    <node name="rqt_image_view" pkg="rqt_image_view" type="rqt_image_view"/>
+
+    <node pkg="week_6_exercises" type="start_light" name="start_light" output="screen"/>
+</launch>
