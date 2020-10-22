@@ -211,7 +211,9 @@ where each color is a blue, green, and red component. Hue, saturation, and value
 common color space where each pixel is described by it base color (hue or tint) in terms of their shade
 (saturation or amount of gray) and their brightness value. In HSV, colors of each hue are arranged in a
 radial slice, around a central axis of neutral colors which ranges from black at the bottom to white at the top.
+
 ![](https://miro.medium.com/max/1700/1*W30TLUP9avQwyyLfwu7WYA.jpeg)
+
 Working with HSV is very useful and convenient when tackling perception problems like if you wanted to reliably
 check if a pixel is roughly a hue of purple. It would definitely be possible to do using the RGB color space,
 but it would be kinda tough if the lighting conditions weren't
@@ -227,7 +229,9 @@ Thresholding is pretty simple. Given an image, check if each pixel is within a b
 In the image below, numbers are displayed so that the number's value corresponds
 it is brightness. Then through binary thresholding, each pixel will a value greater than 0 is set
 to 255 (The max brightness).
+
 ![](https://www.learnopencv.com/wp-content/uploads/2015/02/opencv-threshold-tutorial.jpg)
+
 We can also check if each pixel is within in a certain range by using `cv::inRange()`.
 A common usage of this function is for color thresholding like turning a 3-channel HSV image
 (where each pixel has 3 values 0-255) into a 1-channel binary image (where each pixel
@@ -294,7 +298,9 @@ in closing small holes inside the foreground objects, or small black points on t
 Contours can be explained simply as a list of points that
 represents the edge of a shape.
 Contours are a useful tool for shape analysis and object detection and recognition.
+
 <img width="660" height="200" src="https://lh5.googleusercontent.com/EZxifb4wmL0Kwfte3awn5mtkLKeHR1G94K3iG4JJdlwExu4FnglC3euH8zwWuM6LSs682i0yL2_GhgN7V0LXS14HMM49YkVtLcJwxDzL-CQ_jqVwoQYF4zJZPAX5HbvuvKU5vA28" alt=""/>
+
 In order to find the contours in a image, simply do:
 ```c++
 vector<vector<cv::Point>> contours;
