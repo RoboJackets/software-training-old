@@ -1,0 +1,5 @@
+<launch>
+    <node pkg="week_6_exercises" type="exercise_6_2" name="exercise_6_2" output="screen" />
+    <node pkg="turtle_actionlib" type="shape_server" name="shape_server" output="screen" />
+    <node pkg="turtlesim" type="turtlesim_node" name="turtlesim_node" />
+</launch>

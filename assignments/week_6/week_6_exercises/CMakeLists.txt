@@ -5,12 +5,27 @@ add_compile_options(-std=c++11)
 
 find_package(catkin REQUIRED
              roscpp
+             actionlib
+             actionlib_msgs
+             turtle_actionlib
              std_msgs
              geometry_msgs
              nav_msgs
              cv_bridge
              image_transport
+             message_generation
         )
+
+add_action_files(
+    FILES
+    GoToPosition.action
+)
+
+generate_messages(
+    DEPENDENCIES
+    actionlib_msgs
+    std_msgs
+)
 
 find_package(OpenCV REQUIRED)
 
@@ -20,3 +35,4 @@ catkin_package(
 
 include_directories(${catkin_INCLUDE_DIRS})
 add_subdirectory(project_6)
+add_subdirectory(exercise_6_2)
