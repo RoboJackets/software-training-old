@@ -1,9 +1,0 @@
-# Goal
-float64 x
-float64 y
-float64 error_threshold
----
-# Result
----
-# Feedback
-float64 error

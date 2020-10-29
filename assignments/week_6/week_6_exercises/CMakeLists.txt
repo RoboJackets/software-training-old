@@ -16,17 +16,6 @@ find_package(catkin REQUIRED
              message_generation
         )
 
-add_action_files(
-    FILES
-    GoToPosition.action
-)
-
-generate_messages(
-    DEPENDENCIES
-    actionlib_msgs
-    std_msgs
-)
-
 find_package(OpenCV REQUIRED)
 
 catkin_package(
@@ -35,4 +24,5 @@ catkin_package(
 
 include_directories(${catkin_INCLUDE_DIRS})
 add_subdirectory(project_6)
+add_subdirectory(exercise_6_1)
 add_subdirectory(exercise_6_2)
