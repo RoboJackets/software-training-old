@@ -41,18 +41,22 @@ at what image is being published on any topic. The command for running it is:
  ## Excerise
  Part 1: <br>
  1. Run bag file `start_light.bag` file on loop maunally (ex. `rosbag ...`)
- - [Hint ] (#spoiler `rosbag play bag/start_light.bag -l`)
+ - <details> <summary>Hint</summary> rosbag play bag/start_light.bag -l
+ </details>
  2. Visualize the results by looking at `rviz_image_view`
 
 
  Part 2: <br>
  1. Now record your own bag file (~5 sec) of you controlling the turtle in `buzzsim` with the `teleop_twist_keyboard` node
     - Only record `/oswin/velocity` topic
-    - [Hint ](#spoiler Four Terminals:
-    -`roscore`
-    -`rosrun buzzsim buzzsim`
-    -`rosrun teleop_twist_keyboard teleop_twist_keyboard.py cmd_vel:=/oswin/velocity`
-    -`rosbag record -O buzzsim_example.bag /oswin/velocity`)
+    - <details>
+        <summary>Hint</summary> Four Terminals: <br>
+        -`roscore` <br>
+        -`rosrun buzzsim buzzsim` <br>
+        -`rosrun teleop_twist_keyboard teleop_twist_keyboard.py cmd_vel:=/oswin/velocity` <br>
+        -`rosbag record -O buzzsim_example.bag /oswin/velocity`
+    </details>
 
  2. Play back your bag file with twist messages on loop and check that buzzsim is excuting the recorded actions
-    - [Hint ](#spoiler `rosbag play buzzsim_example.bag -l`)
+    - <details> <summary>Hint</summary> `rosbag play buzzsim_example.bag -l`
+     </details>
