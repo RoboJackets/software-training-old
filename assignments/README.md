@@ -9,6 +9,10 @@ The following links will use GitHub classroom to create repositories for each of
  - [Week 3 Robotics Fundamentals](https://classroom.github.com/a/lyOlorTJ) (Search Algorithms for Planning)
  - [Week 4 Practical Programming](https://classroom.github.com/a/LeHV5EB5) (ROS in C++)
  - [Week 4 Robotics Fundamentals](https://classroom.github.com/a/zaVdG8Nc) (PID Controller)
+ - [Week 5 Practical Programming](https://classroom.github.com/a/k6h8yTSn) (ROS Launch files and Parameters)
+ - [Week 5 Robotics Fundamentals](https://classroom.github.com/a/aqS_sEbK) (Particle Filter)
+ - [Week 6 Practical Programming](https://classroom.github.com/a/ur2MQxbs) (ROS Actions)
+ - [Week 6 Robotics Fundamentals](https://classroom.github.com/a/8iKkuGBI) (Computer Vision)
  
 ## Pre-Meeeting Content
 ### Week 0 (Before week 1 meeting)
@@ -35,6 +39,15 @@ Watch the following videos from the [ROS Videos](https://www.youtube.com/playlis
  - Parameters
  - Gazebo
  - rviz
+ 
+### Week 5
+Watch the following videos from the [ROS Videos](https://www.youtube.com/playlist?list=PL1R5gSylLha3i1nbDdmpkJ6wBVudIJheI) playlist:
+ - rosbag
+ 
+### Week 6
+Watch the following videos from the [ROS Videos](https://www.youtube.com/playlist?list=PL1R5gSylLha3i1nbDdmpkJ6wBVudIJheI) playlist:
+ - Services
+ - Actions
  
 ## Assignment Matrix
 
