@@ -9,3 +9,6 @@ obstacle_detector:
         h: 70
         s: 255
         v: 255
+    map_resolution: 100.0  # pixels per meter
+    map_width: 50  # pixels
+    map_height: 100   # pixels
