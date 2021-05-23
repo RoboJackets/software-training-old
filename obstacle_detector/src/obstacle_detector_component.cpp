@@ -32,8 +32,6 @@ namespace obstacle_detector
 {
   void FindColors(const cv::Mat &input, const cv::Scalar &range_min, const cv::Scalar &range_max, cv::Mat &output)
   {
-    output=input;
-    return;
     cv::Mat input_hsv;
     cv::cvtColor(input, input_hsv, CV_BGR2HSV);
     cv::inRange(input_hsv, range_min, range_max, output);
@@ -125,27 +123,16 @@ namespace obstacle_detector
       cv::Mat opencv_transform;
       cv::eigen2cv(eigen_transform.matrix(), opencv_transform);
 
-
-      const auto new_tf_transform = tf_buffer_.lookupTransform("overhead_camera_optical", "base_footprint", tf2::TimePointZero);
-      const Eigen::Isometry3d new_eigen_transform = tf2::transformToEigen(new_tf_transform);
-      cv::Mat new_opencv_transform;
-      cv::eigen2cv(new_eigen_transform.matrix(), new_opencv_transform);
-
-      cv::Mat Ra = new_opencv_transform(cv::Range(0,3), cv::Range(0,3)).clone();
-      cv::Mat Ta = new_opencv_transform(cv::Range(0,3), cv::Range(3,4)).clone();
+      cv::Mat Ra = (cv::Mat_<double>(3,3) << 0, -1, 0, 
+                                            -1,  0, 0, 
+                                             0, 0, -1);
+      cv::Mat Ta = (cv::Mat_<double>(3,1) << 0, 0.75, 1.0);
 
       cv::Mat Rb = opencv_transform(cv::Range(0,3),cv::Range(0,3)).clone();
       cv::Mat Tb = opencv_transform(cv::Range(0,3),cv::Range(3,4)).clone();
 
-      std::cout << "K = " << camera_matrix << std::endl;
-
-      std::cout << "Ra = " << Ra << std::endl;
-      std::cout << "Ta = " << Ta << std::endl;
-      std::cout << "Rb = " << Rb << std::endl;
-      std::cout << "Tb = " << Tb << std::endl;
-
       cv::Mat n = cv::Mat::zeros(3,1,CV_64F);
-      n.at<double>(2,0) = 1.0;
+      n.at<double>(1,0) = -1.0;
 
       const auto d = Tb.at<double>(1,0);
 
