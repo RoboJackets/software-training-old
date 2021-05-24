@@ -50,11 +50,33 @@ private:
 
   void TagCallback(const stsl_interfaces::msg::TagArray::SharedPtr msg)
   {
+    // TODO: Measurement update
+    PublishPose();
   }
 
   void OdometryCallback(const nav_msgs::msg::Odometry::SharedPtr msg)
   {
+    // TODO: Motion update
+    PublishPose();
+  }
+
+  void PublishPose()
+  {
+    geometry_msgs::msg::TransformStamped transform;
+    transform.header.frame_id = "map";
+    transform.header.stamp = now();
+    transform.child_frame_id = "odom";
+    transform.transform.rotation.w = 1;
+    transform.transform.rotation.x = 0;
+    transform.transform.rotation.y = 0;
+    transform.transform.rotation.z = 0;
+    transform.transform.translation.x = 0;
+    transform.transform.translation.y = 0;
+    transform.transform.translation.z = 0;
+    tf_broadcaster_.sendTransform(transform);
   }
 };
 
 }  // namespace localization
+
+RCLCPP_COMPONENTS_REGISTER_NODE(localization::ParticleFilterLocalizer)
