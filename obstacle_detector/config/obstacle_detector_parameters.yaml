@@ -1,0 +1,14 @@
+obstacle_detector:
+  ros__parameters:
+    obstacle_color_range:
+      min:
+        h: 50
+        s: 125
+        v: 125
+      max:
+        h: 70
+        s: 255
+        v: 255
+    map_resolution: 100.0  # pixels per meter
+    map_width: 50  # pixels
+    map_height: 100   # pixels
