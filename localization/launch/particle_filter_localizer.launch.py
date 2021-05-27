@@ -36,7 +36,7 @@ def generate_launch_description():
             output='screen',
             parameters=[
                 parameters_file_path,
-                {'use_sim_time': LaunchConfiguration('use_sim_time')}
+                {'use_sim_time': LaunchConfiguration('use_sim_time', default='false')}
             ],
             remappings=[
                 ('/tags', '/aruco_tag_detector/tags')
