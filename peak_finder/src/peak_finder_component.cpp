@@ -121,16 +121,16 @@ private:
         RCLCPP_INFO(get_logger(), "Current elevation: %f", current_elevation);
 
         auto generate_next_pose = [&robot_position, angle = 0.0]() mutable {
-          const auto look_distance = 0.2;
+          const auto look_distance = 0.1;
           Eigen::Vector2d pose =
               (look_distance * Eigen::Vector2d(std::cos(angle), std::sin(angle))) + robot_position;
-          angle += M_PI_2;
+          angle += M_PI_4;
           return pose;
         };
 
         std::vector<Eigen::Vector2d> sample_positions;
 
-        std::generate_n(std::back_inserter(sample_positions), 4, generate_next_pose);
+        std::generate_n(std::back_inserter(sample_positions), 8, generate_next_pose);
 
         std::vector<double> elevations;
 
@@ -173,10 +173,10 @@ private:
         goal_pose.pose.position.x = goal_position.x();
         goal_pose.pose.position.y = goal_position.y();
         goal_pose.pose.position.z = 0.0;
-        goal_pose.pose.orientation.x = 0.0;
-        goal_pose.pose.orientation.y = 0.0;
-        goal_pose.pose.orientation.z = 0.0;
-        goal_pose.pose.orientation.w = 0.0;
+        // goal_pose.pose.orientation.x = 0.0;
+        // goal_pose.pose.orientation.y = 0.0;
+        // goal_pose.pose.orientation.z = 0.0;
+        // goal_pose.pose.orientation.w = 0.0;
         if(!navigator_.go_to_pose(goal_pose))
         {
           RCLCPP_ERROR(get_logger(), "Navigation server rejected request");

@@ -27,6 +27,8 @@ private:
   rclcpp_action::Client<nav2_msgs::action::NavigateToPose>::SharedPtr navigation_client_;
   std::shared_ptr<rclcpp_action::ClientGoalHandle<nav2_msgs::action::NavigateToPose>> goal_handle_;
   std::shared_future<rclcpp_action::ClientGoalHandle<nav2_msgs::action::NavigateToPose>::WrappedResult> result_future_;
+
+  void feedbackCallback(rclcpp_action::ClientGoalHandle<nav2_msgs::action::NavigateToPose>::SharedPtr goal_handle, const nav2_msgs::action::NavigateToPose::Feedback::ConstSharedPtr feedback);
 };
 
 }  // namespace peak_finder

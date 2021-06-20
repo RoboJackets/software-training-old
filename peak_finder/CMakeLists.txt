@@ -13,6 +13,7 @@ find_package(nav2_msgs REQUIRED)
 add_library(${PROJECT_NAME}_components SHARED 
   src/peak_finder_component.cpp
   src/navigator.cpp
+  src/test_nav_client.cpp
 )
 ament_target_dependencies(${PROJECT_NAME}_components
   "rclcpp"
@@ -27,6 +28,11 @@ rclcpp_components_register_node(
   ${PROJECT_NAME}_components
   PLUGIN "peak_finder::PeakFinderComponent"
   EXECUTABLE ${PROJECT_NAME}_node
+)
+rclcpp_components_register_node(
+  ${PROJECT_NAME}_components
+  PLUGIN "peak_finder::TestNavClient"
+  EXECUTABLE test_nav_client
 )
 
 install(TARGETS ${PROJECT_NAME}_components

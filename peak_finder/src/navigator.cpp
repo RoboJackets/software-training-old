@@ -15,8 +15,8 @@ bool Navigator::server_available()
 
 bool Navigator::go_to_pose(const geometry_msgs::msg::PoseStamped& pose)
 {
-  if (goal_handle_ && goal_handle_->get_status() != rclcpp_action::GoalStatus::STATUS_ACCEPTED &&
-      goal_handle_->get_status() != rclcpp_action::GoalStatus::STATUS_EXECUTING)
+  if (goal_handle_ && (goal_handle_->get_status() == rclcpp_action::GoalStatus::STATUS_ACCEPTED ||
+      goal_handle_->get_status() == rclcpp_action::GoalStatus::STATUS_EXECUTING))
   {
     RCLCPP_ERROR(node_.get_logger(),
                  "Navigator already working towards a goal. You need to cancel or wait for the "
@@ -25,7 +25,9 @@ bool Navigator::go_to_pose(const geometry_msgs::msg::PoseStamped& pose)
   }
   nav2_msgs::action::NavigateToPose::Goal navigation_goal;
   navigation_goal.pose = pose;
-  auto goal_handle_future = navigation_client_->async_send_goal(navigation_goal);
+  rclcpp_action::Client<nav2_msgs::action::NavigateToPose>::SendGoalOptions send_options;
+  send_options.feedback_callback = std::bind(&Navigator::feedbackCallback, this, std::placeholders::_1, std::placeholders::_2);
+  auto goal_handle_future = navigation_client_->async_send_goal(navigation_goal, send_options);
   goal_handle_future.wait();
   goal_handle_ = goal_handle_future.get();
   if (!goal_handle_)
@@ -77,5 +79,10 @@ void Navigator::cancel()
     RCLCPP_ERROR(node_.get_logger(), "Timed out waiting for navigation goal to cancel.");
   }
 }
+
+  void Navigator::feedbackCallback(rclcpp_action::ClientGoalHandle<nav2_msgs::action::NavigateToPose>::SharedPtr goal_handle, const nav2_msgs::action::NavigateToPose::Feedback::ConstSharedPtr feedback)
+  {
+    // RCLCPP_INFO(node_.get_logger(), "Feedback: %f", feedback->distance_remaining);
+  }
 
 }  // namespace peak_finder
