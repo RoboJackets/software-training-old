@@ -37,7 +37,7 @@ def generate_launch_description():
         ),
         DeclareLaunchArgument(
             name="behavior_tree_file",
-            default_value=os.path.join(get_package_share_directory('nav2_bt_navigator'), 'behavior_trees', 'navigate_w_replanning_time.xml')
+            default_value=os.path.join(get_package_share_directory('rj_training_bringup'), 'behavior_trees', 'navigate.xml')
         ),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(os.path.join(

@@ -27,6 +27,7 @@
 #include <tf2_eigen/tf2_eigen.h>
 #include <Eigen/Dense>
 #include <nav2_msgs/action/navigate_to_pose.hpp>
+#include "navigator.h"
 
 namespace peak_finder
 {
@@ -37,7 +38,7 @@ public:
   using ParkAtPeakGoalHandle = rclcpp_action::ServerGoalHandle<ParkAtPeak>;
 
   explicit PeakFinderComponent(const rclcpp::NodeOptions& options)
-    : rclcpp::Node("peak_finder", options), tf_buffer_(get_clock()), tf_listener_(tf_buffer_)
+    : rclcpp::Node("peak_finder", options), tf_buffer_(get_clock()), tf_listener_(tf_buffer_), navigator_(*this)
   {
     action_server_ = rclcpp_action::create_server<ParkAtPeak>(
         this, "park_at_peak",
@@ -47,9 +48,6 @@ public:
         std::bind(&PeakFinderComponent::handle_accepted, this, std::placeholders::_1));
 
     elevation_client_ = create_client<stsl_interfaces::srv::SampleElevation>("/sample_elevation");
-
-    navigation_client_ =
-        rclcpp_action::create_client<nav2_msgs::action::NavigateToPose>(this, "/navigate_to_pose");
   }
 
 private:
@@ -57,7 +55,7 @@ private:
   tf2_ros::TransformListener tf_listener_;
   rclcpp_action::Server<ParkAtPeak>::SharedPtr action_server_;
   rclcpp::Client<stsl_interfaces::srv::SampleElevation>::SharedPtr elevation_client_;
-  rclcpp_action::Client<nav2_msgs::action::NavigateToPose>::SharedPtr navigation_client_;
+  Navigator navigator_;
 
   rclcpp_action::GoalResponse handle_goal(const rclcpp_action::GoalUUID& /*uuid*/,
                                           std::shared_ptr<const ParkAtPeak::Goal> /*goal*/)
@@ -97,7 +95,7 @@ private:
       return;
     }
 
-    if (!navigation_client_->action_server_is_ready())
+    if (!navigator_.server_available())
     {
       RCLCPP_ERROR(get_logger(),
                    "/navigate_to_point action must be available to run peak_finder action!");
@@ -169,8 +167,37 @@ private:
             sample_positions[std::distance(elevations.begin(), max_elevation_iter)];
 
         RCLCPP_INFO(get_logger(), "Moving to new position.");
-        if (!MoveToPosition(goal_handle, goal_position))
+        geometry_msgs::msg::PoseStamped goal_pose;
+        goal_pose.header.frame_id = "map";
+        goal_pose.header.stamp = now();
+        goal_pose.pose.position.x = goal_position.x();
+        goal_pose.pose.position.y = goal_position.y();
+        goal_pose.pose.position.z = 0.0;
+        goal_pose.pose.orientation.x = 0.0;
+        goal_pose.pose.orientation.y = 0.0;
+        goal_pose.pose.orientation.z = 0.0;
+        goal_pose.pose.orientation.w = 0.0;
+        if(!navigator_.go_to_pose(goal_pose))
         {
+          RCLCPP_ERROR(get_logger(), "Navigation server rejected request");
+          goal_handle->abort(std::make_shared<ParkAtPeak::Result>());
+          return;
+        }
+
+        while(!navigator_.wait_for_completion(std::chrono::milliseconds(100)))
+        {
+          if(!rclcpp::ok() || goal_handle->is_canceling())
+          {
+            navigator_.cancel();
+            goal_handle->canceled(std::make_shared<ParkAtPeak::Result>());
+            return;
+          }
+        }
+
+        if(!navigator_.succeeded())
+        {
+          RCLCPP_ERROR(get_logger(), "Navigation failed!");
+          goal_handle->abort(std::make_shared<ParkAtPeak::Result>());
           return;
         }
       }
@@ -202,20 +229,15 @@ private:
     stsl_interfaces::srv::SampleElevation::Response::SharedPtr response;
 
     RCLCPP_INFO(get_logger(), "Waiting for response.");
-    while(true)
+    while(result_future.wait_for(std::chrono::milliseconds(100)) != std::future_status::ready)
     {
       if(!rclcpp::ok() || goal_handle->is_canceling())
       {
         goal_handle->canceled(std::make_shared<ParkAtPeak::Result>());
         return false;
       }
-      const auto status = result_future.wait_for(std::chrono::milliseconds(100));
-      if(status == std::future_status::ready)
-      {
-        response = result_future.get();
-        break;
-      }
     }
+    response = result_future.get();
     RCLCPP_INFO(get_logger(), "Elevation response received.");
 
     if(!response->success)
@@ -227,77 +249,6 @@ private:
 
     elevation = response->elevation;
     return true;
-  }
-
-  bool MoveToPosition(const std::shared_ptr<ParkAtPeakGoalHandle> goal_handle,
-                      const Eigen::Vector2d& position)
-  {
-    RCLCPP_INFO(get_logger(), "Sending navigation goal.");
-    nav2_msgs::action::NavigateToPose::Goal navigation_goal;
-    navigation_goal.pose.header.frame_id = "map";
-    navigation_goal.pose.header.stamp = now();
-    navigation_goal.pose.pose.position.x = position.x();
-    navigation_goal.pose.pose.position.y = position.y();
-    navigation_goal.pose.pose.position.z = 0.0;
-    navigation_goal.pose.pose.orientation.x = 0.0;
-    navigation_goal.pose.pose.orientation.y = 0.0;
-    navigation_goal.pose.pose.orientation.z = 0.0;
-    navigation_goal.pose.pose.orientation.w = 0.0;
-    const auto nav_goal_handle_future = navigation_client_->async_send_goal(navigation_goal);
-
-    rclcpp_action::ClientGoalHandle<nav2_msgs::action::NavigateToPose>::SharedPtr nav_goal_handle;
-
-    RCLCPP_INFO(get_logger(), "Waiting for acceptance.");
-    while (true)
-    {
-      if (!rclcpp::ok() || goal_handle->is_canceling())
-      {
-        goal_handle->canceled(std::make_shared<ParkAtPeak::Result>());
-        return false;
-      }
-      const auto status = nav_goal_handle_future.wait_for(std::chrono::milliseconds(100));
-      if (status == std::future_status::ready)
-      {
-        nav_goal_handle = nav_goal_handle_future.get();
-        break;
-      }
-    }
-
-    if (!nav_goal_handle)
-    {
-      RCLCPP_ERROR(get_logger(), "Navigation stack reject move request.");
-      goal_handle->abort(std::make_shared<ParkAtPeak::Result>());
-      return false;
-    }
-
-    RCLCPP_INFO(get_logger(), "Waiting for navigation result.");
-    rclcpp::Rate rate{ 10 /*Hz*/ };
-    while (true)
-    {
-      if (!rclcpp::ok() || goal_handle->is_canceling())
-      {
-        goal_handle->canceled(std::make_shared<ParkAtPeak::Result>());
-        return false;
-      }
-      const auto status = nav_goal_handle->get_status();
-      switch (status)
-      {
-        case rclcpp_action::GoalStatus::STATUS_ACCEPTED:
-        case rclcpp_action::GoalStatus::STATUS_EXECUTING:
-          continue;
-        case rclcpp_action::GoalStatus::STATUS_ABORTED:
-        case rclcpp_action::GoalStatus::STATUS_CANCELED:
-        case rclcpp_action::GoalStatus::STATUS_CANCELING:
-        case rclcpp_action::GoalStatus::STATUS_UNKNOWN:
-          RCLCPP_ERROR(get_logger(), "Navigation failed.");
-          goal_handle->abort(std::make_shared<ParkAtPeak::Result>());
-          return false;
-        case rclcpp_action::GoalStatus::STATUS_SUCCEEDED:
-          RCLCPP_INFO(get_logger(), "Navigation succeeded.");
-          return true;
-      }
-      rate.sleep();
-    }
   }
 };
 

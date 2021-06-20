@@ -10,7 +10,10 @@ find_package(tf2_ros REQUIRED)
 find_package(tf2_eigen REQUIRED)
 find_package(nav2_msgs REQUIRED)
 
-add_library(${PROJECT_NAME}_components SHARED src/peak_finder_component.cpp)
+add_library(${PROJECT_NAME}_components SHARED 
+  src/peak_finder_component.cpp
+  src/navigator.cpp
+)
 ament_target_dependencies(${PROJECT_NAME}_components
   "rclcpp"
   "rclcpp_components"
