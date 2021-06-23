@@ -229,6 +229,13 @@ private:
     stsl_interfaces::srv::SampleElevation::Response::SharedPtr response;
 
     RCLCPP_INFO(get_logger(), "Waiting for response.");
+    /*
+      Instead of looping, just call wait_for with a big timeout (2-5s) 
+      Then, we don't have to check for cancelled, because we know we wont hang here indefinitely
+
+
+      And theeeeen, consider making this just throw an exception on timeout / server error and the next function up will catch that 
+    */
     while(result_future.wait_for(std::chrono::milliseconds(100)) != std::future_status::ready)
     {
       if(!rclcpp::ok() || goal_handle->is_canceling())
