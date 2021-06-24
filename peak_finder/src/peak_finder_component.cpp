@@ -30,7 +30,7 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include "./navigator.h"
+#include "./navigator.hpp"
 
 namespace peak_finder
 {
@@ -44,6 +44,9 @@ public:
   : rclcpp::Node("peak_finder", options), tf_buffer_(get_clock()), tf_listener_(tf_buffer_),
     navigator_(*this)
   {
+    declare_parameter<double>("search_radius", 0.1);
+    declare_parameter<int>("sample_count", 8);
+
     action_server_ = rclcpp_action::create_server<ParkAtPeak>(
       this, "park_at_peak",
       std::bind(
@@ -111,52 +114,33 @@ private:
 
     try {
       while (rclcpp::ok() && !goal_handle->is_canceling()) {
-        RCLCPP_INFO(get_logger(), "Getting current position.");
         const auto robot_position = GetRobotPosition();
 
-        double current_elevation;
+        const double current_elevation = SampleElevation(robot_position);
 
-        RCLCPP_INFO(get_logger(), "Sampling current elevations.");
-        if (!SampleElevation(goal_handle, robot_position, current_elevation)) {
-          return;
-        }
+        double search_radius;
+        get_parameter("search_radius", search_radius);
+        int sample_count;
+        get_parameter("sample_count", sample_count);
 
-        RCLCPP_INFO(get_logger(), "Current elevation: %f", current_elevation);
-
-        auto generate_next_pose = [&robot_position, angle = 0.0]() mutable {
-            const auto look_distance = 0.1;
+        auto generate_next_pose = [&robot_position, search_radius, sample_count, angle = 0.0]() mutable {
             Eigen::Vector2d pose =
-              (look_distance * Eigen::Vector2d(std::cos(angle), std::sin(angle))) + robot_position;
-            angle += M_PI_4;
+              (search_radius * Eigen::Vector2d(std::cos(angle), std::sin(angle))) + robot_position;
+            angle += (2 * M_PI) / sample_count;
             return pose;
           };
 
         std::vector<Eigen::Vector2d> sample_positions;
 
-        std::generate_n(std::back_inserter(sample_positions), 8, generate_next_pose);
+        std::generate_n(std::back_inserter(sample_positions), sample_count, generate_next_pose);
 
         std::vector<double> elevations;
 
-        RCLCPP_INFO(get_logger(), "Sampling nearby elevations.");
-        for (const auto & position : sample_positions) {
-          double elevation;
-          if (!SampleElevation(goal_handle, position, elevation)) {
-            return;
-          }
-          elevations.push_back(elevation);
-        }
-
-        {
-          std::stringstream ss;
-          for (const auto & elevation : elevations) {
-            ss << elevation << " ";
-          }
-          RCLCPP_INFO(get_logger(), "Elevations: %s", ss.str().c_str());
-        }
+        std::transform(
+          sample_positions.begin(), sample_positions.end(),
+          std::back_inserter(elevations), [this](const auto & p) {return SampleElevation(p);});
 
         const auto max_elevation_iter = std::max_element(elevations.begin(), elevations.end());
-
-        RCLCPP_INFO(get_logger(), "Max elevation: %f", *max_elevation_iter);
 
         if (*max_elevation_iter <= current_elevation) {
           RCLCPP_INFO(get_logger(), "At peak!");
@@ -167,17 +151,12 @@ private:
         const auto goal_position =
           sample_positions[std::distance(elevations.begin(), max_elevation_iter)];
 
-        RCLCPP_INFO(get_logger(), "Moving to new position.");
         geometry_msgs::msg::PoseStamped goal_pose;
         goal_pose.header.frame_id = "map";
         goal_pose.header.stamp = now();
         goal_pose.pose.position.x = goal_position.x();
         goal_pose.pose.position.y = goal_position.y();
-        goal_pose.pose.position.z = 0.0;
-        // goal_pose.pose.orientation.x = 0.0;
-        // goal_pose.pose.orientation.y = 0.0;
-        // goal_pose.pose.orientation.z = 0.0;
-        // goal_pose.pose.orientation.w = 0.0;
+
         if (!navigator_.go_to_pose(goal_pose)) {
           RCLCPP_ERROR(get_logger(), "Navigation server rejected request");
           goal_handle->abort(std::make_shared<ParkAtPeak::Result>());
@@ -213,43 +192,23 @@ private:
     return robot_pose_3d.translation().head<2>();
   }
 
-  bool SampleElevation(
-    const std::shared_ptr<ParkAtPeakGoalHandle> goal_handle,
-    const Eigen::Vector2d & position, double & elevation)
+  double SampleElevation(const Eigen::Vector2d & position)
   {
-    RCLCPP_INFO(get_logger(), "Sending sample request at <%f, %f>", position.x(), position.y());
     auto sample_request = std::make_shared<stsl_interfaces::srv::SampleElevation::Request>();
     sample_request->x = position.x();
     sample_request->y = position.y();
     const auto result_future = elevation_client_->async_send_request(sample_request);
 
-    stsl_interfaces::srv::SampleElevation::Response::SharedPtr response;
-
-    RCLCPP_INFO(get_logger(), "Waiting for response.");
-    /*
-      Instead of looping, just call wait_for with a big timeout (2-5s)
-      Then, we don't have to check for cancelled, because we know we wont hang here indefinitely
-
-
-      And theeeeen, consider making this just throw an exception on timeout / server error and the next function up will catch that
-    */
-    while (result_future.wait_for(std::chrono::milliseconds(100)) != std::future_status::ready) {
-      if (!rclcpp::ok() || goal_handle->is_canceling()) {
-        goal_handle->canceled(std::make_shared<ParkAtPeak::Result>());
-        return false;
-      }
+    if (result_future.wait_for(std::chrono::seconds(2)) != std::future_status::ready) {
+      throw std::runtime_error("Elevation service call timed out.");
     }
-    response = result_future.get();
-    RCLCPP_INFO(get_logger(), "Elevation response received.");
+    const auto response = result_future.get();
 
     if (!response->success) {
-      RCLCPP_ERROR(get_logger(), "Elevation server reported failure.");
-      goal_handle->abort(std::make_shared<ParkAtPeak::Result>());
-      return false;
+      throw std::runtime_error("Elevation server reported failure.");
     }
 
-    elevation = response->elevation;
-    return true;
+    return response->elevation;
   }
 };
 
