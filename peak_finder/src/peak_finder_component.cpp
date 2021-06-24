@@ -123,7 +123,8 @@ private:
         int sample_count;
         get_parameter("sample_count", sample_count);
 
-        auto generate_next_pose = [&robot_position, search_radius, sample_count, angle = 0.0]() mutable {
+        auto generate_next_pose =
+          [&robot_position, search_radius, sample_count, angle = 0.0]() mutable {
             Eigen::Vector2d pose =
               (search_radius * Eigen::Vector2d(std::cos(angle), std::sin(angle))) + robot_position;
             angle += (2 * M_PI) / sample_count;
