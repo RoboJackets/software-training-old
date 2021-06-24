@@ -8,6 +8,7 @@ install(
   behavior_trees
   config
   launch
+  rviz_config
   DESTINATION share/${PROJECT_NAME}
 )
 
