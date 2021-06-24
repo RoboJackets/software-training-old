@@ -7,6 +7,7 @@ install(
   DIRECTORY
   launch
   config
+  rviz_config
   DESTINATION share/${PROJECT_NAME}
 )
 
