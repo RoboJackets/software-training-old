@@ -13,6 +13,7 @@
     <depend>rclcpp_components</depend>
     <depend>tf2_ros</depend>
     <depend>tf2_eigen</depend>
+    <depend>visualization_msgs</depend>
     <depend>stsl_interfaces</depend>
 
     <test_depend>ament_lint_auto</test_depend>

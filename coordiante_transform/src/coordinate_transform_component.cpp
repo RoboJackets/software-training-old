@@ -21,10 +21,14 @@
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_components/register_node_macro.hpp>
 #include <stsl_interfaces/msg/tag_array.hpp>
+#include <visualization_msgs/msg/marker_array.hpp>
+#include <visualization_msgs/msg/marker.hpp>
 #include <geometry_msgs/msg/point.h>
 #include <geometry_msgs/msg/quaternion.h>
 #include <tf2_ros/transform_listener.h>
 #include <tf2_eigen/tf2_eigen.h>
+
+using namespace std::chrono_literals;
 
 namespace coordinate_transform {
 class CoordinateTransformComponent : public rclcpp::Node
@@ -37,6 +41,7 @@ public:
             10, std::bind(&CoordinateTransformComponent::DetectionCallback, this, std::placeholders::_1));
 
     tag_publisher_ = this->create_publisher<stsl_interfaces::msg::TagArray>("~/tags_transformed", 1);
+    visualization_pub_ = this->create_publisher<visualization_msgs::msg::MarkerArray>("~/tags_visual", 1);
   }
 
 private:
@@ -44,6 +49,7 @@ private:
   tf2_ros::TransformListener tf_listener_;
   rclcpp::Subscription<stsl_interfaces::msg::TagArray>::SharedPtr tag_sub_;
   rclcpp::Publisher<stsl_interfaces::msg::TagArray>::SharedPtr tag_publisher_;
+  rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr visualization_pub_;
 
   void DetectionCallback(const stsl_interfaces::msg::TagArray::SharedPtr tag_array_msg)
   {
@@ -60,24 +66,21 @@ private:
     }
 
     // find the transform from the camera to base footprint
-    // TODO why flipped?
     const auto tf_transform =
             tf_buffer_.lookupTransform("base_footprint", "camera_link", tag_array_msg->header.stamp);
     const Eigen::Isometry3d eigen_transform = tf2::transformToEigen(tf_transform);
 
-    // BEGIN STUDENT CODE
     // creates a matrix that goes from camera to standard ROS coordinates
     Eigen::Matrix4d optical = getRotMatForOpticalFrame();
 
+    // BEGIN STUDENT CODE
     // create a new tag array message
     stsl_interfaces::msg::TagArray new_tag_array_msg;
     // copy the header information
     new_tag_array_msg.header = tag_array_msg->header;
     // change the frame_id to be the correct reference frame
-    new_tag_array_msg.header.frame_id = "/base_footprint";
+    new_tag_array_msg.header.frame_id = "base_footprint";
     // END STUDENT CODE
-
-    // to convert a quaternion to a rotation matrix use the following
 
     // BEGIN STUDENT CODE
     // iterate over each tag to and transform it into body frame
@@ -106,25 +109,57 @@ private:
     }
     tag_publisher_->publish(new_tag_array_msg);
     // END STUDENT CODE
+
+    // visualization code
+    visualization_msgs::msg::MarkerArray marker_array;
+    for(stsl_interfaces::msg::Tag tag : new_tag_array_msg.tags)
+    {
+      visualization_msgs::msg::Marker marker;
+      marker.header.frame_id = "base_footprint";
+      marker.header.stamp = tag_array_msg->header.stamp;
+      marker.id = tag.id;
+      marker.type = visualization_msgs::msg::Marker::CUBE;
+      marker.action = visualization_msgs::msg::Marker::ADD;
+      marker.lifetime = rclcpp::Duration(0.25s);
+
+      marker.pose.orientation.x = tag.pose.orientation.x;
+      marker.pose.orientation.y = tag.pose.orientation.y;
+      marker.pose.orientation.z = tag.pose.orientation.z;
+      marker.pose.orientation.w = tag.pose.orientation.w;
+
+      marker.pose.position.x = tag.pose.position.x;
+      marker.pose.position.y = tag.pose.position.y;
+      marker.pose.position.z = tag.pose.position.z;
+
+      marker.scale.x = 0.2;
+      marker.scale.y = 0.2;
+      marker.scale.z = 0.025;
+
+      marker.color.a = 0.9;
+      marker.color.r = 0.0;
+      marker.color.b = 1.0;
+      marker.color.g = 0.0;
+
+      marker_array.markers.push_back(marker);
+    }
+    visualization_pub_->publish(marker_array);
   }
 
   Eigen::Matrix4d getRotMatForOpticalFrame() {
-    Eigen::Matrix4d R_roll;
     // BEGIN STUDENT CODE
+    Eigen::Matrix4d R_roll;
     R_roll << 1, 0, 0, 0,
-            0, cos(-M_PI/2), sin(-M_PI/2), 0,
-            0, -sin(-M_PI/2), cos(-M_PI/2), 0,
+            0, cos(M_PI/2), sin(M_PI/2), 0,
+            0, -sin(M_PI/2), cos(M_PI/2), 0,
             0,0,0,1;
-    // END STUDENT CODE
 
     Eigen::Matrix4d R_yaw;
-    // BEGIN STUDENT CODE
-    R_yaw << cos(-M_PI/2), sin(-M_PI/2), 0, 0,
-            -sin(-M_PI/2), cos(-M_PI/2), 0, 0,
+    R_yaw << cos(M_PI/2), sin(M_PI/2), 0, 0,
+            -sin(M_PI/2), cos(M_PI/2), 0, 0,
             0, 0, 1, 0,
             0,0,0,1;
-    // END STUDENT CODE
     return R_yaw * R_roll;
+    // END STUDENT CODE
   }
 
   Eigen::Matrix4d convertQuatToRotMat(geometry_msgs::msg::Quaternion quat) {
@@ -139,10 +174,10 @@ private:
     geometry_msgs::msg::Quaternion quat;
     Eigen::Quaterniond e_quat = Eigen::Quaterniond(homo_mat.block<3,3>(0,0));
 
-    quat.w = e_quat.w();
     quat.x = e_quat.x();
-    quat.w = e_quat.w();
+    quat.y = e_quat.y();
     quat.z = e_quat.z();
+    quat.w = e_quat.w();
 
     return quat;
   }

@@ -6,6 +6,7 @@ find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(image_transport REQUIRED)
 find_package(cv_bridge REQUIRED)
+find_package(visualization_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2_eigen REQUIRED)
@@ -17,6 +18,7 @@ ament_target_dependencies(${PROJECT_NAME}_components
         "rclcpp_components"
         "tf2_ros"
         "tf2_eigen"
+        "visualization_msgs"
         "stsl_interfaces"
         )
 rclcpp_components_register_node(
