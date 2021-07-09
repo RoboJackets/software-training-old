@@ -26,10 +26,6 @@ from launch.substitutions import LaunchConfiguration
 from ament_index_python.packages import get_package_share_directory
 
 
-# TODO need to be running the map server????
-
-
-
 def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument(

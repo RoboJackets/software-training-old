@@ -1,5 +1,27 @@
+// Copyright 2021 RoboJackets
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
 #include "astar_path_planner/astar_path_planner.hpp"
+#include <memory>
 #include <set>
+#include <vector>
 #include <queue>
 
 namespace astar_path_planner
@@ -104,14 +126,18 @@ bool AStarPathPlanner::PointInCollision(const Point & point)
   const auto footprint = ros_costmap_->getRobotFootprintPolygon();
 
   std::vector<nav2_costmap_2d::MapLocation> footprint_in_map;
-  std::transform(
-    footprint.points.begin(), footprint.points.end(), std::back_inserter(footprint_in_map), [&point](
-      const auto & footprint_point) {
+
+  auto transform_footprint_point = [&point](
+    const auto & footprint_point) {
       nav2_costmap_2d::MapLocation location;
       location.x = footprint_point.x + point.x();
       location.y = footprint_point.y + point.y();
       return location;
-    });
+    };
+
+  std::transform(
+    footprint.points.begin(), footprint.points.end(), std::back_inserter(
+      footprint_in_map), transform_footprint_point);
 
   auto costmap = ros_costmap_->getCostmap();
 
@@ -157,4 +183,4 @@ void AStarPathPlanner::ReducePath(std::vector<Point> & path)
   }
 }
 
-}
+}  // namespace astar_path_planner
