@@ -8,6 +8,7 @@ install(
   behavior_trees
   config
   launch
+  mineral_sample_sets
   rviz_config
   DESTINATION share/${PROJECT_NAME}
 )
