@@ -1,0 +1,8 @@
+<launch>
+    <arg name="simulation" default="True"/>
+    <include if="$(var simulation)" file="$(find-pkg-share traini_bringup)/launch/traini_simulation.launch.py"/>
+    <include file="$(find-pkg-share obstacle_detector)/launch/obstacle_detector.launch.py"/>
+    <node pkg="rviz2" exec="rviz2" args="-d $(find-pkg-share rj_training_bringup)/rviz_config/color_detection.rviz">
+        <param name="use_sim_time" value="$(var simulation)"/>
+    </node>
+</launch>
