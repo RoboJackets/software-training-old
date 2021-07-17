@@ -19,6 +19,7 @@
 # THE SOFTWARE.
 
 from launch import LaunchDescription
+from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
 
@@ -27,6 +28,9 @@ def generate_launch_description():
         Node(
             package='coordinate_transform',
             executable='coordinate_transform_node',
-            output='screen'
+            output='screen',
+            parameters=[
+                {'use_sim_time': LaunchConfiguration('use_sim_time', default='false')}
+            ]
         )
     ])

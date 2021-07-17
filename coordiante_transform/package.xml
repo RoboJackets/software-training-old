@@ -3,7 +3,7 @@
 <package format="3">
     <name>coordinate_transform</name>
     <version>0.0.0</version>
-    <description>TODO: Package description</description>
+    <description>A package for transforming a fiducial marker from camera frame to body frame</description>
     <maintainer email="jgibson37@gatech.edu">Jason Gibson</maintainer>
     <license>MIT</license>
 

@@ -37,18 +37,18 @@ public:
   explicit CoordinateTransformComponent(const rclcpp::NodeOptions & options)
   : rclcpp::Node("coordinate_transformer", options), tf_buffer_(get_clock()), tf_listener_(tf_buffer_)
   {
-    tag_sub_ = this->create_subscription<stsl_interfaces::msg::TagArray>("/aruco_tag_detector/tags",
+    tag_sub_ = create_subscription<stsl_interfaces::msg::TagArray>("/aruco_tag_detector/tags",
             10, std::bind(&CoordinateTransformComponent::DetectionCallback, this, std::placeholders::_1));
 
-    tag_publisher_ = this->create_publisher<stsl_interfaces::msg::TagArray>("~/tags_transformed", 1);
-    visualization_pub_ = this->create_publisher<visualization_msgs::msg::MarkerArray>("~/tags_visual", 1);
+    tag_pub_ = create_publisher<stsl_interfaces::msg::TagArray>("~/tags_transformed", 1);
+    visualization_pub_ = create_publisher<visualization_msgs::msg::MarkerArray>("~/tags_visual", 1);
   }
 
 private:
   tf2_ros::Buffer tf_buffer_;
   tf2_ros::TransformListener tf_listener_;
   rclcpp::Subscription<stsl_interfaces::msg::TagArray>::SharedPtr tag_sub_;
-  rclcpp::Publisher<stsl_interfaces::msg::TagArray>::SharedPtr tag_publisher_;
+  rclcpp::Publisher<stsl_interfaces::msg::TagArray>::SharedPtr tag_pub_;
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr visualization_pub_;
 
   void DetectionCallback(const stsl_interfaces::msg::TagArray::SharedPtr tag_array_msg)
@@ -77,18 +77,19 @@ private:
     // create a new tag array message
     stsl_interfaces::msg::TagArray new_tag_array_msg;
     // copy the header information
-    new_tag_array_msg.header = tag_array_msg->header;
+    new_tag_array_msg.header.stamp = tag_array_msg->header.stamp;
     // change the frame_id to be the correct reference frame
     new_tag_array_msg.header.frame_id = "base_footprint";
     // END STUDENT CODE
 
     // BEGIN STUDENT CODE
     // iterate over each tag to and transform it into body frame
-    for(int i = 0; i < tag_array_msg->tags.size(); i++) {
+    for(const stsl_interfaces::msg::Tag & old_tag : tag_array_msg->tags)
+    {
       stsl_interfaces::msg::Tag new_tag;
-      new_tag.id = tag_array_msg->tags[i].id;
+      new_tag.id = old_tag.id;
 
-      geometry_msgs::msg::Point old_tag_position = tag_array_msg->tags[i].pose.position;
+      geometry_msgs::msg::Point old_tag_position = old_tag.pose.position;
 
       // extract the important parts of the pose
       Eigen::Vector4d pose = Eigen::Vector4d(old_tag_position.x, old_tag_position.y, old_tag_position.z, 1);
@@ -101,18 +102,18 @@ private:
       new_tag.pose.position.z = pose(2);
 
       // get the orientation of the tag
-      Eigen::Matrix4d tag_orientation = convertQuatToRotMat(tag_array_msg->tags[i].pose.orientation);
+      Eigen::Matrix4d tag_orientation = convertQuatToRotMat(old_tag.pose.orientation);
       tag_orientation = eigen_transform.matrix() * optical * tag_orientation;
       new_tag.pose.orientation = convertRotMatToQuat(tag_orientation);
 
       new_tag_array_msg.tags.push_back(new_tag);
     }
-    tag_publisher_->publish(new_tag_array_msg);
+    tag_pub_->publish(new_tag_array_msg);
     // END STUDENT CODE
 
     // visualization code
     visualization_msgs::msg::MarkerArray marker_array;
-    for(stsl_interfaces::msg::Tag tag : new_tag_array_msg.tags)
+    for(const stsl_interfaces::msg::Tag tag : new_tag_array_msg.tags)
     {
       visualization_msgs::msg::Marker marker;
       marker.header.frame_id = "base_footprint";
@@ -120,16 +121,9 @@ private:
       marker.id = tag.id;
       marker.type = visualization_msgs::msg::Marker::CUBE;
       marker.action = visualization_msgs::msg::Marker::ADD;
-      marker.lifetime = rclcpp::Duration(0.25s);
+      marker.lifetime = rclcpp::Duration(0, 250000000);
 
-      marker.pose.orientation.x = tag.pose.orientation.x;
-      marker.pose.orientation.y = tag.pose.orientation.y;
-      marker.pose.orientation.z = tag.pose.orientation.z;
-      marker.pose.orientation.w = tag.pose.orientation.w;
-
-      marker.pose.position.x = tag.pose.position.x;
-      marker.pose.position.y = tag.pose.position.y;
-      marker.pose.position.z = tag.pose.position.z;
+      marker.pose = tag.pose;
 
       marker.scale.x = 0.2;
       marker.scale.y = 0.2;
@@ -163,23 +157,15 @@ private:
   }
 
   Eigen::Matrix4d convertQuatToRotMat(geometry_msgs::msg::Quaternion quat) {
-    Eigen::Quaterniond e_quat = Eigen::Quaterniond(quat.w, quat.x, quat.y, quat.z);
-    Eigen::Matrix4d result_mat = Eigen::Matrix4d::Zero();
+    Eigen::Quaterniond e_quat;
+    tf2::fromMsg(quat, e_quat);
+    Eigen::Matrix4d result_mat = Eigen::Matrix4d::Identity();
     result_mat.block<3,3>(0,0) = e_quat.normalized().toRotationMatrix();
-    result_mat(3,3) = 1.0;
     return result_mat;
   }
 
   geometry_msgs::msg::Quaternion convertRotMatToQuat(Eigen::Matrix4d homo_mat) {
-    geometry_msgs::msg::Quaternion quat;
-    Eigen::Quaterniond e_quat = Eigen::Quaterniond(homo_mat.block<3,3>(0,0));
-
-    quat.x = e_quat.x();
-    quat.y = e_quat.y();
-    quat.z = e_quat.z();
-    quat.w = e_quat.w();
-
-    return quat;
+    return tf2::toMsg(Eigen::Quaterniond(homo_mat.block<3,3>(0,0)));
   }
 };
 } // namespace coordinate_transform
