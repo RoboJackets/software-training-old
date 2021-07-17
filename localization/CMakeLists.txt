@@ -5,12 +5,20 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(stsl_interfaces REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(visualization_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 
-add_library(${PROJECT_NAME}_component SHARED src/particle_filter_localizer.cpp)
+add_library(${PROJECT_NAME}_component SHARED
+        src/particle_filter_localizer.cpp
+        src/sensor_model.cpp
+        src/motion_model.cpp
+        src/aruco_sensor_model.cpp
+        src/odometry_sensor_model.cpp)
 ament_target_dependencies(${PROJECT_NAME}_component
   "rclcpp"
+  "sensor_msgs"
   "rclcpp_components"
   "stsl_interfaces"
   "nav_msgs"
