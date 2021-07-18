@@ -16,11 +16,12 @@ class IMUMotionModel {
 public:
   IMUMotionModel(std::shared_ptr<ParticleNoise> noise, rclcpp::Node* node);
 
-  void updateParticle(Particle & particle, sensor_msgs::msg::Imu::SharedPtr imu_msg);
+  void updateParticle(Particle & particle, double dt, sensor_msgs::msg::Imu::SharedPtr imu_msg);
   void updateParticles(std::vector<Particle> & particles,
                        sensor_msgs::msg::Imu::SharedPtr imu_msg);
 private:
   Particle sigmas_;
+  rclcpp::Time last_message_time_;
 
   std::shared_ptr<ParticleNoise> noise_;
 

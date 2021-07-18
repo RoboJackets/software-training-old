@@ -11,9 +11,9 @@ IMUMotionModel::IMUMotionModel(std::shared_ptr<ParticleNoise> noise, rclcpp::Nod
 {
   noise_ = noise;
 
-  node->declare_parameter<std::vector<double>>("motion_sigmas", {0.1, 0.1, 0.1, 0.2, 0.2});
+  node->declare_parameter<std::vector<double>>("motion_sigmas", {0.05, 0.05, 0.2, 0.05, 0.0});
   std::vector<double> motion_sigma;
-  node->get_parameter("aruco_meas_cov", motion_sigma);
+  node->get_parameter("motion_sigmas", motion_sigma);
   sigmas_.x = motion_sigma[0];
   sigmas_.y = motion_sigma[1];
   sigmas_.yaw = motion_sigma[2];
@@ -21,28 +21,44 @@ IMUMotionModel::IMUMotionModel(std::shared_ptr<ParticleNoise> noise, rclcpp::Nod
   sigmas_.vy = motion_sigma[4];
 }
 
-void IMUMotionModel::updateParticle(Particle & particle,
+void IMUMotionModel::updateParticle(Particle & particle, double dt,
                                  sensor_msgs::msg::Imu::SharedPtr imu_msg)
 {
-  double dt = 0.1;
-  particle.x += particle.vx*dt + sigmas_.x*noise_->sampleGaussian()*sqrt(dt);
-  particle.y += particle.vy*dt + sigmas_.y*noise_->sampleGaussian()*sqrt(dt);
+  particle.x += cos(particle.yaw)*particle.vx*dt + sin(particle.yaw)*particle.vy*dt + sigmas_.x*noise_->sampleGaussian()*sqrt(dt);
+  particle.y += -sin(particle.yaw)*particle.vx*dt + cos(particle.yaw)*particle.vy*dt + sigmas_.y*noise_->sampleGaussian()*sqrt(dt);
 
   double ux = imu_msg->linear_acceleration.x*dt + sigmas_.vx*noise_->sampleGaussian()*sqrt(dt);
   double uy = imu_msg->linear_acceleration.y*dt + sigmas_.vy*noise_->sampleGaussian()*sqrt(dt);
 
   particle.vx += cos(particle.yaw)*ux + sin(particle.yaw)*uy;
-  particle.vx += sin(particle.yaw)*ux + cos(particle.yaw)*uy;
+  particle.vy += -sin(particle.yaw)*ux + cos(particle.yaw)*uy;
 
-  particle.yaw += imu_msg->angular_velocity.z*dt + sigmas_.yaw*noise_->sampleGaussian()*sqrt(dt);
+  particle.yaw -= imu_msg->angular_velocity.z*dt + sigmas_.yaw*noise_->sampleGaussian()*sqrt(dt);
+  while(particle.yaw > M_PI)
+  {
+    particle.yaw -= 2*M_PI;
+  }
+  while(particle.yaw <= -M_PI)
+  {
+    particle.yaw += 2*M_PI;
+  }
 }
 
 void IMUMotionModel::updateParticles(std::vector<Particle> & particles,
                      sensor_msgs::msg::Imu::SharedPtr imu_msg)
 {
+  //std::cout << "msg: " <<
+  double dt = imu_msg->header.stamp.sec + imu_msg->header.stamp.nanosec*1e-9 - last_message_time_.seconds();
+  if(dt > 1.0)
+  {
+    last_message_time_ = imu_msg->header.stamp;
+    return;
+  }
+  //std::cout << "dt: " << dt << std::endl;
   for(Particle & particle : particles)
   {
-    updateParticle(particle, imu_msg);
+    updateParticle(particle, dt, imu_msg);
   }
+  last_message_time_ = imu_msg->header.stamp;
 }
 }

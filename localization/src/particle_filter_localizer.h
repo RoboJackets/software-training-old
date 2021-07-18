@@ -40,10 +40,10 @@ private:
   std::vector<localization::Particle> particles_;
   std::vector<double> search_weights_;
 
+  std::shared_ptr<ParticleNoise> noise_;
   ArucoSensorModel aruco_model_;
   OdometrySensorModel odom_model_;
   IMUMotionModel motion_model_;
-  std::shared_ptr<ParticleNoise> noise_ = std::make_shared<ParticleNoise>();
 
   int num_particles_ = 100;
   double max_weight_ = 0;

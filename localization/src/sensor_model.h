@@ -13,14 +13,17 @@ namespace localization {
 class SensorModel
 {
 public:
-  virtual double ComputeLogProb(Particle & particle);
-  virtual double ComputeLogNormalizer();
+  virtual double ComputeLogProb(Particle & particle) {return 0.0;}
+  virtual double ComputeLogNormalizer() {return 0.0;}
   static void ComputeLogProbs(std::vector<Particle> & particles, rclcpp::Time cur_time,
                          SensorModel & aruco_model, SensorModel & odom_model);
   virtual bool IsMeasUpdateValid(rclcpp::Time cur_time);
 protected:
   std::vector<double> meas_cov_;
   double time_delay_;
+protected:
+  SensorModel() = default;
+  ~SensorModel() =default;
 private:
 };
 }

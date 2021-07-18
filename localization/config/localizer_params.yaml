@@ -1,0 +1,11 @@
+particle_filter:
+  ros__parameters:
+    aruco:
+      meas_cov: [0.5, 0.5]
+    odom:
+      meas_cov: [0.1]
+    motion_sigmas: [0.1, 0.1, 0.1, 0.1, 0.1]
+    num_particles: 50
+    min_init_vals: [-0.6, -0.3, -1.0, 0.0, 0.0]
+    max_init_vals: [0.6, 0.3, 1.0, 0.0, 0.0]
+

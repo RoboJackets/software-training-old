@@ -5,7 +5,8 @@
 #ifndef SRC_PARTICLE_H
 #define SRC_PARTICLE_H
 
-#include "random"
+#include <random>
+#include <iostream>
 
 namespace localization {
 
@@ -26,6 +27,12 @@ struct Particle
 
 class ParticleNoise {
 public:
+  ParticleNoise() {
+    normal_dist_ = std::normal_distribution<double>(0, 1.0);
+    uniform_dist_ = std::uniform_real_distribution<double>(0, 1);
+    generator_ = std::default_random_engine(100);
+  }
+
   double sampleUniform()
   {
     return uniform_dist_(generator_);
@@ -37,12 +44,11 @@ public:
   }
 private:
   // creates N(0,1)
-  std::normal_distribution<double> normal_dist_ =
-          std::normal_distribution<double>(0, 1.0);
+  std::normal_distribution<double> normal_dist_;
+
   // creates U(0,1)
-  std::uniform_real_distribution<double> uniform_dist_ =
-          std::uniform_real_distribution<double>(0, 1);
-  std::default_random_engine generator_ = std::default_random_engine(100);
+  std::uniform_real_distribution<double> uniform_dist_;
+  std::default_random_engine generator_;
 };
 
 }

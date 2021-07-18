@@ -9,20 +9,23 @@ find_package(sensor_msgs REQUIRED)
 find_package(visualization_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
 
 add_library(${PROJECT_NAME}_component SHARED
-        src/particle_filter_localizer.cpp
         src/sensor_model.cpp
         src/motion_model.cpp
         src/aruco_sensor_model.cpp
-        src/odometry_sensor_model.cpp)
+        src/odometry_sensor_model.cpp
+        src/particle_filter_localizer.cpp)
 ament_target_dependencies(${PROJECT_NAME}_component
   "rclcpp"
   "sensor_msgs"
   "rclcpp_components"
+  "visualization_msgs"
   "stsl_interfaces"
   "nav_msgs"
   "tf2_ros"
+  "tf2_geometry_msgs"
 )
 rclcpp_components_register_node(
   ${PROJECT_NAME}_component
