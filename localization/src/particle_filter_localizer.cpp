@@ -72,8 +72,19 @@ ParticleFilterLocalizer::ParticleFilterLocalizer(const rclcpp::NodeOptions & opt
   //std::generate(particles_.begin(), particles_.end(), std::mem_fn(this->InitializeParticle));
   NormalizeWeights();
 
+  declare_parameter<double>("state_update_rate", 10);
+  double state_update_rate;
+  get_parameter("state_update_rate", state_update_rate);
   pose_timer_ = create_wall_timer(
-          0.1s, std::bind(&ParticleFilterLocalizer::CalculateStateAndPublish, this));
+          std::chrono::duration<long double>(1.0/state_update_rate),
+          std::bind(&ParticleFilterLocalizer::CalculateStateAndPublish, this));
+
+  declare_parameter<double>("resample_rate", 10);
+  double resample_rate;
+  get_parameter("resample_rate", resample_rate);
+  resample_timer_ = create_wall_timer(
+          std::chrono::duration<long double>(1.0/resample_rate),
+          std::bind(&ParticleFilterLocalizer::ResampleParticles, this));
 }
 
 void ParticleFilterLocalizer::TagCallback(const stsl_interfaces::msg::TagArray::SharedPtr msg)
@@ -195,12 +206,6 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
   SensorModel::ComputeLogProbs(particles_, this->now(), aruco_model_, odom_model_);
 
   NormalizeWeights();
-  static int counter = 0;
-  counter +=1;
-
-  if (counter % 2 == 0) {
-    ResampleParticles();
-  }
 
   Particle best_estimate_particle;
   for(Particle & particle : particles_)
@@ -237,7 +242,6 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
   tf_broadcaster_.sendTransform(transform);
 
   // TODO how to publish uncertainty
-
 
   std::cout << "result: " << best_estimate_particle.x << ", " << best_estimate_particle.y << ", " << best_estimate_particle.yaw << std::endl;
 

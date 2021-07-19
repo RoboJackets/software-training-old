@@ -32,6 +32,7 @@ private:
   rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr marker_pub_;
 
   rclcpp::TimerBase::SharedPtr pose_timer_;
+  rclcpp::TimerBase::SharedPtr resample_timer_;
 
   tf2_ros::Buffer tf_buffer_;
   tf2_ros::TransformListener tf_listener_;

@@ -10,4 +10,6 @@ particle_filter_localizer:
     num_particles: 100
     min_init_vals: [-0.6, -0.3, -3.14, 0.0, 0.0]
     max_init_vals: [0.6, 0.3, 3.14, 0.0, 0.0]
+    state_update_rate: 10.0
+    resample_rate: 5.0
 
