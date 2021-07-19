@@ -24,9 +24,9 @@ IMUMotionModel::IMUMotionModel(std::shared_ptr<ParticleNoise> noise, rclcpp::Nod
 void IMUMotionModel::updateParticle(Particle & particle, double dt,
                                  sensor_msgs::msg::Imu::SharedPtr imu_msg)
 {
-  particle.x += cos(particle.yaw)*particle.vx*dt - sin(particle.yaw)*particle.vy*dt + sigmas_.x*noise_->sampleGaussian()*sqrt(dt);
-  particle.y += sin(particle.yaw)*particle.vx*dt + cos(particle.yaw)*particle.vy*dt + sigmas_.y*noise_->sampleGaussian()*sqrt(dt);
-  
+  particle.x += cos(particle.yaw)*particle.vx*dt + sin(particle.yaw)*particle.vy*dt + sigmas_.x*noise_->sampleGaussian()*sqrt(dt);
+  particle.y += -sin(particle.yaw)*particle.vx*dt + cos(particle.yaw)*particle.vy*dt + sigmas_.y*noise_->sampleGaussian()*sqrt(dt);
+
   particle.vx += imu_msg->linear_acceleration.x*dt + sigmas_.vx*noise_->sampleGaussian()*sqrt(dt);
   particle.vy += imu_msg->linear_acceleration.y*dt + sigmas_.vy*noise_->sampleGaussian()*sqrt(dt);
 
