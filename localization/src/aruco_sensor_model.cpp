@@ -11,7 +11,9 @@ ArucoSensorModel::ArucoSensorModel(rclcpp::Node* node)
 {
   node->declare_parameter<std::vector<double>>("aruco/meas_cov", {0.025, 0.025, 0.025});
   node->get_parameter("aruco/meas_cov", this->meas_cov_);
-  time_delay_ = 0.2;
+
+  node->declare_parameter<double>("aruco/time_delay", 0.1);
+  node->get_parameter("aruco/time_delay", this->time_delay_);
 
   tags_.insert(std::pair<int, TagLocation>(0, TagLocation(0.6096, 0, -M_PI_2)));
   tags_.insert(std::pair<int, TagLocation>(1, TagLocation(0.3, -0.381, M_PI)));

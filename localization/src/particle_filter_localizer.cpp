@@ -40,21 +40,21 @@ ParticleFilterLocalizer::ParticleFilterLocalizer(const rclcpp::NodeOptions & opt
   odom_pub_ = create_publisher<nav_msgs::msg::Odometry>("~/pose_estimate", 1);
   marker_pub_ = create_publisher<visualization_msgs::msg::Marker>("~/particles", 1);
 
-  this->declare_parameter<int>("num_particles", 300);
-  this->get_parameter("num_particles", num_particles_);
+  declare_parameter<int>("num_particles", 300);
+  get_parameter("num_particles", num_particles_);
 
-  this->declare_parameter<std::vector<double>>("min_init_vals", {-0.3, -0.3, -M_PI, 0.0, 0.0});
+  declare_parameter<std::vector<double>>("min_init_vals", {-0.6, -0.3, -M_PI, 0.0, 0.0});
   std::vector<double> min_vals;
-  this->get_parameter("min_init_vals", min_vals);
+  get_parameter("min_init_vals", min_vals);
   min_.x = min_vals[0];
   min_.y = min_vals[1];
   min_.yaw = min_vals[2];
   min_.vx = min_vals[3];
   min_.vy = min_vals[4];
 
-  this->declare_parameter<std::vector<double>>("max_init_vals", {0.3, 0.3, M_PI, 0.0, 0.0});
+  declare_parameter<std::vector<double>>("max_init_vals", {0.6, 0.3, M_PI, 0.0, 0.0});
   std::vector<double> max_vals;
-  this->get_parameter("max_init_vals", max_vals);
+  get_parameter("max_init_vals", max_vals);
   max_.x = max_vals[0];
   max_.y = max_vals[1];
   max_.yaw = max_vals[2];
@@ -92,22 +92,6 @@ void ParticleFilterLocalizer::ImuCallback(const sensor_msgs::msg::Imu::SharedPtr
   // updates the particles based off of the IMU message
   motion_model_.updateParticles(particles_, msg);
 }
-
-//void ParticleFilterLocalizer::PublishPose()
-//{
-//  geometry_msgs::msg::TransformStamped transform;
-//  transform.header.frame_id = "map";
-//  transform.header.stamp = now();
-//  transform.child_frame_id = "odom";
-//  transform.transform.rotation.w = 1;
-//  transform.transform.rotation.x = 0;
-//  transform.transform.rotation.y = 0;
-//  transform.transform.rotation.z = 0;
-//  transform.transform.translation.x = 0;
-//  transform.transform.translation.y = 0;
-//  transform.transform.translation.z = 0;
-//  tf_broadcaster_.sendTransform(transform);
-//}
 
 Particle ParticleFilterLocalizer::InitializeParticle() {
   Particle p;
@@ -214,7 +198,7 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
   static int counter = 0;
   counter +=1;
 
-  if (counter % 1 == 0) {
+  if (counter % 2 == 0) {
     ResampleParticles();
   }
 
@@ -238,10 +222,24 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
     cov.vy += pow(best_estimate_particle.vy - particle.vy, 2)*particle.weight;
   }
 
-  std::cout << "result: " << best_estimate_particle.x << ", " << best_estimate_particle.y << ", " << best_estimate_particle.yaw << std::endl;
+  // use estimated pose to determine the new transform from odom to calculated odom position
+  geometry_msgs::msg::TransformStamped transform;
+  transform.header.frame_id = "map";
+  transform.header.stamp = now();
+  transform.child_frame_id = "odom";
+  transform.transform.rotation.w = 1;
+  transform.transform.rotation.x = 0;
+  transform.transform.rotation.y = 0;
+  transform.transform.rotation.z = 0;
+  transform.transform.translation.x = 0;
+  transform.transform.translation.y = 0;
+  transform.transform.translation.z = 0;
+  tf_broadcaster_.sendTransform(transform);
 
-  // TODO use estimated pose to determine the new transform from odom to calculated odom position
   // TODO how to publish uncertainty
+
+
+  std::cout << "result: " << best_estimate_particle.x << ", " << best_estimate_particle.y << ", " << best_estimate_particle.yaw << std::endl;
 
   PublishParticleVisualization();
 }

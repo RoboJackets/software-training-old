@@ -1,11 +1,13 @@
-particle_filter:
+particle_filter_localizer:
   ros__parameters:
     aruco:
-      meas_cov: [0.5, 0.5]
+      meas_cov: [0.025, 0.025, 0.05]
+      time_delay: 0.2
     odom:
       meas_cov: [0.1]
-    motion_sigmas: [0.1, 0.1, 0.1, 0.1, 0.1]
-    num_particles: 50
-    min_init_vals: [-0.6, -0.3, -1.0, 0.0, 0.0]
-    max_init_vals: [0.6, 0.3, 1.0, 0.0, 0.0]
+      time_delay: 0.2
+    motion_sigmas: [0.05, 0.05, 0.1, 0.05, 0.0]
+    num_particles: 100
+    min_init_vals: [-0.6, -0.3, -3.14, 0.0, 0.0]
+    max_init_vals: [0.6, 0.3, 3.14, 0.0, 0.0]
 

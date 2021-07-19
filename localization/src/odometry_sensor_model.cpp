@@ -11,6 +11,9 @@ OdometrySensorModel::OdometrySensorModel(rclcpp::Node* node)
 {
   node->declare_parameter<std::vector<double>>("odom/meas_cov", {0.1});
   node->get_parameter("odom/meas_cov", this->meas_cov_);
+
+  node->declare_parameter<double>("odom/time_delay", 0.1);
+  node->get_parameter("odom/time_delay", this->time_delay_);
 }
 
 void OdometrySensorModel::UpdateMeasurement(const nav_msgs::msg::Odometry::SharedPtr & odom)
