@@ -9,7 +9,7 @@ namespace localization
 
 OdometrySensorModel::OdometrySensorModel(rclcpp::Node* node)
 {
-  node->declare_parameter<std::vector<double>>("odom/meas_cov", {0.1});
+  node->declare_parameter<std::vector<double>>("odom/meas_cov", {0.1, 0.1});
   node->get_parameter("odom/meas_cov", this->meas_cov_);
 
   node->declare_parameter<double>("odom/time_delay", 0.1);
@@ -23,8 +23,8 @@ void OdometrySensorModel::UpdateMeasurement(const nav_msgs::msg::Odometry::Share
 
 double OdometrySensorModel::ComputeLogNormalizer()
 {
-  return log(sqrt(pow(2*M_PI, 1))) +
-         log(sqrt(meas_cov_[0]));
+  return log(sqrt(pow(2*M_PI, 2))) +
+         log(sqrt(meas_cov_[0])) + log(sqrt(meas_cov_[1]));
 }
 
 double OdometrySensorModel::ComputeLogProb(Particle & particle)
@@ -32,6 +32,7 @@ double OdometrySensorModel::ComputeLogProb(Particle & particle)
   double log_prob = 0;
   //std::cout << "particle " << particle.vx << std::endl;
   log_prob += pow(last_msg_->twist.twist.linear.x - particle.vx, 2)/meas_cov_[0];
+  log_prob += pow(last_msg_->twist.twist.linear.y - particle.vy, 2)/meas_cov_[1];
   //std::cout << log_prob << std::endl;
   // vy should be zero since we are not drifting these
   return log_prob;
