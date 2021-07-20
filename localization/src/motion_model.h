@@ -19,9 +19,11 @@ public:
   void updateParticle(Particle & particle, double dt, sensor_msgs::msg::Imu::SharedPtr imu_msg);
   void updateParticles(std::vector<Particle> & particles,
                        sensor_msgs::msg::Imu::SharedPtr imu_msg);
+  void ImuCallback(const sensor_msgs::msg::Imu::SharedPtr msg);
 private:
   Particle sigmas_;
   rclcpp::Time last_message_time_;
+  rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_sub_;
 
   std::shared_ptr<ParticleNoise> noise_;
 

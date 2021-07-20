@@ -28,19 +28,16 @@ using namespace std::chrono_literals;
 ParticleFilterLocalizer::ParticleFilterLocalizer(const rclcpp::NodeOptions & options)
 : rclcpp::Node("particle_filter_localizer", options),
   tf_buffer_(get_clock()), tf_listener_(tf_buffer_), tf_broadcaster_(*this),
-  noise_(std::make_shared<ParticleNoise>()), motion_model_(noise_, this), aruco_model_(this), odom_model_(this)
+  noise_(std::make_shared<ParticleNoise>()), motion_model_(noise_, this)
 {
-  tag_sub_ = create_subscription<stsl_interfaces::msg::TagArray>(
-    "/tags", 1, std::bind(&ParticleFilterLocalizer::TagCallback, this, std::placeholders::_1));
-  odom_sub_ = create_subscription<nav_msgs::msg::Odometry>(
-    "/odom", 10,
-    std::bind(&ParticleFilterLocalizer::OdometryCallback, this, std::placeholders::_1));
   imu_sub_ = create_subscription<sensor_msgs::msg::Imu>(
           "/imu/data", 10, std::bind(&ParticleFilterLocalizer::ImuCallback, this, std::placeholders::_1));
   odom_pub_ = create_publisher<nav_msgs::msg::Odometry>("~/pose_estimate", 1);
   marker_pub_ = create_publisher<visualization_msgs::msg::Marker>("~/particles", 1);
 
   num_particles_ = declare_parameter<int>("num_particles", 300);
+  declare_parameter<double>("resample_threshold", 0.1);
+  declare_parameter<double>("low_percentage_particles_to_drop", 0.1);
 
   std::vector<double> min_vals = declare_parameter<std::vector<double>>("min_init_vals", {-0.6, -0.3, -M_PI, 0.0, 0.0});
   min_.x = min_vals[0];
@@ -71,20 +68,10 @@ ParticleFilterLocalizer::ParticleFilterLocalizer(const rclcpp::NodeOptions & opt
           std::chrono::duration<double>(1.0/resample_rate),
           std::bind(&ParticleFilterLocalizer::ResampleParticles, this));
 
-  declare_parameter<double>("resample_threshold", 0.1);
-  declare_parameter<double>("low_percentage_particles_to_drop", 0.1);
+  // check what is enabled
+  sensor_models_.push_back(std::move(std::make_unique<ArucoSensorModel>(this)));
+  sensor_models_.push_back(std::move(std::make_unique<OdometrySensorModel>(this)));
 }
-
-void ParticleFilterLocalizer::TagCallback(const stsl_interfaces::msg::TagArray::SharedPtr msg)
-{
-  aruco_model_.UpdateMeasurement(msg);
-}
-
-void ParticleFilterLocalizer::OdometryCallback(const nav_msgs::msg::Odometry::SharedPtr msg)
-{
-  odom_model_.UpdateMeasurement(msg);
-}
-
 
 void ParticleFilterLocalizer::ImuCallback(const sensor_msgs::msg::Imu::SharedPtr msg)
 {
@@ -113,7 +100,7 @@ void ParticleFilterLocalizer::NormalizeWeights()
   std::sort(particles_.begin(), particles_.end(),
             [](const Particle& lhs, const Particle& rhs) {return lhs.weight < rhs.weight;});
 
-  double low_percentage_particles_to_drop = get_parameter("low_percentage_particles_to_drop");
+  double low_percentage_particles_to_drop = get_parameter("low_percentage_particles_to_drop").as_double();
   double smallest_weight_to_allow =
           particles_.at(num_particles_*low_percentage_particles_to_drop).weight;
 
@@ -127,10 +114,10 @@ void ParticleFilterLocalizer::NormalizeWeights()
     normalizer += particle.weight;
   }
   // if all particles are zero
-  double resample_threshold = get_parameter("resample_threshold", resample_threshold);
-  if (normalizer < resample_threshold){
-    std::cout << "resampling particles" << std::endl;
-    std::cout << "normalizer/num_particles_ : " << normalizer/num_particles_ << std::endl;
+  double resample_threshold = get_parameter("resample_threshold").as_double();
+  if (normalizer < resample_threshold)
+  {
+    RCLCPP_INFO(get_logger(), "resampling particles since normalizer is low %f\n", normalizer/num_particles_);
     std::generate_n(particles_.begin(), num_particles_, std::bind(&ParticleFilterLocalizer::InitializeParticle, this));
     normalizer = num_particles_;
   }
@@ -194,11 +181,29 @@ void ParticleFilterLocalizer::ResampleParticles()
   //std::cout << "finished resampling particles" << std::endl;
 }
 
+void ParticleFilterLocalizer::ComputeLogProbs()
+{
+  auto cur_time = this->now();
+  for(Particle & particle : particles_)
+  {
+    double log_prob = 0;
+    for(const std::unique_ptr<SensorModel>& sensor_model : sensor_models_)
+    {
+      if (sensor_model->IsMeasUpdateValid(cur_time))
+      {
+        log_prob += -0.5*sensor_model->ComputeLogProb(particle);
+        log_prob -= sensor_model->ComputeLogNormalizer();
+      }
+    }
+    particle.weight = exp(log_prob);
+  }
+}
+
 void ParticleFilterLocalizer::CalculateStateAndPublish()
 {
   // create a weighted average of particles based off of the weights and publish it
 
-  SensorModel::ComputeLogProbs(particles_, this->now(), aruco_model_, odom_model_);
+  ComputeLogProbs();
 
   NormalizeWeights();
 
@@ -208,7 +213,7 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
   {
     best_estimate_particle.x += particle.x * particle.weight;
     best_estimate_particle.y += particle.y * particle.weight;
-    // TODO this gives zero if we are facing pi
+    // this gives zero if we are facing pi
     best_estimate_particle.yaw += particle.yaw * particle.weight;
     best_estimate_particle.vx += particle.vx * particle.weight;
     best_estimate_particle.vy += particle.vy * particle.weight;
@@ -220,7 +225,6 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
     }
     yaw_sum_2 += yaw * particle.weight;
   }
-  std::cout << best_estimate_particle.yaw << ", " << yaw_sum_2 << std::endl;
   if (abs(yaw_sum_2 - M_PI) < 1.0){
     best_estimate_particle.yaw = yaw_sum_2;
   }
@@ -276,8 +280,6 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
   tf_broadcaster_.sendTransform(transform);
 
   // TODO how to publish uncertainty
-
-  std::cout << "result: " << best_estimate_particle.x << ", " << best_estimate_particle.y << ", " << best_estimate_particle.yaw << std::endl;
 
   PublishParticleVisualization();
 }

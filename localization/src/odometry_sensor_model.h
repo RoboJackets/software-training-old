@@ -13,13 +13,13 @@ class OdometrySensorModel : public SensorModel {
 public:
   OdometrySensorModel(rclcpp::Node* node);
 
-  void UpdateMeasurement(const nav_msgs::msg::Odometry::SharedPtr & odom);
+  void UpdateMeasurement(const nav_msgs::msg::Odometry::SharedPtr odom);
   double ComputeLogProb(Particle & particle) override;
   double ComputeLogNormalizer() override;
   bool IsMeasUpdateValid(rclcpp::Time cur_time) override;
 private:
   nav_msgs::msg::Odometry::SharedPtr last_msg_;
-
+  rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_sub_;
 };
 }
 

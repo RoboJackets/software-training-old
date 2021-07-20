@@ -18,9 +18,12 @@ ArucoSensorModel::ArucoSensorModel(rclcpp::Node* node)
   tags_.insert(std::pair<int, TagLocation>(3, TagLocation(-0.6096, 0, M_PI_2)));
   tags_.insert(std::pair<int, TagLocation>(4, TagLocation(-0.3, 0.381, 0)));
   tags_.insert(std::pair<int, TagLocation>(5, TagLocation(0.3, 0.381, 0)));
+
+  tag_sub_ = node->create_subscription<stsl_interfaces::msg::TagArray>(
+          "/tags", 1, std::bind(&ArucoSensorModel::UpdateMeasurement, this, std::placeholders::_1));
 }
 
-void ArucoSensorModel::UpdateMeasurement(const stsl_interfaces::msg::TagArray::SharedPtr & tags)
+void ArucoSensorModel::UpdateMeasurement(const stsl_interfaces::msg::TagArray::SharedPtr tags)
 {
   last_msg_ = tags;
 }

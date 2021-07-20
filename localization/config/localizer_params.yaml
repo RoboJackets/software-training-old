@@ -13,4 +13,5 @@ particle_filter_localizer:
     state_update_rate: 10.0
     resample_rate: 10.0
     low_percentage_particles_to_drop: 0.05
+    resample_threshold: 0.1
 

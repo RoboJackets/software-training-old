@@ -25,8 +25,6 @@ class ParticleFilterLocalizer : public rclcpp::Node
 public:
   explicit ParticleFilterLocalizer(const rclcpp::NodeOptions & options);
 private:
-  rclcpp::Subscription<stsl_interfaces::msg::TagArray>::SharedPtr tag_sub_;
-  rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_sub_;
   rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_sub_;
   rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odom_pub_;
   rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr marker_pub_;
@@ -42,8 +40,7 @@ private:
   std::vector<double> search_weights_;
 
   std::shared_ptr<ParticleNoise> noise_;
-  ArucoSensorModel aruco_model_;
-  OdometrySensorModel odom_model_;
+  std::vector<std::unique_ptr<SensorModel>> sensor_models_;
   IMUMotionModel motion_model_;
 
   int num_particles_ = 100;
@@ -53,14 +50,13 @@ private:
   Particle min_;
   Particle max_;
 
-  void TagCallback(const stsl_interfaces::msg::TagArray::SharedPtr msg);
-  void OdometryCallback(const nav_msgs::msg::Odometry::SharedPtr msg);
   void ImuCallback(const sensor_msgs::msg::Imu::SharedPtr msg);
 
   Particle InitializeParticle();
   void NormalizeWeights();
   void ResampleParticles();
   void CalculateStateAndPublish();
+  void ComputeLogProbs();
 
   void PublishParticleVisualization();
 };
