@@ -11,9 +11,7 @@ IMUMotionModel::IMUMotionModel(std::shared_ptr<ParticleNoise> noise, rclcpp::Nod
 {
   noise_ = noise;
 
-  node->declare_parameter<std::vector<double>>("motion_sigmas", {0.05, 0.05, 0.2, 0.05, 0.0});
-  std::vector<double> motion_sigma;
-  node->get_parameter("motion_sigmas", motion_sigma);
+  std::vector<double> motion_sigma = node->declare_parameter<std::vector<double>>("motion_sigmas", {0.05, 0.05, 0.2, 0.05, 0.0});
   sigmas_.x = motion_sigma[0];
   sigmas_.y = motion_sigma[1];
   sigmas_.yaw = motion_sigma[2];
@@ -27,8 +25,8 @@ void IMUMotionModel::updateParticle(Particle & particle, double dt,
   particle.x += cos(particle.yaw)*particle.vx*dt + sin(particle.yaw)*particle.vy*dt + sigmas_.x*noise_->sampleGaussian()*sqrt(dt);
   particle.y += -sin(particle.yaw)*particle.vx*dt + cos(particle.yaw)*particle.vy*dt + sigmas_.y*noise_->sampleGaussian()*sqrt(dt);
 
-  particle.vx += imu_msg->linear_acceleration.x*dt + sigmas_.vx*noise_->sampleGaussian()*sqrt(dt);
-  particle.vy += imu_msg->linear_acceleration.y*dt + sigmas_.vy*noise_->sampleGaussian()*sqrt(dt);
+  double ax = imu_msg->linear_acceleration.x*dt + sigmas_.vx*noise_->sampleGaussian()*sqrt(dt);
+  particle.vx += ax;
 
   particle.yaw -= imu_msg->angular_velocity.z*dt + sigmas_.yaw*noise_->sampleGaussian()*sqrt(dt);
   while(particle.yaw > M_PI)

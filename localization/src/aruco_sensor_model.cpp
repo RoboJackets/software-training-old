@@ -9,11 +9,8 @@ namespace localization
 
 ArucoSensorModel::ArucoSensorModel(rclcpp::Node* node)
 {
-  node->declare_parameter<std::vector<double>>("aruco/meas_cov", {0.025, 0.025, 0.025});
-  node->get_parameter("aruco/meas_cov", this->meas_cov_);
-
-  node->declare_parameter<double>("aruco/time_delay", 0.1);
-  node->get_parameter("aruco/time_delay", this->time_delay_);
+  this->meas_cov_ = node->declare_parameter<std::vector<double>>("aruco/meas_cov", {0.025, 0.025, 0.025});
+  this->time_delay_ = node->declare_parameter<double>("aruco/time_delay", 0.1);
 
   tags_.insert(std::pair<int, TagLocation>(0, TagLocation(0.6096, 0, -M_PI_2)));
   tags_.insert(std::pair<int, TagLocation>(1, TagLocation(0.3, -0.381, M_PI)));
@@ -76,7 +73,7 @@ double ArucoSensorModel::ComputeLogProb(Particle & particle)
     double yaw_error = body_location.yaw - yaw;
     while(std::abs(yaw_error) > M_PI)
     {
-      yaw_error = std::abs(yaw_error) + M_PI;
+      yaw_error = std::abs(yaw_error) - M_PI;
     }
     log_prob += pow(yaw_error, 2)/meas_cov_[2];
 
