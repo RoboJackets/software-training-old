@@ -71,7 +71,14 @@ double ArucoSensorModel::ComputeLogProb(Particle & particle)
 
     log_prob += pow(body_location.x - tag.pose.position.x, 2)/meas_cov_[0];
     log_prob += pow(body_location.y - tag.pose.position.y, 2)/meas_cov_[1];
-    log_prob += pow(body_location.yaw - yaw, 2)/meas_cov_[1];
+
+    // handles the error difference cleanly
+    double yaw_error = body_location.yaw - yaw;
+    while(std::abs(yaw_error) > M_PI)
+    {
+      yaw_error = std::abs(yaw_error) + M_PI;
+    }
+    log_prob += pow(yaw_error, 2)/meas_cov_[2];
 
   }
   //std::cout << log_prob << std::endl;
