@@ -113,7 +113,7 @@ private:
 
     // visualization code
     visualization_msgs::msg::MarkerArray marker_array;
-    for(const stsl_interfaces::msg::Tag tag : new_tag_array_msg.tags)
+    for(const stsl_interfaces::msg::Tag & tag : new_tag_array_msg.tags)
     {
       visualization_msgs::msg::Marker marker;
       marker.header.frame_id = "base_footprint";
