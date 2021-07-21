@@ -119,9 +119,10 @@ private:
       marker.header.frame_id = "base_footprint";
       marker.header.stamp = tag_array_msg->header.stamp;
       marker.id = tag.id;
+      marker.ns = "/coordinate_transform";
       marker.type = visualization_msgs::msg::Marker::CUBE;
       marker.action = visualization_msgs::msg::Marker::ADD;
-      marker.lifetime = rclcpp::Duration(0, 250000000);
+      marker.lifetime = rclcpp::Duration(0, 150000000);
 
       marker.pose = tag.pose;
 
