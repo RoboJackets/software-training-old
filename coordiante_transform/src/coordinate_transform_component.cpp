@@ -27,6 +27,7 @@
 #include <geometry_msgs/msg/quaternion.h>
 #include <tf2_ros/transform_listener.h>
 #include <tf2_eigen/tf2_eigen.h>
+#include <string>
 
 using namespace std::chrono_literals;
 
@@ -175,6 +176,6 @@ private:
     return tf2::toMsg(Eigen::Quaterniond(homo_mat.block<3, 3>(0, 0)));
   }
 };
-} // namespace coordinate_transform
+}  // namespace coordinate_transform
 
 RCLCPP_COMPONENTS_REGISTER_NODE(coordinate_transform::CoordinateTransformComponent)
