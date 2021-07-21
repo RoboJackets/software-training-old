@@ -30,15 +30,18 @@
 
 using namespace std::chrono_literals;
 
-namespace coordinate_transform {
+namespace coordinate_transform
+{
 class CoordinateTransformComponent : public rclcpp::Node
 {
 public:
   explicit CoordinateTransformComponent(const rclcpp::NodeOptions & options)
-  : rclcpp::Node("coordinate_transformer", options), tf_buffer_(get_clock()), tf_listener_(tf_buffer_)
+  : rclcpp::Node("coordinate_transformer", options), tf_buffer_(get_clock()), tf_listener_(
+      tf_buffer_)
   {
-    tag_sub_ = create_subscription<stsl_interfaces::msg::TagArray>("/aruco_tag_detector/tags",
-            10, std::bind(&CoordinateTransformComponent::DetectionCallback, this, std::placeholders::_1));
+    tag_sub_ = create_subscription<stsl_interfaces::msg::TagArray>(
+      "/aruco_tag_detector/tags",
+      10, std::bind(&CoordinateTransformComponent::DetectionCallback, this, std::placeholders::_1));
 
     tag_pub_ = create_publisher<stsl_interfaces::msg::TagArray>("~/tags_transformed", 1);
     visualization_pub_ = create_publisher<visualization_msgs::msg::MarkerArray>("~/tags_visual", 1);
@@ -55,19 +58,19 @@ private:
   {
     std::string tf_error_string;
     if (!tf_buffer_.canTransform(
-            "base_footprint", tag_array_msg->header.frame_id,
-            tag_array_msg->header.stamp, tf2::durationFromSec(0.1),
-            &tf_error_string))
+        "base_footprint", tag_array_msg->header.frame_id,
+        tag_array_msg->header.stamp, tf2::durationFromSec(0.1),
+        &tf_error_string))
     {
       RCLCPP_WARN_THROTTLE(
-              get_logger(), *get_clock(), 1000, "Could not lookup transform. %s",
-              tf_error_string);
+        get_logger(), *get_clock(), 1000, "Could not lookup transform. %s",
+        tf_error_string);
       return;
     }
 
     // find the transform from the camera to base footprint
     const auto tf_transform =
-            tf_buffer_.lookupTransform("base_footprint", "camera_link", tag_array_msg->header.stamp);
+      tf_buffer_.lookupTransform("base_footprint", "camera_link", tag_array_msg->header.stamp);
     const Eigen::Isometry3d eigen_transform = tf2::transformToEigen(tf_transform);
 
     // creates a matrix that goes from camera to standard ROS coordinates
@@ -84,15 +87,16 @@ private:
 
     // BEGIN STUDENT CODE
     // iterate over each tag to and transform it into body frame
-    for(const stsl_interfaces::msg::Tag & old_tag : tag_array_msg->tags)
-    {
+    for (const stsl_interfaces::msg::Tag & old_tag : tag_array_msg->tags) {
       stsl_interfaces::msg::Tag new_tag;
       new_tag.id = old_tag.id;
 
       geometry_msgs::msg::Point old_tag_position = old_tag.pose.position;
 
       // extract the important parts of the pose
-      Eigen::Vector4d pose = Eigen::Vector4d(old_tag_position.x, old_tag_position.y, old_tag_position.z, 1);
+      Eigen::Vector4d pose = Eigen::Vector4d(
+        old_tag_position.x, old_tag_position.y,
+        old_tag_position.z, 1);
 
       // apply the transform
       pose = eigen_transform.matrix() * optical * pose;
@@ -113,8 +117,7 @@ private:
 
     // visualization code
     visualization_msgs::msg::MarkerArray marker_array;
-    for(const stsl_interfaces::msg::Tag & tag : new_tag_array_msg.tags)
-    {
+    for (const stsl_interfaces::msg::Tag & tag : new_tag_array_msg.tags) {
       visualization_msgs::msg::Marker marker;
       marker.header.frame_id = "base_footprint";
       marker.header.stamp = tag_array_msg->header.stamp;
@@ -140,33 +143,36 @@ private:
     visualization_pub_->publish(marker_array);
   }
 
-  Eigen::Matrix4d getRotMatForOpticalFrame() {
+  Eigen::Matrix4d getRotMatForOpticalFrame()
+  {
     // BEGIN STUDENT CODE
     Eigen::Matrix4d R_roll;
     R_roll << 1, 0, 0, 0,
-            0, cos(M_PI/2), sin(M_PI/2), 0,
-            0, -sin(M_PI/2), cos(M_PI/2), 0,
-            0,0,0,1;
+      0, cos(M_PI / 2), sin(M_PI / 2), 0,
+      0, -sin(M_PI / 2), cos(M_PI / 2), 0,
+      0, 0, 0, 1;
 
     Eigen::Matrix4d R_yaw;
-    R_yaw << cos(M_PI/2), sin(M_PI/2), 0, 0,
-            -sin(M_PI/2), cos(M_PI/2), 0, 0,
-            0, 0, 1, 0,
-            0,0,0,1;
+    R_yaw << cos(M_PI / 2), sin(M_PI / 2), 0, 0,
+      -sin(M_PI / 2), cos(M_PI / 2), 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1;
     return R_yaw * R_roll;
     // END STUDENT CODE
   }
 
-  Eigen::Matrix4d convertQuatToRotMat(geometry_msgs::msg::Quaternion quat) {
+  Eigen::Matrix4d convertQuatToRotMat(geometry_msgs::msg::Quaternion quat)
+  {
     Eigen::Quaterniond e_quat;
     tf2::fromMsg(quat, e_quat);
     Eigen::Matrix4d result_mat = Eigen::Matrix4d::Identity();
-    result_mat.block<3,3>(0,0) = e_quat.normalized().toRotationMatrix();
+    result_mat.block<3, 3>(0, 0) = e_quat.normalized().toRotationMatrix();
     return result_mat;
   }
 
-  geometry_msgs::msg::Quaternion convertRotMatToQuat(Eigen::Matrix4d homo_mat) {
-    return tf2::toMsg(Eigen::Quaterniond(homo_mat.block<3,3>(0,0)));
+  geometry_msgs::msg::Quaternion convertRotMatToQuat(Eigen::Matrix4d homo_mat)
+  {
+    return tf2::toMsg(Eigen::Quaterniond(homo_mat.block<3, 3>(0, 0)));
   }
 };
 } // namespace coordinate_transform
