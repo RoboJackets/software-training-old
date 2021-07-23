@@ -24,6 +24,17 @@ ament_target_dependencies(${PROJECT_NAME}
   tf2_ros
   tf2_eigen
 )
+rclcpp_components_register_node(
+  ${PROJECT_NAME}
+  PLUGIN "mineral_deposit_tracking::MineralDepositTracker"
+  EXECUTABLE mineral_deposit_tracker
+)
+
+install(TARGETS ${PROJECT_NAME}
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION lib/${PROJECT_NAME}
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

@@ -63,37 +63,51 @@ private:
 
   void DepositMeasurementCallback(const stsl_interfaces::msg::MineralDepositArray::SharedPtr msg)
   {
-    filter_.TimeUpdate();
-    const auto found_deposit = std::find_if(
-      msg->deposits.begin(), msg->deposits.end(), [this](const auto & deposit) {
-        return deposit.id == deposit_id_;
-      });
-    if (found_deposit == msg->deposits.end()) {
-      return;
+    try {
+      filter_.TimeUpdate();
+      const auto found_deposit = std::find_if(
+        msg->deposits.begin(), msg->deposits.end(), [this](const auto & deposit) {
+          return deposit.id == deposit_id_;
+        });
+      if (found_deposit == msg->deposits.end()) {
+        return;
+      }
+      const auto & detection = *found_deposit;
+
+      const Eigen::Vector3d sensor_frame_position = detection.range * Eigen::Vector3d{std::cos(
+          detection.heading), std::sin(detection.heading), 0.0};
+
+      const auto transform =
+        tf_buffer_.lookupTransform("map", msg->header.frame_id, msg->header.stamp, rclcpp::Duration::from_seconds(0.1));
+
+      Eigen::Vector3d map_frame_position;
+
+      tf2::doTransform(sensor_frame_position, map_frame_position, transform);
+
+      const Eigen::Vector2d measurement{map_frame_position.x(), map_frame_position.y()};
+
+      const Eigen::Matrix2d covariance = Eigen::Matrix2d::Identity() * 0.01;
+
+      filter_.MeasurementUpdate(measurement, covariance);
+
+      const auto estimated_position = filter_.GetEstimate();
+
+      geometry_msgs::msg::PoseStamped output_msg;
+      output_msg.header.stamp = now();
+      output_msg.header.frame_id = "map";
+      output_msg.pose.position.x = estimated_position.x();
+      output_msg.pose.position.y = estimated_position.y();
+      tracked_deposit_publisher_->publish(output_msg);
+    } catch (const tf2::TransformException& e) {
+      RCLCPP_ERROR(get_logger(), "TF Error: %s", e.what());
     }
-    const auto & detection = *found_deposit;
-
-    const Eigen::Vector3d sensor_frame_position = detection.range * Eigen::Vector3d{std::cos(
-        detection.heading), std::sin(detection.heading), 0.0};
-
-    const auto transform =
-      tf_buffer_.lookupTransform("map", msg->header.frame_id, msg->header.stamp);
-
-    Eigen::Vector3d map_frame_position;
-
-    tf2::doTransform(sensor_frame_position, map_frame_position, transform);
-
-    const Eigen::Vector2d measurement{map_frame_position.x(), map_frame_position.y()};
-
-    const Eigen::Matrix2d covariance = Eigen::Matrix2d::Identity() * 0.01;
-
-    filter_.MeasurementUpdate(measurement, covariance);
   }
 
   void ResetCallback(
     const stsl_interfaces::srv::ResetMineralDepositTracking::Request::SharedPtr request,
     stsl_interfaces::srv::ResetMineralDepositTracking::Response::SharedPtr response)
   {
+    RCLCPP_INFO(get_logger(), "Received reset request!");
     deposit_id_ = request->id;
     const Eigen::Vector2d position{request->pose.pose.position.x, request->pose.pose.position.y};
     Eigen::Matrix2d covariance;
