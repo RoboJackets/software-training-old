@@ -78,7 +78,9 @@ private:
           detection.heading), std::sin(detection.heading), 0.0};
 
       const auto transform =
-        tf_buffer_.lookupTransform("map", msg->header.frame_id, msg->header.stamp, rclcpp::Duration::from_seconds(0.1));
+        tf_buffer_.lookupTransform(
+        "map", msg->header.frame_id, msg->header.stamp, rclcpp::Duration::from_seconds(
+          0.1));
 
       Eigen::Vector3d map_frame_position;
 
@@ -98,7 +100,7 @@ private:
       output_msg.pose.position.x = estimated_position.x();
       output_msg.pose.position.y = estimated_position.y();
       tracked_deposit_publisher_->publish(output_msg);
-    } catch (const tf2::TransformException& e) {
+    } catch (const tf2::TransformException & e) {
       RCLCPP_ERROR(get_logger(), "TF Error: %s", e.what());
     }
   }
