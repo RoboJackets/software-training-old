@@ -6,6 +6,9 @@
     <include file="$(find-pkg-share traini_bringup)/launch/mineral_deposit_detector.launch.py">
         <param name="use_sim_time" value="$(var use_sim_time)"/>
     </include>
+    <include file="$(find-pkg-share rj_training_bringup)/launch/mineral_deposit_tracker.launch.py">
+        <param name="use_sim_time" value="$(var use_sim_time)"/>
+    </include>
     <include file="$(find-pkg-share obstacle_detector)/launch/obstacle_detector.launch.py"/>
     <include file="$(find-pkg-share rj_training_bringup)/launch/fake_localizer.launch.py">
         <!-- TODO (barulicm) Replace with particle filter localizer when it's ready -->
