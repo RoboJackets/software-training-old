@@ -30,7 +30,7 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include "./navigator.hpp"
+#include "navigator.hpp"
 
 namespace peak_finder
 {
