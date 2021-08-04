@@ -13,7 +13,11 @@ set(dependencies
   Eigen3
 )
 
-add_library(${PROJECT_NAME} SHARED src/astar_path_planner_plugin.cpp src/astar_path_planner.cpp)
+add_library(${PROJECT_NAME} SHARED 
+  src/astar_path_planner_plugin.cpp
+  src/astar_path_planner.cpp
+  src/path_reduction.cpp
+)
 target_include_directories(${PROJECT_NAME} PRIVATE include)
 ament_target_dependencies(${PROJECT_NAME} ${dependencies})
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)

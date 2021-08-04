@@ -18,14 +18,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include <astar_path_planner/astar_path_planner.hpp>
+#include "astar_path_planner/astar_path_planner.hpp"
 #include <nav2_core/global_planner.hpp>
 #include <pluginlib/class_list_macros.hpp>
 #include <memory>
 #include <string>
+#include "astar_path_planner/path_reduction.hpp"
 
 namespace astar_path_planner
 {
+
+geometry_msgs::msg::PoseStamped pointToMessage(const Point& point)
+{
+  geometry_msgs::msg::PoseStamped pose;
+  pose.pose.position.x = point.x();
+  pose.pose.position.y = point.y();
+  return pose;
+}
 
 class AStarPathPlannerPlugin : public nav2_core::GlobalPlanner
 {
@@ -76,15 +85,13 @@ public:
 
     const auto point_path = planner.Plan(start_point, goal_point);
 
-    RCLCPP_INFO(node_->get_logger(), "Calculated path with %d points.", point_path.size());
+    std::vector<Point> reduced_point_path(point_path);
+    ReducePath(reduced_point_path);
+
+    RCLCPP_INFO(node_->get_logger(), "Calculated path with %d points.", reduced_point_path.size());
 
     std::transform(
-      point_path.begin(), point_path.end(), std::back_inserter(path.poses), [](const auto & point) {
-        geometry_msgs::msg::PoseStamped pose;
-        pose.pose.position.x = point.x();
-        pose.pose.position.y = point.y();
-        return pose;
-      });
+      reduced_point_path.begin(), reduced_point_path.end(), std::back_inserter(path.poses), &pointToMessage);
 
     return path;
   }

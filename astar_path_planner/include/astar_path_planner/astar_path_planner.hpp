@@ -56,8 +56,6 @@ private:
   double GetPathCost(const std::vector<Point> & path);
 
   bool PointInCollision(const Point & point);
-
-  void ReducePath(std::vector<Point> & path);
 };
 
 }  // namespace astar_path_planner

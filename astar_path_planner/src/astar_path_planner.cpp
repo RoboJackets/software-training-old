@@ -63,9 +63,7 @@ std::vector<Point> AStarPathPlanner::Plan(const Point & start, const Point & goa
       expanded.insert(last_state);
 
       if (IsGoal(last_state)) {
-        std::vector<Point> reduced_path{path};
-        ReducePath(reduced_path);
-        return reduced_path;
+        return path;
       }
 
       const auto neighbors = GetAdjacentPoints(last_state);
@@ -149,38 +147,6 @@ bool AStarPathPlanner::PointInCollision(const Point & point)
       const auto cost = costmap->getCost(cell.x, cell.y);
       return cost == 253;
     });
-}
-
-template<typename InputIterator>
-bool PointsAreCollinear(InputIterator first, InputIterator last)
-{
-  const Eigen::Vector2d first_point = *first;
-  const Eigen::Vector2d line_vector = *last - first_point;
-  auto point_is_collinear = [&first_point, &line_vector](const Eigen::Vector2d & point) {
-      const Eigen::Vector2d point_vector = point - first_point;
-      const auto cos_of_angle = point_vector.dot(line_vector) /
-        (point_vector.norm() * line_vector.norm());
-      return std::abs(cos_of_angle - 1.0) < 1e-3;
-    };
-  return std::all_of(first, last, point_is_collinear);
-}
-
-void AStarPathPlanner::ReducePath(std::vector<Point> & path)
-{
-  auto first = path.begin();
-  auto last = first + 2;
-
-  while (true) {
-    if (last == path.end()) {
-      path.erase(first + 1, last - 1);
-      return;
-    } else if (PointsAreCollinear(first, last)) {
-      last++;
-    } else {
-      first = path.erase(first + 1, last) - 1;
-      last = first + 2;
-    }
-  }
 }
 
 }  // namespace astar_path_planner
