@@ -3,7 +3,7 @@
 <package format="3">
   <name>mineral_deposit_tracking</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>Implements a Kalman Filter for tracking mineral deposits</description>
   <maintainer email="matthew.barulic@gmail.com">Matthew Barulic</maintainer>
   <license>MIT</license>
 
