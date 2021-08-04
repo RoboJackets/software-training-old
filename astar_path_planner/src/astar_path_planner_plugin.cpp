@@ -18,17 +18,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "astar_path_planner/astar_path_planner.hpp"
+#include "astar_path_planner.hpp"
 #include <nav2_core/global_planner.hpp>
 #include <pluginlib/class_list_macros.hpp>
 #include <memory>
 #include <string>
-#include "astar_path_planner/path_reduction.hpp"
+#include <vector>
+#include "path_reduction.hpp"
 
 namespace astar_path_planner
 {
 
-geometry_msgs::msg::PoseStamped pointToMessage(const Point& point)
+geometry_msgs::msg::PoseStamped pointToMessage(const Point & point)
 {
   geometry_msgs::msg::PoseStamped pose;
   pose.pose.position.x = point.x();
@@ -91,7 +92,8 @@ public:
     RCLCPP_INFO(node_->get_logger(), "Calculated path with %d points.", reduced_point_path.size());
 
     std::transform(
-      reduced_point_path.begin(), reduced_point_path.end(), std::back_inserter(path.poses), &pointToMessage);
+      reduced_point_path.begin(), reduced_point_path.end(),
+      std::back_inserter(path.poses), &pointToMessage);
 
     return path;
   }

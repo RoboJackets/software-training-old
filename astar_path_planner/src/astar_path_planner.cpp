@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "astar_path_planner/astar_path_planner.hpp"
+#include "astar_path_planner.hpp"
 #include <memory>
 #include <set>
 #include <vector>

@@ -17,47 +17,20 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-#ifndef ASTAR_PATH_PLANNER__ASTAR_PATH_PLANNER_HPP_
-#define ASTAR_PATH_PLANNER__ASTAR_PATH_PLANNER_HPP_
+#ifndef PATH_REDUCTION_HPP_
+#define PATH_REDUCTION_HPP_
 
-#include <nav2_costmap_2d/costmap_2d_ros.hpp>
-#include <rclcpp_lifecycle/lifecycle_node.hpp>
-#include <eigen3/Eigen/Dense>
-#include <fstream>
-#include <memory>
 #include <vector>
-#include "astar_path_planner/utils.hpp"
+#include "utils.hpp"
 
 namespace astar_path_planner
 {
 
-class AStarPathPlanner
-{
-public:
-  static void DeclareParameters(rclcpp_lifecycle::LifecycleNode::SharedPtr node);
 
-  AStarPathPlanner(
-    rclcpp_lifecycle::LifecycleNode::SharedPtr node,
-    std::shared_ptr<nav2_costmap_2d::Costmap2DROS> ros_costmap);
+void ReducePath(std::vector<Point> & path);
 
-  std::vector<Point> Plan(const Point & start, const Point & goal);
+bool PointsAreCollinear(std::vector<Point>::iterator first, std::vector<Point>::iterator last);
 
-private:
-  rclcpp::Logger logger_;
-  Point goal_;
-  double goal_threshold_;
-  double grid_size_;
-  std::shared_ptr<nav2_costmap_2d::Costmap2DROS> ros_costmap_;
+}
 
-  bool IsGoal(const Point & point);
-
-  std::vector<Point> GetAdjacentPoints(const Point & point);
-
-  double GetPathCost(const std::vector<Point> & path);
-
-  bool PointInCollision(const Point & point);
-};
-
-}  // namespace astar_path_planner
-
-#endif  // ASTAR_PATH_PLANNER__ASTAR_PATH_PLANNER_HPP_
+#endif  // PATH_REDUCTION_HPP_

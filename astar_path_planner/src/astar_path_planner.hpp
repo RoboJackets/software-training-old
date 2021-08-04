@@ -17,41 +17,45 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-#include "path_reduction.hpp"
+#ifndef ASTAR_PATH_PLANNER_HPP_
+#define ASTAR_PATH_PLANNER_HPP_
+
+#include <nav2_costmap_2d/costmap_2d_ros.hpp>
+#include <rclcpp_lifecycle/lifecycle_node.hpp>
+#include <memory>
 #include <vector>
+#include "utils.hpp"
 
 namespace astar_path_planner
 {
 
-void ReducePath(std::vector<Point> & path)
+class AStarPathPlanner
 {
-  auto first = path.begin();
-  auto last = first + 2;
+public:
+  static void DeclareParameters(rclcpp_lifecycle::LifecycleNode::SharedPtr node);
 
-  while (true) {
-    if (last == path.end()) {
-      path.erase(first + 1, last - 1);
-      return;
-    } else if (PointsAreCollinear(first, last)) {
-      last++;
-    } else {
-      first = path.erase(first + 1, last) - 1;
-      last = first + 2;
-    }
-  }
-}
+  AStarPathPlanner(
+    rclcpp_lifecycle::LifecycleNode::SharedPtr node,
+    std::shared_ptr<nav2_costmap_2d::Costmap2DROS> ros_costmap);
 
-bool PointsAreCollinear(std::vector<Point>::iterator first, std::vector<Point>::iterator last)
-{
-  const Eigen::Vector2d first_point = *first;
-  const Eigen::Vector2d line_vector = *last - first_point;
-  auto point_is_collinear = [&first_point, &line_vector](const Eigen::Vector2d & point) {
-      const Eigen::Vector2d point_vector = point - first_point;
-      const auto cos_of_angle = point_vector.dot(line_vector) /
-        (point_vector.norm() * line_vector.norm());
-      return std::abs(cos_of_angle - 1.0) < 1e-3;
-    };
-  return std::all_of(first, last, point_is_collinear);
-}
+  std::vector<Point> Plan(const Point & start, const Point & goal);
+
+private:
+  rclcpp::Logger logger_;
+  Point goal_;
+  double goal_threshold_;
+  double grid_size_;
+  std::shared_ptr<nav2_costmap_2d::Costmap2DROS> ros_costmap_;
+
+  bool IsGoal(const Point & point);
+
+  std::vector<Point> GetAdjacentPoints(const Point & point);
+
+  double GetPathCost(const std::vector<Point> & path);
+
+  bool PointInCollision(const Point & point);
+};
 
 }  // namespace astar_path_planner
+
+#endif  // ASTAR_PATH_PLANNER_HPP_

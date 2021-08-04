@@ -18,8 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef ASTAR_PATH_PLANNER__UTILS_HPP_
-#define ASTAR_PATH_PLANNER__UTILS_HPP_
+#ifndef UTILS_HPP_
+#define UTILS_HPP_
 
 #include <Eigen/Dense>
 #include <vector>
@@ -53,4 +53,4 @@ struct FrontierEntryComparator
 
 }  // namespace astar_path_planner
 
-#endif  // ASTAR_PATH_PLANNER__UTILS_HPP_
+#endif  // UTILS_HPP_
