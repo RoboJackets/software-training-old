@@ -51,8 +51,7 @@ std::vector<Point> AStarPathPlanner::Plan(const Point & start, const Point & goa
 
   goal_ = goal;
 
-  std::vector<Point> initial_path = {start};
-  frontier.push({initial_path, GetPathCost(initial_path)});
+  frontier.push({{start}, GetHeuristicCost(start)});
 
   while (!frontier.empty()) {
     const auto [path, cost] = frontier.top();
@@ -71,8 +70,9 @@ std::vector<Point> AStarPathPlanner::Plan(const Point & start, const Point & goa
       for (const auto & neighbor : neighbors) {
         std::vector<Point> new_path(path);
         new_path.push_back(neighbor);
-        const auto cost = GetPathCost(new_path);
-        frontier.push({new_path, cost});
+        const auto new_cost = cost - GetHeuristicCost(path.back()) +
+          GetStepCost(path.back(), neighbor) + GetHeuristicCost(neighbor);
+        frontier.push({new_path, new_cost});
       }
     }
   }
@@ -103,20 +103,15 @@ std::vector<Point> AStarPathPlanner::GetAdjacentPoints(const Point & point)
   return neighbors;
 }
 
-double AStarPathPlanner::GetPathCost(const std::vector<Point> & path)
+
+double AStarPathPlanner::GetHeuristicCost(const Point & point)
 {
-  // Distance between points
-  std::vector<Eigen::Vector2d> edges;
-  std::adjacent_difference(path.begin(), path.end(), std::back_inserter(edges));
-  double cost = std::accumulate(
-    edges.begin(), edges.end(), 0.0, [](const double & total, const Eigen::Vector2d & edge) {
-      return total + edge.norm();
-    });
+  return (point - goal_).norm();
+}
 
-  // Heuristic
-  cost += (path.back() - goal_).norm();
-
-  return cost;
+double AStarPathPlanner::GetStepCost(const Point & point, const Point & next)
+{
+  return (next - point).norm();
 }
 
 bool AStarPathPlanner::PointInCollision(const Point & point)

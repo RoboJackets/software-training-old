@@ -51,7 +51,9 @@ private:
 
   std::vector<Point> GetAdjacentPoints(const Point & point);
 
-  double GetPathCost(const std::vector<Point> & path);
+  double GetHeuristicCost(const Point& point);
+
+  double GetStepCost(const Point& point, const Point& next);
 
   bool PointInCollision(const Point & point);
 };
