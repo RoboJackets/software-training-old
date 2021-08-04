@@ -25,6 +25,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from ament_index_python.packages import get_package_share_directory
 
+
 def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument(
@@ -33,11 +34,13 @@ def generate_launch_description():
         ),
         DeclareLaunchArgument(
             name="navigation_params_file",
-            default_value=os.path.join(get_package_share_directory('rj_training_bringup'), 'config', 'nav_params.yaml')
+            default_value=os.path.join(get_package_share_directory(
+                'rj_training_bringup'), 'config', 'nav_params.yaml')
         ),
         DeclareLaunchArgument(
             name="behavior_tree_file",
-            default_value=os.path.join(get_package_share_directory('nav2_bt_navigator'), 'behavior_trees', 'navigate_w_replanning_time.xml')
+            default_value=os.path.join(get_package_share_directory(
+                'rj_training_bringup'), 'behavior_trees', 'navigate.xml')
         ),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(os.path.join(
