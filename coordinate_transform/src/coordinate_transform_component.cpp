@@ -78,7 +78,8 @@ private:
 
     // BEGIN STUDENT CODE
     std::vector<stsl_interfaces::msg::Tag> new_tags;
-    // iterate over each tag to and transform it into body frame
+
+    // iterate over each tag and transform it into body frame
     for (const stsl_interfaces::msg::Tag & old_tag : tag_array_msg->tags) {
       stsl_interfaces::msg::Tag new_tag;
       new_tag.id = old_tag.id;
