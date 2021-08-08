@@ -77,13 +77,7 @@ private:
     Eigen::Matrix4d camera_to_optical_transform = getRotationMatrixForOpticalFrame();
 
     // BEGIN STUDENT CODE
-    // create a new tag array message
-    stsl_interfaces::msg::TagArray new_tag_array_msg;
-    // copy the header information
-    new_tag_array_msg.header.stamp = tag_array_msg->header.stamp;
-    // change the frame_id to be the correct reference frame
-    new_tag_array_msg.header.frame_id = "base_footprint";
-
+    std::vector<stsl_interfaces::msg::Tag> new_tags;
     // iterate over each tag to and transform it into body frame
     for (const stsl_interfaces::msg::Tag & old_tag : tag_array_msg->tags) {
       stsl_interfaces::msg::Tag new_tag;
@@ -116,10 +110,19 @@ private:
       // Copy the new orientation into the new tag message
       new_tag.pose.orientation = transformationMatrixToQuaternionMessage(tag_orientation);
 
-      new_tag_array_msg.tags.push_back(new_tag);
+      new_tags.push_back(new_tag);
     }
     // END STUDENT CODE
 
+    // create a new tag array message
+    stsl_interfaces::msg::TagArray new_tag_array_msg;
+    // copy the header information
+    new_tag_array_msg.header.stamp = tag_array_msg->header.stamp;
+    // change the frame_id to be the correct reference frame
+    new_tag_array_msg.header.frame_id = "base_footprint";
+    // set message tags to new_tags vector
+    new_tag_array_msg.tags = new_tags;
+    // publish new tag message
     tag_pub_->publish(new_tag_array_msg);
   }
 
