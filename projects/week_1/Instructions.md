@@ -9,6 +9,18 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 
 # Week 1 Project: Coordinate Frame Transformations
 
+## Table of Contents
+- [Background](#background)
+- [How to Run](#how-to-run)
+- [Instructions](#instructions)
+  - [Test the simulator](#test-the-simulator)
+  - [Implement the rotation matrix helper function](#implement-the-rotation-matrix-helper-function)
+  - [Make a vector to hold our transformed tags](#make-a-vector-to-hold-our-transformed-tags)
+  - [Write a loop over the old tags](#write-a-loop-over-the-old-tags)
+  - [Transform tag position](#transform-tag-position)
+  - [Transform tag orientation](#transform_tag_orientation)
+  - [Run project](#run-project)
+
 ## Background
 
 Explain context and purpose of the exercise
@@ -23,7 +35,7 @@ Provide the step by step instructions for modifying the code
 
 ### Test the simulator
    
-Before we start writing code, let's take a moment to make sure you're able to run the robot simulator. To start the simulator, launch the `traini_simulation.launch.py` file in the `traini_bringup` package.
+Before we start writing code, let's take a moment to introduce you to the robot simulator. To start the simulator, launch the `traini_simulation.launch.py` file in the `traini_bringup` package.
 
 ```bash
 $ ros2 launch traini_bringup traini_simulation.launch.py
@@ -51,21 +63,24 @@ $ ros2 launch traini_bringup joystick_control.launch.py
 
 You should now be able to drive the robot, using the left joystick to drive forward/backward and the right joystick to turn.
 
-#### Fixing gamepad mappings
+After you've driven your robot around for a bit, select (from the menu bar) `Edit -> Reset Model Poses` to move the robot back to its starting position. This is a good trick to know to reset your simulator.
 
+You can now close the simulator window, or press Ctrl+c in the terminal.
+
+<details>
+<summary><b>Bonus:</b> How to fix gamepad mappings</summary>
 Different gamepads map their inputs differently. By default, the launch file above uses a config that works with the joysticks we use in the classroom. You can create your own config file to set the mappings appropriate for your gamepad.
 
 To show the content of the default config file, run the following command. You can then copy this to a file anywhere on your computer and edit it there.
 
-```bash
-$ cat $(ros2 pkg prefix traini_bringup)/share/traini_bringup/config/joystick_parameters.yaml
-```
+<pre><code>$ cat $(ros2 pkg prefix traini_bringup)/share/traini_bringup/config/joystick_parameters.yaml
+</code></pre>
 
 Then, you can launch the joystick control nodes with your new config like this:
 
-```bash
-$ ros2 launch traini_bringup joystick_control.launch.py config_path:=/path/to/your/config/file.yaml
-```
+<pre><code>$ ros2 launch traini_bringup joystick_control.launch.py config_path:=/path/to/your/config/file.yaml
+</code></pre>
+</details>
 
 ### Implement the rotation matrix helper function
 
@@ -82,9 +97,7 @@ Start by declaring and initializing two `std::array` variables, called `R_roll_d
 <details>
 <summary><b>Hint:</b> Declaring and initializing a <code>std::array</code></summary>
 <p>Here's how you would declare and initialize a <code>std::array</code> that stores three doubles.</p>
-<code>
-std::array&ltdouble, 3&gt my_array = {0, 0, 0};
-</code>
+<pre><code>std::array&ltdouble, 3&gt my_array = {0, 0, 0};</code></pre>
 </details>
 
 These arrays will contain the data for our rotation matrices in what's called "row order". This is a technique for holding a 2-dimensional structure like a matrix in a 1-dimensional container. The array will contain the elements of each row in order from left to right, and top to bottom. So, the following 3x3 matrix:
@@ -130,37 +143,61 @@ Now, fill out your arrays with the correct values to represent a rotation transf
 
 Next, let's create `Eigen::Matrix4d` objects using our data arrays:
 
-```
+```c++
 Eigen::Matrix4d R_roll(R_roll_data.data());
 Eigen::Matrix4d R_yaw(R_yaw_data.data());
 ```
 
 Finally, modify the return statement to return the result of `R_yaw` multiplied by `R_roll`.
 
----
+### Make a vector to hold our transformed tags
 
+Let's create a `std::vector` to hold our transformed tags. Before we can use `std::vector` in our code, we'll need to include the standard library header that declares it. Locate the student code block at the top of the file, with the rest of the include statements.
 
+Add an include statement for `<vector>`.
 
+Now locate the student code block in `DetectionCallback()` (should be around line 82). Here, declare a `std::vector` called `new_tags` that contains elements of type `stsl_interfaces::msg::Tag`.
 
+A few lines down, you'll see another student code block with this comment:
 
+```c++
+// set message tags to new_tags vector
+```
 
+We're going to do exactly what the comment says. Add a line that sets `msg`'s `tags` member to our `new_tags` vector.
 
-1. Implement our rotation matrix helper function
-   * Replace identity values with rotation matrix values in `getRotationMatrixForOpticalFrame()`.
+```c++
+new_tag_array_msg.tags = new_tags;
+```
 
-1. Make new_tags vector
-   * include <vector> header
-   * declare variable
-   * set message tags field to new vector variable
+### Write a loop over the old tags
 
-1. Prepare loop over old tags
-   * use classic for loop syntax
-   * Declare new tag message & copy id
-   * Push new tag message into new array message
+Now that we have a container to put our transformed tags into, we need to loop over the container of old tags and, for each one, push a new tag into `new_tags`.
 
-1. Transform tag position
+Starting on the line after your `new_tags` declaration, add a for loop that iterates over `tag_array_msg->tags`.
 
-1. Transform tag orientation
+**Tip:** You can get the count of elements in a `std::vector` by calling its `size()` method.
 
-1. Run final code and see great results!
-   * Show how to run joystick code to drive robot around
+<details>
+<summary><b>Hint:</b> For loops</summary>
+<p>You can write a for loop that iterates from `i=0` to `i=9` like this:</p>
+<pre><code>for(int i = 0; i < 10; ++i)
+{
+   // body of loop
+}</code></pre>
+</details>
+
+In the body of this new loop, declare a variable named `new_tag` of type `stsl_interfaces::msg::Tag`. Then, copy the `id` member of the current old tag into `new_tag.id` like this:
+
+```c++
+new_tag.id = tag_array_msg->tags[i].id;
+```
+
+Finally, at the end of the loop body use `push_back()` to add `new_tag` to the `new_tags` vector.
+
+### Transform tag position
+
+### Transform tag orientation
+
+### Run project
+
