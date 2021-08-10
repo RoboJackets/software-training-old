@@ -1,0 +1,14 @@
+<launch>
+    <arg name="use_sim_time" default="True"/>
+    <include file="$(find-pkg-share traini_bringup)/launch/traini_simulation.launch.py"/>
+    <include file="$(find-pkg-share rj_training_bringup)/launch/fake_localizer.launch.py">
+        <arg name="use_sim_time" value="$(var use_sim_time)"/>
+    </include>
+    <include file="$(find-pkg-share rj_training_bringup)/launch/navigation.launch.py">
+        <arg name="use_sim_time" value="$(var use_sim_time)"/>
+        <arg name="navigation_params_file" value="$(find-pkg-share rj_training_bringup)/config/planning_project_nav_params.yaml"/>
+    </include>
+    <node pkg="rviz2" exec="rviz2" args="-d $(find-pkg-share rj_training_bringup)/rviz_config/optimization.rviz">
+        <param name="use_sim_time" value="$(var use_sim_time)"/>
+    </node>
+</launch>
