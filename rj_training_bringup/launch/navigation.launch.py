@@ -20,35 +20,106 @@
 
 import os
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
-from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
+from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
+from nav2_common.launch import RewrittenYaml
 
 
 def generate_launch_description():
+
+    use_sim_time = LaunchConfiguration('use_sim_time')
+
+    tf_remappings = [('/tf', 'tf'), ('/tf_static', 'tf_static')]
+
+    lifecycle_nodes = ['controller_server',
+                       'planner_server',
+                       'recoveries_server',
+                       'bt_navigator']
+
+    behavior_tree = os.path.join(get_package_share_directory(
+        'rj_training_bringup'), 'behavior_trees', 'navigate.xml')
+
+    params_file = LaunchConfiguration('params_file')
+
+    param_substitutions = {
+        'use_sim_time': use_sim_time,
+        'default_bt_xml_filename': behavior_tree
+    }
+
+    configured_params = RewrittenYaml(
+        source_file=params_file,
+        root_key='',
+        param_rewrites=param_substitutions,
+        convert_types=True
+    )
+
     return LaunchDescription([
         DeclareLaunchArgument(
             name='use_sim_time',
-            default_value='True'
+            default_value='false'
         ),
+
         DeclareLaunchArgument(
-            name="navigation_params_file",
+            name='params_file',
             default_value=os.path.join(get_package_share_directory(
                 'rj_training_bringup'), 'config', 'nav_params.yaml')
         ),
-        DeclareLaunchArgument(
-            name="behavior_tree_file",
-            default_value=os.path.join(get_package_share_directory(
-                'rj_training_bringup'), 'behavior_trees', 'navigate.xml')
+
+        Node(
+            package='nav2_bt_navigator',
+            executable='bt_navigator',
+            name='bt_navigator',
+            output='screen',
+            parameters=[configured_params],
+            remappings=tf_remappings
         ),
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(os.path.join(
-                get_package_share_directory('nav2_bringup'), 'launch', 'navigation_launch.py')),
-            launch_arguments={'namespace': '',
-                              'use_namespace': 'False',
-                              'use_sim_time': LaunchConfiguration('use_sim_time'),
-                              'params_file': LaunchConfiguration('navigation_params_file'),
-                              'default_bt_xml_filename': LaunchConfiguration('behavior_tree_file'),
-                              'autostart': 'True'}.items())
+
+        Node(
+            package='nav2_controller',
+            executable='controller_server',
+            output='screen',
+            parameters=[configured_params],
+            remappings=tf_remappings
+        ),
+
+        Node(
+            package='nav2_planner',
+            executable='planner_server',
+            name='planner_server',
+            output='screen',
+            parameters=[configured_params],
+            remappings=tf_remappings
+        ),
+
+        Node(
+            package='nav2_recoveries',
+            executable='recoveries_server',
+            name='recoveries_server',
+            output='screen',
+            parameters=[configured_params],
+            remappings=tf_remappings
+        ),
+
+        # Node(
+        #     package='nav2_map_server',
+        #     executable='map_server',
+        #     name='map_server',
+        #     output='screen',
+        #     parameters=[],
+        #     remappings=tf_remappings
+        # ),
+
+        Node(
+            package='nav2_lifecycle_manager',
+            executable='lifecycle_manager',
+            name='lifecycle_manager_navigation',
+            output='screen',
+            parameters=[
+                {'use_sim_time': use_sim_time},
+                {'autostart': True},
+                {'node_names': lifecycle_nodes}
+            ]
+        )
     ])

@@ -1,17 +1,24 @@
 <launch>
     <arg name="use_sim_time" default="True"/>
     <include file="$(find-pkg-share traini_bringup)/launch/tag_detector.launch.py">
-        <param name="use_sim_time" value="$(var use_sim_time)"/>
+        <arg name="use_sim_time" value="$(var use_sim_time)"/>
     </include>
     <include file="$(find-pkg-share obstacle_detector)/launch/obstacle_detector.launch.py"/>
     <include file="$(find-pkg-share rj_training_bringup)/launch/fake_localizer.launch.py">
         <!-- TODO (barulicm) Replace with particle filter localizer when it's ready -->
-        <param name="use_sim_time" value="$(var use_sim_time)"/>
+        <arg name="use_sim_time" value="$(var use_sim_time)"/>
     </include>
     <include file="$(find-pkg-share elevation_server)/launch/elevation_server.launch.py">
-        <param name="use_sim_time" value="$(var use_sim_time)"/>
+        <arg name="use_sim_time" value="$(var use_sim_time)"/>
     </include>
     <include file="$(find-pkg-share rj_training_bringup)/launch/navigation.launch.py">
-        <param name="use_sim_time" value="$(var use_sim_time)"/>
+        <arg name="use_sim_time" value="$(var use_sim_time)"/>
+    </include>
+    <node pkg="peak_finder" exec="peak_finder_node">
+        <arg name="use_sim_time" value="$(var use_sim_time)"/>
+    </node>
+    <include file="$(find-pkg-share mission_orchestration)/launch/mission_orchestrator.launch.py">
+        <arg name="use_sim_time" value="$(var use_sim_time)"/>
+        <arg name="mineral_samples_file" value="$(find-pkg-share rj_training_bringup)/mineral_sample_sets/default.yaml"/>
     </include>
 </launch>
