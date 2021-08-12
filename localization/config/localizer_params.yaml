@@ -6,12 +6,12 @@ particle_filter_localizer:
     odom:
       meas_cov: [0.1, 0.1]
       time_delay: 0.05
-    motion_sigmas: [0.025, 0.025, 0.05, 0.025, 0.0]
-    num_particles: 300
+    motion_sigmas: [0.025, 0.025, 0.05, 0.025, 0.025]
+    num_particles: 200
     min_init_vals: [-0.6, -0.3, -3.14, 0.0, 0.0]
     max_init_vals: [0.6, 0.3, 3.14, 0.0, 0.0]
-    state_update_rate: 10.0
+    state_update_rate: 20.0
     resample_rate: 10.0
     low_percentage_particles_to_drop: 0.05
-    resample_threshold: 0.1
+    resample_threshold: 0.0
 

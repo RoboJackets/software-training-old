@@ -6,7 +6,7 @@
 #define SRC_MOTION_MODEL_H
 
 #include "particle.h"
-#include <sensor_msgs/msg/imu.hpp>
+#include <geometry_msgs/msg/twist.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include "random"
 
@@ -16,17 +16,16 @@ class IMUMotionModel {
 public:
   IMUMotionModel(std::shared_ptr<ParticleNoise> noise, rclcpp::Node* node);
 
-  void updateParticle(Particle & particle, double dt, sensor_msgs::msg::Imu::SharedPtr imu_msg);
+  void updateParticle(Particle & particle, double dt, geometry_msgs::msg::Twist::SharedPtr cmd_msg);
   void updateParticles(std::vector<Particle> & particles,
-                       sensor_msgs::msg::Imu::SharedPtr imu_msg);
-  void ImuCallback(const sensor_msgs::msg::Imu::SharedPtr msg);
+                       geometry_msgs::msg::Twist::SharedPtr cmd_msg,
+                       rclcpp::Time current_time);
+  void ImuCallback(const geometry_msgs::msg::Twist::SharedPtr msg);
 private:
   Particle sigmas_;
   rclcpp::Time last_message_time_;
-  rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_sub_;
 
   std::shared_ptr<ParticleNoise> noise_;
-
 };
 
 }

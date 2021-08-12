@@ -5,7 +5,6 @@
 #include <rclcpp_components/register_node_macro.hpp>
 #include <stsl_interfaces/msg/tag_array.hpp>
 #include <nav_msgs/msg/odometry.hpp>
-#include <sensor_msgs/msg/imu.hpp>
 #include <tf2_ros/transform_listener.h>
 #include <tf2_ros/transform_broadcaster.h>
 #include <visualization_msgs/msg/marker.hpp>
@@ -25,7 +24,7 @@ class ParticleFilterLocalizer : public rclcpp::Node
 public:
   explicit ParticleFilterLocalizer(const rclcpp::NodeOptions & options);
 private:
-  rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_sub_;
+  rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr cmd_sub_;
   rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odom_pub_;
   rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr marker_pub_;
 
@@ -50,7 +49,7 @@ private:
   Particle min_;
   Particle max_;
 
-  void ImuCallback(const sensor_msgs::msg::Imu::SharedPtr msg);
+  void CmdCallback(const geometry_msgs::msg::Twist::SharedPtr msg);
 
   Particle InitializeParticle();
   void NormalizeWeights();

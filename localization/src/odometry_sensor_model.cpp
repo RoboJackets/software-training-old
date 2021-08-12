@@ -31,11 +31,8 @@ double OdometrySensorModel::ComputeLogNormalizer()
 double OdometrySensorModel::ComputeLogProb(Particle & particle)
 {
   double log_prob = 0;
-  //std::cout << "particle " << particle.vx << std::endl;
   log_prob += pow(last_msg_->twist.twist.linear.x - particle.vx, 2)/meas_cov_[0];
-  log_prob += pow(last_msg_->twist.twist.linear.y - particle.vy, 2)/meas_cov_[1];
-  //std::cout << log_prob << std::endl;
-  // vy should be zero since we are not drifting these
+  log_prob += pow(last_msg_->twist.twist.angular.z - particle.yaw_rate, 2)/meas_cov_[1];
   return log_prob;
 }
 

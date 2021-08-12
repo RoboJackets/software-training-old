@@ -16,19 +16,19 @@ IMUMotionModel::IMUMotionModel(std::shared_ptr<ParticleNoise> noise, rclcpp::Nod
   sigmas_.y = motion_sigma[1];
   sigmas_.yaw = motion_sigma[2];
   sigmas_.vx = motion_sigma[3];
-  sigmas_.vy = motion_sigma[4];
+  sigmas_.yaw_rate = motion_sigma[4];
 }
 
 void IMUMotionModel::updateParticle(Particle & particle, double dt,
-                                 sensor_msgs::msg::Imu::SharedPtr imu_msg)
+                                 geometry_msgs::msg::Twist::SharedPtr cmd_msg)
 {
-  particle.x += cos(particle.yaw)*particle.vx*dt + sin(particle.yaw)*particle.vy*dt + sigmas_.x*noise_->sampleGaussian()*sqrt(dt);
-  particle.y += -sin(particle.yaw)*particle.vx*dt + cos(particle.yaw)*particle.vy*dt + sigmas_.y*noise_->sampleGaussian()*sqrt(dt);
+  particle.x += cos(particle.yaw)*particle.vx*dt + sigmas_.x*noise_->sampleGaussian()*sqrt(dt);
+  particle.y += -sin(particle.yaw)*particle.vx*dt + sigmas_.y*noise_->sampleGaussian()*sqrt(dt);
+  particle.yaw += particle.yaw_rate*dt + sigmas_.yaw*noise_->sampleGaussian()*sqrt(dt);
 
-  double ax = imu_msg->linear_acceleration.x*dt + sigmas_.vx*noise_->sampleGaussian()*sqrt(dt);
-  particle.vx += ax;
+  particle.vx = cmd_msg->linear.x + sigmas_.vx*noise_->sampleGaussian()*sqrt(dt);
+  particle.yaw_rate = -cmd_msg->angular.z + sigmas_.yaw_rate*noise_->sampleGaussian()*sqrt(dt);
 
-  particle.yaw -= imu_msg->angular_velocity.z*dt + sigmas_.yaw*noise_->sampleGaussian()*sqrt(dt);
   while(particle.yaw > M_PI)
   {
     particle.yaw -= 2*M_PI;
@@ -40,20 +40,19 @@ void IMUMotionModel::updateParticle(Particle & particle, double dt,
 }
 
 void IMUMotionModel::updateParticles(std::vector<Particle> & particles,
-                     sensor_msgs::msg::Imu::SharedPtr imu_msg)
+                     geometry_msgs::msg::Twist::SharedPtr cmd_msg,
+                     rclcpp::Time current_time)
 {
-  //std::cout << "msg: " <<
-  double dt = imu_msg->header.stamp.sec + imu_msg->header.stamp.nanosec*1e-9 - last_message_time_.seconds();
+  double dt = current_time.seconds() - last_message_time_.seconds();
   if(dt > 1.0)
   {
-    last_message_time_ = imu_msg->header.stamp;
+    last_message_time_ = current_time;
     return;
   }
-  //std::cout << "dt: " << dt << std::endl;
   for(Particle & particle : particles)
   {
-    updateParticle(particle, dt, imu_msg);
+    updateParticle(particle, dt, cmd_msg);
   }
-  last_message_time_ = imu_msg->header.stamp;
+  last_message_time_ = current_time;
 }
 }

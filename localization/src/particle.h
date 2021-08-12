@@ -19,7 +19,7 @@ struct Particle
 
   // body rates
   double vx = 0;
-  double vy = 0;
+  double yaw_rate = 0;
 
   // normalized weight of the particle
   double weight = 1.0;
