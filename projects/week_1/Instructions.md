@@ -10,26 +10,28 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 # Week 1 Project: Coordinate Frame Transformations
 
 ## Table of Contents
-- [Background](#background)
-- [How to Run](#how-to-run)
-- [Instructions](#instructions)
-  - [Test the simulator](#test-the-simulator)
-  - [Implement the rotation matrix helper function](#implement-the-rotation-matrix-helper-function)
-  - [Make a vector to hold our transformed tags](#make-a-vector-to-hold-our-transformed-tags)
-  - [Write a loop over the old tags](#write-a-loop-over-the-old-tags)
-  - [Transform tag position](#transform-tag-position)
-  - [Transform tag orientation](#transform_tag_orientation)
-  - [Run project](#run-project)
+- [1 Background](#1-background)
+- [2 How to Run](#2-how-to-run)
+- [3 Instructions](#3-instructions)
+  - [3.1 Test the simulator](#3-1-test-the-simulator)
+  - [3.2 Add new include statements](#3-2-add-new-include-statements)
+  - [3.3 Implement the rotation matrix helper function](#3-3-implement-the-rotation-matrix-helper-function)
+  - [3.4 Make a vector to hold our transformed tags](#3-4-make-a-vector-to-hold-our-transformed-tags)
+  - [3.5 Write a loop over the old tags](#3-5-write-a-loop-over-the-old-tags)
+  - [3.6 Transform tag position](#3-6-transform-tag-position)
+  - [3.7 Transform tag orientation](#3-7-transform_tag_orientation)
+  - [3.8 Build project](#3-8-build-project)
+  - [3.9 Run project](#3-9-run-project)
 
-## 1. Background
+## 1 Background
 
 Explain context and purpose of the exercise
 
-## 2. How to Run
+## 2 How to Run
 
 Explain how to launch relevant files. Demonstrate that the robot can't do the desired behavior with the starter code.
 
-## 3. Instructions
+## 3 Instructions
 
 Provide the step by step instructions for modifying the code
 
