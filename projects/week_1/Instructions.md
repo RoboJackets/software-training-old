@@ -21,19 +21,19 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
   - [Transform tag orientation](#transform_tag_orientation)
   - [Run project](#run-project)
 
-## Background
+## 1. Background
 
 Explain context and purpose of the exercise
 
-## How to Run
+## 2. How to Run
 
 Explain how to launch relevant files. Demonstrate that the robot can't do the desired behavior with the starter code.
 
-## Instructions
+## 3. Instructions
 
 Provide the step by step instructions for modifying the code
 
-### Test the simulator
+### 3.1 Test the simulator
    
 Before we start writing code, let's take a moment to introduce you to the robot simulator. To start the simulator, launch the `traini_simulation.launch.py` file in the `traini_bringup` package.
 
@@ -67,28 +67,26 @@ After you've driven your robot around for a bit, select (from the menu bar) `Edi
 
 You can now close the simulator window, or press Ctrl+c in the terminal.
 
-<details>
-<summary><b>Bonus:</b> How to fix gamepad mappings</summary>
-Different gamepads map their inputs differently. By default, the launch file above uses a config that works with the joysticks we use in the classroom. You can create your own config file to set the mappings appropriate for your gamepad.
+*Bonus:* [How to fix gamepad mappings](CustomGamepadMappings.md)
 
-To show the content of the default config file, run the following command. You can then copy this to a file anywhere on your computer and edit it there.
+### 3.2 Add new include statements
 
-<pre><code>$ cat $(ros2 pkg prefix traini_bringup)/share/traini_bringup/config/joystick_parameters.yaml
-</code></pre>
+Now we'll move on to writing some code. Our first task is to include two new headers for containers we'll be using in this project: `std::array` and `std::vector`.
 
-Then, you can launch the joystick control nodes with your new config like this:
+Locate the include block at the top of the file.
 
-<pre><code>$ ros2 launch traini_bringup joystick_control.launch.py config_path:=/path/to/your/config/file.yaml
-</code></pre>
-</details>
+**Tip** We'll mark locations in the starter code where you'll need to add code with `// BEGIN STUDENT CODE` and `// END STUDENT CODE`.
 
-### Implement the rotation matrix helper function
+In the marked student code section, add two lines to include the new headers. You'll need to include `<array>` and `<vector>`.
 
-Now we'll move on to writing some code. Our first task is to implement the `getRotationMatrixForOpticalFrame()` helper function. Locate this function towards the end of this file:
+With that done, we can now use those containers in this file.
+
+### 3.3 Implement the rotation matrix helper function
+
+Next, we'll implement the `getRotationMatrixForOpticalFrame()` helper function. Locate this function towards the end of this file:
 
 `~/training_ws/src/software-training/coordinate_transform/src/coordinate_transform.cpp`
 
-**Tip** We'll mark locations in the starter code where you'll need to add code with `// BEGIN STUDENT CODE` and `// END STUDENT CODE`.
 
 This function will create and combine two rotation matrices to create a final transformation matrix that maps from the camera's optical frame to the camera's conventional frame.
 
@@ -150,13 +148,11 @@ Eigen::Matrix4d R_yaw(R_yaw_data.data());
 
 Finally, modify the return statement to return the result of `R_yaw` multiplied by `R_roll`.
 
-### Make a vector to hold our transformed tags
+### 3.4 Make a vector to hold our transformed tags
 
-Let's create a `std::vector` to hold our transformed tags. Before we can use `std::vector` in our code, we'll need to include the standard library header that declares it. Locate the student code block at the top of the file, with the rest of the include statements.
+Let's create a `std::vector` to hold our transformed tags.
 
-Add an include statement for `<vector>`.
-
-Now locate the student code block in `DetectionCallback()` (should be around line 82). Here, declare a `std::vector` called `new_tags` that contains elements of type `stsl_interfaces::msg::Tag`.
+Locate the student code block in `DetectionCallback()` (should be around line 82). Here, declare a `std::vector` called `new_tags` that contains elements of type `stsl_interfaces::msg::Tag`.
 
 A few lines down, you'll see another student code block with this comment:
 
@@ -170,7 +166,7 @@ We're going to do exactly what the comment says. Add a line that sets `msg`'s `t
 new_tag_array_msg.tags = new_tags;
 ```
 
-### Write a loop over the old tags
+### 3.5 Write a loop over the old tags
 
 Now that we have a container to put our transformed tags into, we need to loop over the container of old tags and, for each one, push a new tag into `new_tags`.
 
@@ -195,9 +191,104 @@ new_tag.id = tag_array_msg->tags[i].id;
 
 Finally, at the end of the loop body use `push_back()` to add `new_tag` to the `new_tags` vector.
 
-### Transform tag position
+### 3.6 Transform tag position
 
-### Transform tag orientation
+We now have two transformations we need to apply to our tags. The first we grabbed for you from the ROS TF system (which we'll cover in detail later). This is `camera_to_base_transform`, which transforms things from the camera's conventional frame to the robot's base frame. The second transform, `camera_optical_to_conventional_transform` is the rotation transformation you created in the `getRotationMatrixForOpticalFrame()` function. Our objective is to transform all of the tag detections from the camera's optical frame to the robot's base frame, so we need to apply both of these transformations to the position and orientation of each tag. In this section, we'll handle the position.
 
-### Run project
+Let's start by creating a homogeneous vector for our tag's position. In the body of our for loop, after the `new_tag.id = old_tag.id;` line, declare a variable of type `Eigen::Vector4d`, named `position`. Initialize `position` by passing, to its constructor, the x, y, and z coordinates from the old tag's pose, and 1 for the final element. That will look like this:
+
+```c++
+Eigen::Vector4d position(
+  old_tag.pose.position.x,
+  old_tag.pose.position.y,
+  old_tag.pose.position.z,
+  1
+);
+```
+
+Now, apply the transformations by multiplying the transformation objects, `camera_to_base_transform` and `camera_optical_to_conventional_transform`, with `position`. Assign the result of that multiplication back to `position`. Remember, the order of this multiplication matters. Be sure to apply `camera_optical_to_conventional_transform` before `camera_to_base_transform`.
+
+The last thing we need to do for this section is to copy the new position's coordinates into the `new_tag` message. Copying the x value looks like this:
+
+```c++
+new_tag.pose.position.x = position.x();
+```
+
+Do the same for y and z.
+
+### 3.7 Transform tag orientation
+
+To transform the tag's orientation, we're going to follow a similar process. We'll start by extracting the rotation from the `old_tag` message. We've provided a function to help you with this. Declare a variable named `tag_orientation` of type `Eigen::Matrix4d` right after you position code. Initialize `tag_orientation` by calling `quaternionMessageToTransformationMatrix()`, passing it `old_tag.pose.orientation`.
+
+Now, apply both transformations to `tag_orientation`. This should look basically identical to how you applied the transformations to `position`.
+
+Finally, we need to convert our new orientation back into a quaternion message and set it in the `new_tag` message. Here again, we've got a helper function for you called `transformationMatrixToQuaternionMessage()`. Call this function, passing `tag_orientation`, and assign the result to `new_tag.pose.orientation`.
+
+And that's it! We've written all the code we need to make this node complete.
+
+### 3.8 Build project
+
+Before we can run our newly finished node, we need to build it. Open a terminal window and navigate to the training workspace folder (`/home/robojackets/training_ws`).
+
+Source the underlay setup script:
+
+```bash
+$ source /opt/ros/foxy/setup.bash
+```
+
+And use colcon to build the workspace
+
+```bash
+$ colcon build
+```
+
+If your build succeeded, the last line printed will be `Summary: __ packages finished [_.__s]` that tells you how many packages were built and how long the process took.
+
+If any errors were found during the build, the final summary will tell you, and the output will include the error details. The summary of a failed build looks like this:
+
+```bash
+Summary: 16 packages finished [5.12s]
+  1 package failed: coordinate_transform
+  1 package had stderr output: coordinate_transform
+```
+
+If you do have any errors, you'll need to fix them before you can run your node. We recommend starting with the first error reported, reading the error message carefully, fixing it, and building again. Repeat that process until all errors are resolved. Of course, if you're not sure how to fix any given error, reach out to the trainers.
+
+### 3.9 Run project
+
+To run this project, we'll need two terminal windows or tabs.
+
+In the first terminal, after sourcing the underlay setup file and the training workspace overlay setup file, launch the week 1 launch file.
+
+```bash
+source /opt/ros/foxy/setup.bash
+source ~/training_ws/install/setup.bash
+ros2 launch rj_training_bringup week_1.launch.xml
+```
+
+This will open up the simulator and a pre-configured rviz instance. A number of other nodes will also be started in the background, including the coordinate transform node you wrote!
+
+In the second terminal, we need to run a node that can drive the robot around. You can either use keyboard control or joystick control.
+
+For joystick control:
+
+```bash
+$ ros2 launch traini_bringup joystick_control.launch.py
+```
+
+Or, for keyboard control:
+
+```bash
+$ ros2 run teleop_twist_keyboard teleop_twist_keyboard
+```
+
+Now you should be able to drive the robot around and see the tag detections visualized in the rviz window.
+
+If everything's working correctly, you'll see something like this:
+
+![Working code demo](working-demo.gif)
+
+Here's an example of what things might look like if something's not right. In this case, the rotation matrices weren't setup correctly.
+
+![Non-working code demo](non-working-demo.gif)
 
