@@ -129,18 +129,22 @@ private:
   Eigen::Matrix4d getRotationMatrixForOpticalFrame()
   {
     // BEGIN STUDENT CODE
-    Eigen::Matrix4d R_roll;
-    R_roll << 1, 0, 0, 0,
-      0, cos(M_PI / 2), sin(M_PI / 2), 0,
-      0, -sin(M_PI / 2), cos(M_PI / 2), 0,
-      0, 0, 0, 1;
+    std::array<double, 16> R_roll_data = {
+      1, 0, 0, 0,
+      0, cos(-M_PI / 2), sin(-M_PI / 2), 0,
+      0, -sin(-M_PI / 2), cos(-M_PI / 2), 0,
+      0, 0, 0, 1
+    };
 
-    Eigen::Matrix4d R_yaw;
-    R_yaw << cos(M_PI / 2), sin(M_PI / 2), 0, 0,
-      -sin(M_PI / 2), cos(M_PI / 2), 0, 0,
+    std::array<double, 16> R_yaw_data = {
+      cos(-M_PI / 2), sin(-M_PI / 2), 0, 0,
+      -sin(-M_PI / 2), cos(-M_PI / 2), 0, 0,
       0, 0, 1, 0,
-      0, 0, 0, 1;
+      0, 0, 0, 1
+    };
 
+    Eigen::Matrix4d R_roll(R_roll_data.data());
+    Eigen::Matrix4d R_yaw(R_yaw_data.data());
     return R_yaw * R_roll;
     // END STUDENT CODE
   }
