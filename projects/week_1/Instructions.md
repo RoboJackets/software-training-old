@@ -19,7 +19,7 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
   - [3.4 Make a vector to hold our transformed tags](#34-make-a-vector-to-hold-our-transformed-tags)
   - [3.5 Write a loop over the old tags](#35-write-a-loop-over-the-old-tags)
   - [3.6 Transform tag position](#36-transform-tag-position)
-  - [3.7 Transform tag orientation](#37-transform_tag_orientation)
+  - [3.7 Transform tag orientation](#37-transform-tag-orientation)
   - [3.8 Build project](#38-build-project)
   - [3.9 Run project](#39-run-project)
 
