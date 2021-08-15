@@ -118,7 +118,7 @@ Can be represented in row order by this array:
 
 <code>{ 1, 0, 0, 0, 1, 0, 0, 0, 1 }</code>
 
-Now, fill out your arrays with the correct values to represent a rotation transformation matrix. `R_roll_data` should represent a rotation of &pi;/2 radians about the X axis. `R_yaw_data` should represent a rotation of &pi;/2 radians about the Z axis.
+Now, fill out your arrays with the correct values to represent a rotation transformation matrix. `R_roll_data` should represent a rotation of -&pi;/2 radians about the X axis. `R_yaw_data` should represent a rotation of -&pi;/2 radians about the Z axis.
 
 **Tip:** In C++, you can use the special constant `M_PI` to get the value of &pi;.
 
