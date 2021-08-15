@@ -87,7 +87,7 @@ private:
     new_tag_array_msg.header.stamp = tag_array_msg->header.stamp;
     // change the frame_id to be the correct reference frame
     new_tag_array_msg.header.frame_id = "base_footprint";
-    
+
     // BEGIN STUDENT CODE
     // set message tags to new_tags vector
     // END STUDENT CODE
