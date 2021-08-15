@@ -24,7 +24,8 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
   - [2.8 Transform tag orientation](#28-transform-tag-orientation)
   - [2.9 Build project](#29-build-project)
   - [2.10 Run project](#210-run-project)
-  - [2.11 Commit your new code in git](#211-commit-your-new-code-in-git)
+  - [2.11 Modernize the for loop](#211-modernize-the-for-loop)
+  - [2.12 Commit your new code in git](#212-commit-your-new-code-in-git)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -209,13 +210,13 @@ Finally, at the end of the loop body use `push_back()` to add `new_tag` to the `
 
 We now have two transformations we need to apply to our tags. The first we grabbed for you from the ROS TF system (which we'll cover in detail later). This is `camera_to_base_transform`, which transforms things from the camera's conventional frame to the robot's base frame. The second transform, `camera_optical_to_conventional_transform` is the rotation transformation you created in the `getRotationMatrixForOpticalFrame()` function. Our objective is to transform all of the tag detections from the camera's optical frame to the robot's base frame, so we need to apply both of these transformations to the position and orientation of each tag. In this section, we'll handle the position.
 
-Let's start by creating a homogeneous vector for our tag's position. In the body of our for loop, after the `new_tag.id = old_tag.id;` line, declare a variable of type `Eigen::Vector4d`, named `position`. Initialize `position` by passing, to its constructor, the x, y, and z coordinates from the old tag's pose, and 1 for the final element. That will look like this:
+Let's start by creating a homogeneous vector for our tag's position. In the body of our for loop, after the `new_tag.id = tag_array_msg->tags[i].id;` line, declare a variable of type `Eigen::Vector4d`, named `position`. Initialize `position` by passing, to its constructor, the x, y, and z coordinates from the old tag's pose, and 1 for the final element. That will look like this:
 
 ```c++
 Eigen::Vector4d position(
-  old_tag.pose.position.x,
-  old_tag.pose.position.y,
-  old_tag.pose.position.z,
+  tag_array_msg->tags[i].pose.position.x,
+  tag_array_msg->tags[i].pose.position.y,
+  tag_array_msg->tags[i].pose.position.z,
   1
 );
 ```
@@ -232,7 +233,7 @@ Do the same for y and z.
 
 ### 2.8 Transform tag orientation
 
-To transform the tag's orientation, we're going to follow a similar process. We'll start by extracting the rotation from the `old_tag` message. We've provided a function to help you with this. Declare a variable named `tag_orientation` of type `Eigen::Matrix4d` right after you position code. Initialize `tag_orientation` by calling `quaternionMessageToTransformationMatrix()`, passing it `old_tag.pose.orientation`.
+To transform the tag's orientation, we're going to follow a similar process. We'll start by extracting the rotation from the old tag message. We've provided a function to help you with this. Declare a variable named `tag_orientation` of type `Eigen::Matrix4d` right after you position code. Initialize `tag_orientation` by calling `quaternionMessageToTransformationMatrix()`, passing it `tag_array_msg->tags[i].pose.orientation`.
 
 Now, apply both transformations to `tag_orientation`. This should look basically identical to how you applied the transformations to `position`.
 
@@ -306,7 +307,23 @@ Here's an example of what things might look like if something's not right. In th
 
 ![Non-working code demo](non-working-demo.gif)
 
-### 2.11 Commit your new code in git
+### 2.11 Modernize the for loop
+
+Now that we've got our code working, let's take a moment to improve our implementation by changing our index-based for loop to a range-based for loop.
+
+Rewrite your for loop using the range-based syntax with the element variable named `old_tag`. Be sure to replace all instances of `tag_array_msg->tags[i]` with `old_tag`.
+
+<details>
+<summary><b>Hint:</b> Range-based for loops</summary>
+<p>You can write a for loop that iterates over every element in a container named <code>c</code> like this:</p>
+<pre><code>for(const auto& e : c)
+{
+   // body of loop
+   // e holds a constant reference to the current element
+}</code></pre>
+</details>
+
+### 2.12 Commit your new code in git
 
 Once you've got your code for this project working, use the command below to commit it into git. This will make it easier to grab changes to the starter code for the remaining projects.
 
