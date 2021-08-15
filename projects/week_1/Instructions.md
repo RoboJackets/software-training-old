@@ -21,6 +21,7 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
   - [2.8 Transform tag orientation](#28-transform-tag-orientation)
   - [2.9 Build project](#29-build-project)
   - [2.10 Run project](#210-run-project)
+  - [2.11 Commit your new code in git](#211-commit-your-new-code-in-git)
 
 ## 1 Background
 
