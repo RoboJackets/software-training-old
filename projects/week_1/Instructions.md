@@ -8,10 +8,9 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 
 # Week 1 Project: Coordinate Frame Transformations
 
-
-## Contents
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+## Contents
 
 - [1 Background](#1-background)
 - [2 Instructions](#2-instructions)
