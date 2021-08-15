@@ -8,7 +8,11 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 
 # Week 1 Project: Coordinate Frame Transformations
 
-## Table of Contents
+
+## Contents
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 - [1 Background](#1-background)
 - [2 Instructions](#2-instructions)
   - [2.1 Get the latest starter code](#21-get-the-latest-starter-code)
@@ -22,6 +26,8 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
   - [2.9 Build project](#29-build-project)
   - [2.10 Run project](#210-run-project)
   - [2.11 Commit your new code in git](#211-commit-your-new-code-in-git)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## 1 Background
 
