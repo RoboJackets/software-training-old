@@ -1,4 +1,6 @@
-Different gamepads map their inputs differently. By default, the launch file above uses a config that works with the joysticks we use in the classroom. You can create your own config file to set the mappings appropriate for your gamepad.
+# Custom Gamepad Mappings
+
+Different gamepads map their inputs differently. By default, the joystick control launch file uses a config that works with the joysticks we use in the classroom. You can create your own config file to set the mappings appropriate for your gamepad.
 
 To show the content of the default config file, run the following command. You can then copy this to a file anywhere on your computer and edit it there.
 

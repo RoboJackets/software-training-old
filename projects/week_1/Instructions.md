@@ -6,36 +6,42 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
  - Opening this file in any other markdown viewer you prefer
 -->
 
-
 # Week 1 Project: Coordinate Frame Transformations
 
 ## Table of Contents
 - [1 Background](#1-background)
-- [2 How to Run](#2-how-to-run)
-- [3 Instructions](#3-instructions)
-  - [3.1 Test the simulator](#31-test-the-simulator)
-  - [3.2 Add new include statements](#32-add-new-include-statements)
-  - [3.3 Implement the rotation matrix helper function](#33-implement-the-rotation-matrix-helper-function)
-  - [3.4 Make a vector to hold our transformed tags](#34-make-a-vector-to-hold-our-transformed-tags)
-  - [3.5 Write a loop over the old tags](#35-write-a-loop-over-the-old-tags)
-  - [3.6 Transform tag position](#36-transform-tag-position)
-  - [3.7 Transform tag orientation](#37-transform-tag-orientation)
-  - [3.8 Build project](#38-build-project)
-  - [3.9 Run project](#39-run-project)
+- [2 Instructions](#2-instructions)
+  - [2.1 Get the latest starter code](#21-get-the-latest-starter-code)
+  - [2.2 Test the simulator](#22-test-the-simulator)
+  - [2.3 Add new include statements](#23-add-new-include-statements)
+  - [2.4 Implement the rotation matrix helper function](#24-implement-the-rotation-matrix-helper-function)
+  - [2.5 Make a vector to hold our transformed tags](#25-make-a-vector-to-hold-our-transformed-tags)
+  - [2.6 Write a loop over the old tags](#26-write-a-loop-over-the-old-tags)
+  - [2.7 Transform tag position](#27-transform-tag-position)
+  - [2.8 Transform tag orientation](#28-transform-tag-orientation)
+  - [2.9 Build project](#29-build-project)
+  - [2.10 Run project](#210-run-project)
 
 ## 1 Background
 
-Explain context and purpose of the exercise
+This week's robotics videos covered how coordinate frames give us information about the reference frame for a measurement, and the math used to transform data between frames. In this project, we're going to practice that math a bit by transforming measurements from our robot from one frame to another.
 
-## 2 How to Run
+Our robot uses a camera to track ArUco tag fiducials. We'll be using these detections in a later project to localize our robot. For now, we just want to take these detections, which are measured in the camera's optical frame, and transform them to the robot's "base_footprint" frame. This will give you a glimpse into the process used to track objects against different reference frames.
 
-Explain how to launch relevant files. Demonstrate that the robot can't do the desired behavior with the starter code.
+To test our code, we'll use rviz to visualize both the original tag detections and our transformed tag detections. rviz can render data in multiple reference frames, and will do the transformation math internally. This means that if we do our transformations correctly, both the original and transformed tags will show up in the same place in the rviz 3D rendered world.
 
-## 3 Instructions
+## 2 Instructions
 
-Provide the step by step instructions for modifying the code
+### 2.1 Get the latest starter code
 
-### 3.1 Test the simulator
+To make sure you're starting with the latest starter code, pull from the git server in your copy of the software-training repository.
+
+```bash
+$ cd training_ws/src/software-training
+$ git pull
+```
+
+### 2.2 Test the simulator
    
 Before we start writing code, let's take a moment to introduce you to the robot simulator. To start the simulator, launch the `traini_simulation.launch.py` file in the `traini_bringup` package.
 
@@ -71,7 +77,7 @@ You can now close the simulator window, or press Ctrl+c in the terminal.
 
 *Bonus:* [How to fix gamepad mappings](CustomGamepadMappings.md)
 
-### 3.2 Add new include statements
+### 2.3 Add new include statements
 
 Now we'll move on to writing some code. Our first task is to include two new headers for containers we'll be using in this project: `std::array` and `std::vector`.
 
@@ -83,7 +89,7 @@ In the marked student code section, add two lines to include the new headers. Yo
 
 With that done, we can now use those containers in this file.
 
-### 3.3 Implement the rotation matrix helper function
+### 2.4 Implement the rotation matrix helper function
 
 Next, we'll implement the `getRotationMatrixForOpticalFrame()` helper function. Locate this function towards the end of this file:
 
@@ -150,7 +156,7 @@ Eigen::Matrix4d R_yaw(R_yaw_data.data());
 
 Finally, modify the return statement to return the result of `R_yaw` multiplied by `R_roll`.
 
-### 3.4 Make a vector to hold our transformed tags
+### 2.5 Make a vector to hold our transformed tags
 
 Let's create a `std::vector` to hold our transformed tags.
 
@@ -168,7 +174,7 @@ We're going to do exactly what the comment says. Add a line that sets `msg`'s `t
 new_tag_array_msg.tags = new_tags;
 ```
 
-### 3.5 Write a loop over the old tags
+### 2.6 Write a loop over the old tags
 
 Now that we have a container to put our transformed tags into, we need to loop over the container of old tags and, for each one, push a new tag into `new_tags`.
 
@@ -193,7 +199,7 @@ new_tag.id = tag_array_msg->tags[i].id;
 
 Finally, at the end of the loop body use `push_back()` to add `new_tag` to the `new_tags` vector.
 
-### 3.6 Transform tag position
+### 2.7 Transform tag position
 
 We now have two transformations we need to apply to our tags. The first we grabbed for you from the ROS TF system (which we'll cover in detail later). This is `camera_to_base_transform`, which transforms things from the camera's conventional frame to the robot's base frame. The second transform, `camera_optical_to_conventional_transform` is the rotation transformation you created in the `getRotationMatrixForOpticalFrame()` function. Our objective is to transform all of the tag detections from the camera's optical frame to the robot's base frame, so we need to apply both of these transformations to the position and orientation of each tag. In this section, we'll handle the position.
 
@@ -218,7 +224,7 @@ new_tag.pose.position.x = position.x();
 
 Do the same for y and z.
 
-### 3.7 Transform tag orientation
+### 2.8 Transform tag orientation
 
 To transform the tag's orientation, we're going to follow a similar process. We'll start by extracting the rotation from the `old_tag` message. We've provided a function to help you with this. Declare a variable named `tag_orientation` of type `Eigen::Matrix4d` right after you position code. Initialize `tag_orientation` by calling `quaternionMessageToTransformationMatrix()`, passing it `old_tag.pose.orientation`.
 
@@ -228,7 +234,7 @@ Finally, we need to convert our new orientation back into a quaternion message a
 
 And that's it! We've written all the code we need to make this node complete.
 
-### 3.8 Build project
+### 2.9 Build project
 
 Before we can run our newly finished node, we need to build it. Open a terminal window and navigate to the training workspace folder (`/home/robojackets/training_ws`).
 
@@ -256,7 +262,7 @@ Summary: 16 packages finished [5.12s]
 
 If you do have any errors, you'll need to fix them before you can run your node. We recommend starting with the first error reported, reading the error message carefully, fixing it, and building again. Repeat that process until all errors are resolved. Of course, if you're not sure how to fix any given error, reach out to the trainers.
 
-### 3.9 Run project
+### 2.10 Run project
 
 To run this project, we'll need two terminal windows or tabs.
 
@@ -294,3 +300,10 @@ Here's an example of what things might look like if something's not right. In th
 
 ![Non-working code demo](non-working-demo.gif)
 
+### 2.11 Commit your new code in git
+
+Once you've got your code for this project working, use the command below to commit it into git. This will make it easier to grab changes to the starter code for the remaining projects.
+
+```bash
+$ git commit -a -m "My project 1 code."
+```
