@@ -68,13 +68,13 @@ Week | Robotics Theory | ROS | C++
 
 Each week will culminate in a programming project that uses the tools and techniques covered. The projects build on each other to produce the complete software stack needed to get a custom robot to execute a challenge game.
 
-Week | Title | Description
---- | --- | ---
-1 | Coordinate Frame Transforms | Transform fiducial detections from the camera's frame to the robot's body frame.
-2 | Color-baesd Obstacle Detection | Use HSV color detection and a projective homography to find obstacles near the robot.
-3 | Particle Filter Localization | Use a particle filter to localize the robot based on fiducial detections.
-4 | Gradient Descent Optimization | Use gradient ascent to guide the robot to the highest simulated elevation on the map.
-5 | Mapping | Build a map of the environment with a probablistic occupancy grid.
-6 | Kalman Filter Tracking | Track mineral deposits with a kalman filter.
-7 | LQR Controller | Control the robot's motion with an LQR controller.
-8 | A-Star Path Planning | Teach the robot how to avoid obstacles with the A-Star path planning algorithm.
+Week | Title |  | Description
+--- | --- | --- | ---
+1 | Coordinate Frame Transforms | [Instructions]() | Transform fiducial detections from the camera's frame to the robot's body frame.
+2 | Color-baesd Obstacle Detection | [Instructions]() | Use HSV color detection and a projective homography to find obstacles near the robot.
+3 | Particle Filter Localization | [Instructions]() | Use a particle filter to localize the robot based on fiducial detections.
+4 | Gradient Descent Optimization | [Instructions]() | Use gradient ascent to guide the robot to the highest simulated elevation on the map.
+5 | Mapping | [Instructions]() | Build a map of the environment with a probablistic occupancy grid.
+6 | Kalman Filter Tracking | [Instructions]() | Track mineral deposits with a kalman filter.
+7 | LQR Controller | [Instructions]() | Control the robot's motion with an LQR controller.
+8 | A-Star Path Planning | [Instructions]() | Teach the robot how to avoid obstacles with the A-Star path planning algorithm.
