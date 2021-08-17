@@ -1,6 +1,6 @@
 # RoboJackets Software Training - Fall 2021
 
-TODO
+The RoboJackets software training program is designed to prepare you to work on software for the RoboJackets competitive teams. This program offers practical experience writing code using C++ and ROS. It also covers some of the fundamental concepts of robotics used by all of our teams.
 
 ## Trainers
 
@@ -50,7 +50,9 @@ We will assume that students are familiar with the concepts covered in [AP Compu
 
 ## Topic Schedule
 
-Week | Robotics | ROS | C++
+The content of this program is divided into three tracks: Robotics Theory, ROS, and C++. The Robotics Theory track will survey the concepts and math that make intelligent mobile robots work. The ROS track will cover how to use the Robot Operating System to program robots. The C++ track will introduce the C++ programming language, popular in robotics applications.
+
+Week | Robotics Theory | ROS | C++
 --- | --- | --- | ---
 0 | | | AP CS Review
 1 | Linear Algebra, Sensors, Coordinate Frames | Introduction to ROS and useful tools | Introduction to C++
@@ -63,6 +65,8 @@ Week | Robotics | ROS | C++
 8 | Path Planning | rosbag | Iterators, Algorithms
 
 ## Project Schedule
+
+Each week will culminate in a programming project that uses the tools and techniques covered. The projects build on each other to produce the complete software stack needed to get a custom robot to execute a challenge game.
 
 Week | Title | Description
 --- | --- | ---
