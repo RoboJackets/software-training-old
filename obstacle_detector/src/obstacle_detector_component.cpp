@@ -30,44 +30,22 @@
 #include <string>
 #include <algorithm>
 
+// BEGIN STUDENT CODE
+// END STUDENT CODE
+
 namespace obstacle_detector
 {
-void FindColors(
-  const cv::Mat & input, const cv::Scalar & range_min, const cv::Scalar & range_max,
-  cv::Mat & output)
-{
-  //// BEGIN STUDENT CODE
-  cv::Mat input_hsv;
-  cv::cvtColor(input, input_hsv, CV_BGR2HSV);
-  cv::inRange(input_hsv, range_min, range_max, output);
-  //// END STUDENT CODE
-}
 
-void ReprojectToGroundPlane(
-  const cv::Mat & input, const cv::Mat & homography,
-  const cv::Size & map_size, cv::Mat & output)
-{
-  //// BEGIN STUDENT CODE
-  cv::warpPerspective(
-    input, output, homography, map_size, cv::INTER_NEAREST, cv::BORDER_CONSTANT,
-    cv::Scalar(127));
-  //// END STUDENT CODE
-}
-
-class ObstacleDetectorComponent : public rclcpp::Node
+class ObstacleDetector : public rclcpp::Node
 {
 public:
-  explicit ObstacleDetectorComponent(const rclcpp::NodeOptions & options)
+  explicit ObstacleDetector(const rclcpp::NodeOptions & options)
   : rclcpp::Node("obstacle_detector", options), tf_buffer_(get_clock()), tf_listener_(tf_buffer_)
   {
-    camera_subscriber_ = image_transport::create_camera_subscription(
-      this, "/camera/image_raw",
-      std::bind(
-        &ObstacleDetectorComponent::ImageCallback, this, std::placeholders::_1,
-        std::placeholders::_2),
-      "raw", rmw_qos_profile_sensor_data);
-    occupancy_grid_publisher_ =
-      create_publisher<nav_msgs::msg::OccupancyGrid>("~/occupancy_grid", 1);
+    // BEGIN STUDENT CODE
+    // Initialize publisher and subscriber
+    // END STUDENT CODE
+    
     declare_parameters<int>(
       "obstacle_color_range", {{"min.h", 0},
         {"min.s", 0},
@@ -83,8 +61,10 @@ public:
 private:
   tf2_ros::Buffer tf_buffer_;
   tf2_ros::TransformListener tf_listener_;
-  image_transport::CameraSubscriber camera_subscriber_;
-  rclcpp::Publisher<nav_msgs::msg::OccupancyGrid>::SharedPtr occupancy_grid_publisher_;
+
+  // BEGIN STUDENT CODE
+  // Declare subscriber and publisher members
+  // END STUDENT CODE
 
   void ImageCallback(
     const sensor_msgs::msg::Image::ConstSharedPtr & image_msg,
@@ -101,7 +81,10 @@ private:
       get_parameter("obstacle_color_range.max.v").as_int());
 
     cv::Mat detected_colors;
-    FindColors(cv_image->image, min_color, max_color, detected_colors);
+
+    // BEGIN STUDENT CODE
+    // Call FindColors()
+    // END STUDENT CODE
 
     std::string tf_error_string;
     if (!tf_buffer_.canTransform(
@@ -132,7 +115,10 @@ private:
       map_camera_rotation, map_camera_position);
 
     cv::Mat projected_colors;
-    ReprojectToGroundPlane(detected_colors, homography, map_size, projected_colors);
+    
+    // BEGIN STUDENT CODE
+    // Call ReprojectToGroundPlane
+    // END STUDENT CODE
 
     cv::flip(projected_colors, projected_colors, 0);
 
@@ -153,11 +139,22 @@ private:
     std::transform(
       projected_colors.begin<uint8_t>(), projected_colors.end<uint8_t>(),
       std::back_inserter(occupancy_grid_msg.data),
-      ObstacleDetectorComponent::MapValuesFromImageValues);
+      ObstacleDetector::MapValuesFromImageValues);
 
-    occupancy_grid_publisher_->publish(occupancy_grid_msg);
+    // BEGIN STUDENT CODE
+    // Publish occupancy_grid_msg
+    // END STUDENT CODE
   }
 
+  /**
+   * @brief Calculates the intrinsic and extrinsic properties for the virtual map camera
+   * 
+   * @param map_resolution The desired scale of the map in pixels/meter
+   * @param map_size The size of the map in pixels
+   * @param intrinsics The calculated camera intrinsics matrix
+   * @param rotation The calculated rotation matrix
+   * @param position The calculated position vector
+   */
   void GetMapCameraProperties(
     const double map_resolution, const cv::Size & map_size,
     cv::Mat & intrinsics, cv::Mat & rotation, cv::Mat & position)
@@ -171,6 +168,16 @@ private:
       (map_size.height / 2.0), 0, 0, 1);
   }
 
+  /**
+   * @brief Calculates the homography matrix between the frame in image_header and the virtual camera
+   * 
+   * @param camera_intrinsics The intrinsics matrix of the robot's camera
+   * @param image_header The header from the image message
+   * @param map_camera_intrinsics The intrinsics matrix of the virtual map camera
+   * @param map_camera_rotation The rotation matrix of the virtual map camera
+   * @param map_camera_position The position vector of the virtual map camera
+   * @return cv::Mat The calculated homography matrix
+   */
   cv::Mat GetHomography(
     const cv::Mat & camera_intrinsics, const std_msgs::msg::Header & image_header,
     const cv::Mat & map_camera_intrinsics, const cv::Mat & map_camera_rotation,
@@ -198,6 +205,12 @@ private:
     return H;
   }
 
+  /**
+   * @brief Maps thresholded image pixel values to conventional values for occupancy grids
+   * 
+   * @param image_value The pixel value from the thresholded image
+   * @return int8_t The corresponding occupancy grid value
+   */
   static int8_t MapValuesFromImageValues(const uint8_t image_value)
   {
     switch (image_value) {
@@ -214,4 +227,4 @@ private:
 
 }  // namespace obstacle_detector
 
-RCLCPP_COMPONENTS_REGISTER_NODE(obstacle_detector::ObstacleDetectorComponent)
+RCLCPP_COMPONENTS_REGISTER_NODE(obstacle_detector::ObstacleDetector)

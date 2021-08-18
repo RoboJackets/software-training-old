@@ -11,8 +11,12 @@ find_package(tf2_ros REQUIRED)
 find_package(tf2_eigen REQUIRED)
 find_package(OpenCV 4 REQUIRED)
 
-add_library(${PROJECT_NAME}_components SHARED src/obstacle_detector_component.cpp)
-ament_target_dependencies(${PROJECT_NAME}_components
+add_library(${PROJECT_NAME} SHARED 
+  src/obstacle_detector_component.cpp
+# BEGIN STUDENT CODE
+# END STUDENT CODE
+)
+ament_target_dependencies(${PROJECT_NAME}
   "rclcpp"
   "rclcpp_components"
   "cv_bridge"
@@ -23,12 +27,12 @@ ament_target_dependencies(${PROJECT_NAME}_components
   "OpenCV"
 )
 rclcpp_components_register_node(
-  ${PROJECT_NAME}_components
-  PLUGIN "obstacle_detector::ObstacleDetectorComponent"
+  ${PROJECT_NAME}
+  PLUGIN "obstacle_detector::ObstacleDetector"
   EXECUTABLE ${PROJECT_NAME}_node
 )
 
-install(TARGETS ${PROJECT_NAME}_components
+install(TARGETS ${PROJECT_NAME}
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION lib/${PROJECT_NAME}
