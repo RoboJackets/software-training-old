@@ -17,7 +17,7 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
   - [2.1 Get the latest starter code](#21-get-the-latest-starter-code)
   - [2.2 Test the simulator](#22-test-the-simulator)
   - [2.3 Add new include statements](#23-add-new-include-statements)
-  - [2.4 Implement the rotation matrix helper function](#24-implement-the-rotation-matrix-helper-function)
+  - [2.4 Implement the transformation matrix helper function](#24-implement-the-transformation-matrix-helper-function)
   - [2.5 Make a vector to hold our transformed tags](#25-make-a-vector-to-hold-our-transformed-tags)
   - [2.6 Write a loop over the old tags](#26-write-a-loop-over-the-old-tags)
   - [2.7 Transform tag position](#27-transform-tag-position)
@@ -31,9 +31,13 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 
 ## 1 Background
 
-This week's robotics videos covered how coordinate frames give us information about the reference frame for a measurement, and the math used to transform data between frames. In this project, we're going to practice that math a bit by transforming measurements from our robot from one frame to another.
+This weeks' robotics videos covered the basics of coordinate frames. We will be practicing the math covered in order to transform a measurement coming from an attached camera to the body frame of the robot.
 
-Our robot uses a camera to track ArUco tag fiducials. We'll be using these detections in a later project to localize our robot. For now, we just want to take these detections, which are measured in the camera's optical frame, and transform them to the robot's "base_footprint" frame. This will give you a glimpse into the process used to track objects against different reference frames.
+Our robot uses a camera to track ArUco tag fiducials. We'll be using these detections in a later project to track our robot's position. For now, we just want to take these detections, which are measured in the camera's optical frame, and transform them to the robot's "base_footprint" frame. This will give you a glimpse into the process used to track objects against different reference frames.
+
+Here's an example ArUco tag fiducial. This one represents the number 0.
+
+![ArUco tag with ID 0](ArUcoTag0.jpg)
 
 To test our code, we'll use rviz to visualize both the original tag detections and our transformed tag detections. rviz can render data in multiple reference frames, and will do the transformation math internally. This means that if we do our transformations correctly, both the original and transformed tags will show up in the same place in the rviz 3D rendered world.
 
@@ -96,14 +100,13 @@ In the marked student code section, add two lines to include the new headers. Yo
 
 With that done, we can now use those containers in this file.
 
-### 2.4 Implement the rotation matrix helper function
+### 2.4 Implement the transformation matrix helper function
 
-Next, we'll implement the `getRotationMatrixForOpticalFrame()` helper function. Locate this function towards the end of this file:
+Next, we'll implement the `getTransformationMatrixForOpticalFrame()` helper function. Locate this function towards the end of this file:
 
 `~/training_ws/src/software-training/coordinate_transform/src/coordinate_transform.cpp`
 
-
-This function will create and combine two rotation matrices to create a final transformation matrix that maps from the camera's optical frame to the camera's conventional frame.
+This function will create and combine two pure-rotation transformation matrices to create a final transformation matrix that maps from the camera's optical frame to the camera's conventional frame.
 
 Start by declaring and initializing two `std::array` variables, called `R_roll_data` and `R_yaw_data`. Both should contain 16 elements of type `double`.
 
@@ -113,7 +116,7 @@ Start by declaring and initializing two `std::array` variables, called `R_roll_d
 <pre><code>std::array&ltdouble, 3&gt my_array = {0, 0, 0};</code></pre>
 </details>
 
-These arrays will contain the data for our rotation matrices in what's called "row order". This is a technique for holding a 2-dimensional structure like a matrix in a 1-dimensional container. The array will contain the elements of each row in order from left to right, and top to bottom. So, the following 3x3 matrix:
+These arrays will contain the data for our transformation matrices in what's called "row order". This is a technique for holding a 2-dimensional structure like a matrix in a 1-dimensional container. The array will contain the elements of each row in order from left to right, and top to bottom. So, the following 3x3 matrix:
 
 <table style="border-collapse:collapse">
 <tr> <td>1</td> <td>0</td> <td>0</td> </tr>
@@ -130,7 +133,8 @@ Now, fill out your arrays with the correct values to represent a rotation transf
 **Tip:** In C++, you can use the special constant `M_PI` to get the value of &pi;.
 
 <details>
-<summary><b>Hint:</b> Rotation matrices</summary>
+<summary><b>Hint:</b> Pure rotation transformation matrices</summary>
+<p>Transformation matrices that only represent a rotation have translation parts that are all zeros. The top-left 3x3 block of the transfomation matrix is then filled in as a 3x3 rotation matrix.</p>
 <p>Rotation about the X axis:</p>
 <table style="border-collapse:collapse">
 <tr> <td>1</td> <td>0</td> <td>0</td> <td>0</td> </tr>
@@ -161,7 +165,7 @@ Eigen::Matrix4d R_roll(R_roll_data.data());
 Eigen::Matrix4d R_yaw(R_yaw_data.data());
 ```
 
-Finally, modify the return statement to return the result of `R_yaw` multiplied by `R_roll`.
+Finally, modify the return statement to return the result of `R_roll * R_yaw`.
 
 ### 2.5 Make a vector to hold our transformed tags
 
@@ -204,11 +208,13 @@ In the body of this new loop, declare a variable named `new_tag` of type `stsl_i
 new_tag.id = tag_array_msg->tags[i].id;
 ```
 
+**Tip:** `i` in the above snippet should be replaced with whatever you named the variable being incremented in your for loop.
+
 Finally, at the end of the loop body use `push_back()` to add `new_tag` to the `new_tags` vector.
 
 ### 2.7 Transform tag position
 
-We now have two transformations we need to apply to our tags. The first we grabbed for you from the ROS TF system (which we'll cover in detail later). This is `camera_to_base_transform`, which transforms things from the camera's conventional frame to the robot's base frame. The second transform, `camera_optical_to_conventional_transform` is the rotation transformation you created in the `getRotationMatrixForOpticalFrame()` function. Our objective is to transform all of the tag detections from the camera's optical frame to the robot's base frame, so we need to apply both of these transformations to the position and orientation of each tag. In this section, we'll handle the position.
+We now have two transformations we need to apply to our tags. The first we grabbed for you from the ROS TF system (which we'll cover in detail later). This is `camera_to_base_transform`, which transforms things from the camera's conventional frame to the robot's base frame. The second transform, `camera_optical_to_conventional_transform` is the rotation transformation you created in the `getTransformationMatrixForOpticalFrame()` function. Our objective is to transform all of the tag detections from the camera's optical frame to the robot's base frame, so we need to apply both of these transformations to the position and orientation of each tag. In this section, we'll handle the position.
 
 Let's start by creating a homogeneous vector for our tag's position. In the body of our for loop, after the `new_tag.id = tag_array_msg->tags[i].id;` line, declare a variable of type `Eigen::Vector4d`, named `position`. Initialize `position` by passing, to its constructor, the x, y, and z coordinates from the old tag's pose, and 1 for the final element. That will look like this:
 
@@ -223,6 +229,11 @@ Eigen::Vector4d position(
 
 Now, apply the transformations by multiplying the transformation objects, `camera_to_base_transform` and `camera_optical_to_conventional_transform`, with `position`. Assign the result of that multiplication back to `position`. Remember, the order of this multiplication matters. Be sure to apply `camera_optical_to_conventional_transform` before `camera_to_base_transform`.
 
+<details>
+<summary><b>Hint:</b> Ordering transformations</summary>
+<p>Transforms that are applied first should appear on the right of a multiplication chain. To apply A, then B, then C, we would write <code>C * B * A</code>.</p>
+</details>
+
 The last thing we need to do for this section is to copy the new position's coordinates into the `new_tag` message. Copying the x value looks like this:
 
 ```c++
@@ -233,7 +244,9 @@ Do the same for y and z.
 
 ### 2.8 Transform tag orientation
 
-To transform the tag's orientation, we're going to follow a similar process. We'll start by extracting the rotation from the old tag message. We've provided a function to help you with this. Declare a variable named `tag_orientation` of type `Eigen::Matrix4d` right after you position code. Initialize `tag_orientation` by calling `quaternionMessageToTransformationMatrix()`, passing it `tag_array_msg->tags[i].pose.orientation`.
+To transform the tag's orientation, we're going to follow a similar process. We'll start by extracting the rotation from the old tag message. We've provided a function to help you with this. `quaternionMessageToTransformationMatrix()` will take in a quaternion from a ROS message, and return a 4x4 transformation matrix that represents the rotation. The translation part of this matrix will be all zeros and won't really matter while we're treating it as a pure rotation.
+
+Declare a variable named `tag_orientation` of type `Eigen::Matrix4d` right after you position code. Initialize `tag_orientation` by calling `quaternionMessageToTransformationMatrix()`, passing it `tag_array_msg->tags[i].pose.orientation`.
 
 Now, apply both transformations to `tag_orientation`. This should look basically identical to how you applied the transformations to `position`.
 
@@ -273,11 +286,16 @@ If you do have any errors, you'll need to fix them before you can run your node.
 
 To run this project, we'll need two terminal windows or tabs.
 
-In the first terminal, after sourcing the underlay setup file and the training workspace overlay setup file, launch the week 1 launch file.
+In both terminals, you'll need to start by sourcing the underlay setup file and the training workspace overlay setup file.
 
 ```bash
 source /opt/ros/foxy/setup.bash
 source ~/training_ws/install/setup.bash
+```
+
+In the first terminal, launch the week 1 launch file.
+
+```bash
 ros2 launch rj_training_bringup week_1.launch.xml
 ```
 
@@ -299,7 +317,7 @@ $ ros2 run teleop_twist_keyboard teleop_twist_keyboard
 
 Now you should be able to drive the robot around and see the tag detections visualized in the rviz window.
 
-If everything's working correctly, you'll see something like this:
+If everything's working correctly, you'll see something like this the gif below. The blue box is where the tag actually is, and the green box is where your code says it is. If your code is correct, the two boxes should completely overlap, looking like one teal box.
 
 ![Working code demo](working-demo.gif)
 
