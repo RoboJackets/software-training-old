@@ -74,7 +74,7 @@ private:
     const Eigen::Matrix4d base_to_camera_transform = tf2::transformToEigen(tf_transform).matrix();
 
     // creates a matrix that goes from camera to standard ROS coordinates
-    Eigen::Matrix4d camera_to_optical_transform = getRotationMatrixForOpticalFrame();
+    Eigen::Matrix4d camera_to_optical_transform = getTransformationMatrixForOpticalFrame();
 
     // BEGIN STUDENT CODE
     std::vector<stsl_interfaces::msg::Tag> new_tags;
@@ -126,7 +126,7 @@ private:
     tag_pub_->publish(new_tag_array_msg);
   }
 
-  Eigen::Matrix4d getRotationMatrixForOpticalFrame()
+  Eigen::Matrix4d getTransformationMatrixForOpticalFrame()
   {
     // BEGIN STUDENT CODE
     std::array<double, 16> R_roll_data = {
