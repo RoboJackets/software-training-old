@@ -20,6 +20,8 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 
 ## 1 Background
 
+Color detection and homography are very common tasks for any robot that uses a camera to follow (or avoid) markings on the floor. In this project, we're going to make our robot aware of the "rocks" in our challenge mission, represented by red blobs on the challenge mat. You'll be implementing functions to isolate the red color in the image and use homography to reproject the camera's image into a top-down map for the robot.
+
 ## 2 Running this project
 
 You can run this week's project using the week 2 launch file. This will startup the simulator, rviz, and your obstacle detection code.
