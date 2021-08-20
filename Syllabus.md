@@ -48,6 +48,8 @@ TODO
 
 We will assume that students are familiar with the concepts covered in [AP Computer Science A](https://apstudents.collegeboard.org/courses/ap-computer-science-a). Topics we assume knowledge of will be briefly covered in Week 0 content. Topics covered in AP Computer Science A that have special syntax, properties, or behavior in C++ will be covered in the main course content.
 
+Students should also be comfortable with math at the level of [AP Calculus AB](https://apstudents.collegeboard.org/courses/ap-calculus-ab). Derivatives and integrals will show up throughout the course.
+
 ## Topic Schedule
 
 The content of this program is divided into three tracks: Robotics Theory, ROS, and C++. The Robotics Theory track will survey the concepts and math that make intelligent mobile robots work. The ROS track will cover how to use the Robot Operating System to program robots. The C++ track will introduce the C++ programming language, popular in robotics applications.
