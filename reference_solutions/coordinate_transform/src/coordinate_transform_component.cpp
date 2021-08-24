@@ -26,8 +26,6 @@
 #include <tf2_ros/transform_listener.h>
 #include <tf2_eigen/tf2_eigen.h>
 #include <string>
-// BEGIN STUDENT CODE
-// END STUDENT CODE
 
 using namespace std::chrono_literals;
 
@@ -73,12 +71,47 @@ private:
     // find the transform from the camera to base footprint
     const auto tf_transform =
       tf_buffer_.lookupTransform("base_footprint", "camera_link", tag_array_msg->header.stamp);
-    const Eigen::Matrix4d camera_to_base_transform = tf2::transformToEigen(tf_transform).matrix();
+    const Eigen::Matrix4d base_to_camera_transform = tf2::transformToEigen(tf_transform).matrix();
 
     // creates a matrix that goes from camera to standard ROS coordinates
-    Eigen::Matrix4d camera_optical_to_conventional_transform = getTransformationMatrixForOpticalFrame();
+    Eigen::Matrix4d camera_to_optical_transform = getTransformationMatrixForOpticalFrame();
 
     // BEGIN STUDENT CODE
+    std::vector<stsl_interfaces::msg::Tag> new_tags;
+    // iterate over each tag to and transform it into body frame
+    for (const stsl_interfaces::msg::Tag & old_tag : tag_array_msg->tags) {
+      stsl_interfaces::msg::Tag new_tag;
+      new_tag.id = old_tag.id;
+
+      geometry_msgs::msg::Point old_tag_position = old_tag.pose.position;
+
+      // Create the homogeneous vector from position
+      Eigen::Vector4d position = Eigen::Vector4d(
+        old_tag_position.x,
+        old_tag_position.y,
+        old_tag_position.z,
+        1);
+
+      // Apply the transform to the position
+      position = base_to_camera_transform * camera_to_optical_transform * position;
+
+      // Copy the new position into the new tag message
+      new_tag.pose.position.x = position.x();
+      new_tag.pose.position.y = position.y();
+      new_tag.pose.position.z = position.z();
+
+      // Get the orientation of the tag
+      Eigen::Matrix4d tag_orientation = quaternionMessageToTransformationMatrix(
+        old_tag.pose.orientation);
+
+      // Apply the transform to the orientation
+      tag_orientation = base_to_camera_transform * camera_to_optical_transform * tag_orientation;
+
+      // Copy the new orientation into the new tag message
+      new_tag.pose.orientation = transformationMatrixToQuaternionMessage(tag_orientation);
+
+      new_tags.push_back(new_tag);
+    }
     // END STUDENT CODE
 
     // create a new tag array message
@@ -87,11 +120,8 @@ private:
     new_tag_array_msg.header.stamp = tag_array_msg->header.stamp;
     // change the frame_id to be the correct reference frame
     new_tag_array_msg.header.frame_id = "base_footprint";
-
-    // BEGIN STUDENT CODE
     // set message tags to new_tags vector
-    // END STUDENT CODE
-
+    new_tag_array_msg.tags = new_tags;
     // publish new tag message
     tag_pub_->publish(new_tag_array_msg);
   }
@@ -99,7 +129,23 @@ private:
   Eigen::Matrix4d getTransformationMatrixForOpticalFrame()
   {
     // BEGIN STUDENT CODE
-    return {};
+    std::array<double, 16> R_roll_data = {
+      1, 0, 0, 0,
+      0, cos(-M_PI / 2), sin(-M_PI / 2), 0,
+      0, -sin(-M_PI / 2), cos(-M_PI / 2), 0,
+      0, 0, 0, 1
+    };
+
+    std::array<double, 16> R_yaw_data = {
+      cos(-M_PI / 2), sin(-M_PI / 2), 0, 0,
+      -sin(-M_PI / 2), cos(-M_PI / 2), 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1
+    };
+
+    Eigen::Matrix4d R_roll(R_roll_data.data());
+    Eigen::Matrix4d R_yaw(R_yaw_data.data());
+    return R_yaw * R_roll;
     // END STUDENT CODE
   }
 

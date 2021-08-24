@@ -1,0 +1,8 @@
+ground_truth_tag_visualizer:
+  ros__parameters:
+    marker_namespace: "ground_truth_markers"
+    marker_color_rgba: [0.0, 1.0, 0.0, 0.5]
+student_tag_visualizer:
+  ros__parameters:
+    marker_namespace: "student_markers"
+    marker_color_rgba: [0.0, 0.0, 1.0, 0.9]
