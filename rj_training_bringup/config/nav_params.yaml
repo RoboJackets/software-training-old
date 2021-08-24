@@ -46,7 +46,8 @@ controller_server:
     FollowPath:
       plugin: "stsl_nav_plugins::PointAndShootController"
       xy_threshold: 0.01
-      max_theta_vel: 1.0
+      max_theta_vel: 0.2
+      max_x_vel: 0.05
       linear_controller:
         kP: 10.0
       angular_controller:
