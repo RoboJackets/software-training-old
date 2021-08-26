@@ -4,19 +4,32 @@ The RoboJackets software training program is designed to prepare you to work on 
 
 ## Trainers
 
-- Vivek Mhatre
-- Matthew Hannay
-- Nicolas Leone
+- Nico Bartholomai
 - Isaac Dale
-- Charlie Jenkins
 - Hussain Gynai
-- Kyle Stachowicz
-- Kevin Fu
+- Matthew Hannay
+- Charlie Jenkins
+- Nicolas Leone
+- Vivek Mhatre
 - Adithya Vasudev
 
 ## Meeting Schedules
 
-TODO
+All new software members will attend two meetings each week. One meeting will be with their competition team. The other is a general training meeting for members of all teams. While each competition team has its own schedule for new member meetings, there are multiple sessions of the general training meetings available. These general sessions are identical and exist just to give more flexible scheduling options.
+
+For more information about team meeting schedules and locations, check with each team's leadership.
+
+### New Member Team Meetings
+- RoboCup
+  - Tuesdays, 7:00 - 9:30pm
+- RoboNav
+  - Sundays, 4:00 - 7:00pm
+- RoboRacing
+  - Mondays, 7:00 - 9:30pm
+
+### General Software Training Meetings
+- Wednesdays, 4:30 - 6:30pm, Location TBD
+- Thursdays, 4:30 - 6:30pm, Location TBD
 
 ## Resources
 
@@ -72,7 +85,7 @@ Each week will culminate in a programming project that uses the tools and techni
 
 Week | Title |  | Description
 --- | --- | --- | ---
-1 | Coordinate Frame Transforms | [Instructions]() | Transform fiducial detections from the camera's frame to the robot's body frame.
+1 | Coordinate Frame Transforms | [Instructions](projects/week_1/Instructions.md) | Transform fiducial detections from the camera's frame to the robot's body frame.
 2 | Color-baesd Obstacle Detection | [Instructions]() | Use HSV color detection and a projective homography to find obstacles near the robot.
 3 | Particle Filter Localization | [Instructions]() | Use a particle filter to localize the robot based on fiducial detections.
 4 | Gradient Descent Optimization | [Instructions]() | Use gradient ascent to guide the robot to the highest simulated elevation on the map.
