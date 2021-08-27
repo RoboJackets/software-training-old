@@ -80,10 +80,10 @@ private:
       get_parameter("obstacle_color_range.max.s").as_int(),
       get_parameter("obstacle_color_range.max.v").as_int());
 
-    cv::Mat detected_colors;
 
     // BEGIN STUDENT CODE
     // Call FindColors()
+    cv::Mat detected_colors;
     // END STUDENT CODE
 
     std::string tf_error_string;
@@ -114,10 +114,9 @@ private:
       camera_matrix, image_msg->header, map_camera_intrinsics,
       map_camera_rotation, map_camera_position);
 
-    cv::Mat projected_colors;
-    
     // BEGIN STUDENT CODE
     // Call ReprojectToGroundPlane
+    cv::Mat projected_colors;
     // END STUDENT CODE
 
     cv::flip(projected_colors, projected_colors, 0);
