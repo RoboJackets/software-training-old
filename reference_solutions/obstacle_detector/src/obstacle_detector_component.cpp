@@ -46,13 +46,13 @@ public:
     // BEGIN STUDENT CODE
     // Initialize publisher and subscriber
     occupancy_grid_publisher_ =
-      create_publisher<nav_msgs::msg::OccupancyGrid>("~/occupancy_grid", 1);
+      create_publisher<nav_msgs::msg::OccupancyGrid>("~/occupancy_grid", rclcpp::SystemDefaultsQoS());
     camera_subscriber_ = image_transport::create_camera_subscription(
       this, "/camera/image_raw",
       std::bind(
         &ObstacleDetector::ImageCallback, this, std::placeholders::_1,
         std::placeholders::_2),
-      "raw", rmw_qos_profile_sensor_data);
+      "raw", rclcpp::SensorDataQoS());
     // END STUDENT CODE
     
     declare_parameters<int>(
@@ -73,8 +73,8 @@ private:
 
   // BEGIN STUDENT CODE
   // Declare subscriber and publisher members
-  image_transport::CameraSubscriber camera_subscriber_;
   rclcpp::Publisher<nav_msgs::msg::OccupancyGrid>::SharedPtr occupancy_grid_publisher_;
+  image_transport::CameraSubscriber camera_subscriber_;
   // END STUDENT CODE
 
   void ImageCallback(
@@ -91,11 +91,10 @@ private:
       get_parameter("obstacle_color_range.max.s").as_int(),
       get_parameter("obstacle_color_range.max.v").as_int());
 
-    cv::Mat detected_colors;
 
     // BEGIN STUDENT CODE
     // Call FindColors()
-    FindColors(cv_image->image, min_color, max_color, detected_colors);
+    cv::Mat detected_colors = FindColors(cv_image->image, min_color, max_color);
     // END STUDENT CODE
 
     std::string tf_error_string;
@@ -126,11 +125,9 @@ private:
       camera_matrix, image_msg->header, map_camera_intrinsics,
       map_camera_rotation, map_camera_position);
 
-    cv::Mat projected_colors;
-    
     // BEGIN STUDENT CODE
     // Call ReprojectToGroundPlane
-    ReprojectToGroundPlane(detected_colors, homography, map_size, projected_colors);
+    cv::Mat projected_colors = ReprojectToGroundPlane(detected_colors, homography, map_size);
     // END STUDENT CODE
 
     cv::flip(projected_colors, projected_colors, 0);

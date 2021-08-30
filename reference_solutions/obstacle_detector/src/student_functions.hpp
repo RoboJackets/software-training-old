@@ -3,12 +3,10 @@
 
 #include <opencv2/opencv.hpp>
 
-void FindColors(
-  const cv::Mat & input, const cv::Scalar & range_min, const cv::Scalar & range_max,
-  cv::Mat & output);
+cv::Mat FindColors(const cv::Mat input, const cv::Scalar range_min, const cv::Scalar range_max);
 
-void ReprojectToGroundPlane(
-  const cv::Mat & input, const cv::Mat & homography,
-  const cv::Size & map_size, cv::Mat & output);
+cv::Mat ReprojectToGroundPlane(
+  const cv::Mat input, const cv::Mat homography,
+  const cv::Size map_size);
 
-#endif  // STUDENT_FUNCTIONS_HPP
+#endif
