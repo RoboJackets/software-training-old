@@ -205,7 +205,7 @@ Finally, after the end of both nested loops, return `output`.
 
 ### 3.5 Call our functions in `ObstacleDetector`
 
-Both of our key functions are now implemented, so it's time to use them by calling them within `ObstacleDetector`. In [obstacle_detector_component.cpp](../../obstacle_detector/src/obstacle_detector_component.cpp), find the student code comment block at the end of the existing set of `#include` lines. Add an `#include` line for your header, "student_functions.hpp".
+Both of our key functions are now implemented, so it's time to use them by calling them within `ObstacleDetector`. In [obstacle_detector.cpp](../../obstacle_detector/src/obstacle_detector.cpp), find the student code comment block at the end of the existing set of `#include` lines. Add an `#include` line for your header, "student_functions.hpp".
 
 Nest, find the student code comments that include `// Call FindColors()`. Within that comment block, you'll see a declared but uninitialized variable named `detected_colors`. Add an initializer for this variable that calls `FindColors`. The input image for `FindColors` is `cv_image->image`, and the color range is given by `min_color` and `max_color`.
 
