@@ -19,11 +19,11 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
   - [3.2 Declare functions](#32-declare-functions)
   - [3.3 Implement `FindColors`](#33-implement-findcolors)
   - [3.4 Implement `ReprojectToGroundPlane`](#34-implement-reprojecttogroundplane)
-  - [3.5 Call `FindColors` in `ObstacleDetector`](#35-call-findcolors-in-obstacledetector)
-  - [3.6 Call `ReprojectToGroundPlane` in `ObstacleDetector`](#36-call-reprojecttogroundplane-in-obstacledetector)
-  - [3.7 Setup publisher](#37-setup-publisher)
-  - [3.8 Setup subscriber](#38-setup-subscriber)
-  - [3.9 Build and test](#39-build-and-test)
+  - [3.5 Call our functions in `ObstacleDetector`](#35-call-our-functions-in-obstacledetector)
+  - [3.6 Setup publisher](#36-setup-publisher)
+  - [3.7 Setup subscriber](#37-setup-subscriber)
+  - [3.8 Build and test](#38-build-and-test)
+  - [3.9 Simplifying our code with library functions](#39-simplifying-our-code-with-library-functions)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -142,10 +142,10 @@ Now we need to iterate over each pixel position in our images. Create two nested
 In the body of our column loop, we can get the color at that position using the `at` function of `cv::Mat`:
 
 ```c++
-const auto input_color = input_hsv.at<cv::Scalar>(r,c);
+const auto input_color = input_hsv.at<cv::Vec3b>(r,c);
 ```
 
-Note that we're asking for the value at that position as a `cv::Scalar` so it's easy to compare against our range variables. Each `cv::Scalar` holds the three channel values that represent the color value at a given pixel. To compare scalars, we can compare each of the channel values individually. `cv::Scalar` provides a square bracket operator so we can access each channel value by its index. For example, to check if channel 0 of our input color is in our target range, we could write this:
+Note that we're asking for the value at that position as a `cv::Vec3b` so it's easy to compare against our range variables. Each `cv::Vec3b` holds the three channel values that represent the color value at a given pixel as a vector (in the math sense, not `std::vector`) of bytes. To compare scalars, we can compare each of the channel values individually. `cv::Vec3b` provides a square bracket operator so we can access each channel value by its index. For example, to check if channel 0 of our input color is in our target range, we could write this:
 
 ```c++
 input_color[0] >= range_min[0] && input_color[0] <= range_max[0]
@@ -163,12 +163,113 @@ Finally, after the end of the nested loops, return our `output` image.
 
 ### 3.4 Implement `ReprojectToGroundPlane`
 
-### 3.5 Call `FindColors` in `ObstacleDetector`
+`ReprojectToGroundPlane` warps `input` using the homography defined by the `homography` matrix. This function will create an output image with the size given by `map_size`. It will then iterate over each pixel position in the output image and calculate the corresponding pixel position in the input image with the homography matrix. Finally, it copies the value from the source position in the source image to the destination position in the output image. Any pixels that get mapped outside of the bounds of the source image will be set to 127 in the output image.
 
-### 3.6 Call `ReprojectToGroundPlane` in `ObstacleDetector`
+Let's start by declaring our output image variable. We'll call it `output` and use `cv::Mat` as its type. Initialize it by passing `map_size` and `CV_8UC1` to its constructor. `map_size` just holds the desired height and width for our output image. `CV_8UC1` tells OpenCV that this image will have one channel of unsigned, 8-bit values. (Our color images so far have been using `CV_8UC3` to store three channels of unsigned, 8-bit values).
 
-### 3.7 Setup publisher
+Next, setup two nested loops to iterate over all pixel positions in `output`. The first loop should iterate from `y = 0` to `y = output.rows-1`. The second loop should iterator from `x = 0` to `x = output.cols-1`.
 
-### 3.8 Setup subscriber
+In the body of our inner nested loop, we're going do these steps:
 
-### 3.9 Build and test
+1. Create a homogeneous point for our current output position
+1. Calculate the homogeneous point for the source image with the homography
+1. Create `cv::Point2i` points for the source and destination positions
+1. If source point is within bounds of source image, copy the color value to output image
+1. If source point is outside bounds of source image, set output position to 127
+
+Start by declaring a constant `cv::Vec3d` named `dest_vec`. Initialize it by passing `x`, `y`, and `1` to the constructor.
+
+Then, declare a constant `cv::Vec3d` named `src_vec`. Initialize this with the result of multiplying the inverse of `homography` by `dest_vec`. Unfortunately, to store this result as a `cv::Vec3d`, we first need to convert it to a `cv::Mat1d`. This is just a quirk of the way OpenCV's types work.
+
+```c++
+const cv::Vec3d src_vec = cv::Mat1d(homography.inv() * dest_vec);
+```
+
+Next, create two constant `cv::Point2i` variables named `dest_point` and `src_point`. `dest_point` should just be initialized with `x` and `y`. `src_point` should be such that its x value is `src_vec[0] / src_vec[2]` and its y value is `src_vec[1] / src_vec[2]`. This division re-normalizes the homogeneous coordinate in `src_vec` so we can get back to 2D coordinates.
+
+Now we have the source and destination points. We just need to check if our source point is actually within the bounds of our source image. `cv::Point2i` gives us the `inside` function that can tell us if the given point is within a `cv::Rect` rectangle. We can create a `cv::Rect` from our input image with `cv::Rect(cv::Point(), input.size())`. Set up an if statement that checks the result of calling `inside` on `src_point` with the `cv::Rect` just described.
+
+Inside of the if statement, copy the value from `input` to `output`:
+
+```c++
+output.at<uint8_t>(dest_point) = input.at<uint8_t>(src_point);
+```
+
+Add an else branch that sets the output location to 127:
+
+```c++
+output.at<uint8_t>(dest_point) = 127;
+```
+
+Finally, after the end of both nested loops, return `output`.
+
+### 3.5 Call our functions in `ObstacleDetector`
+
+Both of our key functions are now implemented, so it's time to use them by calling them within `ObstacleDetector`. In [obstacle_detector_component.cpp](../../obstacle_detector/src/obstacle_detector_component.cpp), find the student code comment block at the end of the existing set of `#include` lines. Add an `#include` line for your header, "student_functions.hpp".
+
+Nest, find the student code comments that include `// Call FindColors()`. Within that comment block, you'll see a declared but uninitialized variable named `detected_colors`. Add an initializer for this variable that calls `FindColors`. The input image for `FindColors` is `cv_image->image`, and the color range is given by `min_color` and `max_color`.
+
+In the same file, find the student code comment block that includes `// Call ReprojectToGroundPlane`. Again, you'll see an uninitialized variable, this time named `projected_colors`. Initialize it by calling `ReprojectToGroundPlane`. The input image here is `detected_colors`. The homography matrix is called `homography`, and the map size is called `map_size`.
+
+### 3.6 Setup publisher
+
+The core logic of our obstacle detection node is ready, but it doesn't actually connect to any ROS topics. We'll start by setting up the publisher that will publish `nav_msgs::msg::OccupancyGrid` messages to the `"~/occupancy_grid"` topic.
+
+Find the student code comment block that includes `// Declare subscriber and publisher members`. With this block, declare a new member variable of type `rclcpp::Publisher<nav_msgs::msg::OccupancyGrid>::SharedPtr`, named `occupancy_grid_publisher_`.
+
+Up in the `ObstacleDetector` constructor, find the student code comment block that includes `// Initialize publisher and subscriber`. Set `occupancy_grid_publisher_` to the returned value of `create_publisher`. The topic should be `"~/occupancy_grid"` and the quality of service setting should be `rclcpp::SystemDefaultQoS()`. Don't forget to specify the message type (`nav_msgs::msg::OccupancyGrid`) as a template parameter.
+
+Now scroll down to find the student code comment block that includes `// Publish occupancy_grid_msg`. Here, call `publish` on `occupancy_grid_publisher_`, passing it `occupancy_grid_msg`. Remember, our publisher object is a shared pointer, so we'll use the arrow syntax (`->`) for accessing the member function.
+
+### 3.7 Setup subscriber
+
+Now that our publisher is setup to get the map data out of our node, we need to setup the subscriber that will pull data into the node. There is a library called "image_transport" that gives us special publisher and subscriber types for efficiently working with image messages and cameras data. We'll be using image_transport's `CameraSubscriber`. This object subscribes to both the image topic and the camera info topic that includes metadata like our cameras intrinsics matrix (sometimes called the "K matrix"). We can then get both the image and camera info data in the same subscriber.
+
+Back in the `// Declare subscriber and publisher members` comment block, declare another member variable of type `image_transport::CameraSubscriber` named `camera_subscriber_`. 
+
+In the `// Initialize publisher and subscriber` comment block, use `image_transport::create_camera_subscription` to initialize `camera_subscriber_`. This is a slightly different interface than the standard `create_subscription` method.
+
+```c++
+camera_subscriber_ = image_transport::create_camera_subscription(
+      this, "/camera/image_raw",
+      std::bind(
+        &ObstacleDetector::ImageCallback, this, std::placeholders::_1,
+        std::placeholders::_2),
+      "raw", rclcpp::SensorDataQoS());
+```
+
+The first argument, `this` gives the function a reference to our node object.
+
+`"/camera/image_raw"` is the image topic we want to subscribe to. The camera info topic, `"/camera/camera_info"`, will be derived from the given image topic.
+
+The call to `std::bind` defines our subscription callback.
+
+`"raw"` is called the "transport hint" and tells image_transport that we're interested in the raw, uncompressed version of the images.
+
+Finally, `rclcpp::SensorDataQoS()` sets our quality of service settings to good defaults for sensor data.
+
+That's it! Our subscription callback, `ImageCallback` already exists, so we don't need any more code to make our subscriber work. All of our ROS inputs and outputs are ready.
+
+### 3.8 Build and test
+
+Build your training workspace with `colcon build`, and run the project using the instructions in [section 2](#2-running-this-project). Debug any problems you find before continuing. Once you do have your output working and looking like the examples in section 2, congratulations! You've just implemented two perception functions that have been the backbone of many robots! Both RoboNav and RoboRacing have won trophies using code that largely boiled down to these two functions. They are unreasonably good at what they do for how simple they are.
+
+### 3.9 Simplifying our code with library functions
+
+Of course, because these two operations are so common, there are functions that come with OpenCV to do exactly these steps. We can rewrite both of our nested loop pairs with single calls to some library functions.
+
+In your `FindColors` implementation, the nested loops can be replaced with `cv::inRange`. This does exactly the same thing our loops did.
+
+```c++
+cv::inRange(input_hsv, range_min, range_max, output);
+```
+
+In `ReprojectToGroundPlane`, the nested loops can be replaced by calling `warpPerspective`. Again, this function does exactly the same thing that our loops implemented.
+
+```c++
+cv::warpPerspective(
+    input, output, homography, map_size, cv::INTER_NEAREST, cv::BORDER_CONSTANT,
+    cv::Scalar(127));
+```
+
+While implementing these algorithms ourselves is a good way to understand what they do, in "real code" there's almost never a reason to do so. Using library functions like these makes our code much easier to write and maintain. If you've done everything completely right, you should be able to switch between your loops and the library functions without noticing a difference in the node's behavior.
