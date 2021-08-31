@@ -86,7 +86,7 @@ Each week will culminate in a programming project that uses the tools and techni
 Week | Title |  | Description
 --- | --- | --- | ---
 1 | Coordinate Frame Transforms | [Instructions](projects/week_1/Instructions.md) | Transform fiducial detections from the camera's frame to the robot's body frame.
-2 | Color-baesd Obstacle Detection | [Instructions](projects/week_2/Instructions.md) | Use HSV color detection and a projective homography to find obstacles near the robot.
+2 | Color-based Obstacle Detection | [Instructions](projects/week_2/Instructions.md) | Use HSV color detection and a projective homography to find obstacles near the robot.
 3 | Particle Filter Localization | [Instructions]() | Use a particle filter to localize the robot based on fiducial detections.
 4 | Gradient Descent Optimization | [Instructions]() | Use gradient ascent to guide the robot to the highest simulated elevation on the map.
 5 | Mapping | [Instructions]() | Build a map of the environment with a probablistic occupancy grid.
