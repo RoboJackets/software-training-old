@@ -131,7 +131,7 @@ cv::cvtColor(input, input_hsv, cv::COLOR_BGR2HSV);
 
 Note that the conversion type uses "BGR". This color space uses the same channels as RGB, just in the opposite order in the image data. OpenCV uses BGR as the default color space for color images.
 
-Next, declare another `cv::Mat` variable that will hold our output image, named `outupt`. We'll initialise this variable to be the same size as our input image while holding one channel of unsigned, 8-bit values.
+Next, declare another `cv::Mat` variable that will hold our output image, named `output`. We'll initialize this variable to be the same size as our input image while holding one channel of unsigned, 8-bit values.
 
 ```c++
 cv::Mat output(input.size(), CV_8UC1);
@@ -207,7 +207,7 @@ Finally, after the end of both nested loops, return `output`.
 
 Both of our key functions are now implemented, so it's time to use them by calling them within `ObstacleDetector`. In [obstacle_detector.cpp](../../obstacle_detector/src/obstacle_detector.cpp), find the student code comment block at the end of the existing set of `#include` lines. Add an `#include` line for your header, "student_functions.hpp".
 
-Nest, find the student code comments that include `// Call FindColors()`. Within that comment block, you'll see a declared but uninitialized variable named `detected_colors`. Add an initializer for this variable that calls `FindColors`. The input image for `FindColors` is `cv_image->image`, and the color range is given by `min_color` and `max_color`.
+Next, find the student code comments that include `// Call FindColors()`. Within that comment block, you'll see a declared but uninitialized variable named `detected_colors`. Add an initializer for this variable that calls `FindColors`. The input image for `FindColors` is `cv_image->image`, and the color range is given by `min_color` and `max_color`.
 
 In the same file, find the student code comment block that includes `// Call ReprojectToGroundPlane`. Again, you'll see an uninitialized variable, this time named `projected_colors`. Initialize it by calling `ReprojectToGroundPlane`. The input image here is `detected_colors`. The homography matrix is called `homography`, and the map size is called `map_size`.
 
