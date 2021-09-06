@@ -28,8 +28,12 @@ For more information about team meeting schedules and locations, check with each
   - Mondays, 7:00 - 9:30pm
 
 ### General Software Training Meetings
-- Wednesdays, 4:30 - 6:30pm, Location TBD
-- Thursdays, 4:30 - 6:30pm, Location TBD
+- Wednesdays
+  - 4:30 - 6:30pm
+  - Van Leer, room C241
+- Thursdays
+  - 4:30 - 6:30pm
+  - Molecular Science and Engineering Building (MoSE), room 1201A
 
 ## Resources
 
