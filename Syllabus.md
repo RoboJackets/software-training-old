@@ -21,7 +21,7 @@ For more information about team meeting schedules and locations, check with each
 
 ### New Member Team Meetings
 - RoboCup
-  - Tuesdays, 7:00 - 9:30pm
+  - Sundays, 7:00 - 9:30pm
 - RoboNav
   - Sundays, 4:00 - 7:00pm
 - RoboRacing
