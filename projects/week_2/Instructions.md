@@ -15,15 +15,17 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 - [1 Background](#1-background)
 - [2 Running this project](#2-running-this-project)
 - [3 Instructions](#3-instructions)
-  - [3.1 Create new files](#31-create-new-files)
-  - [3.2 Declare functions](#32-declare-functions)
-  - [3.3 Implement `FindColors`](#33-implement-findcolors)
-  - [3.4 Implement `ReprojectToGroundPlane`](#34-implement-reprojecttogroundplane)
-  - [3.5 Call our functions in `ObstacleDetector`](#35-call-our-functions-in-obstacledetector)
-  - [3.6 Setup publisher](#36-setup-publisher)
-  - [3.7 Setup subscriber](#37-setup-subscriber)
-  - [3.8 Build and test](#38-build-and-test)
-  - [3.9 Simplifying our code with library functions](#39-simplifying-our-code-with-library-functions)
+  - [3.1 Get the latest starter code](#31-get-the-latest-starter-code)
+  - [3.2 Create new files](#32-create-new-files)
+  - [3.3 Declare functions](#33-declare-functions)
+  - [3.4 Implement `FindColors`](#34-implement-findcolors)
+  - [3.5 Implement `ReprojectToGroundPlane`](#35-implement-reprojecttogroundplane)
+  - [3.6 Call our functions in `ObstacleDetector`](#36-call-our-functions-in-obstacledetector)
+  - [3.7 Setup publisher](#37-setup-publisher)
+  - [3.8 Setup subscriber](#38-setup-subscriber)
+  - [3.9 Build and test](#39-build-and-test)
+  - [3.10 Simplifying our code with library functions](#310-simplifying-our-code-with-library-functions)
+  - [3.11 Commit your new code in git](#311-commit-your-new-code-in-git)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -53,7 +55,16 @@ Once you've got your code working, you should see a map show up in rviz's 3D vie
 
 ## 3 Instructions
 
-### 3.1 Create new files
+### 3.1 Get the latest starter code
+
+To make sure you're starting with the latest starter code, pull from the git server in your copy of the software-training repository.
+
+```bash
+$ cd training_ws/src/software-training
+$ git pull
+```
+
+### 3.2 Create new files
 
 You'll be implementing the two steps of this project, color detection and re-projection, as new fuctions defined in separate files from the node's main file. The first thing we need to do is add these files to our package.
 
@@ -82,7 +93,7 @@ Find the student code block in the call to `add_library`. Add our new implementa
 
 **Note:** We don't need to add our header file, because it gets compiled as part of the files that include it.
 
-### 3.2 Declare functions
+### 3.3 Declare functions
 
 Let's now declare the two functions we'll be creating for this project. First, because our functions will be using objects from the [OpenCV library](https://opencv.org/) for computer vision, we need to include a header from that library.
 
@@ -102,7 +113,7 @@ Finally, add the declaration for our second function. This function should be na
 1. A constant `cv::Mat` named `homography`
 1. A constant `cv::Size` named `map_size`
 
-### 3.3 Implement `FindColors`
+### 3.4 Implement `FindColors`
 
 It's now time to implement our `FindColors` function. This function needs to check each pixel in `input` to see if the color value at that pixel is within the range defined by `range_min` and `range_max`. In our output image, any pixels whose color values were within the range will be set to white, and the rest will be set to black.
 
@@ -161,7 +172,7 @@ Add an else block to our if statement. In this branch, set the output value to 0
 
 Finally, after the end of the nested loops, return our `output` image.
 
-### 3.4 Implement `ReprojectToGroundPlane`
+### 3.5 Implement `ReprojectToGroundPlane`
 
 `ReprojectToGroundPlane` warps `input` using the homography defined by the `homography` matrix. This function will create an output image with the size given by `map_size`. It will then iterate over each pixel position in the output image and calculate the corresponding pixel position in the input image with the homography matrix. Finally, it copies the value from the source position in the source image to the destination position in the output image. Any pixels that get mapped outside of the bounds of the source image will be set to 127 in the output image.
 
@@ -203,7 +214,7 @@ output.at<uint8_t>(dest_point) = 127;
 
 Finally, after the end of both nested loops, return `output`.
 
-### 3.5 Call our functions in `ObstacleDetector`
+### 3.6 Call our functions in `ObstacleDetector`
 
 Both of our key functions are now implemented, so it's time to use them by calling them within `ObstacleDetector`. In [obstacle_detector.cpp](../../obstacle_detector/src/obstacle_detector.cpp), find the student code comment block at the end of the existing set of `#include` lines. Add an `#include` line for your header, "student_functions.hpp".
 
@@ -211,7 +222,7 @@ Next, find the student code comments that include `// Call FindColors()`. Within
 
 In the same file, find the student code comment block that includes `// Call ReprojectToGroundPlane`. Again, you'll see an uninitialized variable, this time named `projected_colors`. Initialize it by calling `ReprojectToGroundPlane`. The input image here is `detected_colors`. The homography matrix is called `homography`, and the map size is called `map_size`.
 
-### 3.6 Setup publisher
+### 3.7 Setup publisher
 
 The core logic of our obstacle detection node is ready, but it doesn't actually connect to any ROS topics. We'll start by setting up the publisher that will publish `nav_msgs::msg::OccupancyGrid` messages to the `"~/occupancy_grid"` topic.
 
@@ -221,7 +232,7 @@ Up in the `ObstacleDetector` constructor, find the student code comment block th
 
 Now scroll down to find the student code comment block that includes `// Publish occupancy_grid_msg`. Here, call `publish` on `occupancy_grid_publisher_`, passing it `occupancy_grid_msg`. Remember, our publisher object is a shared pointer, so we'll use the arrow syntax (`->`) for accessing the member function.
 
-### 3.7 Setup subscriber
+### 3.8 Setup subscriber
 
 Now that our publisher is setup to get the map data out of our node, we need to setup the subscriber that will pull data into the node. There is a library called "image_transport" that gives us special publisher and subscriber types for efficiently working with image messages and cameras data. We'll be using image_transport's `CameraSubscriber`. This object subscribes to both the image topic and the camera info topic that includes metadata like our cameras intrinsics matrix (sometimes called the "K matrix"). We can then get both the image and camera info data in the same subscriber.
 
@@ -250,11 +261,11 @@ Finally, `rclcpp::SensorDataQoS()` sets our quality of service settings to good 
 
 That's it! Our subscription callback, `ImageCallback` already exists, so we don't need any more code to make our subscriber work. All of our ROS inputs and outputs are ready.
 
-### 3.8 Build and test
+### 3.9 Build and test
 
 Build your training workspace with `colcon build`, and run the project using the instructions in [section 2](#2-running-this-project). Debug any problems you find before continuing. Once you do have your output working and looking like the examples in section 2, congratulations! You've just implemented two perception functions that have been the backbone of many robots! Both RoboNav and RoboRacing have won trophies using code that largely boiled down to these two functions. They are unreasonably good at what they do for how simple they are.
 
-### 3.9 Simplifying our code with library functions
+### 3.10 Simplifying our code with library functions
 
 Of course, because these two operations are so common, there are functions that come with OpenCV to do exactly these steps. We can rewrite both of our nested loop pairs with single calls to some library functions.
 
@@ -273,3 +284,11 @@ cv::warpPerspective(
 ```
 
 While implementing these algorithms ourselves is a good way to understand what they do, in "real code" there's almost never a reason to do so. Using library functions like these makes our code much easier to write and maintain. If you've done everything completely right, you should be able to switch between your loops and the library functions without noticing a difference in the node's behavior.
+
+### 3.11 Commit your new code in git
+
+Once you've got your code for this project working, use the command below to commit it into git. This will make it easier to grab changes to the starter code for the remaining projects.
+
+```bash
+$ git commit -a -m "My project 2 code."
+```
