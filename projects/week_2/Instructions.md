@@ -80,7 +80,7 @@ Finally, to include our new files into our package's build rules, we need to edi
 
 Find the student code block in the call to `add_library`. Add our new implementation file, `src/student_code.cpp` to this function call.
 
-**Note:** We don't need to add our header file, because it gets compiled as part of the files that include it. Most C++ projects omit header files from the build rules unless there are special technical reasons that require them to be there.
+**Note:** We don't need to add our header file, because it gets compiled as part of the files that include it.
 
 ### 3.2 Declare functions
 
@@ -131,7 +131,7 @@ cv::cvtColor(input, input_hsv, cv::COLOR_BGR2HSV);
 
 Note that the conversion type uses "BGR". This color space uses the same channels as RGB, just in the opposite order in the image data. OpenCV uses BGR as the default color space for color images.
 
-Next, declare another `cv::Mat` variable that will hold our output image, named `output`. We'll initialize this variable to be the same size as our input image while holding one channel of unsigned, 8-bit values.
+Next, declare another `cv::Mat` variable that will hold our output image, named `output`. We'll initialize this variable such that its size matches our input image's size. `CV_8UC1` tells OpenCV that this image will have one channel of unsigned, 8-bit values. (Our color images so far have been using `CV_8UC3` to store three channels of unsigned, 8-bit values).
 
 ```c++
 cv::Mat output(input.size(), CV_8UC1);
@@ -165,7 +165,7 @@ Finally, after the end of the nested loops, return our `output` image.
 
 `ReprojectToGroundPlane` warps `input` using the homography defined by the `homography` matrix. This function will create an output image with the size given by `map_size`. It will then iterate over each pixel position in the output image and calculate the corresponding pixel position in the input image with the homography matrix. Finally, it copies the value from the source position in the source image to the destination position in the output image. Any pixels that get mapped outside of the bounds of the source image will be set to 127 in the output image.
 
-Let's start by declaring our output image variable. We'll call it `output` and use `cv::Mat` as its type. Initialize it by passing `map_size` and `CV_8UC1` to its constructor. `map_size` just holds the desired height and width for our output image. `CV_8UC1` tells OpenCV that this image will have one channel of unsigned, 8-bit values. (Our color images so far have been using `CV_8UC3` to store three channels of unsigned, 8-bit values).
+Let's start by declaring our output image variable. We'll call it `output` and use `cv::Mat` as its type. Initialize it by passing `map_size` and `CV_8UC1` to its constructor. `map_size` just holds the desired height and width for our output image.
 
 Next, setup two nested loops to iterate over all pixel positions in `output`. The first loop should iterate from `y = 0` to `y = output.rows-1`. The second loop should iterator from `x = 0` to `x = output.cols-1`.
 
