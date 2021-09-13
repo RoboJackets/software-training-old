@@ -87,7 +87,7 @@ Week | Robotics Theory | ROS | C++
 
 Robotics theory videos should be watched before your team-specific meetings. C++ and ROS videos should be watched before the general training meetings. You should watch the C++ videos before the ROS videos for a given week.
 
-[Course Introduction Video](https://youtu.be/Rz6zcpVQvNo)
+[Course Introduction Video](https://youtu.be/LZ4-nDEAFcY)
 
 Week | Robotics Theory | C++ | ROS
 --- | --- | --- | ---
