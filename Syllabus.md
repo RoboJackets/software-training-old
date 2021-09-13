@@ -21,15 +21,19 @@ For more information about team meeting schedules and locations, check with each
 
 ### New Member Team Meetings
 - RoboCup
-  - Tuesdays, 7:00 - 9:30pm
+  - Sundays, 7:00 - 9:30pm
 - RoboNav
   - Sundays, 4:00 - 7:00pm
 - RoboRacing
   - Mondays, 7:00 - 9:30pm
 
 ### General Software Training Meetings
-- Wednesdays, 4:30 - 6:30pm, Location TBD
-- Thursdays, 4:30 - 6:30pm, Location TBD
+- Wednesdays
+  - 4:30 - 6:30pm
+  - Van Leer, room C241
+- Thursdays
+  - 4:30 - 6:30pm
+  - Molecular Science and Engineering Building (MoSE), room 1201A
 
 ## Resources
 
@@ -79,6 +83,24 @@ Week | Robotics Theory | ROS | C++
 7 | Control | Actions | 
 8 | Path Planning | rosbag | Iterators, Algorithms
 
+## Video Schedule
+
+Robotics theory videos should be watched before your team-specific meetings. C++ and ROS videos should be watched before the general training meetings. You should watch the C++ videos before the ROS videos for a given week.
+
+[Course Introduction Video](https://youtu.be/LZ4-nDEAFcY)
+
+Week | Robotics Theory | C++ | ROS
+--- | --- | --- | ---
+0 | | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2AOCmSaLdDlBMug5XFNfwv) | 
+1 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2RjafLHG9lqNqZ2rzH_hdQ) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1TChL2Lkm6PQQnOPRSIpDK) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0y1U3yHAkCYJXXL-GiJDwF)
+2 | | |
+3 | | |
+4 | | |
+5 | | |
+6 | | |
+7 | | |
+8 | | |
+
 ## Project Schedule
 
 Each week will culminate in a programming project that uses the tools and techniques covered. The projects build on each other to produce the complete software stack needed to get a custom robot to execute a challenge game.
@@ -87,9 +109,9 @@ Week | Title |  | Description
 --- | --- | --- | ---
 1 | Coordinate Frame Transforms | [Instructions](projects/week_1/Instructions.md) | Transform fiducial detections from the camera's frame to the robot's body frame.
 2 | Color-based Obstacle Detection | [Instructions](projects/week_2/Instructions.md) | Use HSV color detection and a projective homography to find obstacles near the robot.
-3 | Particle Filter Localization | [Instructions]() | Use a particle filter to localize the robot based on fiducial detections.
-4 | Gradient Descent Optimization | [Instructions]() | Use gradient ascent to guide the robot to the highest simulated elevation on the map.
-5 | Mapping | [Instructions]() | Build a map of the environment with a probablistic occupancy grid.
-6 | Kalman Filter Tracking | [Instructions]() | Track mineral deposits with a kalman filter.
-7 | LQR Controller | [Instructions]() | Control the robot's motion with an LQR controller.
-8 | A-Star Path Planning | [Instructions]() | Teach the robot how to avoid obstacles with the A-Star path planning algorithm.
+3 | Particle Filter Localization | | Use a particle filter to localize the robot based on fiducial detections.
+4 | Gradient Descent Optimization | | Use gradient ascent to guide the robot to the highest simulated elevation on the map.
+5 | Mapping | | Build a map of the environment with a probablistic occupancy grid.
+6 | Kalman Filter Tracking | | Track mineral deposits with a kalman filter.
+7 | LQR Controller | | Control the robot's motion with an LQR controller.
+8 | A-Star Path Planning | | Teach the robot how to avoid obstacles with the A-Star path planning algorithm.
