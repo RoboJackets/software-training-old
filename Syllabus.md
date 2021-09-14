@@ -4,6 +4,7 @@ The RoboJackets software training program is designed to prepare you to work on 
 
 ## Trainers
 
+- Navaneet Kadaba (Software Training Lead)
 - Nico Bartholomai
 - Isaac Dale
 - Hussain Gynai
