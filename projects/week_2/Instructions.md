@@ -76,6 +76,13 @@ $ cd training_ws/src/software-training
 $ git pull
 ```
 
+You'll also want to make sure you've got the latest version of the training support library by running an apt package update.
+
+```bash
+$ sudo apt update
+$ sudo apt upgrade
+```
+
 ### 3.2 Create new files
 
 You'll be implementing the two steps of this project, color detection and re-projection, as new fuctions defined in separate files from the node's main file. The first thing we need to do is add these files to our package.

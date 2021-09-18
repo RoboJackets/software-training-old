@@ -52,6 +52,13 @@ $ cd training_ws/src/software-training
 $ git pull
 ```
 
+You'll also want to make sure you've got the latest version of the training support library by running an apt package update.
+
+```bash
+$ sudo apt update
+$ sudo apt upgrade
+```
+
 ### 2.2 Test the simulator
    
 Before we start writing code, let's take a moment to introduce you to the robot simulator. To start the simulator, launch the `traini_simulation.launch.py` file in the `traini_bringup` package.
