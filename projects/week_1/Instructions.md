@@ -135,7 +135,7 @@ Can be represented in row order by this array:
 
 <code>{ 1, 0, 0, 0, 1, 0, 0, 0, 1 }</code>
 
-Now, fill out your arrays with the correct values to represent a rotation transformation matrix. `R_roll_data` should represent a rotation of -&pi;/2 radians about the X axis. `R_yaw_data` should represent a rotation of -&pi;/2 radians about the Z axis.
+Now, fill out your arrays with the correct values to represent a rotation transformation matrix. `R_roll_data` should represent a rotation of &pi;/2 radians about the X axis. `R_yaw_data` should represent a rotation of &pi;/2 radians about the Z axis.
 
 **Tip:** In C++, you can use the special constant `M_PI` to get the value of &pi;.
 
@@ -172,7 +172,7 @@ Eigen::Matrix4d R_roll(R_roll_data.data());
 Eigen::Matrix4d R_yaw(R_yaw_data.data());
 ```
 
-Finally, modify the return statement to return the result of `R_roll * R_yaw`.
+Finally, modify the return statement to return the result of `R_yaw * R_roll`.
 
 ### 2.5 Make a vector to hold our transformed tags
 
