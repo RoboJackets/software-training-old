@@ -117,10 +117,10 @@ Week | Title |  | Description
 7 | LQR Controller | | Control the robot's motion with an LQR controller.
 8 | A-Star Path Planning | | Teach the robot how to avoid obstacles with the A-Star path planning algorithm.
 
-## Robotics Theory Worksheet
+## Robotics Theory Worksheets
 Week | Title | Worksheet | Solutions
 --- | --- | --- | ---
-1 | Coordiante Frames, Sensors, Linear | [Sheet](https://drive.google.com/file/d/1RSI5FDaifu5RI0Zk8mrcxu_oQC9gFEAS/view?usp=sharing) | [Solutions](https://drive.google.com/file/d/1LZhwLFQjPbsGK8R7Md7tE79cBLSYIphd/view?usp=sharing)
+1 | Coordinate Frames, Sensors, Linear | [Sheet](https://drive.google.com/file/d/1RSI5FDaifu5RI0Zk8mrcxu_oQC9gFEAS/view?usp=sharing) | [Solutions](https://drive.google.com/file/d/1LZhwLFQjPbsGK8R7Md7tE79cBLSYIphd/view?usp=sharing)
 2 | | |
 3 | | |
 4 | | |
