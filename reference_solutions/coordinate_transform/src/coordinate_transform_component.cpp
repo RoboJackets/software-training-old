@@ -131,14 +131,14 @@ private:
     // BEGIN STUDENT CODE
     std::array<double, 16> R_roll_data = {
       1, 0, 0, 0,
-      0, cos(-M_PI / 2), sin(-M_PI / 2), 0,
-      0, -sin(-M_PI / 2), cos(-M_PI / 2), 0,
+      0, cos(M_PI / 2), -sin(M_PI / 2), 0,
+      0, sin(M_PI / 2), cos(M_PI / 2), 0,
       0, 0, 0, 1
     };
 
     std::array<double, 16> R_yaw_data = {
-      cos(-M_PI / 2), sin(-M_PI / 2), 0, 0,
-      -sin(-M_PI / 2), cos(-M_PI / 2), 0, 0,
+      cos(M_PI / 2), -sin(M_PI / 2), 0, 0,
+      sin(M_PI / 2), cos(M_PI / 2), 0, 0,
       0, 0, 1, 0,
       0, 0, 0, 1
     };
