@@ -17,7 +17,7 @@ This document will help you get started using the RoboJackets Software Virtualbo
 
 3. Get a Copy of the built Image
 
-   First start by downloading the [[https://cloud.robojackets.org/f/342830][prebuilt image]].
+   First start by downloading the [[https://mirror.robojackets.org/software_training_fall_2021.ova][prebuilt image]].
 
 4. Import Image into VirtualBox
 
