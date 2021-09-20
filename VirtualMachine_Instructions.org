@@ -1,7 +1,4 @@
-
 * RoboJackets Virtual Machine Setup Guide
-
-Scroll to the bottom for Docker setup.
 
 This document will help you get started using the RoboJackets Software Virtualbox Image
 
@@ -67,20 +64,3 @@ This document will help you get started using the RoboJackets Software Virtualbo
     2. If you are having other graphical issues check how much VRAM is allocated by right clicking the virtualbox entry and hitting =Settings=. Then, go to the =Display= tab and confirm that =VRAM= is set to 128 MB and the =Enable 3D Acceleration= checkbox is checked. 
         
     3. Check to see if too much memory/cpu's have been allocated to the virtual machine by right clicking the virtualbox entry and hitting =Settings=. Then, go to the =System= tab and check that the=Memory= slider on the =Motherboard= tab is set to around half of your total system RAM. Finally, go to the =Processor= tab and check that the =Processor(s)= slider is set to between 1 and half of your total system CPU cores and that the =Exectuion Cap= is set to 100%.
-    
-
-* RoboJackets Docker Image Setup Guide
-
-If you would prefer to use Docker (or your computer does not support VirtualBox) follow this guide.
-
-1. Download Docker: https://docs.docker.com/get-docker/
-2. In your terminal run: `docker pull thecharlesjenkins/robojackets-software-training`
-3. Run `docker run  --rm -p 6080:80 -p 6081:443 --mount source=rj-training-home,destination=/home/padowan --mount source=rj-training-usr,destination=/usr -e USER=padowan -e PASSWORD=robojackets --name training thecharlesjenkins/robojackets-software-training -h training`.
-4. Navigate to `localhost:6080` in your browser and wait (it may take a while).
-5. Start training! You will also have access to the repos for robonav, roboracing, and robocup.
-6. Anytime password is needed fill in with `robojackets` or whatever you put as the argument to the environment variable in step 3.
-
-If the above does not work on you computer, you can replace steps 2 and three with:
-2. `docker pull thecharlesjenkins/robojackets-software-training:m1`
-3. Run `docker run  --rm -p 5900:5900 --mount source=rj-training-home,destination=/home/padowan --mount source=rj-training-usr,destination=/usr -e USER=padowan -e PASSWORD=robojackets --name training thecharlesjenkins/robojackets-software-training:m1 -h training`
-4. Use a VNC viewer to navigate to localhost:5900. On Safari you can do `vnc://localhost:5900`
