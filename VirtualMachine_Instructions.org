@@ -49,7 +49,7 @@ This document will help you get started using the RoboJackets Software Virtualbo
    | robojackets | robojackets  |
    |---------+----------|
 
-   The sudo password is =vagrant=.
+   The sudo password is =robojackets=.
 
 7. You Made It! :tada:
     If you are having issues see the troubleshooting section below
