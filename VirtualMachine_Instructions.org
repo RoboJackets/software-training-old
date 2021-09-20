@@ -83,4 +83,4 @@ If you would prefer to use Docker (or your computer does not support VirtualBox)
 If the above does not work on you computer, you can replace steps 2 and three with:
 2. `docker pull thecharlesjenkins/robojackets-software-training:m1`
 3. Run `docker run  --rm -p 5900:5900 --mount source=rj-training-home,destination=/home/padowan --mount source=rj-training-usr,destination=/usr -e USER=padowan -e PASSWORD=robojackets --name training thecharlesjenkins/robojackets-software-training:m1 -h training`
-4. Use a VNC viewer to navegate to localhost:5900. On Safari you can do `vnc://localhost:5900`
+4. Use a VNC viewer to navigate to localhost:5900. On Safari you can do `vnc://localhost:5900`
