@@ -94,7 +94,7 @@ Week | Robotics Theory | C++ | ROS
 --- | --- | --- | ---
 0 | | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2AOCmSaLdDlBMug5XFNfwv) | 
 1 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2RjafLHG9lqNqZ2rzH_hdQ) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1TChL2Lkm6PQQnOPRSIpDK) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0y1U3yHAkCYJXXL-GiJDwF)
-2 | | |
+2 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0cFU3nGomLr8cIUaKun6bl) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3KemZ2wqInhNm-db8kR88r) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0wxbvXIiNeEr12aoO_VX_8)
 3 | | |
 4 | | |
 5 | | |
@@ -121,7 +121,7 @@ Week | Title |  | Description
 Week | Title | Worksheet | Solutions
 --- | --- | --- | ---
 1 | Coordinate Frames, Sensors, Linear | [Sheet](https://drive.google.com/file/d/1RSI5FDaifu5RI0Zk8mrcxu_oQC9gFEAS/view?usp=sharing) | [Solutions](https://drive.google.com/file/d/1LZhwLFQjPbsGK8R7Md7tE79cBLSYIphd/view?usp=sharing)
-2 | | |
+2 | Computer Vision | [Sheet](https://drive.google.com/file/d/1WPaKruCqwO1BnkNg9nxosYZ5uVZSZLNn/view?usp=sharing) |
 3 | | |
 4 | | |
 5 | | |
