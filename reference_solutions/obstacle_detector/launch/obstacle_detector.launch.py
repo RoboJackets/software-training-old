@@ -18,19 +18,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+import os
 from launch import LaunchDescription
-from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
+from ament_index_python.packages import get_package_share_directory
 
 
 def generate_launch_description():
+    parameters_file_path = os.path.join(get_package_share_directory(
+        'obstacle_detector'), 'config', 'obstacle_detector_parameters.yaml')
+
     return LaunchDescription([
         Node(
-            package='coordinate_transform',
-            executable='coordinate_transform_node',
+            package='obstacle_detector',
+            executable='obstacle_detector_node',
             output='screen',
-            parameters=[
-                {'use_sim_time': LaunchConfiguration('use_sim_time', default='false')}
-            ]
+            parameters=[parameters_file_path]
         )
     ])

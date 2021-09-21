@@ -14,6 +14,7 @@ find_package(OpenCV 4 REQUIRED)
 add_library(${PROJECT_NAME} SHARED 
   src/obstacle_detector.cpp
 # BEGIN STUDENT CODE
+  src/student_functions.cpp
 # END STUDENT CODE
 )
 ament_target_dependencies(${PROJECT_NAME}
