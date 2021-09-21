@@ -30,7 +30,7 @@ ParticleFilterLocalizer::ParticleFilterLocalizer(const rclcpp::NodeOptions & opt
   tf_buffer_(get_clock()), tf_listener_(tf_buffer_), tf_broadcaster_(*this),
   noise_(std::make_shared<ParticleNoise>()), motion_model_(noise_, this)
 {
-  std::cout << "out" <<std::endl;
+  // BEGIN STUDENT CODE
   cmd_sub_ = create_subscription<geometry_msgs::msg::Twist>(
           "/cmd_vel", 10, std::bind(&ParticleFilterLocalizer::CmdCallback, this, std::placeholders::_1));
   odom_pub_ = create_publisher<nav_msgs::msg::Odometry>("~/pose_estimate", 1);
@@ -72,6 +72,7 @@ ParticleFilterLocalizer::ParticleFilterLocalizer(const rclcpp::NodeOptions & opt
   // check what is enabled
   sensor_models_.push_back(std::move(std::make_unique<ArucoSensorModel>(this)));
   sensor_models_.push_back(std::move(std::make_unique<OdometrySensorModel>(this)));
+  // END STUDENT CODE
 }
 
 void ParticleFilterLocalizer::CmdCallback(const geometry_msgs::msg::Twist::SharedPtr msg)
@@ -98,12 +99,11 @@ void ParticleFilterLocalizer::NormalizeWeights()
   // run through list of particles and normalize the weights
 
   // TODO should be just finding pivot
-  std::sort(particles_.begin(), particles_.end(),
+  auto index_to_drop = std::round(get_parameter("low_percentage_particles_to_drop").as_double() * num_particles_);
+  std::nth_element(particles_.begin(), particles_.begin() + index_to_drop, particles_.end(),
             [](const Particle& lhs, const Particle& rhs) {return lhs.weight < rhs.weight;});
 
-  double low_percentage_particles_to_drop = get_parameter("low_percentage_particles_to_drop").as_double();
-  double smallest_weight_to_allow =
-          particles_.at(num_particles_*low_percentage_particles_to_drop).weight;
+  double smallest_weight_to_allow = particles_.at(index_to_drop).weight;
 
   double normalizer = 0;
   for(Particle & particle : particles_)
@@ -208,6 +208,7 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
   NormalizeWeights();
 
   Particle best_estimate_particle;
+  // yaw_sum_2 is the sum with a different discontinuity
   double yaw_sum_2 = 0;
   for(const Particle & particle : particles_)
   {
@@ -223,11 +224,16 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
     {
       yaw += 2*M_PI;
     }
+    // estimate is zero is facing pi/2
     yaw_sum_2 += yaw * particle.weight;
   }
+  // if very close to the discontinuity of pi--pi, use the one with
+  // a discontinuity at a different place
   if (abs(yaw_sum_2 - M_PI) < 1.0){
     best_estimate_particle.yaw = yaw_sum_2;
   }
+
+  // ensure that the yaw is in the range [-pi, pi]
   while(best_estimate_particle.yaw >= M_PI)
   {
     best_estimate_particle.yaw -= 2*M_PI;
@@ -244,6 +250,7 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
     cov.x += pow(best_estimate_particle.x - particle.x, 2)*particle.weight;
     cov.y += pow(best_estimate_particle.y - particle.y, 2)*particle.weight;
     double yaw_error = best_estimate_particle.yaw - particle.yaw;
+    // ensure yaw error is handled with discontinuity correctly. Cannot be larger than pi
     while (yaw_error >= M_PI)
     {
       yaw_error -= M_PI;
@@ -265,10 +272,33 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
   cov.vx /= (1-cov_normalizer);
   cov.yaw_rate /= (1-cov_normalizer);
 
+  rclcpp::Time current_time = now();
+
+  nav_msgs::msg::Odometry odom_msg;
+  odom_msg.header.frame_id = "map";
+  odom_msg.header.stamp = current_time;
+  odom_msg.pose.pose.position.x = best_estimate_particle.x;
+  odom_msg.pose.pose.position.y = best_estimate_particle.y;
+  tf2::Quaternion quaternion;
+  quaternion.setRPY(0,0,best_estimate_particle.yaw);
+  odom_msg.pose.pose.orientation = tf2::toMsg(quaternion);
+  odom_msg.twist.twist.linear.x = best_estimate_particle.vx;
+  odom_msg.twist.twist.angular.z = best_estimate_particle.yaw_rate;
+
+  odom_msg.pose.covariance[0] = cov.x;
+  odom_msg.pose.covariance[7] = cov.y;
+  odom_msg.pose.covariance[35] = cov.yaw;
+
+  odom_msg.twist.covariance[0] = cov.vx;
+  odom_msg.twist.covariance[35] = cov.yaw_rate;
+  odom_pub_->publish(odom_msg);
+
+  // TODO
+
   // use estimated pose to determine the new transform from odom to calculated odom position
   geometry_msgs::msg::TransformStamped transform;
   transform.header.frame_id = "map";
-  transform.header.stamp = now();
+  transform.header.stamp = current_time;
   transform.child_frame_id = "odom";
   transform.transform.rotation.w = 1;
   transform.transform.rotation.x = 0;
@@ -279,8 +309,6 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
   transform.transform.translation.z = 0;
   tf_broadcaster_.sendTransform(transform);
 
-  // TODO how to publish uncertainty
-
   PublishParticleVisualization();
 }
 
@@ -290,7 +318,7 @@ void ParticleFilterLocalizer::PublishParticleVisualization()
 
   // publish visualization of all particles likelihood
   visualization_msgs::msg::Marker marker;
-  marker.header.frame_id = "/odom";
+  marker.header.frame_id = "map";
   marker.type = visualization_msgs::msg::Marker::TRIANGLE_LIST;
   marker.action = visualization_msgs::msg::Marker::ADD;
   marker.header.stamp = this->now();
@@ -326,6 +354,7 @@ void ParticleFilterLocalizer::PublishParticleVisualization()
     marker.scale.y = 1.0;
     marker.scale.z = 1.0;
 
+    // sets the color intensity based off of the max weight particle
     marker.colors[i].r = (particles_[i].weight / max_weight_);
     marker.colors[i].g = 0;
     marker.colors[i].b = 0;

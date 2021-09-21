@@ -22,6 +22,7 @@ IMUMotionModel::IMUMotionModel(std::shared_ptr<ParticleNoise> noise, rclcpp::Nod
 void IMUMotionModel::updateParticle(Particle & particle, double dt,
                                  geometry_msgs::msg::Twist::SharedPtr cmd_msg)
 {
+  // BEGIN STUDENT CODE
   particle.x += cos(particle.yaw)*particle.vx*dt + sigmas_.x*noise_->sampleGaussian()*sqrt(dt);
   particle.y += -sin(particle.yaw)*particle.vx*dt + sigmas_.y*noise_->sampleGaussian()*sqrt(dt);
   particle.yaw += particle.yaw_rate*dt + sigmas_.yaw*noise_->sampleGaussian()*sqrt(dt);
@@ -37,6 +38,7 @@ void IMUMotionModel::updateParticle(Particle & particle, double dt,
   {
     particle.yaw += 2*M_PI;
   }
+  // END STUDENT CODE
 }
 
 void IMUMotionModel::updateParticles(std::vector<Particle> & particles,

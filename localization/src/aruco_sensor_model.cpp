@@ -9,6 +9,7 @@ namespace localization
 
 ArucoSensorModel::ArucoSensorModel(rclcpp::Node* node)
 {
+  // BEGIN STUDENT CODE
   this->meas_cov_ = node->declare_parameter<std::vector<double>>("aruco/meas_cov", {0.025, 0.025, 0.025});
   this->time_delay_ = node->declare_parameter<double>("aruco/time_delay", 0.1);
 
@@ -21,6 +22,8 @@ ArucoSensorModel::ArucoSensorModel(rclcpp::Node* node)
 
   tag_sub_ = node->create_subscription<stsl_interfaces::msg::TagArray>(
           "/tags", 1, std::bind(&ArucoSensorModel::UpdateMeasurement, this, std::placeholders::_1));
+
+  // END STUDENT CODE
 }
 
 void ArucoSensorModel::UpdateMeasurement(const stsl_interfaces::msg::TagArray::SharedPtr tags)
@@ -40,15 +43,14 @@ double ArucoSensorModel::ComputeLogProb(Particle & particle)
   //std::cout << "==========" << std::endl;
   for(const stsl_interfaces::msg::Tag & tag : last_msg_->tags)
   {
-    // TODO convert tag from global to body frame
     TagLocation body_location;
+    // ensure this is a localization tag
     if (tags_.find(tag.id) == tags_.end())
     {
       continue;
     }
+    // convert the global location of the current tag id into body frame
     TagLocation map_location = tags_.at(tag.id);
-    //std::cout << "particle " << particle.x << ", " << particle.y << ", " << particle.yaw << std::endl;
-    //std::cout << "map location (" << map_location.x << ", " << map_location.y << ", " << map_location.yaw << ")" << std::endl;
     body_location.x = map_location.x*cos(particle.yaw) - map_location.y*sin(particle.yaw) - particle.x*cos(particle.yaw) + particle.y*sin(particle.yaw);
     body_location.y = map_location.x*sin(particle.yaw) + map_location.y*cos(particle.yaw) - particle.x*sin(particle.yaw) - particle.y*cos(particle.yaw);
 
@@ -66,14 +68,12 @@ double ArucoSensorModel::ComputeLogProb(Particle & particle)
       body_location.yaw += 2*M_PI;
     }
 
-    //std::cout << "body location (" << body_location.x << ", " << body_location.y << ", " << body_location.yaw << ")" << std::endl;
-    //std::cout << "tag location (" << tag.pose.position.x << ", " << tag.pose.position.y << ", " << yaw << ")" << std::endl;
-
     log_prob += pow(body_location.x - tag.pose.position.x, 2)/meas_cov_[0];
     log_prob += pow(body_location.y - tag.pose.position.y, 2)/meas_cov_[1];
 
     // handles the error difference cleanly
     double yaw_error = body_location.yaw - yaw;
+    // yaw error cannot exceed pi
     while(std::abs(yaw_error) > M_PI)
     {
       yaw_error = std::abs(yaw_error) - M_PI;
@@ -81,7 +81,6 @@ double ArucoSensorModel::ComputeLogProb(Particle & particle)
     log_prob += pow(yaw_error, 2)/meas_cov_[2];
 
   }
-  //std::cout << log_prob << std::endl;
   return log_prob;
 }
 
