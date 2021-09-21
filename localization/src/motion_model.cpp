@@ -26,10 +26,8 @@ namespace localization
 {
 
 
-IMUMotionModel::IMUMotionModel(std::shared_ptr<ParticleNoise> noise, rclcpp::Node * node)
+IMUMotionModel::IMUMotionModel(rclcpp::Node * node)
 {
-  noise_ = noise;
-
   std::vector<double> motion_sigma = node->declare_parameter<std::vector<double>>(
     "motion_sigmas",
     {0.05, 0.05, 0.2,
@@ -46,14 +44,14 @@ void IMUMotionModel::updateParticle(
   geometry_msgs::msg::Twist::SharedPtr cmd_msg)
 {
   // BEGIN STUDENT CODE
-  particle.x += cos(particle.yaw) * particle.vx * dt + sigmas_.x * noise_->sampleGaussian() * sqrt(
+  particle.x += cos(particle.yaw) * particle.vx * dt + sigmas_.x * gaussian_noise_.Sample() * sqrt(
     dt);
-  particle.y += -sin(particle.yaw) * particle.vx * dt + sigmas_.y * noise_->sampleGaussian() * sqrt(
+  particle.y += -sin(particle.yaw) * particle.vx * dt + sigmas_.y * gaussian_noise_.Sample() * sqrt(
     dt);
-  particle.yaw += particle.yaw_rate * dt + sigmas_.yaw * noise_->sampleGaussian() * sqrt(dt);
+  particle.yaw += particle.yaw_rate * dt + sigmas_.yaw * gaussian_noise_.Sample() * sqrt(dt);
 
-  particle.vx = cmd_msg->linear.x + sigmas_.vx * noise_->sampleGaussian() * sqrt(dt);
-  particle.yaw_rate = -cmd_msg->angular.z + sigmas_.yaw_rate * noise_->sampleGaussian() * sqrt(dt);
+  particle.vx = cmd_msg->linear.x + sigmas_.vx * gaussian_noise_.Sample() * sqrt(dt);
+  particle.yaw_rate = -cmd_msg->angular.z + sigmas_.yaw_rate * gaussian_noise_.Sample() * sqrt(dt);
 
   while (particle.yaw > M_PI) {
     particle.yaw -= 2 * M_PI;

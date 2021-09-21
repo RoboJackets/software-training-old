@@ -32,7 +32,7 @@ using namespace std::chrono_literals;
 ParticleFilterLocalizer::ParticleFilterLocalizer(const rclcpp::NodeOptions & options)
 : rclcpp::Node("particle_filter_localizer", options),
   tf_buffer_(get_clock()), tf_listener_(tf_buffer_), tf_broadcaster_(*this),
-  noise_(std::make_shared<ParticleNoise>()), motion_model_(noise_, this)
+  motion_model_(this)
 {
   // BEGIN STUDENT CODE
   cmd_sub_ = create_subscription<geometry_msgs::msg::Twist>(
@@ -93,14 +93,14 @@ void ParticleFilterLocalizer::CmdCallback(const geometry_msgs::msg::Twist::Share
 
 Particle ParticleFilterLocalizer::InitializeParticle()
 {
-  // noise_->sampleUniform() to get a uniform sample
+  // uniform_noise_.Sample() to get a uniform sample
   // BEGIN STUDENT CODE
   Particle p;
-  p.x = min_.x + noise_->sampleUniform() * (max_.x - min_.x);
-  p.y = min_.y + noise_->sampleUniform() * (max_.y - min_.y);
-  p.yaw = min_.yaw + noise_->sampleUniform() * (max_.yaw - min_.yaw);
-  p.vx = min_.vx + noise_->sampleUniform() * (max_.vx - min_.vx);
-  p.yaw_rate = min_.yaw_rate + noise_->sampleUniform() * (max_.yaw_rate - min_.yaw_rate);
+  p.x = min_.x + uniform_noise_.Sample() * (max_.x - min_.x);
+  p.y = min_.y + uniform_noise_.Sample() * (max_.y - min_.y);
+  p.yaw = min_.yaw + uniform_noise_.Sample() * (max_.yaw - min_.yaw);
+  p.vx = min_.vx + uniform_noise_.Sample() * (max_.vx - min_.vx);
+  p.yaw_rate = min_.yaw_rate + uniform_noise_.Sample() * (max_.yaw_rate - min_.yaw_rate);
   return p;
   // END STUDENT CODE
 }
@@ -160,7 +160,7 @@ void ParticleFilterLocalizer::ResampleParticles()
   std::vector<Particle> new_particles;
   for (int i = 0; i < num_particles_; i++) {
     // get a target values 0-1
-    double target_val = noise_->sampleUniform();
+    double target_val = uniform_noise_.Sample();
     int left_idx = 0;
     int right_idx = num_particles_ - 1;
     int cur_index = (left_idx + right_idx) / 2;

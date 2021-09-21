@@ -27,6 +27,7 @@
 #include <random>
 #include <vector>
 #include "particle.hpp"
+#include "random_helpers.hpp"
 
 namespace localization
 {
@@ -34,7 +35,7 @@ namespace localization
 class IMUMotionModel
 {
 public:
-  IMUMotionModel(std::shared_ptr<ParticleNoise> noise, rclcpp::Node * node);
+  IMUMotionModel(rclcpp::Node * node);
 
   void updateParticle(Particle & particle, double dt, geometry_msgs::msg::Twist::SharedPtr cmd_msg);
   void updateParticles(
@@ -46,8 +47,7 @@ public:
 private:
   Particle sigmas_;
   rclcpp::Time last_message_time_;
-
-  std::shared_ptr<ParticleNoise> noise_;
+  GaussianRandomGenerator gaussian_noise_;
 };
 
 }  // namespace localization

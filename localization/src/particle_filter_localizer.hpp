@@ -29,7 +29,6 @@
 #include <nav_msgs/msg/odometry.hpp>
 #include <visualization_msgs/msg/marker.hpp>
 #include <memory>
-#include <random>
 #include <vector>
 
 #include "particle.hpp"
@@ -37,6 +36,7 @@
 #include "motion_model.hpp"
 #include "aruco_sensor_model.hpp"
 #include "odometry_sensor_model.hpp"
+#include "random_helpers.hpp"
 
 namespace localization
 {
@@ -61,7 +61,7 @@ private:
   std::vector<localization::Particle> particles_;
   std::vector<double> search_weights_;
 
-  std::shared_ptr<ParticleNoise> noise_;
+  UniformRandomGenerator uniform_noise_;
   std::vector<std::unique_ptr<SensorModel>> sensor_models_;
   IMUMotionModel motion_model_;
 
