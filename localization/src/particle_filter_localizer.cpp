@@ -312,7 +312,10 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
 
 void ParticleFilterLocalizer::PublishParticleVisualization()
 {
-  // TODO(barulicm) check for subscriber
+  if(marker_pub_->get_subscription_count() == 0) {
+    // Don't bother building visualization if nobody's subscribed
+    return;
+  }
 
   // publish visualization of all particles likelihood
   visualization_msgs::msg::Marker marker;
