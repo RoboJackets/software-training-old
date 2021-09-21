@@ -18,7 +18,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "particle_filter_localizer.h"
+#include "particle_filter_localizer.hpp"
+#include <algorithm>
+#include <memory>
+#include <vector>
+#include <utility>
 
 namespace localization
 {
@@ -32,7 +36,7 @@ ParticleFilterLocalizer::ParticleFilterLocalizer(const rclcpp::NodeOptions & opt
 {
   // BEGIN STUDENT CODE
   cmd_sub_ = create_subscription<geometry_msgs::msg::Twist>(
-          "/cmd_vel", 10, std::bind(&ParticleFilterLocalizer::CmdCallback, this, std::placeholders::_1));
+    "/cmd_vel", 10, std::bind(&ParticleFilterLocalizer::CmdCallback, this, std::placeholders::_1));
   odom_pub_ = create_publisher<nav_msgs::msg::Odometry>("~/pose_estimate", 1);
   marker_pub_ = create_publisher<visualization_msgs::msg::Marker>("~/particles", 1);
 
@@ -40,14 +44,18 @@ ParticleFilterLocalizer::ParticleFilterLocalizer(const rclcpp::NodeOptions & opt
   declare_parameter<double>("resample_threshold", 0.1);
   declare_parameter<double>("low_percentage_particles_to_drop", 0.1);
 
-  std::vector<double> min_vals = declare_parameter<std::vector<double>>("min_init_vals", {-0.6, -0.3, -M_PI, 0.0, 0.0});
+  std::vector<double> min_vals = declare_parameter<std::vector<double>>(
+    "min_init_vals", {-0.6,
+      -0.3, -M_PI, 0.0, 0.0});
   min_.x = min_vals[0];
   min_.y = min_vals[1];
   min_.yaw = min_vals[2];
   min_.vx = min_vals[3];
   min_.yaw_rate = min_vals[4];
 
-  std::vector<double> max_vals = declare_parameter<std::vector<double>>("max_init_vals", {0.6, 0.3, M_PI, 0.0, 0.0});
+  std::vector<double> max_vals = declare_parameter<std::vector<double>>(
+    "max_init_vals", {0.6, 0.3,
+      M_PI, 0.0, 0.0});
   max_.x = max_vals[0];
   max_.y = max_vals[1];
   max_.yaw = max_vals[2];
@@ -56,18 +64,20 @@ ParticleFilterLocalizer::ParticleFilterLocalizer(const rclcpp::NodeOptions & opt
 
   // initialize particle filter
   particles_ = std::vector<Particle>(num_particles_);
-  std::generate_n(particles_.begin(), num_particles_, std::bind(&ParticleFilterLocalizer::InitializeParticle, this));
+  std::generate_n(
+    particles_.begin(), num_particles_,
+    std::bind(&ParticleFilterLocalizer::InitializeParticle, this));
   NormalizeWeights();
 
   double state_update_rate = declare_parameter<double>("state_update_rate", 10);
   pose_timer_ = create_wall_timer(
-          std::chrono::duration<double>(1.0/state_update_rate),
-          std::bind(&ParticleFilterLocalizer::CalculateStateAndPublish, this));
+    std::chrono::duration<double>(1.0 / state_update_rate),
+    std::bind(&ParticleFilterLocalizer::CalculateStateAndPublish, this));
 
   double resample_rate = declare_parameter<double>("resample_rate", 10);
   resample_timer_ = create_wall_timer(
-          std::chrono::duration<double>(1.0/resample_rate),
-          std::bind(&ParticleFilterLocalizer::ResampleParticles, this));
+    std::chrono::duration<double>(1.0 / resample_rate),
+    std::bind(&ParticleFilterLocalizer::ResampleParticles, this));
 
   // check what is enabled
   sensor_models_.push_back(std::move(std::make_unique<ArucoSensorModel>(this)));
@@ -81,15 +91,16 @@ void ParticleFilterLocalizer::CmdCallback(const geometry_msgs::msg::Twist::Share
   motion_model_.updateParticles(particles_, msg, now());
 }
 
-Particle ParticleFilterLocalizer::InitializeParticle() {
+Particle ParticleFilterLocalizer::InitializeParticle()
+{
   // noise_->sampleUniform() to get a uniform sample
   // BEGIN STUDENT CODE
   Particle p;
-  p.x = min_.x + noise_->sampleUniform()*(max_.x - min_.x);
-  p.y = min_.y + noise_->sampleUniform()*(max_.y - min_.y);
-  p.yaw = min_.yaw + noise_->sampleUniform()*(max_.yaw - min_.yaw);
-  p.vx = min_.vx + noise_->sampleUniform()*(max_.vx - min_.vx);
-  p.yaw_rate = min_.yaw_rate + noise_->sampleUniform()*(max_.yaw_rate - min_.yaw_rate);
+  p.x = min_.x + noise_->sampleUniform() * (max_.x - min_.x);
+  p.y = min_.y + noise_->sampleUniform() * (max_.y - min_.y);
+  p.yaw = min_.yaw + noise_->sampleUniform() * (max_.yaw - min_.yaw);
+  p.vx = min_.vx + noise_->sampleUniform() * (max_.vx - min_.vx);
+  p.yaw_rate = min_.yaw_rate + noise_->sampleUniform() * (max_.yaw_rate - min_.yaw_rate);
   return p;
   // END STUDENT CODE
 }
@@ -98,32 +109,35 @@ void ParticleFilterLocalizer::NormalizeWeights()
 {
   // run through list of particles and normalize the weights
 
-  // TODO should be just finding pivot
-  auto index_to_drop = std::round(get_parameter("low_percentage_particles_to_drop").as_double() * num_particles_);
-  std::nth_element(particles_.begin(), particles_.begin() + index_to_drop, particles_.end(),
-            [](const Particle& lhs, const Particle& rhs) {return lhs.weight < rhs.weight;});
+  // TODO(barulicm) should be just finding pivot
+  auto index_to_drop = std::round(
+    get_parameter(
+      "low_percentage_particles_to_drop").as_double() * num_particles_);
+  std::nth_element(
+    particles_.begin(), particles_.begin() + index_to_drop, particles_.end(),
+    [](const Particle & lhs, const Particle & rhs) {return lhs.weight < rhs.weight;});
 
   double smallest_weight_to_allow = particles_.at(index_to_drop).weight;
 
   double normalizer = 0;
-  for(Particle & particle : particles_)
-  {
-    if (particle.weight < smallest_weight_to_allow)
-    {
+  for (Particle & particle : particles_) {
+    if (particle.weight < smallest_weight_to_allow) {
       particle.weight = 0;
     }
     normalizer += particle.weight;
   }
   // if all particles are zero
   double resample_threshold = get_parameter("resample_threshold").as_double();
-  if (normalizer < resample_threshold)
-  {
-    RCLCPP_INFO(get_logger(), "resampling particles from initial distribution since normalizer is low %f\n", normalizer/num_particles_);
-    std::generate_n(particles_.begin(), num_particles_, std::bind(&ParticleFilterLocalizer::InitializeParticle, this));
+  if (normalizer < resample_threshold) {
+    RCLCPP_INFO(
+      get_logger(), "resampling particles from initial distribution since normalizer is low %f\n",
+      normalizer / num_particles_);
+    std::generate_n(
+      particles_.begin(), num_particles_,
+      std::bind(&ParticleFilterLocalizer::InitializeParticle, this));
     normalizer = num_particles_;
   }
-  if(normalizer == 0)
-  {
+  if (normalizer == 0) {
     RCLCPP_INFO(get_logger(), "normalizer is zero%f\n", normalizer);
     normalizer = 1;
   }
@@ -131,7 +145,7 @@ void ParticleFilterLocalizer::NormalizeWeights()
   double running_sum = 0;
   min_weight_ = 1.0;
   max_weight_ = 0.0;
-  for(Particle & particle : particles_) {
+  for (Particle & particle : particles_) {
     particle.weight /= normalizer;
     min_weight_ = std::min(min_weight_, particle.weight);
     max_weight_ = std::max(max_weight_, particle.weight);
@@ -144,34 +158,30 @@ void ParticleFilterLocalizer::ResampleParticles()
 {
   // resample particles uniformly across the entire state space
   std::vector<Particle> new_particles;
-  for(int i = 0; i < num_particles_; i++) {
+  for (int i = 0; i < num_particles_; i++) {
     // get a target values 0-1
     double target_val = noise_->sampleUniform();
     int left_idx = 0;
-    int right_idx = num_particles_-1;
-    int cur_index = (left_idx+right_idx)/2;
+    int right_idx = num_particles_ - 1;
+    int cur_index = (left_idx + right_idx) / 2;
 
     bool found_sol = false;
     // binary search the summed weights to find the particle
-    while(left_idx <= right_idx && !found_sol) {
-      cur_index = (left_idx+right_idx)/2;
+    while (left_idx <= right_idx && !found_sol) {
+      cur_index = (left_idx + right_idx) / 2;
       double cur_val = search_weights_[cur_index];
 
-      if (cur_index == num_particles_ - 1 || cur_index == 0)
-      {
+      if (cur_index == num_particles_ - 1 || cur_index == 0) {
         found_sol = true;
-      } else if (target_val >= search_weights_[cur_index-1] && target_val <= cur_val)
-      {
+      } else if (target_val >= search_weights_[cur_index - 1] && target_val <= cur_val) {
         // if we have found our target, return it
         found_sol = true;
-      } else if (cur_val < target_val)
-      {
+      } else if (cur_val < target_val) {
         // if we have a current smaller than target search to the right
-        left_idx = cur_index+1;
-      } else if (cur_val > target_val)
-      {
+        left_idx = cur_index + 1;
+      } else if (cur_val > target_val) {
         // if we have a current smaller than target search to the left
-        right_idx = cur_index-1;
+        right_idx = cur_index - 1;
       } else {
         RCLCPP_INFO(get_logger(), "Invalid search weights or cur_val %f\n", cur_val);
       }
@@ -184,14 +194,11 @@ void ParticleFilterLocalizer::ResampleParticles()
 void ParticleFilterLocalizer::ComputeLogProbs()
 {
   auto cur_time = this->now();
-  for(Particle & particle : particles_)
-  {
+  for (Particle & particle : particles_) {
     double log_prob = 0;
-    for(const std::unique_ptr<SensorModel>& sensor_model : sensor_models_)
-    {
-      if (sensor_model->IsMeasUpdateValid(cur_time))
-      {
-        log_prob += -0.5*sensor_model->ComputeLogProb(particle);
+    for (const std::unique_ptr<SensorModel> & sensor_model : sensor_models_) {
+      if (sensor_model->IsMeasUpdateValid(cur_time)) {
+        log_prob += -0.5 * sensor_model->ComputeLogProb(particle);
         log_prob -= sensor_model->ComputeLogNormalizer();
       }
     }
@@ -210,8 +217,7 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
   Particle best_estimate_particle;
   // yaw_sum_2 is the sum with a different discontinuity
   double yaw_sum_2 = 0;
-  for(const Particle & particle : particles_)
-  {
+  for (const Particle & particle : particles_) {
     best_estimate_particle.x += particle.x * particle.weight;
     best_estimate_particle.y += particle.y * particle.weight;
     // this gives zero if we are facing pi
@@ -220,57 +226,51 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
     best_estimate_particle.yaw_rate += particle.yaw_rate * particle.weight;
 
     double yaw = particle.yaw;
-    if (yaw < 0)
-    {
-      yaw += 2*M_PI;
+    if (yaw < 0) {
+      yaw += 2 * M_PI;
     }
     // estimate is zero is facing pi/2
     yaw_sum_2 += yaw * particle.weight;
   }
   // if very close to the discontinuity of pi--pi, use the one with
   // a discontinuity at a different place
-  if (abs(yaw_sum_2 - M_PI) < 1.0){
+  if (abs(yaw_sum_2 - M_PI) < 1.0) {
     best_estimate_particle.yaw = yaw_sum_2;
   }
 
   // ensure that the yaw is in the range [-pi, pi]
-  while(best_estimate_particle.yaw >= M_PI)
-  {
-    best_estimate_particle.yaw -= 2*M_PI;
+  while (best_estimate_particle.yaw >= M_PI) {
+    best_estimate_particle.yaw -= 2 * M_PI;
   }
-  while(best_estimate_particle.yaw < -M_PI)
-  {
-    best_estimate_particle.yaw += 2*M_PI;
+  while (best_estimate_particle.yaw < -M_PI) {
+    best_estimate_particle.yaw += 2 * M_PI;
   }
 
   Particle cov;
   double cov_normalizer = 0;
-  for(const Particle & particle : particles_)
-  {
-    cov.x += pow(best_estimate_particle.x - particle.x, 2)*particle.weight;
-    cov.y += pow(best_estimate_particle.y - particle.y, 2)*particle.weight;
+  for (const Particle & particle : particles_) {
+    cov.x += pow(best_estimate_particle.x - particle.x, 2) * particle.weight;
+    cov.y += pow(best_estimate_particle.y - particle.y, 2) * particle.weight;
     double yaw_error = best_estimate_particle.yaw - particle.yaw;
     // ensure yaw error is handled with discontinuity correctly. Cannot be larger than pi
-    while (yaw_error >= M_PI)
-    {
+    while (yaw_error >= M_PI) {
       yaw_error -= M_PI;
     }
-    while (yaw_error < -M_PI)
-    {
+    while (yaw_error < -M_PI) {
       yaw_error += M_PI;
     }
-    cov.yaw += pow(yaw_error, 2)*particle.weight;
-    cov.vx += pow(best_estimate_particle.vx - particle.vx, 2)*particle.weight;
-    cov.yaw_rate += pow(best_estimate_particle.yaw_rate - particle.yaw_rate, 2)*particle.weight;
+    cov.yaw += pow(yaw_error, 2) * particle.weight;
+    cov.vx += pow(best_estimate_particle.vx - particle.vx, 2) * particle.weight;
+    cov.yaw_rate += pow(best_estimate_particle.yaw_rate - particle.yaw_rate, 2) * particle.weight;
 
     cov_normalizer += pow(particle.weight, 2);
   }
 
-  cov.x /= (1-cov_normalizer);
-  cov.y /= (1-cov_normalizer);
-  cov.yaw /= (1-cov_normalizer);
-  cov.vx /= (1-cov_normalizer);
-  cov.yaw_rate /= (1-cov_normalizer);
+  cov.x /= (1 - cov_normalizer);
+  cov.y /= (1 - cov_normalizer);
+  cov.yaw /= (1 - cov_normalizer);
+  cov.vx /= (1 - cov_normalizer);
+  cov.yaw_rate /= (1 - cov_normalizer);
 
   rclcpp::Time current_time = now();
 
@@ -280,7 +280,7 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
   odom_msg.pose.pose.position.x = best_estimate_particle.x;
   odom_msg.pose.pose.position.y = best_estimate_particle.y;
   tf2::Quaternion quaternion;
-  quaternion.setRPY(0,0,best_estimate_particle.yaw);
+  quaternion.setRPY(0, 0, best_estimate_particle.yaw);
   odom_msg.pose.pose.orientation = tf2::toMsg(quaternion);
   odom_msg.twist.twist.linear.x = best_estimate_particle.vx;
   odom_msg.twist.twist.angular.z = best_estimate_particle.yaw_rate;
@@ -292,8 +292,6 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
   odom_msg.twist.covariance[0] = cov.vx;
   odom_msg.twist.covariance[35] = cov.yaw_rate;
   odom_pub_->publish(odom_msg);
-
-  // TODO
 
   // use estimated pose to determine the new transform from odom to calculated odom position
   geometry_msgs::msg::TransformStamped transform;
@@ -314,7 +312,7 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
 
 void ParticleFilterLocalizer::PublishParticleVisualization()
 {
-  // TODO check for subscriber
+  // TODO(barulicm) check for subscriber
 
   // publish visualization of all particles likelihood
   visualization_msgs::msg::Marker marker;
@@ -328,7 +326,7 @@ void ParticleFilterLocalizer::PublishParticleVisualization()
   marker.color.a = 1.0;
 
   marker.colors.resize(num_particles_);
-  for(int i = 0; i < num_particles_; i++) {
+  for (int i = 0; i < num_particles_; i++) {
     geometry_msgs::msg::Point front_point, right_point, left_point;
 
     // create three points based off of the particle
@@ -337,14 +335,14 @@ void ParticleFilterLocalizer::PublishParticleVisualization()
     double y = particles_[i].y;
     double yaw = particles_[i].yaw;
 
-    front_point.x = x + 0.1*cos(yaw);
-    front_point.y = y - 0.1*sin(yaw);
+    front_point.x = x + 0.1 * cos(yaw);
+    front_point.y = y - 0.1 * sin(yaw);
 
-    right_point.x = x + 0.025*cos(yaw+M_PI_2);
-    right_point.y = y - 0.025*sin(yaw+M_PI_2);
+    right_point.x = x + 0.025 * cos(yaw + M_PI_2);
+    right_point.y = y - 0.025 * sin(yaw + M_PI_2);
 
-    left_point.x = x + 0.025*cos(yaw-M_PI_2);
-    left_point.y = y - 0.025*sin(yaw-M_PI_2);
+    left_point.x = x + 0.025 * cos(yaw - M_PI_2);
+    left_point.y = y - 0.025 * sin(yaw - M_PI_2);
 
     marker.points.push_back(front_point);
     marker.points.push_back(right_point);
@@ -362,7 +360,6 @@ void ParticleFilterLocalizer::PublishParticleVisualization()
   }
 
   marker_pub_->publish(marker);
-
 }
 
 

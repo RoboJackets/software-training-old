@@ -34,7 +34,7 @@ def generate_launch_description():
             package='localization',
             executable='localization_node',
             output='screen',
-            #prefix=['gdb -ex run --args'],
+            # prefix=['gdb -ex run --args'],
             parameters=[
                 parameters_file_path,
                 {'use_sim_time': LaunchConfiguration('use_sim_time', default='false')}

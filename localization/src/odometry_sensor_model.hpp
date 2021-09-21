@@ -18,13 +18,29 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#ifndef ODOMETRY_SENSOR_MODEL_HPP_
+#define ODOMETRY_SENSOR_MODEL_HPP_
+
+#include <nav_msgs/msg/odometry.hpp>
 #include "sensor_model.hpp"
 
 namespace localization
 {
-
-bool SensorModel::IsMeasUpdateValid(rclcpp::Time cur_time)
+class OdometrySensorModel : public SensorModel
 {
-  return false;
-}
+public:
+  explicit OdometrySensorModel(rclcpp::Node * node);
+
+  void UpdateMeasurement(const nav_msgs::msg::Odometry::SharedPtr odom);
+  double ComputeLogProb(Particle & particle) override;
+  double ComputeLogNormalizer() override;
+  bool IsMeasUpdateValid(rclcpp::Time cur_time) override;
+
+private:
+  nav_msgs::msg::Odometry::SharedPtr last_msg_;
+  rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_sub_;
+};
 }  // namespace localization
+
+
+#endif  // ODOMETRY_SENSOR_MODEL_HPP_

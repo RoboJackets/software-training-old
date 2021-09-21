@@ -18,13 +18,59 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "sensor_model.hpp"
+#ifndef PARTICLE_HPP_
+#define PARTICLE_HPP_
+
+#include <random>
+#include <iostream>
 
 namespace localization
 {
 
-bool SensorModel::IsMeasUpdateValid(rclcpp::Time cur_time)
+struct Particle
 {
-  return false;
-}
+  // global positions
+  double x = 0;
+  double y = 0;
+  double yaw = 0;
+
+  // body rates
+  double vx = 0;
+  double yaw_rate = 0;
+
+  // normalized weight of the particle
+  double weight = 1.0;
+};
+
+class ParticleNoise
+{
+public:
+  ParticleNoise()
+  {
+    normal_dist_ = std::normal_distribution<double>(0, 1.0);
+    uniform_dist_ = std::uniform_real_distribution<double>(0, 1);
+    generator_ = std::default_random_engine(100);
+  }
+
+  double sampleUniform()
+  {
+    return uniform_dist_(generator_);
+  }
+
+  double sampleGaussian()
+  {
+    return normal_dist_(generator_);
+  }
+
+private:
+  // creates N(0,1)
+  std::normal_distribution<double> normal_dist_;
+
+  // creates U(0,1)
+  std::uniform_real_distribution<double> uniform_dist_;
+  std::default_random_engine generator_;
+};
+
 }  // namespace localization
+
+#endif  // PARTICLE_HPP_

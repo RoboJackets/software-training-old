@@ -18,13 +18,39 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "sensor_model.hpp"
+#ifndef MOTION_MODEL_HPP_
+#define MOTION_MODEL_HPP_
+
+#include <geometry_msgs/msg/twist.hpp>
+#include <rclcpp/rclcpp.hpp>
+#include <memory>
+#include <random>
+#include <vector>
+#include "particle.hpp"
 
 namespace localization
 {
 
-bool SensorModel::IsMeasUpdateValid(rclcpp::Time cur_time)
+class IMUMotionModel
 {
-  return false;
-}
+public:
+  IMUMotionModel(std::shared_ptr<ParticleNoise> noise, rclcpp::Node * node);
+
+  void updateParticle(Particle & particle, double dt, geometry_msgs::msg::Twist::SharedPtr cmd_msg);
+  void updateParticles(
+    std::vector<Particle> & particles,
+    geometry_msgs::msg::Twist::SharedPtr cmd_msg,
+    rclcpp::Time current_time);
+  void ImuCallback(const geometry_msgs::msg::Twist::SharedPtr msg);
+
+private:
+  Particle sigmas_;
+  rclcpp::Time last_message_time_;
+
+  std::shared_ptr<ParticleNoise> noise_;
+};
+
 }  // namespace localization
+
+
+#endif  // MOTION_MODEL_HPP_

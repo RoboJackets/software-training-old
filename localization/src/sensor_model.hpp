@@ -18,13 +18,36 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "sensor_model.hpp"
+#ifndef SENSOR_MODEL_HPP_
+#define SENSOR_MODEL_HPP_
+
+#include <stsl_interfaces/msg/tag_array.hpp>
+#include <rclcpp/rclcpp.hpp>
+#include <map>
+#include <random>
+#include <vector>
+#include "particle.hpp"
 
 namespace localization
 {
 
-bool SensorModel::IsMeasUpdateValid(rclcpp::Time cur_time)
+
+class SensorModel
 {
-  return false;
-}
+public:
+  virtual double ComputeLogProb(Particle & particle) {return 0.0;}
+  virtual double ComputeLogNormalizer() {return 0.0;}
+  virtual bool IsMeasUpdateValid(rclcpp::Time cur_time);
+  ~SensorModel() = default;
+
+protected:
+  std::vector<double> meas_cov_;
+  double time_delay_;
+  SensorModel() = default;
+
+private:
+};
 }  // namespace localization
+
+
+#endif  // SENSOR_MODEL_HPP_
