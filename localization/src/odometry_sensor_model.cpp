@@ -50,8 +50,8 @@ double OdometrySensorModel::ComputeLogNormalizer()
 double OdometrySensorModel::ComputeLogProb(Particle & particle)
 {
   double log_prob = 0;
-  log_prob += pow(last_msg_->twist.twist.linear.x - particle.vx, 2) / meas_cov_[0];
-  log_prob += pow(last_msg_->twist.twist.angular.z - particle.yaw_rate, 2) / meas_cov_[1];
+  log_prob += pow(last_msg_->twist.twist.linear.x - particle.x_vel, 2) / meas_cov_[0];
+  log_prob += pow(last_msg_->twist.twist.angular.z - particle.yaw_vel, 2) / meas_cov_[1];
   return log_prob;
 }
 

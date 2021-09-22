@@ -10,6 +10,7 @@ find_package(visualization_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
+find_package(angles REQUIRED)
 
 add_library(${PROJECT_NAME}_component SHARED
   src/sensor_model.cpp
@@ -27,6 +28,7 @@ ament_target_dependencies(${PROJECT_NAME}_component
   "nav_msgs"
   "tf2_ros"
   "tf2_geometry_msgs"
+  "angles"
 )
 rclcpp_components_register_node(
   ${PROJECT_NAME}_component

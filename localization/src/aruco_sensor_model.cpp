@@ -33,12 +33,14 @@ ArucoSensorModel::ArucoSensorModel(rclcpp::Node * node)
       0.025});
   this->time_delay_ = node->declare_parameter<double>("aruco/time_delay", 0.1);
 
-  tags_.insert(std::pair<int, TagLocation>(0, TagLocation(0.6096, 0, -M_PI_2)));
-  tags_.insert(std::pair<int, TagLocation>(1, TagLocation(0.3, -0.381, M_PI)));
-  tags_.insert(std::pair<int, TagLocation>(2, TagLocation(-0.3, -0.381, M_PI)));
-  tags_.insert(std::pair<int, TagLocation>(3, TagLocation(-0.6096, 0, M_PI_2)));
-  tags_.insert(std::pair<int, TagLocation>(4, TagLocation(-0.3, 0.381, 0)));
-  tags_.insert(std::pair<int, TagLocation>(5, TagLocation(0.3, 0.381, 0)));
+  tags_ = {
+    {0, TagLocation{0.6096, 0, -M_PI_2}},
+    {1, TagLocation{0.3, -0.381, M_PI}},
+    {2, TagLocation{-0.3, -0.381, M_PI}},
+    {3, TagLocation{-0.6096, 0, M_PI_2}},
+    {4, TagLocation{-0.3, 0.381, 0}},
+    {5, TagLocation{0.3, 0.381, 0}}
+  };
 
   tag_sub_ = node->create_subscription<stsl_interfaces::msg::TagArray>(
     "/tags", 1, std::bind(&ArucoSensorModel::UpdateMeasurement, this, std::placeholders::_1));

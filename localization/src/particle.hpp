@@ -33,12 +33,36 @@ struct Particle
   double y = 0;
   double yaw = 0;
 
-  // body rates
-  double vx = 0;
-  double yaw_rate = 0;
+  // body velocities
+  double x_vel = 0;
+  double yaw_vel = 0;
 
   // normalized weight of the particle
   double weight = 1.0;
+
+  Particle Weighted() const
+  {
+    Particle weighted = *this;
+    weighted.x *= weight;
+    weighted.y *= weight;
+    weighted.yaw *= weight;
+    weighted.x_vel *= weight;
+    weighted.yaw_vel *= weight;
+    weighted.weight = 1.0;
+    return weighted;
+  }
+
+  Particle operator+(const Particle & other) const
+  {
+    Particle sum = *this;
+    sum.x += other.x;
+    sum.y += other.y;
+    sum.yaw += other.yaw;
+    sum.x_vel += other.x_vel;
+    sum.yaw_vel += other.yaw_vel;
+    sum.weight += other.weight;
+    return sum;
+  }
 };
 
 }  // namespace localization

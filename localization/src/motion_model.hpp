@@ -35,7 +35,7 @@ namespace localization
 class IMUMotionModel
 {
 public:
-  IMUMotionModel(rclcpp::Node * node);
+  explicit IMUMotionModel(rclcpp::Node * node);
 
   void updateParticle(Particle & particle, double dt, geometry_msgs::msg::Twist::SharedPtr cmd_msg);
   void updateParticles(

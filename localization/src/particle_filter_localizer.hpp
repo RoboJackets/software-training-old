@@ -76,10 +76,16 @@ private:
 
   Particle InitializeParticle();
   void NormalizeWeights();
+  Particle CalculateEstimate();
+  Particle CalculateCovariance(const Particle & estimate);
   void ResampleParticles();
   void CalculateStateAndPublish();
   void ComputeLogProbs();
 
+  void PublishEstimateOdom(
+    const Particle & estimate, const Particle & covariance,
+    const rclcpp::Time & current_time);
+  void PublishEstimateTF(const Particle & estimate, const rclcpp::Time & current_time);
   void PublishParticleVisualization();
 };
 

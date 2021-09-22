@@ -19,6 +19,7 @@
 // THE SOFTWARE.
 
 #include "motion_model.hpp"
+#include <angles/angles.h>
 #include <memory>
 #include <vector>
 
@@ -35,8 +36,8 @@ IMUMotionModel::IMUMotionModel(rclcpp::Node * node)
   sigmas_.x = motion_sigma[0];
   sigmas_.y = motion_sigma[1];
   sigmas_.yaw = motion_sigma[2];
-  sigmas_.vx = motion_sigma[3];
-  sigmas_.yaw_rate = motion_sigma[4];
+  sigmas_.x_vel = motion_sigma[3];
+  sigmas_.yaw_vel = motion_sigma[4];
 }
 
 void IMUMotionModel::updateParticle(
@@ -44,21 +45,18 @@ void IMUMotionModel::updateParticle(
   geometry_msgs::msg::Twist::SharedPtr cmd_msg)
 {
   // BEGIN STUDENT CODE
-  particle.x += cos(particle.yaw) * particle.vx * dt + sigmas_.x * gaussian_noise_.Sample() * sqrt(
+  particle.x += cos(particle.yaw) * particle.x_vel * dt + sigmas_.x * gaussian_noise_.Sample() *
+    sqrt(
     dt);
-  particle.y += -sin(particle.yaw) * particle.vx * dt + sigmas_.y * gaussian_noise_.Sample() * sqrt(
+  particle.y += -sin(particle.yaw) * particle.x_vel * dt + sigmas_.y * gaussian_noise_.Sample() *
+    sqrt(
     dt);
-  particle.yaw += particle.yaw_rate * dt + sigmas_.yaw * gaussian_noise_.Sample() * sqrt(dt);
+  particle.yaw += particle.yaw_vel * dt + sigmas_.yaw * gaussian_noise_.Sample() * sqrt(dt);
 
-  particle.vx = cmd_msg->linear.x + sigmas_.vx * gaussian_noise_.Sample() * sqrt(dt);
-  particle.yaw_rate = -cmd_msg->angular.z + sigmas_.yaw_rate * gaussian_noise_.Sample() * sqrt(dt);
+  particle.x_vel = cmd_msg->linear.x + sigmas_.x_vel * gaussian_noise_.Sample() * sqrt(dt);
+  particle.yaw_vel = -cmd_msg->angular.z + sigmas_.yaw_vel * gaussian_noise_.Sample() * sqrt(dt);
 
-  while (particle.yaw > M_PI) {
-    particle.yaw -= 2 * M_PI;
-  }
-  while (particle.yaw <= -M_PI) {
-    particle.yaw += 2 * M_PI;
-  }
+  particle.yaw = angles::normalize_angle(particle.yaw);
   // END STUDENT CODE
 }
 

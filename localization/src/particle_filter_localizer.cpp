@@ -19,6 +19,7 @@
 // THE SOFTWARE.
 
 #include "particle_filter_localizer.hpp"
+#include <angles/angles.h>
 #include <algorithm>
 #include <memory>
 #include <vector>
@@ -50,8 +51,8 @@ ParticleFilterLocalizer::ParticleFilterLocalizer(const rclcpp::NodeOptions & opt
   min_.x = min_vals[0];
   min_.y = min_vals[1];
   min_.yaw = min_vals[2];
-  min_.vx = min_vals[3];
-  min_.yaw_rate = min_vals[4];
+  min_.x_vel = min_vals[3];
+  min_.yaw_vel = min_vals[4];
 
   std::vector<double> max_vals = declare_parameter<std::vector<double>>(
     "max_init_vals", {0.6, 0.3,
@@ -59,8 +60,8 @@ ParticleFilterLocalizer::ParticleFilterLocalizer(const rclcpp::NodeOptions & opt
   max_.x = max_vals[0];
   max_.y = max_vals[1];
   max_.yaw = max_vals[2];
-  max_.vx = max_vals[3];
-  max_.yaw_rate = max_vals[4];
+  max_.x_vel = max_vals[3];
+  max_.yaw_vel = max_vals[4];
 
   // initialize particle filter
   particles_ = std::vector<Particle>(num_particles_);
@@ -99,8 +100,8 @@ Particle ParticleFilterLocalizer::InitializeParticle()
   p.x = min_.x + uniform_noise_.Sample() * (max_.x - min_.x);
   p.y = min_.y + uniform_noise_.Sample() * (max_.y - min_.y);
   p.yaw = min_.yaw + uniform_noise_.Sample() * (max_.yaw - min_.yaw);
-  p.vx = min_.vx + uniform_noise_.Sample() * (max_.vx - min_.vx);
-  p.yaw_rate = min_.yaw_rate + uniform_noise_.Sample() * (max_.yaw_rate - min_.yaw_rate);
+  p.x_vel = min_.x_vel + uniform_noise_.Sample() * (max_.x_vel - min_.x_vel);
+  p.yaw_vel = min_.yaw_vel + uniform_noise_.Sample() * (max_.yaw_vel - min_.yaw_vel);
   return p;
   // END STUDENT CODE
 }
@@ -152,6 +153,57 @@ void ParticleFilterLocalizer::NormalizeWeights()
     search_weights_.push_back(running_sum);
     running_sum += particle.weight;
   }
+}
+
+Particle ParticleFilterLocalizer::CalculateEstimate()
+{
+  Particle estimate;
+  estimate.weight = 0.0;
+  estimate = std::accumulate(
+    particles_.begin(), particles_.end(), Particle{}, [](const auto & total, const auto & p) {
+      return total + p.Weighted();
+    });
+
+  double yaw_alternative = std::accumulate(
+    particles_.begin(), particles_.end(), 0.0, [](const auto & total, const auto & p) {
+      return total + (angles::normalize_angle_positive(p.yaw) * p.weight);
+    });
+
+  // if very close to the discontinuity of pi--pi, use the one with
+  // a discontinuity at a different place
+  if (std::abs(std::abs(estimate.yaw) - M_PI) < 1.0) {
+    estimate.yaw = yaw_alternative;
+  }
+
+  estimate.yaw = angles::normalize_angle(estimate.yaw);
+
+  return estimate;
+}
+
+
+Particle ParticleFilterLocalizer::CalculateCovariance(const Particle & estimate)
+{
+  Particle cov;
+  double cov_normalizer = 0;
+  for (const Particle & particle : particles_) {
+    cov.x += pow(estimate.x - particle.x, 2) * particle.weight;
+    cov.y += pow(estimate.y - particle.y, 2) * particle.weight;
+    double yaw_error = estimate.yaw - particle.yaw;
+    yaw_error = angles::normalize_angle(yaw_error);
+    cov.yaw += pow(yaw_error, 2) * particle.weight;
+    cov.x_vel += pow(estimate.x_vel - particle.x_vel, 2) * particle.weight;
+    cov.yaw_vel += pow(estimate.yaw_vel - particle.yaw_vel, 2) * particle.weight;
+
+    cov_normalizer += pow(particle.weight, 2);
+  }
+
+  cov.x /= (1 - cov_normalizer);
+  cov.y /= (1 - cov_normalizer);
+  cov.yaw /= (1 - cov_normalizer);
+  cov.x_vel /= (1 - cov_normalizer);
+  cov.yaw_vel /= (1 - cov_normalizer);
+
+  return cov;
 }
 
 void ParticleFilterLocalizer::ResampleParticles()
@@ -214,86 +266,48 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
 
   NormalizeWeights();
 
-  Particle best_estimate_particle;
-  // yaw_sum_2 is the sum with a different discontinuity
-  double yaw_sum_2 = 0;
-  for (const Particle & particle : particles_) {
-    best_estimate_particle.x += particle.x * particle.weight;
-    best_estimate_particle.y += particle.y * particle.weight;
-    // this gives zero if we are facing pi
-    best_estimate_particle.yaw += particle.yaw * particle.weight;
-    best_estimate_particle.vx += particle.vx * particle.weight;
-    best_estimate_particle.yaw_rate += particle.yaw_rate * particle.weight;
+  const Particle best_estimate_particle = CalculateEstimate();
 
-    double yaw = particle.yaw;
-    if (yaw < 0) {
-      yaw += 2 * M_PI;
-    }
-    // estimate is zero is facing pi/2
-    yaw_sum_2 += yaw * particle.weight;
-  }
-  // if very close to the discontinuity of pi--pi, use the one with
-  // a discontinuity at a different place
-  if (abs(yaw_sum_2 - M_PI) < 1.0) {
-    best_estimate_particle.yaw = yaw_sum_2;
-  }
+  const Particle covariance = CalculateCovariance(best_estimate_particle);
 
-  // ensure that the yaw is in the range [-pi, pi]
-  while (best_estimate_particle.yaw >= M_PI) {
-    best_estimate_particle.yaw -= 2 * M_PI;
-  }
-  while (best_estimate_particle.yaw < -M_PI) {
-    best_estimate_particle.yaw += 2 * M_PI;
-  }
+  const rclcpp::Time current_time = now();
 
-  Particle cov;
-  double cov_normalizer = 0;
-  for (const Particle & particle : particles_) {
-    cov.x += pow(best_estimate_particle.x - particle.x, 2) * particle.weight;
-    cov.y += pow(best_estimate_particle.y - particle.y, 2) * particle.weight;
-    double yaw_error = best_estimate_particle.yaw - particle.yaw;
-    // ensure yaw error is handled with discontinuity correctly. Cannot be larger than pi
-    while (yaw_error >= M_PI) {
-      yaw_error -= M_PI;
-    }
-    while (yaw_error < -M_PI) {
-      yaw_error += M_PI;
-    }
-    cov.yaw += pow(yaw_error, 2) * particle.weight;
-    cov.vx += pow(best_estimate_particle.vx - particle.vx, 2) * particle.weight;
-    cov.yaw_rate += pow(best_estimate_particle.yaw_rate - particle.yaw_rate, 2) * particle.weight;
+  PublishEstimateOdom(best_estimate_particle, covariance, current_time);
 
-    cov_normalizer += pow(particle.weight, 2);
-  }
+  PublishEstimateTF(best_estimate_particle, current_time);
 
-  cov.x /= (1 - cov_normalizer);
-  cov.y /= (1 - cov_normalizer);
-  cov.yaw /= (1 - cov_normalizer);
-  cov.vx /= (1 - cov_normalizer);
-  cov.yaw_rate /= (1 - cov_normalizer);
+  PublishParticleVisualization();
+}
 
-  rclcpp::Time current_time = now();
-
+void ParticleFilterLocalizer::PublishEstimateOdom(
+  const Particle & estimate,
+  const Particle & covariance,
+  const rclcpp::Time & current_time)
+{
   nav_msgs::msg::Odometry odom_msg;
   odom_msg.header.frame_id = "map";
   odom_msg.header.stamp = current_time;
-  odom_msg.pose.pose.position.x = best_estimate_particle.x;
-  odom_msg.pose.pose.position.y = best_estimate_particle.y;
+  odom_msg.pose.pose.position.x = estimate.x;
+  odom_msg.pose.pose.position.y = estimate.y;
   tf2::Quaternion quaternion;
-  quaternion.setRPY(0, 0, -best_estimate_particle.yaw);
+  quaternion.setRPY(0, 0, -estimate.yaw);
   odom_msg.pose.pose.orientation = tf2::toMsg(quaternion);
-  odom_msg.twist.twist.linear.x = best_estimate_particle.vx;
-  odom_msg.twist.twist.angular.z = best_estimate_particle.yaw_rate;
+  odom_msg.twist.twist.linear.x = estimate.x_vel;
+  odom_msg.twist.twist.angular.z = estimate.yaw_vel;
 
-  odom_msg.pose.covariance[0] = cov.x;
-  odom_msg.pose.covariance[7] = cov.y;
-  odom_msg.pose.covariance[35] = cov.yaw;
+  odom_msg.pose.covariance[0] = covariance.x;
+  odom_msg.pose.covariance[7] = covariance.y;
+  odom_msg.pose.covariance[35] = covariance.yaw;
 
-  odom_msg.twist.covariance[0] = cov.vx;
-  odom_msg.twist.covariance[35] = cov.yaw_rate;
+  odom_msg.twist.covariance[0] = covariance.x_vel;
+  odom_msg.twist.covariance[35] = covariance.yaw_vel;
   odom_pub_->publish(odom_msg);
+}
 
-  // use estimated pose to determine the new transform from odom to calculated odom position
+void ParticleFilterLocalizer::PublishEstimateTF(
+  const Particle & estimate,
+  const rclcpp::Time & current_time)
+{
   tf2::Transform map_odom_transform;
   if (tf_buffer_.canTransform("base_footprint", "odom", tf2::TimePointZero)) {
     const auto base_odom_transform_msg = tf_buffer_.lookupTransform(
@@ -305,12 +319,12 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
     tf2::Transform map_base_transform;
     map_base_transform.setOrigin(
       tf2::Vector3(
-        best_estimate_particle.x, best_estimate_particle.y,
+        estimate.x, estimate.y,
         0));
     map_base_transform.setRotation(
       tf2::Quaternion(
         tf2::Vector3(0, 0, 1),
-        -best_estimate_particle.yaw));
+        -estimate.yaw));
 
     map_odom_transform.mult(map_base_transform, base_odom_transform);
   } else {
@@ -325,8 +339,6 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
   transform.child_frame_id = "odom";
   transform.transform = tf2::toMsg(map_odom_transform);
   tf_broadcaster_.sendTransform(transform);
-
-  PublishParticleVisualization();
 }
 
 void ParticleFilterLocalizer::PublishParticleVisualization()

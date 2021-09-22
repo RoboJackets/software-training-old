@@ -31,13 +31,6 @@ namespace localization
 
 struct TagLocation
 {
-  TagLocation() {}
-  TagLocation(double x, double y, double yaw)
-  {
-    this->x = x;
-    this->y = y;
-    this->yaw = yaw;
-  }
   double x = 0;
   double y = 0;
   double yaw = 0;
