@@ -60,7 +60,7 @@ bool OdometrySensorModel::IsMeasUpdateValid(rclcpp::Time cur_time)
   if (!last_msg_) {
     return false;
   }
-  return last_msg_->header.stamp.sec + last_msg_->header.stamp.nanosec * 1e-9 <
+  return last_msg_->header.stamp.sec + last_msg_->header.stamp.nanosec * 1e-9 >
          cur_time.seconds() - this->time_delay_;
 }
 

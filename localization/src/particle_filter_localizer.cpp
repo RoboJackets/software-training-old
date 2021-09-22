@@ -280,7 +280,7 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
   odom_msg.pose.pose.position.x = best_estimate_particle.x;
   odom_msg.pose.pose.position.y = best_estimate_particle.y;
   tf2::Quaternion quaternion;
-  quaternion.setRPY(0, 0, best_estimate_particle.yaw);
+  quaternion.setRPY(0, 0, -best_estimate_particle.yaw);
   odom_msg.pose.pose.orientation = tf2::toMsg(quaternion);
   odom_msg.twist.twist.linear.x = best_estimate_particle.vx;
   odom_msg.twist.twist.angular.z = best_estimate_particle.yaw_rate;
