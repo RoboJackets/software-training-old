@@ -294,17 +294,36 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
   odom_pub_->publish(odom_msg);
 
   // use estimated pose to determine the new transform from odom to calculated odom position
+  tf2::Transform map_odom_transform;
+  if (tf_buffer_.canTransform("base_footprint", "odom", tf2::TimePointZero)) {
+    const auto base_odom_transform_msg = tf_buffer_.lookupTransform(
+      "base_footprint", "odom",
+      tf2::TimePointZero);
+    tf2::Transform base_odom_transform;
+    tf2::fromMsg(base_odom_transform_msg.transform, base_odom_transform);
+
+    tf2::Transform map_base_transform;
+    map_base_transform.setOrigin(
+      tf2::Vector3(
+        best_estimate_particle.x, best_estimate_particle.y,
+        0));
+    map_base_transform.setRotation(
+      tf2::Quaternion(
+        tf2::Vector3(0, 0, 1),
+        -best_estimate_particle.yaw));
+
+    map_odom_transform.mult(map_base_transform, base_odom_transform);
+  } else {
+    RCLCPP_WARN_THROTTLE(
+      get_logger(),
+      *get_clock(), 1.0, "Waiting for odom->base_footprint transform...");
+    map_odom_transform.setIdentity();
+  }
   geometry_msgs::msg::TransformStamped transform;
   transform.header.frame_id = "map";
   transform.header.stamp = current_time;
   transform.child_frame_id = "odom";
-  transform.transform.rotation.w = 1;
-  transform.transform.rotation.x = 0;
-  transform.transform.rotation.y = 0;
-  transform.transform.rotation.z = 0;
-  transform.transform.translation.x = 0;
-  transform.transform.translation.y = 0;
-  transform.transform.translation.z = 0;
+  transform.transform = tf2::toMsg(map_odom_transform);
   tf_broadcaster_.sendTransform(transform);
 
   PublishParticleVisualization();
@@ -312,7 +331,7 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
 
 void ParticleFilterLocalizer::PublishParticleVisualization()
 {
-  if(marker_pub_->get_subscription_count() == 0) {
+  if (marker_pub_->get_subscription_count() == 0) {
     // Don't bother building visualization if nobody's subscribed
     return;
   }
