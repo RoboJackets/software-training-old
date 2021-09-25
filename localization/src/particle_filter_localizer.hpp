@@ -41,6 +41,14 @@
 namespace localization
 {
 
+struct Range
+{
+  double min_x;
+  double min_y;
+  double max_x;
+  double max_y;
+};
+
 class ParticleFilterLocalizer : public rclcpp::Node
 {
 public:
@@ -63,24 +71,25 @@ private:
 
   UniformRandomGenerator uniform_noise_;
   std::vector<std::unique_ptr<SensorModel>> sensor_models_;
-  IMUMotionModel motion_model_;
+  MotionModel motion_model_;
 
   int num_particles_ = 100;
   double max_weight_ = 0;
   double min_weight_ = 0;
 
-  Particle min_;
-  Particle max_;
+  Range initial_range_;
 
   void CmdCallback(const geometry_msgs::msg::Twist::SharedPtr msg);
 
-  Particle InitializeParticle();
+  void InitializeParticles();
+  Particle GenerateNewParticle();
   void NormalizeWeights();
   Particle CalculateEstimate();
   Particle CalculateCovariance(const Particle & estimate);
   void ResampleParticles();
   void CalculateStateAndPublish();
-  void ComputeLogProbs();
+  void CalculateAllParticleWeights(const rclcpp::Time& current_time);
+  void CalculateParticleWeight(Particle& particle, const rclcpp::Time& current_time);
 
   void PublishEstimateOdom(
     const Particle & estimate, const Particle & covariance,

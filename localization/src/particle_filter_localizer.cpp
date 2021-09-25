@@ -32,7 +32,7 @@ using namespace std::chrono_literals;
 
 ParticleFilterLocalizer::ParticleFilterLocalizer(const rclcpp::NodeOptions & options)
 : rclcpp::Node("particle_filter_localizer", options),
-  tf_buffer_(get_clock()), tf_listener_(tf_buffer_), tf_broadcaster_(*this),
+  tf_buffer_(get_clock()), tf_listener_(tf_buffer_), tf_broadcaster_(this),
   motion_model_(this)
 {
   // BEGIN STUDENT CODE
@@ -45,37 +45,19 @@ ParticleFilterLocalizer::ParticleFilterLocalizer(const rclcpp::NodeOptions & opt
   declare_parameter<double>("resample_threshold", 0.1);
   declare_parameter<double>("low_percentage_particles_to_drop", 0.1);
 
-  std::vector<double> min_vals = declare_parameter<std::vector<double>>(
-    "min_init_vals", {-0.6,
-      -0.3, -M_PI, 0.0, 0.0});
-  min_.x = min_vals[0];
-  min_.y = min_vals[1];
-  min_.yaw = min_vals[2];
-  min_.x_vel = min_vals[3];
-  min_.yaw_vel = min_vals[4];
+  initial_range_.min_x = declare_parameter<double>("initial_range.min_x", -0.6);
+  initial_range_.max_x = declare_parameter<double>("initial_range.max_x", 0.6);
+  initial_range_.min_y = declare_parameter<double>("initial_range.min_y", -0.3);
+  initial_range_.max_y = declare_parameter<double>("initial_range.max_y", 0.3);
 
-  std::vector<double> max_vals = declare_parameter<std::vector<double>>(
-    "max_init_vals", {0.6, 0.3,
-      M_PI, 0.0, 0.0});
-  max_.x = max_vals[0];
-  max_.y = max_vals[1];
-  max_.yaw = max_vals[2];
-  max_.x_vel = max_vals[3];
-  max_.yaw_vel = max_vals[4];
+  InitializeParticles();
 
-  // initialize particle filter
-  particles_ = std::vector<Particle>(num_particles_);
-  std::generate_n(
-    particles_.begin(), num_particles_,
-    std::bind(&ParticleFilterLocalizer::InitializeParticle, this));
-  NormalizeWeights();
-
-  double state_update_rate = declare_parameter<double>("state_update_rate", 10);
+  const double state_update_rate = declare_parameter<double>("state_update_rate", 10);
   pose_timer_ = create_wall_timer(
     std::chrono::duration<double>(1.0 / state_update_rate),
     std::bind(&ParticleFilterLocalizer::CalculateStateAndPublish, this));
 
-  double resample_rate = declare_parameter<double>("resample_rate", 10);
+  const double resample_rate = declare_parameter<double>("resample_rate", 10);
   resample_timer_ = create_wall_timer(
     std::chrono::duration<double>(1.0 / resample_rate),
     std::bind(&ParticleFilterLocalizer::ResampleParticles, this));
@@ -88,20 +70,30 @@ ParticleFilterLocalizer::ParticleFilterLocalizer(const rclcpp::NodeOptions & opt
 
 void ParticleFilterLocalizer::CmdCallback(const geometry_msgs::msg::Twist::SharedPtr msg)
 {
-  // updates the particles based off of the IMU message
   motion_model_.updateParticles(particles_, msg, now());
 }
 
-Particle ParticleFilterLocalizer::InitializeParticle()
+void ParticleFilterLocalizer::InitializeParticles()
+{
+  particles_.resize(num_particles_);
+  std::generate(
+    particles_.begin(), particles_.end(),
+    std::bind(&ParticleFilterLocalizer::GenerateNewParticle, this));
+  NormalizeWeights();
+}
+
+Particle ParticleFilterLocalizer::GenerateNewParticle()
 {
   // uniform_noise_.Sample() to get a uniform sample
   // BEGIN STUDENT CODE
   Particle p;
-  p.x = min_.x + uniform_noise_.Sample() * (max_.x - min_.x);
-  p.y = min_.y + uniform_noise_.Sample() * (max_.y - min_.y);
-  p.yaw = min_.yaw + uniform_noise_.Sample() * (max_.yaw - min_.yaw);
-  p.x_vel = min_.x_vel + uniform_noise_.Sample() * (max_.x_vel - min_.x_vel);
-  p.yaw_vel = min_.yaw_vel + uniform_noise_.Sample() * (max_.yaw_vel - min_.yaw_vel);
+  p.x = initial_range_.min_x + uniform_noise_.Sample() *
+    (initial_range_.max_x - initial_range_.min_x);
+  p.y = initial_range_.min_y + uniform_noise_.Sample() *
+    (initial_range_.max_y - initial_range_.min_y);
+  p.yaw = (uniform_noise_.Sample() * M_2_PI) - M_1_PI;
+  p.x_vel = 0.0;
+  p.yaw_vel = 0.0;
   return p;
   // END STUDENT CODE
 }
@@ -135,7 +127,7 @@ void ParticleFilterLocalizer::NormalizeWeights()
       normalizer / num_particles_);
     std::generate_n(
       particles_.begin(), num_particles_,
-      std::bind(&ParticleFilterLocalizer::InitializeParticle, this));
+      std::bind(&ParticleFilterLocalizer::GenerateNewParticle, this));
     normalizer = num_particles_;
   }
   if (normalizer == 0) {
@@ -243,34 +235,40 @@ void ParticleFilterLocalizer::ResampleParticles()
   particles_ = new_particles;
 }
 
-void ParticleFilterLocalizer::ComputeLogProbs()
+void ParticleFilterLocalizer::CalculateAllParticleWeights(const rclcpp::Time & current_time)
 {
-  auto cur_time = this->now();
   for (Particle & particle : particles_) {
-    double log_prob = 0;
-    for (const std::unique_ptr<SensorModel> & sensor_model : sensor_models_) {
-      if (sensor_model->IsMeasUpdateValid(cur_time)) {
-        log_prob += -0.5 * sensor_model->ComputeLogProb(particle);
-        log_prob -= sensor_model->ComputeLogNormalizer();
-      }
-    }
-    particle.weight = exp(log_prob);
+    CalculateParticleWeight(particle, current_time);
   }
+  NormalizeWeights();
+}
+
+
+void ParticleFilterLocalizer::CalculateParticleWeight(
+  Particle & particle,
+  const rclcpp::Time & current_time)
+{
+  double log_probability = 0.0;
+  for (const auto & model : sensor_models_) {
+    if (model->IsMeasUpdateValid(current_time)) {
+      log_probability += -0.5 * model->ComputeLogProb(particle);
+      log_probability -= model->ComputeLogNormalizer();
+    }
+  }
+  particle.weight = exp(log_probability);
 }
 
 void ParticleFilterLocalizer::CalculateStateAndPublish()
 {
   // create a weighted average of particles based off of the weights and publish it
 
-  ComputeLogProbs();
+  const rclcpp::Time current_time = now();
 
-  NormalizeWeights();
+  CalculateAllParticleWeights(current_time);
 
   const Particle best_estimate_particle = CalculateEstimate();
 
   const Particle covariance = CalculateCovariance(best_estimate_particle);
-
-  const rclcpp::Time current_time = now();
 
   PublishEstimateOdom(best_estimate_particle, covariance, current_time);
 
@@ -310,12 +308,14 @@ void ParticleFilterLocalizer::PublishEstimateTF(
 {
   tf2::Transform map_odom_transform;
   if (tf_buffer_.canTransform("base_footprint", "odom", tf2::TimePointZero)) {
+    // Get base_footprint -> odom transform from TF
     const auto base_odom_transform_msg = tf_buffer_.lookupTransform(
       "base_footprint", "odom",
       tf2::TimePointZero);
     tf2::Transform base_odom_transform;
     tf2::fromMsg(base_odom_transform_msg.transform, base_odom_transform);
 
+    // Set map -> base_footprint transform to our estimated pose
     tf2::Transform map_base_transform;
     map_base_transform.setOrigin(
       tf2::Vector3(
@@ -326,11 +326,13 @@ void ParticleFilterLocalizer::PublishEstimateTF(
         tf2::Vector3(0, 0, 1),
         -estimate.yaw));
 
+    // Set map -> odom transform by compining map -> base_footprint -> odom
     map_odom_transform.mult(map_base_transform, base_odom_transform);
   } else {
     RCLCPP_WARN_THROTTLE(
       get_logger(),
       *get_clock(), 1.0, "Waiting for odom->base_footprint transform...");
+    // Use identity transform until odom is available
     map_odom_transform.setIdentity();
   }
   geometry_msgs::msg::TransformStamped transform;

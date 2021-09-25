@@ -32,17 +32,16 @@
 namespace localization
 {
 
-class IMUMotionModel
+class MotionModel
 {
 public:
-  explicit IMUMotionModel(rclcpp::Node * node);
+  explicit MotionModel(rclcpp::Node * node);
 
   void updateParticle(Particle & particle, double dt, geometry_msgs::msg::Twist::SharedPtr cmd_msg);
   void updateParticles(
     std::vector<Particle> & particles,
     geometry_msgs::msg::Twist::SharedPtr cmd_msg,
     rclcpp::Time current_time);
-  void ImuCallback(const geometry_msgs::msg::Twist::SharedPtr msg);
 
 private:
   Particle sigmas_;

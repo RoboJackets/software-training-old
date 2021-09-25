@@ -27,7 +27,7 @@ namespace localization
 {
 
 
-IMUMotionModel::IMUMotionModel(rclcpp::Node * node)
+MotionModel::MotionModel(rclcpp::Node * node)
 {
   std::vector<double> motion_sigma = node->declare_parameter<std::vector<double>>(
     "motion_sigmas",
@@ -40,7 +40,7 @@ IMUMotionModel::IMUMotionModel(rclcpp::Node * node)
   sigmas_.yaw_vel = motion_sigma[4];
 }
 
-void IMUMotionModel::updateParticle(
+void MotionModel::updateParticle(
   Particle & particle, double dt,
   geometry_msgs::msg::Twist::SharedPtr cmd_msg)
 {
@@ -60,7 +60,7 @@ void IMUMotionModel::updateParticle(
   // END STUDENT CODE
 }
 
-void IMUMotionModel::updateParticles(
+void MotionModel::updateParticles(
   std::vector<Particle> & particles,
   geometry_msgs::msg::Twist::SharedPtr cmd_msg,
   rclcpp::Time current_time)

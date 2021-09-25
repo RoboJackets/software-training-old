@@ -19,6 +19,7 @@
 // THE SOFTWARE.
 
 #include "aruco_sensor_model.hpp"
+#include <angles/angles.h>
 #include <vector>
 #include <utility>
 
@@ -90,12 +91,7 @@ double ArucoSensorModel::ComputeLogProb(Particle & particle)
     log_prob += pow(body_location.x - tag.pose.position.x, 2) / meas_cov_[0];
     log_prob += pow(body_location.y - tag.pose.position.y, 2) / meas_cov_[1];
 
-    // handles the error difference cleanly
-    double yaw_error = body_location.yaw - yaw;
-    // yaw error cannot exceed pi
-    while (std::abs(yaw_error) > M_PI) {
-      yaw_error = std::abs(yaw_error) - M_PI;
-    }
+    const auto yaw_error = angles::shortest_angular_distance(yaw, body_location.yaw);
     log_prob += pow(yaw_error, 2) / meas_cov_[2];
   }
   return log_prob;
