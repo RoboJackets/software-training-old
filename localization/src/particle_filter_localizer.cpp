@@ -355,7 +355,7 @@ void ParticleFilterLocalizer::PublishParticleVisualization()
   marker.header.frame_id = "map";
   marker.type = visualization_msgs::msg::Marker::TRIANGLE_LIST;
   marker.action = visualization_msgs::msg::Marker::ADD;
-  marker.header.stamp = this->now();
+  marker.header.stamp = now();
   marker.id = 10;
 
   marker.color.r = 1.0;

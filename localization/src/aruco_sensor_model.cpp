@@ -80,13 +80,7 @@ double ArucoSensorModel::ComputeLogProb(Particle & particle)
     tf2::Quaternion q;
     tf2::fromMsg(tag.pose.orientation, q);
     tf2::Matrix3x3(q).getRPY(r, p, yaw);
-    body_location.yaw = map_location.yaw + particle.yaw;
-    while (body_location.yaw > M_PI) {
-      body_location.yaw -= 2 * M_PI;
-    }
-    while (body_location.yaw < -M_PI) {
-      body_location.yaw += 2 * M_PI;
-    }
+    body_location.yaw = angles::normalize_angle(map_location.yaw + particle.yaw);
 
     log_prob += pow(body_location.x - tag.pose.position.x, 2) / meas_cov_[0];
     log_prob += pow(body_location.y - tag.pose.position.y, 2) / meas_cov_[1];
