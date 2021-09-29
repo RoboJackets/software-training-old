@@ -108,7 +108,7 @@ In our new header file (student_functions.hpp), we need to add header guards. Ad
 
 Finally, to include our new files into our package's build rules, we need to edit obstacle_detector's [CMakeLists.txt](../../obstacle_detector/CMakeLists.txt).
 
-Find the student code block in the call to `add_library`. Add our new implementation file, `src/student_code.cpp` to this function call.
+Find the student code block in the call to `add_library`. Add our new implementation file, `src/student_functions.cpp` to this function call.
 
 **Note:** We don't need to add our header file, because it gets compiled as part of the files that include it.
 
@@ -243,7 +243,7 @@ The core logic of our obstacle detection node is ready, but it doesn't actually 
 
 Find the student code comment block that includes `// Declare subscriber and publisher members`. With this block, declare a new member variable of type `rclcpp::Publisher<nav_msgs::msg::OccupancyGrid>::SharedPtr`, named `occupancy_grid_publisher_`.
 
-Up in the `ObstacleDetector` constructor, find the student code comment block that includes `// Initialize publisher and subscriber`. Set `occupancy_grid_publisher_` to the returned value of `create_publisher`. The topic should be `"~/occupancy_grid"` and the quality of service setting should be `rclcpp::SystemDefaultQoS()`. Don't forget to specify the message type (`nav_msgs::msg::OccupancyGrid`) as a template parameter.
+Up in the `ObstacleDetector` constructor, find the student code comment block that includes `// Initialize publisher and subscriber`. Set `occupancy_grid_publisher_` to the returned value of `create_publisher`. The topic should be `"~/occupancy_grid"` and the quality of service setting should be `rclcpp::SystemDefaultsQoS()`. Don't forget to specify the message type (`nav_msgs::msg::OccupancyGrid`) as a template parameter.
 
 Now scroll down to find the student code comment block that includes `// Publish occupancy_grid_msg`. Here, call `publish` on `occupancy_grid_publisher_`, passing it `occupancy_grid_msg`. Remember, our publisher object is a shared pointer, so we'll use the arrow syntax (`->`) for accessing the member function.
 
