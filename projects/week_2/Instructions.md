@@ -108,7 +108,7 @@ In our new header file (student_functions.hpp), we need to add header guards. Ad
 
 Finally, to include our new files into our package's build rules, we need to edit obstacle_detector's [CMakeLists.txt](../../obstacle_detector/CMakeLists.txt).
 
-Find the student code block in the call to `add_library`. Add our new implementation file, `src/student_code.cpp` to this function call.
+Find the student code block in the call to `add_library`. Add our new implementation file, `src/student_functions.cpp` to this function call.
 
 **Note:** We don't need to add our header file, because it gets compiled as part of the files that include it.
 
