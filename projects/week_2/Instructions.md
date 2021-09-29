@@ -261,7 +261,7 @@ camera_subscriber_ = image_transport::create_camera_subscription(
       std::bind(
         &ObstacleDetector::ImageCallback, this, std::placeholders::_1,
         std::placeholders::_2),
-      "raw", rclcpp::SensorDataQoS());
+      "raw", rclcpp::SensorDataQoS().get_rmw_qos_profile());
 ```
 
 The first argument, `this` gives the function a reference to our node object.
