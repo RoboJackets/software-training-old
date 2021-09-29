@@ -52,7 +52,7 @@ public:
       std::bind(
         &ObstacleDetector::ImageCallback, this, std::placeholders::_1,
         std::placeholders::_2),
-      "raw", rclcpp::SensorDataQoS());
+      "raw", rclcpp::SensorDataQoS().get_rmw_qos_profile());
     // END STUDENT CODE
     
     declare_parameters<int>(
