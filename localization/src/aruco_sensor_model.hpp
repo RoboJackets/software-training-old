@@ -39,14 +39,14 @@ struct TagLocation
 class ArucoSensorModel : public SensorModel
 {
 public:
-  explicit ArucoSensorModel(rclcpp::Node * node);
-  void UpdateMeasurement(const stsl_interfaces::msg::TagArray::SharedPtr tags);
-  double ComputeLogProb(Particle & particle) override;
+  explicit ArucoSensorModel(rclcpp::Node & node);
+  void UpdateMeasurement(const stsl_interfaces::msg::TagArray::SharedPtr msg);
+  double ComputeLogProb(const Particle & particle) override;
   double ComputeLogNormalizer() override;
-  bool IsMeasUpdateValid(rclcpp::Time cur_time) override;
+  bool IsMeasurementAvailable(const rclcpp::Time & cur_time) override;
 
 private:
-  stsl_interfaces::msg::TagArray::SharedPtr last_msg_;
+  stsl_interfaces::msg::TagArray last_msg_;
   rclcpp::Subscription<stsl_interfaces::msg::TagArray>::SharedPtr tag_sub_;
   std::map<int, TagLocation> tags_;
 };

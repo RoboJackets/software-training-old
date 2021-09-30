@@ -24,8 +24,6 @@
 #include <tf2_ros/transform_listener.h>
 #include <tf2_ros/transform_broadcaster.h>
 #include <rclcpp/rclcpp.hpp>
-#include <rclcpp_components/register_node_macro.hpp>
-#include <stsl_interfaces/msg/tag_array.hpp>
 #include <nav_msgs/msg/odometry.hpp>
 #include <visualization_msgs/msg/marker.hpp>
 #include <memory>
@@ -34,8 +32,6 @@
 #include "particle.hpp"
 #include "sensor_model.hpp"
 #include "motion_model.hpp"
-#include "aruco_sensor_model.hpp"
-#include "odometry_sensor_model.hpp"
 #include "random_helpers.hpp"
 
 namespace localization

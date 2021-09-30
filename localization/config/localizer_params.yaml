@@ -1,11 +1,12 @@
 particle_filter_localizer:
   ros__parameters:
-    aruco:
-      meas_cov: [0.05, 0.05, 0.2]
-      time_delay: 0.05
-    odom:
-      meas_cov: [0.1, 0.1]
-      time_delay: 0.05
+    sensors:
+      aruco:
+        covariance: [0.05, 0.05, 0.2]
+        measurement_timeout: 0.05
+      odom:
+        covariance: [0.1, 0.1]
+        measurement_timeout: 0.05
     motion_sigmas: [0.025, 0.025, 0.05, 0.025, 0.025]
     num_particles: 200
     initial_range:
@@ -17,4 +18,3 @@ particle_filter_localizer:
     resample_rate: 10.0
     low_percentage_particles_to_drop: 0.05
     resample_threshold: 0.0
-

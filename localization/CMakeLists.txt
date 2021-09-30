@@ -13,12 +13,13 @@ find_package(tf2_geometry_msgs REQUIRED)
 find_package(angles REQUIRED)
 
 add_library(${PROJECT_NAME}_component SHARED
-  src/sensor_model.cpp
   src/motion_model.cpp
   src/aruco_sensor_model.cpp
-  src/odometry_sensor_model.cpp
   src/random_helpers.cpp
-  src/particle_filter_localizer.cpp)
+  src/particle_filter_localizer.cpp
+# BEGIN STUDENT CODE
+# END STUDENT CODE  
+)
 ament_target_dependencies(${PROJECT_NAME}_component
   "rclcpp"
   "sensor_msgs"

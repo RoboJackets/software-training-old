@@ -27,9 +27,9 @@ namespace localization
 {
 
 
-MotionModel::MotionModel(rclcpp::Node * node)
+MotionModel::MotionModel(rclcpp::Node & node)
 {
-  std::vector<double> motion_sigma = node->declare_parameter<std::vector<double>>(
+  std::vector<double> motion_sigma = node.declare_parameter<std::vector<double>>(
     "motion_sigmas",
     {0.05, 0.05, 0.2,
       0.05, 0.0});
@@ -44,7 +44,6 @@ void MotionModel::updateParticle(
   Particle & particle, double dt,
   geometry_msgs::msg::Twist::SharedPtr cmd_msg)
 {
-  // BEGIN STUDENT CODE
   particle.x += cos(particle.yaw) * particle.x_vel * dt + sigmas_.x * gaussian_noise_.Sample() *
     sqrt(
     dt);
@@ -57,7 +56,6 @@ void MotionModel::updateParticle(
   particle.yaw_vel = -cmd_msg->angular.z + sigmas_.yaw_vel * gaussian_noise_.Sample() * sqrt(dt);
 
   particle.yaw = angles::normalize_angle(particle.yaw);
-  // END STUDENT CODE
 }
 
 void MotionModel::updateParticles(

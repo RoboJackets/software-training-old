@@ -21,31 +21,25 @@
 #ifndef SENSOR_MODEL_HPP_
 #define SENSOR_MODEL_HPP_
 
-#include <stsl_interfaces/msg/tag_array.hpp>
-#include <rclcpp/rclcpp.hpp>
-#include <map>
-#include <random>
+#include <rclcpp/time.hpp>
 #include <vector>
 #include "particle.hpp"
 
 namespace localization
 {
 
-
 class SensorModel
 {
 public:
-  virtual double ComputeLogProb(Particle & particle) {return 0.0;}
-  virtual double ComputeLogNormalizer() {return 0.0;}
-  virtual bool IsMeasUpdateValid(rclcpp::Time cur_time);
-  ~SensorModel() = default;
+  virtual ~SensorModel() = default;
+  virtual double ComputeLogProb(const Particle & particle) = 0;
+  virtual double ComputeLogNormalizer() = 0;
+  virtual bool IsMeasurementAvailable(const rclcpp::Time & cur_time) = 0;
 
 protected:
-  std::vector<double> meas_cov_;
-  double time_delay_;
-  SensorModel() = default;
+  std::vector<double> covariance_;
+  double timeout_;
 
-private:
 };
 }  // namespace localization
 

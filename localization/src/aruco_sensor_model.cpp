@@ -26,13 +26,12 @@
 namespace localization
 {
 
-ArucoSensorModel::ArucoSensorModel(rclcpp::Node * node)
+ArucoSensorModel::ArucoSensorModel(rclcpp::Node & node)
 {
-  // BEGIN STUDENT CODE
-  this->meas_cov_ = node->declare_parameter<std::vector<double>>(
-    "aruco/meas_cov", {0.025, 0.025,
+  covariance_ = node.declare_parameter<std::vector<double>>(
+    "sensors/aruco/covariance", {0.025, 0.025,
       0.025});
-  this->time_delay_ = node->declare_parameter<double>("aruco/time_delay", 0.1);
+  timeout_ = node.declare_parameter<double>("sensors/aruco/measurement_timeout", 0.1);
 
   tags_ = {
     {0, TagLocation{0.6096, 0, -M_PI_2}},
@@ -43,27 +42,25 @@ ArucoSensorModel::ArucoSensorModel(rclcpp::Node * node)
     {5, TagLocation{0.3, 0.381, 0}}
   };
 
-  tag_sub_ = node->create_subscription<stsl_interfaces::msg::TagArray>(
+  tag_sub_ = node.create_subscription<stsl_interfaces::msg::TagArray>(
     "/tags", 1, std::bind(&ArucoSensorModel::UpdateMeasurement, this, std::placeholders::_1));
-
-  // END STUDENT CODE
 }
 
-void ArucoSensorModel::UpdateMeasurement(const stsl_interfaces::msg::TagArray::SharedPtr tags)
+void ArucoSensorModel::UpdateMeasurement(const stsl_interfaces::msg::TagArray::SharedPtr msg)
 {
-  last_msg_ = tags;
+  last_msg_ = *msg;
 }
 
 double ArucoSensorModel::ComputeLogNormalizer()
 {
   return log(sqrt(pow(2 * M_PI, 3))) +
-         log(sqrt(meas_cov_[0])) + log(sqrt(meas_cov_[1])) + log(sqrt(meas_cov_[2]));
+         log(sqrt(covariance_[0])) + log(sqrt(covariance_[1])) + log(sqrt(covariance_[2]));
 }
 
-double ArucoSensorModel::ComputeLogProb(Particle & particle)
+double ArucoSensorModel::ComputeLogProb(const Particle & particle)
 {
   double log_prob = 0;
-  for (const stsl_interfaces::msg::Tag & tag : last_msg_->tags) {
+  for (const stsl_interfaces::msg::Tag & tag : last_msg_.tags) {
     TagLocation body_location;
     // ensure this is a localization tag
     if (tags_.find(tag.id) == tags_.end()) {
@@ -82,22 +79,21 @@ double ArucoSensorModel::ComputeLogProb(Particle & particle)
     tf2::Matrix3x3(q).getRPY(r, p, yaw);
     body_location.yaw = angles::normalize_angle(map_location.yaw + particle.yaw);
 
-    log_prob += pow(body_location.x - tag.pose.position.x, 2) / meas_cov_[0];
-    log_prob += pow(body_location.y - tag.pose.position.y, 2) / meas_cov_[1];
+    log_prob += pow(body_location.x - tag.pose.position.x, 2) / covariance_[0];
+    log_prob += pow(body_location.y - tag.pose.position.y, 2) / covariance_[1];
 
     const auto yaw_error = angles::shortest_angular_distance(yaw, body_location.yaw);
-    log_prob += pow(yaw_error, 2) / meas_cov_[2];
+    log_prob += pow(yaw_error, 2) / covariance_[2];
   }
   return log_prob;
 }
 
-bool ArucoSensorModel::IsMeasUpdateValid(rclcpp::Time cur_time)
+bool ArucoSensorModel::IsMeasurementAvailable(const rclcpp::Time & cur_time)
 {
-  if (!last_msg_) {
+  if(last_msg_.header.stamp.sec == 0)
     return false;
-  }
-  return last_msg_->header.stamp.sec + last_msg_->header.stamp.nanosec * 1e-9 >
-         cur_time.seconds() - this->time_delay_;
+  const auto time_since_last_msg = cur_time - rclcpp::Time(last_msg_.header.stamp);
+  return time_since_last_msg.seconds() < timeout_;
 }
 
 }  // namespace localization

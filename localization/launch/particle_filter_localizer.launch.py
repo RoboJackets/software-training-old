@@ -26,19 +26,16 @@ from ament_index_python.packages import get_package_share_directory
 
 
 def generate_launch_description():
-    parameters_file_path = os.path.join(get_package_share_directory(
-        'localization'), 'config', 'localizer_params.yaml')
+    # BEGIN STUDENT CODE
+    # END STUDENT CODE
 
     return LaunchDescription([
         Node(
             package='localization',
             executable='localization_node',
             output='screen',
-            # prefix=['xterm -e gdb -ex run --args'],
-            parameters=[
-                parameters_file_path,
-                {'use_sim_time': LaunchConfiguration('use_sim_time', default='false')}
-            ],
+            # BEGIN STUDENT CODE
+            # END STUDENT CODE
             remappings=[
                 ('/tags', '/coordinate_transformer/tags_transformed')
             ]

@@ -13,7 +13,10 @@
   </node>
 
   <!-- BEGIN STUDENT CODE -->
-  <include file="$(find-pkg-share rj_training_bringup)/launch/fake_localizer.launch.py">
+  <!-- <include file="$(find-pkg-share rj_training_bringup)/launch/fake_localizer.launch.py">
+    <arg name="use_sim_time" value="$(var simulation)"/>
+  </include> -->
+  <include file="$(find-pkg-share localization)/launch/particle_filter_localizer.launch.py">
     <arg name="use_sim_time" value="$(var simulation)"/>
   </include>
   <!-- END STUDENT CODE -->

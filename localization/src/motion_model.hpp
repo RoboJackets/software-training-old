@@ -35,7 +35,7 @@ namespace localization
 class MotionModel
 {
 public:
-  explicit MotionModel(rclcpp::Node * node);
+  explicit MotionModel(rclcpp::Node & node);
 
   void updateParticle(Particle & particle, double dt, geometry_msgs::msg::Twist::SharedPtr cmd_msg);
   void updateParticles(

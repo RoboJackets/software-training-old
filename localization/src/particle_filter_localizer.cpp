@@ -20,10 +20,14 @@
 
 #include "particle_filter_localizer.hpp"
 #include <angles/angles.h>
+#include <rclcpp_components/register_node_macro.hpp>
 #include <algorithm>
 #include <memory>
 #include <vector>
 #include <utility>
+#include "aruco_sensor_model.hpp"
+// BEGIN STUDENT CODE
+// END STUDENT CODE
 
 namespace localization
 {
@@ -33,9 +37,8 @@ using namespace std::chrono_literals;
 ParticleFilterLocalizer::ParticleFilterLocalizer(const rclcpp::NodeOptions & options)
 : rclcpp::Node("particle_filter_localizer", options),
   tf_buffer_(get_clock()), tf_listener_(tf_buffer_), tf_broadcaster_(this),
-  motion_model_(this)
+  motion_model_(*this)
 {
-  // BEGIN STUDENT CODE
   cmd_sub_ = create_subscription<geometry_msgs::msg::Twist>(
     "/cmd_vel", 10, std::bind(&ParticleFilterLocalizer::CmdCallback, this, std::placeholders::_1));
   odom_pub_ = create_publisher<nav_msgs::msg::Odometry>("~/pose_estimate", 1);
@@ -62,9 +65,8 @@ ParticleFilterLocalizer::ParticleFilterLocalizer(const rclcpp::NodeOptions & opt
     std::chrono::duration<double>(1.0 / resample_rate),
     std::bind(&ParticleFilterLocalizer::ResampleParticles, this));
 
-  // check what is enabled
-  sensor_models_.push_back(std::move(std::make_unique<ArucoSensorModel>(this)));
-  sensor_models_.push_back(std::move(std::make_unique<OdometrySensorModel>(this)));
+  sensor_models_.push_back(std::make_unique<ArucoSensorModel>(*this));
+  // BEGIN STUDENT CODE
   // END STUDENT CODE
 }
 
@@ -85,7 +87,6 @@ void ParticleFilterLocalizer::InitializeParticles()
 Particle ParticleFilterLocalizer::GenerateNewParticle()
 {
   // uniform_noise_.Sample() to get a uniform sample
-  // BEGIN STUDENT CODE
   Particle p;
   p.x = initial_range_.min_x + uniform_noise_.Sample() *
     (initial_range_.max_x - initial_range_.min_x);
@@ -95,14 +96,12 @@ Particle ParticleFilterLocalizer::GenerateNewParticle()
   p.x_vel = 0.0;
   p.yaw_vel = 0.0;
   return p;
-  // END STUDENT CODE
 }
 
 void ParticleFilterLocalizer::NormalizeWeights()
 {
   // run through list of particles and normalize the weights
 
-  // TODO(barulicm) should be just finding pivot
   auto index_to_drop = std::round(
     get_parameter(
       "low_percentage_particles_to_drop").as_double() * num_particles_);
@@ -250,7 +249,7 @@ void ParticleFilterLocalizer::CalculateParticleWeight(
 {
   double log_probability = 0.0;
   for (const auto & model : sensor_models_) {
-    if (model->IsMeasUpdateValid(current_time)) {
+    if (model->IsMeasurementAvailable(current_time)) {
       log_probability += -0.5 * model->ComputeLogProb(particle);
       log_probability -= model->ComputeLogNormalizer();
     }
