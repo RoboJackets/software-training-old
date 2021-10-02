@@ -303,7 +303,7 @@ Why are we computing the _log_ of the probability instead of just returning the 
 
 But we could do that shift in any number of ways, why log specifically? That's because logs can turn multiplication into addition. When we want to multiply two probabilities, we can just add their logs. When we want to divide, just subtract the logs. Addition and subtraction are usually a lot faster than multiplication and division, so this better representation also gives us faster code!
 
-Also remember that since we are only trying to find the most probable particle we just need to find something proportional to the probability rather than the full value. The following figure shows a full derviation starting from the PDF of a univariate (scalar) and a multivariate (vector). We are using the multivariate version. The math below is just using log rules to move things around and properties of diagonal matrices which we have not covered explicitly, so don't worry about it if you cannot follow it. If you are interested in that property look at the result of a x^T a I x, where x, x^T are the same vector, a is a scalar, and I is the identity matrix. Remember that A[ii] would be the ith row and ith column of a matrix.
+Also remember that since we are only trying to find the most probable particle we just need to find something proportional to the probability rather than the full value. The following figure shows a full derivation starting from the PDF of a univariate (scalar) and a multivariate (vector). We are using the multivariate version. The math below is just using log rules to move things around and properties of diagonal matrices which we have not covered explicitly, so don't worry about it if you cannot follow it. If you are interested in that property look at the result of a x^T a I x, where x, x^T are the same vector, a is a scalar, and I is the identity matrix. Remember that A[ii] would be the ith row and ith column of a matrix.
 
 ![Univariate](UnivariateGaussian.png)
 
@@ -318,8 +318,6 @@ log_prob += pow(last_msg_.twist.twist.linear.x - particle.x_vel, 2) / covariance
 log_prob += pow(last_msg_.twist.twist.angular.z - particle.yaw_vel, 2) / covariance_[1];
 return log_prob;
 ```
-
-The following figure will explain a detailed derviation of the math here.
 
 ### 3.9 Implement ComputeLogNormalizer
 
