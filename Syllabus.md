@@ -110,7 +110,7 @@ Week | Title |  | Description
 --- | --- | --- | ---
 1 | Coordinate Frame Transforms | [Instructions](projects/week_1/Instructions.md) | Transform fiducial detections from the camera's frame to the robot's body frame.
 2 | Color-based Obstacle Detection | [Instructions](projects/week_2/Instructions.md) | Use HSV color detection and a projective homography to find obstacles near the robot.
-3 | Particle Filter Localization | | Use a particle filter to localize the robot based on fiducial detections.
+3 | Particle Filter Localization | [Instructions](projects/week_3/Instructions.md) | Use a particle filter to localize the robot based on fiducial detections.
 4 | Gradient Descent Optimization | | Use gradient ascent to guide the robot to the highest simulated elevation on the map.
 5 | Mapping | | Build a map of the environment with a probablistic occupancy grid.
 6 | Kalman Filter Tracking | | Track mineral deposits with a kalman filter.
@@ -122,7 +122,7 @@ Week | Title | Worksheet | Solutions
 --- | --- | --- | ---
 1 | Coordinate Frames, Sensors, Linear | [Sheet](https://drive.google.com/file/d/1RSI5FDaifu5RI0Zk8mrcxu_oQC9gFEAS/view?usp=sharing) | [Solutions](https://drive.google.com/file/d/1LZhwLFQjPbsGK8R7Md7tE79cBLSYIphd/view?usp=sharing)
 2 | Computer Vision | [Sheet](https://drive.google.com/file/d/1WPaKruCqwO1BnkNg9nxosYZ5uVZSZLNn/view?usp=sharing) |
-3 | | |
+3 | Particle Filters | [Sheet](https://drive.google.com/file/d/1ovqS1k6tqK4Txt3FhzIUuJiRUirwYU99/view?usp=sharing) | [Solutions](https://drive.google.com/file/d/1KoD2lEKV4r5nIR7G9aXvYRyaUUf7aoA8/view?usp=sharing)
 4 | | |
 5 | | |
 6 | | |
