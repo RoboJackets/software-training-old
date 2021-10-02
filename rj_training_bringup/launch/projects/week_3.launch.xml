@@ -1,0 +1,24 @@
+<launch>
+  <arg name="simulation" default="True"/>
+  <include if="$(var simulation)" file="$(find-pkg-share traini_bringup)/launch/traini_simulation.launch.py"/>
+  <node pkg="traini_gazebo" exec="randomize_robot_pose.py"/>
+  <node pkg="traini_gazebo" exec="publish_map_boundary.py"/>
+
+  <include file="$(find-pkg-share traini_bringup)/launch/tag_detector.launch.py">
+    <param name="use_sim_time" value="$(var simulation)"/>
+  </include>
+  <node pkg="coordinate_transform" exec="coordinate_transform_node">
+      <param name="use_sim_time" value="$(var simulation)"/>
+      <remap from="~/tags" to="/aruco_tag_detector/tags"/>
+  </node>
+
+  <!-- BEGIN STUDENT CODE -->
+  <include file="$(find-pkg-share rj_training_bringup)/launch/fake_localizer.launch.py">
+    <arg name="use_sim_time" value="$(var simulation)"/>
+  </include>
+  <!-- END STUDENT CODE -->
+  
+  <node pkg="rviz2" exec="rviz2" args="-d $(find-pkg-share rj_training_bringup)/rviz_config/week_3.rviz">
+      <arg name="use_sim_time" value="$(var simulation)"/>
+  </node>
+</launch>
