@@ -118,39 +118,13 @@ private:
 
         const double current_elevation = SampleElevation(robot_position);
 
-        double search_radius;
-        get_parameter("search_radius", search_radius);
-        int sample_count;
-        get_parameter("sample_count", sample_count);
+        const auto goal_position = PickNextGoalPosition(robot_position, current_elevation);
 
-        auto generate_next_pose =
-          [&robot_position, search_radius, sample_count, angle = 0.0]() mutable {
-            Eigen::Vector2d pose =
-              (search_radius * Eigen::Vector2d(std::cos(angle), std::sin(angle))) + robot_position;
-            angle += (2 * M_PI) / sample_count;
-            return pose;
-          };
-
-        std::vector<Eigen::Vector2d> sample_positions;
-
-        std::generate_n(std::back_inserter(sample_positions), sample_count, generate_next_pose);
-
-        std::vector<double> elevations;
-
-        std::transform(
-          sample_positions.begin(), sample_positions.end(),
-          std::back_inserter(elevations), [this](const auto & p) {return SampleElevation(p);});
-
-        const auto max_elevation_iter = std::max_element(elevations.begin(), elevations.end());
-
-        if (*max_elevation_iter <= current_elevation) {
+        if(goal_position == robot_position) {
           RCLCPP_INFO(get_logger(), "At peak!");
           goal_handle->succeed(std::make_shared<ParkAtPeak::Result>());
           return;
         }
-
-        const auto goal_position =
-          sample_positions[std::distance(elevations.begin(), max_elevation_iter)];
 
         geometry_msgs::msg::PoseStamped goal_pose;
         goal_pose.header.frame_id = "map";
@@ -195,6 +169,7 @@ private:
 
   double SampleElevation(const Eigen::Vector2d & position)
   {
+    // BEGIN STUDENT CODE
     auto sample_request = std::make_shared<stsl_interfaces::srv::SampleElevation::Request>();
     sample_request->x = position.x();
     sample_request->y = position.y();
@@ -210,6 +185,37 @@ private:
     }
 
     return response->elevation;
+    // END STUDENT CODE
+  }
+
+  Eigen::Vector2d PickNextGoalPosition(const Eigen::Vector2d& current_position, const double& current_elevation) {
+    // BEGIN STUDENT CODE
+    const double search_radius = get_parameter("search_radius").as_double();
+    const int sample_count = get_parameter("sample_count").as_int();
+
+    std::vector<Eigen::Vector2d> sample_positions;
+
+    double angle = 0.0;
+    for(auto sample_index = 0; sample_index < sample_count; ++sample_index) {
+      const Eigen::Vector2d pose = (search_radius * Eigen::Vector2d(std::cos(angle), std::sin(angle))) + current_position;
+      sample_positions.push_back(pose);
+      angle += (2 * M_PI) / sample_count;
+    }
+
+    std::vector<double> elevations;
+
+    for(const auto& position : sample_positions) {
+      elevations.push_back(SampleElevation(position));
+    }
+
+    const auto max_elevation_iter = std::max_element(elevations.begin(), elevations.end());
+
+    if (*max_elevation_iter <= current_elevation) {
+      return current_position;
+    }
+
+    return sample_positions[std::distance(elevations.begin(), max_elevation_iter)];
+    // END STUDENT CODE
   }
 };
 
