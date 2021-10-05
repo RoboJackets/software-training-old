@@ -23,7 +23,6 @@
 #include <rclcpp_action/rclcpp_action.hpp>
 #include <stsl_interfaces/action/park_at_peak.hpp>
 // BEGIN STUDENT CODE
-#include <stsl_interfaces/srv/sample_elevation.hpp>
 // END STUDENT CODE
 #include <tf2_ros/transform_listener.h>
 #include <tf2_eigen/tf2_eigen.h>
@@ -58,7 +57,6 @@ public:
       std::bind(&PeakFinderComponent::handle_accepted, this, std::placeholders::_1));
 
     // BEGIN STUDENT CODE
-    elevation_client_ = create_client<stsl_interfaces::srv::SampleElevation>("/sample_elevation");
     // END STUDENT CODE
   }
 
@@ -67,7 +65,6 @@ private:
   tf2_ros::TransformListener tf_listener_;
   rclcpp_action::Server<ParkAtPeak>::SharedPtr action_server_;
   // BEGIN STUDENT CODE
-  rclcpp::Client<stsl_interfaces::srv::SampleElevation>::SharedPtr elevation_client_;
   // END STUDENT CODE
   Navigator navigator_;
 
@@ -93,13 +90,8 @@ private:
 
   void execute(const std::shared_ptr<ParkAtPeakGoalHandle> goal_handle)
   {
-    if (!elevation_client_->service_is_ready()) {
-      RCLCPP_ERROR(
-        get_logger(), "%s service must be available to run peak_finder action!",
-        elevation_client_->get_service_name());
-      goal_handle->abort(std::make_shared<ParkAtPeak::Result>());
-      return;
-    }
+    // BEGIN STUDENT CODE
+    // END STUDENT CODE
 
     std::string tf_error_msg;
     if (!tf_buffer_.canTransform("map", "base_footprint", tf2::TimePointZero, &tf_error_msg)) {
@@ -176,21 +168,7 @@ private:
   double SampleElevation(const Eigen::Vector2d & position)
   {
     // BEGIN STUDENT CODE
-    auto sample_request = std::make_shared<stsl_interfaces::srv::SampleElevation::Request>();
-    sample_request->x = position.x();
-    sample_request->y = position.y();
-    const auto result_future = elevation_client_->async_send_request(sample_request);
-
-    if (result_future.wait_for(std::chrono::seconds(2)) != std::future_status::ready) {
-      throw std::runtime_error("Elevation service call timed out.");
-    }
-    const auto response = result_future.get();
-
-    if (!response->success) {
-      throw std::runtime_error("Elevation server reported failure.");
-    }
-
-    return response->elevation;
+    return 0.0;
     // END STUDENT CODE
   }
 
@@ -199,33 +177,7 @@ private:
     const double & current_elevation)
   {
     // BEGIN STUDENT CODE
-    const double search_radius = get_parameter("search_radius").as_double();
-    const int sample_count = get_parameter("sample_count").as_int();
-
-    std::vector<Eigen::Vector2d> sample_positions;
-
-    double angle = 0.0;
-    for (auto sample_index = 0; sample_index < sample_count; ++sample_index) {
-      const Eigen::Vector2d pose = (search_radius * Eigen::Vector2d(
-          std::cos(angle), std::sin(
-            angle))) + current_position;
-      sample_positions.push_back(pose);
-      angle += (2 * M_PI) / sample_count;
-    }
-
-    std::vector<double> elevations;
-
-    for (const auto & position : sample_positions) {
-      elevations.push_back(SampleElevation(position));
-    }
-
-    const auto max_elevation_iter = std::max_element(elevations.begin(), elevations.end());
-
-    if (*max_elevation_iter <= current_elevation) {
-      return current_position;
-    }
-
-    return sample_positions[std::distance(elevations.begin(), max_elevation_iter)];
+    return current_position;
     // END STUDENT CODE
   }
 };
