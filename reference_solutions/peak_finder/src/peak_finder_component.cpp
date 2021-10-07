@@ -206,13 +206,12 @@ private:
 
     std::vector<Eigen::Vector2d> sample_positions;
 
-    double angle = 0.0;
-    for (auto sample_index = 0; sample_index < sample_count; ++sample_index) {
-      const Eigen::Vector2d pose = (search_radius * Eigen::Vector2d(
-          std::cos(angle), std::sin(
-            angle))) + current_position;
+    const double angle_delta = (2 * M_PI) / sample_count;
+    for(auto angle = 0.0; angle < (2 * M_PI); angle += angle_delta)
+    {
+      const Eigen::Vector2d pose = 
+        (search_radius * Eigen::Vector2d(std::cos(angle), std::sin(angle))) + current_position;
       sample_positions.push_back(pose);
-      angle += (2 * M_PI) / sample_count;
     }
 
     std::vector<double> elevations;
