@@ -6,7 +6,7 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
  - Opening this file in any other markdown viewer you prefer
 -->
 
-# Week 3 Project: Particle Filter Localization
+# Week 4 Project: Optimization
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
