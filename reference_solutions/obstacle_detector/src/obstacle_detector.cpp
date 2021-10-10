@@ -46,7 +46,9 @@ public:
     // BEGIN STUDENT CODE
     // Initialize publisher and subscriber
     occupancy_grid_publisher_ =
-      create_publisher<nav_msgs::msg::OccupancyGrid>("~/occupancy_grid", rclcpp::SystemDefaultsQoS());
+      create_publisher<nav_msgs::msg::OccupancyGrid>(
+      "~/occupancy_grid",
+      rclcpp::SystemDefaultsQoS());
     camera_subscriber_ = image_transport::create_camera_subscription(
       this, "/camera/image_raw",
       std::bind(
@@ -54,7 +56,7 @@ public:
         std::placeholders::_2),
       "raw", rclcpp::SensorDataQoS().get_rmw_qos_profile());
     // END STUDENT CODE
-    
+
     declare_parameters<int>(
       "obstacle_color_range", {{"min.h", 0},
         {"min.s", 0},
@@ -110,8 +112,9 @@ private:
     }
 
     const auto map_resolution = get_parameter("map_resolution").as_double();
-    const auto map_size =
-      cv::Size(get_parameter("map_width").as_int(), get_parameter("map_height").as_int());
+    const auto map_height = get_parameter("map_height").as_int();
+    const auto map_width = get_parameter("map_width").as_int();
+    const auto map_size = cv::Size(map_height, map_width);
     cv::Mat map_camera_intrinsics;
     cv::Mat map_camera_rotation;
     cv::Mat map_camera_position;
@@ -130,22 +133,20 @@ private:
     cv::Mat projected_colors = ReprojectToGroundPlane(detected_colors, homography, map_size);
     // END STUDENT CODE
 
+    cv::rotate(projected_colors, projected_colors, cv::ROTATE_90_CLOCKWISE);
     cv::flip(projected_colors, projected_colors, 0);
 
     nav_msgs::msg::OccupancyGrid occupancy_grid_msg;
     occupancy_grid_msg.header.stamp = image_msg->header.stamp;
     occupancy_grid_msg.header.frame_id = "base_footprint";
-    occupancy_grid_msg.info.height = map_size.height;
-    occupancy_grid_msg.info.width = map_size.width;
+    occupancy_grid_msg.info.height = map_height;
+    occupancy_grid_msg.info.width = map_width;
     occupancy_grid_msg.info.resolution = 1.0 / map_resolution;
     occupancy_grid_msg.info.map_load_time = image_msg->header.stamp;
     occupancy_grid_msg.info.origin.position.x = 0;
-    occupancy_grid_msg.info.origin.position.y = map_size.width / (2.0 * map_resolution);
+    occupancy_grid_msg.info.origin.position.y = -map_height / (2.0 * map_resolution);
     occupancy_grid_msg.info.origin.position.z = 0;
-    occupancy_grid_msg.info.origin.orientation.x = 0;
-    occupancy_grid_msg.info.origin.orientation.y = 0;
-    occupancy_grid_msg.info.origin.orientation.z = -0.7071068;
-    occupancy_grid_msg.info.origin.orientation.w = 0.7071068;
+
     std::transform(
       projected_colors.begin<uint8_t>(), projected_colors.end<uint8_t>(),
       std::back_inserter(occupancy_grid_msg.data),
@@ -159,7 +160,7 @@ private:
 
   /**
    * @brief Calculates the intrinsic and extrinsic properties for the virtual map camera
-   * 
+   *
    * @param map_resolution The desired scale of the map in pixels/meter
    * @param map_size The size of the map in pixels
    * @param intrinsics The calculated camera intrinsics matrix
@@ -181,7 +182,7 @@ private:
 
   /**
    * @brief Calculates the homography matrix between the frame in image_header and the virtual camera
-   * 
+   *
    * @param camera_intrinsics The intrinsics matrix of the robot's camera
    * @param image_header The header from the image message
    * @param map_camera_intrinsics The intrinsics matrix of the virtual map camera
@@ -206,7 +207,7 @@ private:
     // Assumes ground plane lies at Z=0 with a normal pointing towards +Z, in the base_footprint
     // frame
     cv::Mat n = Rb * (cv::Mat_<double>(3, 1) << 0, 0, 1);
-    const auto d = cv::norm(Tb.mul(n));
+    const auto d = cv::norm(n.dot(Tb)) / cv::norm(n);
 
     cv::Mat M = (map_camera_rotation * Rb.t()) -
       (((-map_camera_rotation * Rb.t() * Tb + map_camera_position) * n.t()) / d);
@@ -218,7 +219,7 @@ private:
 
   /**
    * @brief Maps thresholded image pixel values to conventional values for occupancy grids
-   * 
+   *
    * @param image_value The pixel value from the thresholded image
    * @return int8_t The corresponding occupancy grid value
    */
