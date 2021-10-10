@@ -1,7 +1,8 @@
 <launch>
   <arg name="use_sim_time" default="False"/>
-  <node pkg="mapping" exec="mapping_node">
+  <node pkg="mapping" exec="mapping_node" launch-prefix="xterm -e gdb -ex run --args">
     <param name="use_sim_time" value="$(var use_sim_time)"/>
     <param from="$(find-pkg-share mapping)/config/mapping_params.yaml" />
+    <remap from="~/obstacles" to="/obstacle_detector/occupancy_grid"/>
   </node>
 </launch>
