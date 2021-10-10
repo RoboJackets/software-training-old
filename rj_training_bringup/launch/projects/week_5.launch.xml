@@ -8,10 +8,7 @@
     <param name="use_sim_time" value="$(var simulation)"/>
     <remap from="~/tags" to="/aruco_tag_detector/tags"/>
   </node>
-  <!-- <include file="$(find-pkg-share localization)/launch/particle_filter_localizer.launch.py">
-    <arg name="use_sim_time" value="$(var simulation)"/>
-  </include> -->
-  <include file="$(find-pkg-share rj_training_bringup)/launch/fake_localizer.launch.py">
+  <include file="$(find-pkg-share localization)/launch/particle_filter_localizer.launch.py">
     <arg name="use_sim_time" value="$(var simulation)"/>
   </include>
   <include file="$(find-pkg-share obstacle_detector)/launch/obstacle_detector.launch.py">
