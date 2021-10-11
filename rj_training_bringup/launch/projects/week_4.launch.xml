@@ -13,7 +13,7 @@
     <node pkg="peak_finder" exec="peak_finder_node">
         <arg name="use_sim_time" value="$(var use_sim_time)"/>
     </node>
-    <node pkg="rviz2" exec="rviz2" args="-d $(find-pkg-share rj_training_bringup)/rviz_config/optimization.rviz">
+    <node pkg="rviz2" exec="rviz2" args="-d $(find-pkg-share rj_training_bringup)/rviz_config/week_4.rviz">
         <arg name="use_sim_time" value="$(var use_sim_time)"/>
     </node>
 </launch>
