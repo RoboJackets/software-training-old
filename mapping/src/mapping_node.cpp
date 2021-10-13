@@ -28,10 +28,15 @@ public:
     tf_listener_(tf_buffer_)
     // END STUDENT CODE
   {
-    //TODO(barulicm) load theseefrom parameters
-    constexpr auto map_width = 1.2192;  // m
-    constexpr auto map_height = 0.762;  // m
-    constexpr auto map_resolution = 0.01;  // m/cell
+    map_frame_id_ = declare_parameter<std::string>("map_frame", "map");
+    robot_frame_id_ = declare_parameter<std::string>("robot_frame", "base_link");
+    distance_coefficient_ = declare_parameter<double>("distance_coefficient", 0.01);
+    hit_log_odds_ = toLogOdds(declare_parameter<double>("hit_probability", 0.7));
+    miss_log_odds_ = toLogOdds(declare_parameter<double>("miss_probability", 0.3));
+
+    const auto map_width = declare_parameter<double>("map_width", 1.2192);  // meters
+    const auto map_height = declare_parameter<double>("map_height", 0.762);  // meters
+    const auto map_resolution = declare_parameter<double>("map_resolution", 0.01);  // meters/cell
 
     map_info_.origin.position.x = -map_width / 2.0;
     map_info_.origin.position.y = -map_height / 2.0;
@@ -57,6 +62,11 @@ private:
   tf2_ros::Buffer tf_buffer_;
   tf2_ros::TransformListener tf_listener_;
   // END STUDENT CODE
+  std::string map_frame_id_;
+  std::string robot_frame_id_;
+  double distance_coefficient_;
+  double hit_log_odds_;
+  double miss_log_odds_;
   std::vector<double> map_data_;
   nav_msgs::msg::MapMetaData map_info_;
   rclcpp::Publisher<nav_msgs::msg::OccupancyGrid>::SharedPtr map_publisher_;
@@ -64,15 +74,17 @@ private:
 
   void ObstaclesCallback(const nav_msgs::msg::OccupancyGrid::SharedPtr obstacles_msg)
   {
-    if(!tf_buffer_.canTransform("base_link", "map", tf2::TimePointZero) || !tf_buffer_.canTransform(obstacles_msg->header.frame_id, "map", tf2::TimePointZero)) {
+    // BEGIN STUDENT CODE
+    if(!tf_buffer_.canTransform(robot_frame_id_, map_frame_id_, tf2::TimePointZero) || !tf_buffer_.canTransform(obstacles_msg->header.frame_id, map_frame_id_, tf2::TimePointZero)) {
       RCLCPP_INFO_ONCE(get_logger(), "Waiting for necessary TF data to be available.");
       return;
     }
+    // END STUDENT CODE
 
     AddObstaclesToMap(*obstacles_msg);
 
     nav_msgs::msg::OccupancyGrid map_msg;
-    map_msg.header.frame_id = "map";
+    map_msg.header.frame_id = map_frame_id_;
     const auto current_time = now();
     map_msg.header.stamp = current_time;
     map_msg.info = map_info_;
@@ -90,7 +102,7 @@ private:
   geometry_msgs::msg::Point GetRobotLocation()
   {
     // BEGIN STUDENT CODE
-    const auto robot_transform = tf_buffer_.lookupTransform("base_link", "map", tf2::TimePointZero);
+    const auto robot_transform = tf_buffer_.lookupTransform(robot_frame_id_, map_frame_id_, tf2::TimePointZero);
     geometry_msgs::msg::Point robot_location;
     robot_location.x = robot_transform.transform.translation.x;
     robot_location.y = robot_transform.transform.translation.y;
@@ -119,7 +131,7 @@ private:
         obstacle_location.point.y = (y * obstacles.info.resolution) +
           obstacles.info.origin.position.y;
 
-        const auto map_location = tf_buffer_.transform(obstacle_location, "map");
+        const auto map_location = tf_buffer_.transform(obstacle_location, map_frame_id_);
 
         if(!IsLocationInMapBounds(map_location.point)) {
           // skip any detections that are outside of map bounds
@@ -146,19 +158,12 @@ private:
       robot_location.x - map_location.x,
       robot_location.y - map_location.y);
 
-    const auto distance_coef = 0.01;  // param
+    auto probability = std::exp(-distance_coefficient_ * distance_robot_to_measurement);
 
-    if (obstacle_detected) {
-      const auto hit_weight = toLogOdds(0.7);  // param
-      const auto probability = std::exp(-distance_coef * distance_robot_to_measurement) *
-        hit_weight;
-      map_data_[data_index] += probability;
-    } else {
-      const auto miss_weight = toLogOdds(0.3);  // param
-      const auto probability = std::exp(-distance_coef * distance_robot_to_measurement) *
-        miss_weight;
-      map_data_[data_index] += probability;
-    }
+    probability *= (obstacle_detected ? hit_log_odds_ : miss_log_odds_);
+
+    map_data_[data_index] += probability;
+
     map_data_[data_index] = std::clamp(map_data_[data_index], 0.0, 1.0);
     // END STUDENT CODE
   }
