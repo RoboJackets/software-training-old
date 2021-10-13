@@ -78,7 +78,7 @@ Week | Robotics Theory | ROS | C++
 1 | Linear Algebra, Sensors, Coordinate Frames | Introduction to ROS and useful tools | Introduction to C++
 2 | Computer Vision | rclcpp Basics, Timers, Topics | Classes, Inheritance, std::bind
 3 | Probability, Particle Filters | Launch, Parameters | Lifetime, References, Pointers
-4 | Optimization | Services | Parallelism
+4 | Optimization | Services | Concurrency Basics
 5 | SLAM, Mapping | TF, Custom Interfaces | Lambdas
 6 | Kalman Filters | Quality of Service | Templates
 7 | Control | Actions | 
@@ -96,7 +96,7 @@ Week | Robotics Theory | C++ | ROS
 1 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2RjafLHG9lqNqZ2rzH_hdQ) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1TChL2Lkm6PQQnOPRSIpDK) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0y1U3yHAkCYJXXL-GiJDwF)
 2 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0cFU3nGomLr8cIUaKun6bl) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3KemZ2wqInhNm-db8kR88r) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0wxbvXIiNeEr12aoO_VX_8)
 3 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2ylxbALvguW15qf-mHjsGm) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2BEzoEGSt-EAmx4HbvQ7RZ) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3YMGovXmHZGn9wVrAChkxk)
-4 | | |
+4 | | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1B3HQldnfhFu4_rVZnW55q) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3QucE7Smr0-YvnV70fZkoq)
 5 | | |
 6 | | |
 7 | | |
@@ -111,7 +111,7 @@ Week | Title |  | Description
 1 | Coordinate Frame Transforms | [Instructions](projects/week_1/Instructions.md) | Transform fiducial detections from the camera's frame to the robot's body frame.
 2 | Color-based Obstacle Detection | [Instructions](projects/week_2/Instructions.md) | Use HSV color detection and a projective homography to find obstacles near the robot.
 3 | Particle Filter Localization | [Instructions](projects/week_3/Instructions.md) | Use a particle filter to localize the robot based on fiducial detections.
-4 | Gradient Descent Optimization | | Use gradient ascent to guide the robot to the highest simulated elevation on the map.
+4 | Gradient Descent Optimization | [Instructions](projects/week_4/Instructions.md) | Use gradient ascent to guide the robot to the highest simulated elevation on the map.
 5 | Mapping | | Build a map of the environment with a probablistic occupancy grid.
 6 | Kalman Filter Tracking | | Track mineral deposits with a kalman filter.
 7 | LQR Controller | | Control the robot's motion with an LQR controller.
