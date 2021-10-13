@@ -1,20 +1,45 @@
-#include <algorithm>
-#include <vector>
+// Copyright 2021 RoboJackets
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_components/register_node_macro.hpp>
 #include <nav_msgs/msg/occupancy_grid.hpp>
+#include <geometry_msgs/msg/point_stamped.hpp>
+#include <algorithm>
+#include <string>
+#include <vector>
+// BEGIN STUDENT CODE
 #include <tf2_ros/transform_listener.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
-#include <geometry_msgs/msg/point_stamped.hpp>
+// END STUDENT CODE
 
 namespace mapping
 {
 
-double toLogOdds(double prob) {
+double toLogOdds(double prob)
+{
   return std::log(prob / (1.0 - prob));
 }
 
-double fromLogOdds(double log_odds) {
+double fromLogOdds(double log_odds)
+{
   return 1.0 - (1.0 / (1.0 + std::exp(log_odds)));
 }
 
@@ -22,8 +47,8 @@ class MappingNode : public rclcpp::Node
 {
 public:
   explicit MappingNode(const rclcpp::NodeOptions & options)
+  // BEGIN STUDENT CODE
   : rclcpp::Node("mapping_node", options),
-    // BEGIN STUDENT CODE
     tf_buffer_(get_clock()),
     tf_listener_(tf_buffer_)
     // END STUDENT CODE
@@ -51,10 +76,13 @@ public:
     map_publisher_ = create_publisher<nav_msgs::msg::OccupancyGrid>(
       "~/map",
       rclcpp::SystemDefaultsQoS());
+
+    // BEGIN STUDENT CODE
     obstacles_subscription_ = create_subscription<nav_msgs::msg::OccupancyGrid>(
       "~/obstacles",
       rclcpp::SystemDefaultsQoS(),
-      std::bind(&MappingNode::ObstaclesCallback, this, std::placeholders::_1));
+      [this](const nav_msgs::msg::OccupancyGrid::SharedPtr msg) {ObstaclesCallback(msg);});
+    // END STUDENT CODE
   }
 
 private:
@@ -75,7 +103,13 @@ private:
   void ObstaclesCallback(const nav_msgs::msg::OccupancyGrid::SharedPtr obstacles_msg)
   {
     // BEGIN STUDENT CODE
-    if(!tf_buffer_.canTransform(robot_frame_id_, map_frame_id_, tf2::TimePointZero) || !tf_buffer_.canTransform(obstacles_msg->header.frame_id, map_frame_id_, tf2::TimePointZero)) {
+    if (!tf_buffer_.canTransform(
+        map_frame_id_, robot_frame_id_,
+        tf2::TimePointZero) ||
+      !tf_buffer_.canTransform(
+        obstacles_msg->header.frame_id, map_frame_id_,
+        tf2::TimePointZero))
+    {
       RCLCPP_INFO_ONCE(get_logger(), "Waiting for necessary TF data to be available.");
       return;
     }
@@ -102,7 +136,9 @@ private:
   geometry_msgs::msg::Point GetRobotLocation()
   {
     // BEGIN STUDENT CODE
-    const auto robot_transform = tf_buffer_.lookupTransform(robot_frame_id_, map_frame_id_, tf2::TimePointZero);
+    const auto robot_transform = tf_buffer_.lookupTransform(
+      map_frame_id_, robot_frame_id_,
+      tf2::TimePointZero);
     geometry_msgs::msg::Point robot_location;
     robot_location.x = robot_transform.transform.translation.x;
     robot_location.y = robot_transform.transform.translation.y;
@@ -110,9 +146,11 @@ private:
     // END STUDENT CODE
   }
 
-  void AddObstaclesToMap(const nav_msgs::msg::OccupancyGrid& obstacles)
+  void AddObstaclesToMap(const nav_msgs::msg::OccupancyGrid & obstacles)
   {
     const auto robot_location = GetRobotLocation();
+
+    RCLCPP_INFO(get_logger(), "Robot location: <%f, %f>", robot_location.x, robot_location.y);
 
     // BEGIN STUDENT CODE
     for (auto y = 0; y < obstacles.info.height; ++y) {
@@ -133,8 +171,7 @@ private:
 
         const auto map_location = tf_buffer_.transform(obstacle_location, map_frame_id_);
 
-        if(!IsLocationInMapBounds(map_location.point)) {
-          // skip any detections that are outside of map bounds
+        if (!IsLocationInMapBounds(map_location.point)) {
           continue;
         }
 
@@ -168,7 +205,8 @@ private:
     // END STUDENT CODE
   }
 
-  bool IsLocationInMapBounds(const geometry_msgs::msg::Point& location) {
+  bool IsLocationInMapBounds(const geometry_msgs::msg::Point & location)
+  {
     return location.x >= map_info_.origin.position.x &&
            location.x < (map_info_.origin.position.x + (map_info_.width * map_info_.resolution)) &&
            location.y >= map_info_.origin.position.y &&
@@ -181,7 +219,6 @@ private:
     assert(cell_y >= 0 && cell_y < map_info_.height);
     return cell_x + (cell_y * map_info_.width);
   }
-
 };
 
 }  // namespace mapping
