@@ -13,6 +13,8 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 ## Contents
 
 - [1 Background](#1-background)
+  - [1.1 The Algorithm](#11-the-algorithm)
+  - [1.2 The Code](#12-the-code)
 - [2 Running this project](#2-running-this-project)
 - [3 Instructions](#3-instructions)
   - [3.1 Get the latest starter code](#31-get-the-latest-starter-code)
@@ -29,9 +31,53 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 
 ## 1 Background
 
+This week, we'll be implementing an algorithm for mapping our robot's environment. In Project 2, you used computer vision techniques to identify obstacles near our robot. These obstacles are the read shapes on our floor mat, which represent rocks our robot can't drive over. As things stand now, our robot only knows about the obstacles it can see at any given moment. It has no ability to keep track of all the obstacles it has seen so far. Our mapping node will take in these individual frames of obstacle detections and combine them into a complete map of the world.
+
+Note that this project depends on you having working solutions for projects 1, 2, and 3.
+
+### 1.1 The Algorithm
+
+The approach we'll be using for mapping is known as [occupancy grid mapping](https://en.wikipedia.org/wiki/Occupancy_grid_mapping). We layout a grid of cells across the entire mappable area, where each cell holds the probability that the space is occupied by an obstacle. By assuming that neighboring cells don't influence each other, we can treat all of these probabilities as independant. This lets us have simple update equations that only work with the data for a single cell.
+
+As usual, because of the realities of representing small fractional numbers in computers, we'll be using the log-odds representation of our probabilities in our map. If you read through the starter code, you'll see two helper functions, `fromLogOdds` and `toLogOdds`, which convert between log-odds and direct probability representations. Ultimately, our node will publish a `nav_msgs::msg::OccupancyGrid` message that expects integral probability values between 0 and 100.
+
+### 1.2 The Code
+
+All of the code we'll be writing in this project will be in the [mapping package](../../mapping). Specifically, we'll be completing the implementation of [mapping_node.cpp](../../mapping/src/mapping_node.cpp).
+
+This node uses two sources of input. The first is a `nav_msgs::msg::OccupancyGrid` topic that contains the obstacle detections published by our obstacle detector. This occupancy grid is associated with the robot's coordinate frame, so it moves around the world as the robot moves.
+
+The second input source is the TF system. While TF uses topics under the hood, we don't have to deal with them directly. Instead, we'll use TF's listener API to get the specific transforms we'll be interested in. Our node will use this to convert robot-relative obstacle coordinates into world-relative map coordinates, and to get our robot's current position in the world.
+
+The mapping node publishes one topic: a `nav_msgs::msg::OccupancyGrid` topic that contains the global map built by our node. This occupancy grid is associated with the "map" coordinate frame, so it stays fixed to the world.
 
 ## 2 Running this project
 
+To run this week's project, you'll need to run two things: the project launch file and a teleop source.
+
+The project launch file will start the simulator, rviz, and processing nodes.
+
+```bash
+$ ros2 launch rj_training_bringup week_5.launch.xml
+```
+
+For the teleop source, you can use either keyboard teleop or joystick teleop.
+
+```bash
+$ ros2 run stsl_utils keyboard_teleop
+or
+$ ros2 launch traini_bringup joystick_control.launch.py
+```
+
+In rviz, you should see the robot, the obstacle detections (similar to Project 2), and the map being published by the mapping node. As you drive your robot around, you'll see the map get updated with the obstacles seen at that location. After a bit of exploring, your map should be complete, showing all of the red obstacles present on the floor mat.
+
+![Animation of working mapping output](working_fake_localizer.gif)
+
+**Note:** Your pose estimate from the particle filter may be pretty noisy. This can sometimes make debugging the mapper difficult, since it assumes the pose estimate is correct. You can launch the project launch file this week with an optional argument that will switch to using the "fake localizer". This localizer is much smoother than your particle filter, but it can't correct for odometry errors as they build up. It should be very accurate for a bit, and then gradually the pose estimate will get worse. This should be enough to help you debug the mapping node.
+
+```bash
+$ ros2 launch rj_training_bringup week_5.launch.xml use_fake_localizer:=True
+```
 
 ## 3 Instructions
 
