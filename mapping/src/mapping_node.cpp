@@ -150,8 +150,6 @@ private:
   {
     const auto robot_location = GetRobotLocation();
 
-    RCLCPP_INFO(get_logger(), "Robot location: <%f, %f>", robot_location.x, robot_location.y);
-
     // BEGIN STUDENT CODE
     for (auto y = 0; y < obstacles.info.height; ++y) {
       for (auto x = 0; x < obstacles.info.width; ++x) {
