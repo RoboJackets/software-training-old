@@ -13,7 +13,7 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 ## Contents
 
 - [1 Background](#1-background)
-  - [2.1 The code](#21-the-code)
+  - [1.1 The code](#11-the-code)
 - [2 Running this project](#2-running-this-project)
 - [3 Instructions](#3-instructions)
   - [3.1 Get the latest starter code](#31-get-the-latest-starter-code)
@@ -36,7 +36,7 @@ This week, we'll be focussing on optimization by doing some literal (simulated) 
 
 If our robot could see a terrain map of the entire world, this task would be really easy. We would just check every spot to find the max elevation and drive directly to it. Unfortunately, we don't have such a map in our scenario. The robot is limitted to checking the elevation at locations within a certain range of it's current position. Because our robot has this limitted view of the world around it, we need to use an iterative optimization algorithm to come up with individual steps that will take us to the peak.
 
-### 2.1 The code
+### 1.1 The code
 
 The code we'll be writing this week is in the [peak_finder](../../peak_finder) package. This package features a node that provides a ROS action the drives the robot to the highest point and stops. We'll talk in detail about actions later. For now, just know that this is a behavior we can trigger and cancel.
 
