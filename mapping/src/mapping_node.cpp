@@ -26,8 +26,6 @@
 #include <string>
 #include <vector>
 // BEGIN STUDENT CODE
-#include <tf2_ros/transform_listener.h>
-#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 // END STUDENT CODE
 
 namespace mapping
@@ -48,9 +46,7 @@ class MappingNode : public rclcpp::Node
 public:
   explicit MappingNode(const rclcpp::NodeOptions & options)
   // BEGIN STUDENT CODE
-  : rclcpp::Node("mapping_node", options),
-    tf_buffer_(get_clock()),
-    tf_listener_(tf_buffer_)
+  : rclcpp::Node("mapping_node", options)
     // END STUDENT CODE
   {
     map_frame_id_ = declare_parameter<std::string>("map_frame", "map");
@@ -78,17 +74,11 @@ public:
       rclcpp::SystemDefaultsQoS());
 
     // BEGIN STUDENT CODE
-    obstacles_subscription_ = create_subscription<nav_msgs::msg::OccupancyGrid>(
-      "~/obstacles",
-      rclcpp::SystemDefaultsQoS(),
-      [this](const nav_msgs::msg::OccupancyGrid::SharedPtr msg) {ObstaclesCallback(msg);});
     // END STUDENT CODE
   }
 
 private:
   // BEGIN STUDENT CODE
-  tf2_ros::Buffer tf_buffer_;
-  tf2_ros::TransformListener tf_listener_;
   // END STUDENT CODE
   std::string map_frame_id_;
   std::string robot_frame_id_;
@@ -103,16 +93,6 @@ private:
   void ObstaclesCallback(const nav_msgs::msg::OccupancyGrid::SharedPtr obstacles_msg)
   {
     // BEGIN STUDENT CODE
-    if (!tf_buffer_.canTransform(
-        map_frame_id_, robot_frame_id_,
-        tf2::TimePointZero) ||
-      !tf_buffer_.canTransform(
-        obstacles_msg->header.frame_id, map_frame_id_,
-        tf2::TimePointZero))
-    {
-      RCLCPP_INFO_ONCE(get_logger(), "Waiting for necessary TF data to be available.");
-      return;
-    }
     // END STUDENT CODE
 
     AddObstaclesToMap(*obstacles_msg);
@@ -136,13 +116,7 @@ private:
   geometry_msgs::msg::Point GetRobotLocation()
   {
     // BEGIN STUDENT CODE
-    const auto robot_transform = tf_buffer_.lookupTransform(
-      map_frame_id_, robot_frame_id_,
-      tf2::TimePointZero);
-    geometry_msgs::msg::Point robot_location;
-    robot_location.x = robot_transform.transform.translation.x;
-    robot_location.y = robot_transform.transform.translation.y;
-    return robot_location;
+    return geometry_msgs::msg::Point{};
     // END STUDENT CODE
   }
 
@@ -151,31 +125,6 @@ private:
     const auto robot_location = GetRobotLocation();
 
     // BEGIN STUDENT CODE
-    for (auto y = 0; y < obstacles.info.height; ++y) {
-      for (auto x = 0; x < obstacles.info.width; ++x) {
-        const auto obstacle_data_index = x + (y * obstacles.info.width);
-        const auto obstacle_data = obstacles.data.at(obstacle_data_index);
-
-        if (obstacle_data == -1) {
-          continue;
-        }
-
-        geometry_msgs::msg::PointStamped obstacle_location;
-        obstacle_location.header.frame_id = obstacles.header.frame_id;
-        obstacle_location.point.x = (x * obstacles.info.resolution) +
-          obstacles.info.origin.position.x;
-        obstacle_location.point.y = (y * obstacles.info.resolution) +
-          obstacles.info.origin.position.y;
-
-        const auto map_location = tf_buffer_.transform(obstacle_location, map_frame_id_);
-
-        if (!IsLocationInMapBounds(map_location.point)) {
-          continue;
-        }
-
-        UpdateProbability(robot_location, map_location.point, obstacle_data == 100);
-      }
-    }
     // END STUDENT CODE
   }
 
@@ -185,21 +134,6 @@ private:
     const bool & obstacle_detected)
   {
     // BEGIN STUDENT CODE
-    const int cell_x = (map_location.x - map_info_.origin.position.x) / map_info_.resolution;
-    const int cell_y = (map_location.y - map_info_.origin.position.y) / map_info_.resolution;
-    const auto data_index = MapDataIndexFromLocation(cell_x, cell_y);
-
-    const auto distance_robot_to_measurement = std::hypot(
-      robot_location.x - map_location.x,
-      robot_location.y - map_location.y);
-
-    auto probability = std::exp(-distance_coefficient_ * distance_robot_to_measurement);
-
-    probability *= (obstacle_detected ? hit_log_odds_ : miss_log_odds_);
-
-    map_data_[data_index] += probability;
-
-    map_data_[data_index] = std::clamp(map_data_[data_index], 0.0, 1.0);
     // END STUDENT CODE
   }
 
