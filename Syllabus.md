@@ -123,7 +123,7 @@ Week | Title | Worksheet | Solutions
 1 | Coordinate Frames, Sensors, Linear | [Sheet](https://drive.google.com/file/d/1RSI5FDaifu5RI0Zk8mrcxu_oQC9gFEAS/view?usp=sharing) | [Solutions](https://drive.google.com/file/d/1LZhwLFQjPbsGK8R7Md7tE79cBLSYIphd/view?usp=sharing)
 2 | Computer Vision | [Sheet](https://drive.google.com/file/d/1WPaKruCqwO1BnkNg9nxosYZ5uVZSZLNn/view?usp=sharing) |
 3 | Particle Filters | [Sheet](https://drive.google.com/file/d/1ovqS1k6tqK4Txt3FhzIUuJiRUirwYU99/view?usp=sharing) | [Solutions](https://drive.google.com/file/d/1KoD2lEKV4r5nIR7G9aXvYRyaUUf7aoA8/view?usp=sharing)
-4 | | |
+4 | Optimization | [Sheet](https://drive.google.com/file/d/1Aly66DlZdsVI6cXFvYiMf55G17Fb8wAP/view?usp=sharing) | [Solutions](https://drive.google.com/file/d/1NQUzBEHjBFmcptKXA6lt_mlFg_643osC/view?usp=sharing)
 5 | | |
 6 | | |
 7 | | |
