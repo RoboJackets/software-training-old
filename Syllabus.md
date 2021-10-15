@@ -96,7 +96,7 @@ Week | Robotics Theory | C++ | ROS
 1 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2RjafLHG9lqNqZ2rzH_hdQ) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1TChL2Lkm6PQQnOPRSIpDK) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0y1U3yHAkCYJXXL-GiJDwF)
 2 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0cFU3nGomLr8cIUaKun6bl) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3KemZ2wqInhNm-db8kR88r) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0wxbvXIiNeEr12aoO_VX_8)
 3 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2ylxbALvguW15qf-mHjsGm) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2BEzoEGSt-EAmx4HbvQ7RZ) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3YMGovXmHZGn9wVrAChkxk)
-4 | | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1B3HQldnfhFu4_rVZnW55q) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3QucE7Smr0-YvnV70fZkoq)
+4 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0975HYnqN-Jq4Jx0r7LiTu) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1B3HQldnfhFu4_rVZnW55q) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3QucE7Smr0-YvnV70fZkoq)
 5 | | |
 6 | | |
 7 | | |
