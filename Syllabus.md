@@ -112,7 +112,7 @@ Week | Title |  | Description
 2 | Color-based Obstacle Detection | [Instructions](projects/week_2/Instructions.md) | Use HSV color detection and a projective homography to find obstacles near the robot.
 3 | Particle Filter Localization | [Instructions](projects/week_3/Instructions.md) | Use a particle filter to localize the robot based on fiducial detections.
 4 | Gradient Descent Optimization | [Instructions](projects/week_4/Instructions.md) | Use gradient ascent to guide the robot to the highest simulated elevation on the map.
-5 | Mapping | | Build a map of the environment with a probablistic occupancy grid.
+5 | Mapping | [Instructions](projects/week_5/Instructions.md) | Build a map of the environment with a probablistic occupancy grid.
 6 | Kalman Filter Tracking | | Track mineral deposits with a kalman filter.
 7 | LQR Controller | | Control the robot's motion with an LQR controller.
 8 | A-Star Path Planning | | Teach the robot how to avoid obstacles with the A-Star path planning algorithm.
