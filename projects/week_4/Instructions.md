@@ -21,9 +21,9 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
   - [3.3 Create service client](#33-create-service-client)
   - [3.4 Elevation Sampling: Send SampleElevation request](#34-elevation-sampling-send-sampleelevation-request)
   - [3.5 Elevation Sampling: Wait for SampleElevation response](#35-elevation-sampling-wait-for-sampleelevation-response)
-  - [3.6 First Algorithm: Choose sample positions](#36-first-algorithm-choose-sample-positions)
-  - [3.7 First Algorithm: Sample elevations](#37-first-algorithm-sample-elevations)
-  - [3.8 First Algorithm: Choose goal position](#38-first-algorithm-choose-goal-position)
+  - [3.6 Hill Climbing: Choose sample positions](#36-hill-climbing-choose-sample-positions)
+  - [3.7 Hill Climbing: Sample elevations](#37-hill-climbing-sample-elevations)
+  - [3.8 Hill Climbing: Choose goal position](#38-hill-climbing-choose-goal-position)
   - [3.9 Commit your new code in git](#39-commit-your-new-code-in-git)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -201,7 +201,7 @@ return response->elevation;
 
 With that, `SampleElevation` is done!
 
-### 3.6 First Algorithm: Choose sample positions
+### 3.6 Hill Climbing: Choose sample positions
 
 Now we're going to shift our attention to the `PickNextGoalPosition` function. This function implements one iteration our optimization algorithm. Given the robot's current position and elevation, this function needs to return the next position the robot should move to. Once the robot is at the highest spot, this function can signal that upstream by returning `current_position`.
 
@@ -232,13 +232,13 @@ const Eigen::Vector2d pose = (search_radius * Eigen::Vector2d(std::cos(angle), s
 sample_positions.push_back(pose);
 ```
 
-### 3.7 First Algorithm: Sample elevations
+### 3.7 Hill Climbing: Sample elevations
 
 Now that `sample_positions` holds the set of positions we'll sample, we need to do the sampling. First, declare a vector of doubles called `elevations`. This will hold the elevation values sampled at each position. The idea here is that `elevations[i]` is the elevation at `sample_positions[i]`.
 
 Next, loop through every position in `sample_positions`, call `SampleElevation` with that position, and append the returned value to `elevations`.
 
-### 3.8 First Algorithm: Choose goal position
+### 3.8 Hill Climbing: Choose goal position
 
 Now we need to find the largest elevation and the corresponding sample position. The standard library gives us a function for finding the largest element in a container, called `std::max_element`. This function takes in a first and last iterator, then returns an iterator pointing to the largest value.
 
