@@ -53,7 +53,7 @@ For more information about team meeting schedules and locations, check with each
 - [RoboJackets Training YouTube Channel](https://www.youtube.com/channel/UCh3TLV-vQzzcWGQ4u2jsMOw)
 
   Where all training videos will be posted.
-  
+
 - [Software Training Repository](https://github.com/RoboJackets/software-training)
 
   The GitHub repository that hosts most of the resources for the software training program, including project instructions and starter code.
@@ -81,7 +81,7 @@ Week | Robotics Theory | ROS | C++
 4 | Optimization | Services | Concurrency Basics
 5 | SLAM, Mapping | TF, Custom Interfaces | Lambdas
 6 | Kalman Filters | Quality of Service | Templates
-7 | Control | Actions | 
+7 | Control | Actions |
 8 | Path Planning | rosbag | Iterators, Algorithms
 
 ## Video Schedule
@@ -92,12 +92,12 @@ Robotics theory videos should be watched before your team-specific meetings. C++
 
 Week | Robotics Theory | C++ | ROS
 --- | --- | --- | ---
-0 | | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2AOCmSaLdDlBMug5XFNfwv) | 
+0 | | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2AOCmSaLdDlBMug5XFNfwv) |
 1 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2RjafLHG9lqNqZ2rzH_hdQ) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1TChL2Lkm6PQQnOPRSIpDK) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0y1U3yHAkCYJXXL-GiJDwF)
 2 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0cFU3nGomLr8cIUaKun6bl) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3KemZ2wqInhNm-db8kR88r) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0wxbvXIiNeEr12aoO_VX_8)
 3 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2ylxbALvguW15qf-mHjsGm) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2BEzoEGSt-EAmx4HbvQ7RZ) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3YMGovXmHZGn9wVrAChkxk)
 4 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0975HYnqN-Jq4Jx0r7LiTu) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1B3HQldnfhFu4_rVZnW55q) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3QucE7Smr0-YvnV70fZkoq)
-5 | | |
+5 | [Playlist](https://www.youtube.com/watch?v=CgiVz-KMBH0&list=PL1R5gSylLha1cX02r8hiMA85vPmfSYHP_) | |
 6 | | |
 7 | | |
 8 | | |
@@ -124,7 +124,7 @@ Week | Title | Worksheet | Solutions
 2 | Computer Vision | [Sheet](https://drive.google.com/file/d/1WPaKruCqwO1BnkNg9nxosYZ5uVZSZLNn/view?usp=sharing) |
 3 | Particle Filters | [Sheet](https://drive.google.com/file/d/1ovqS1k6tqK4Txt3FhzIUuJiRUirwYU99/view?usp=sharing) | [Solutions](https://drive.google.com/file/d/1KoD2lEKV4r5nIR7G9aXvYRyaUUf7aoA8/view?usp=sharing)
 4 | Optimization | [Sheet](https://drive.google.com/file/d/1Aly66DlZdsVI6cXFvYiMf55G17Fb8wAP/view?usp=sharing) | [Solutions](https://drive.google.com/file/d/1NQUzBEHjBFmcptKXA6lt_mlFg_643osC/view?usp=sharing)
-5 | | |
+5 | SLAM | [Sheet](https://drive.google.com/file/d/1o6NjqCvy8NcEIltzQVaopmZFODLcoPmy/view?usp=sharing) | [Solutions](https://drive.google.com/file/d/1_bqroLE8-UTiIGRiDryycg_3FNnZlOuA/view?usp=sharing)
 6 | | |
 7 | | |
 8 | | |
