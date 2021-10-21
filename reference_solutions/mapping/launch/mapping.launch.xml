@@ -1,0 +1,7 @@
+<launch>
+  <arg name="use_sim_time" default="False"/>
+  <node pkg="mapping" exec="mapping_node">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    <remap from="~/obstacles" to="/obstacle_detector/occupancy_grid"/>
+  </node>
+</launch>
