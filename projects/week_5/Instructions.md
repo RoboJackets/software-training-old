@@ -31,7 +31,7 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 
 ## 1 Background
 
-This week, we'll be implementing an algorithm for mapping our robot's environment. In Project 2, you used computer vision techniques to identify obstacles near our robot. These obstacles are the read shapes on our floor mat, which represent rocks our robot can't drive over. As things stand now, our robot only knows about the obstacles it can see at any given moment. It has no ability to keep track of all the obstacles it has seen so far. Our mapping node will take in these individual frames of obstacle detections and combine them into a complete map of the world.
+This week, we'll be implementing an algorithm for mapping our robot's environment. In Project 2, you used computer vision techniques to identify obstacles near our robot. These obstacles are the red shapes on our floor mat, which represent rocks our robot can't drive over. As things stand now, our robot only knows about the obstacles it can see at any given moment. It has no ability to keep track of all the obstacles it has seen so far. Our mapping node will take in these individual frames of obstacle detections and combine them into a complete map of the world.
 
 Note that this project depends on you having working solutions for projects 1, 2, and 3.
 
@@ -39,7 +39,7 @@ Note that this project depends on you having working solutions for projects 1, 2
 
 The approach we'll be using for mapping is known as [occupancy grid mapping](https://en.wikipedia.org/wiki/Occupancy_grid_mapping). We layout a grid of cells across the entire mappable area, where each cell holds the probability that the space is occupied by an obstacle. By assuming that neighboring cells don't influence each other, we can treat all of these probabilities as independant. This lets us have simple update equations that only work with the data for a single cell.
 
-As usual, because of the realities of representing small fractional numbers in computers, we'll be using the log-odds representation of our probabilities in our map. If you read through the starter code, you'll see two helper functions, `fromLogOdds` and `toLogOdds`, which convert between log-odds and direct probability representations. Ultimately, our node will publish a `nav_msgs::msg::OccupancyGrid` message that expects integral probability values between 0 and 100.
+As usual, because of the realities of representing small fractional numbers in computers, we'll be using the log representation of our probabilities in our map. If you read through the starter code, you'll see two helper functions, `fromLogOdds` and `toLogOdds`, which convert between log-odds and direct probability representations. Ultimately, our node will publish a `nav_msgs::msg::OccupancyGrid` message that expects integral probability values between 0 and 100 (The usual 0 to 1, but scaled).
 
 ### 1.2 The Code
 
@@ -61,7 +61,7 @@ The project launch file will start the simulator, rviz, and processing nodes.
 $ ros2 launch rj_training_bringup week_5.launch.xml
 ```
 
-For the teleop source, you can use either keyboard teleop or joystick teleop.
+For the teleop source, you can use either keyboard teleop or joystick teleop. Make sure to use the stsl_utils version of the keyboard teleop so the particle filter works.
 
 ```bash
 $ ros2 run stsl_utils keyboard_teleop
@@ -192,15 +192,23 @@ const auto distance_robot_to_measurement = std::hypot(
   robot_location.y - map_location.y);
 ```
 
-Now we've got everything we need to update our map probability. 
+Now we've got everything we need to update our map probability. Remember we are using the log odds probability equation to update our map.
 
-<!-- TODO explain this math at least a little -->
+```
+l(m_{t+1}) = l(m_t) + inverse_sensor_model(m_t, x_t, z_t) - l_0
+```
+
+What is stored in our occupancy grid is l(m_t) (log odds of grid cell being occupied at time t). We have loaded some parameters that represent the inverse sensor model. Feel free to play around with those in the config file if you are interested. Furthermore we have set l_0 to be 0, this dropping it from the update equation. We have done this because our assumption is the world is very likely to be free.
+
+The second half of this is some arbitrary scaling on the probability due in relation to the distance from the detection. Often farther away detections are less certain, so we represent that through the exponential equation here. Since we are taking e to the power of a positive value (distance) * a fixed positive (negative with the -1), this gives a monotonically decreasing function (farther away is less trusted). [std::exp](https://en.cppreference.com/w/cpp/numeric/math/exp) takes e to the power of whatever we pass in. You can think of this as part of the inverse_sensor_model. Therefore probability here is the inverse_sensor_model even after applying the weighting.
+
+The final line ensures that our log odds space retains numerical stability. Our log odds will asymptotically approach 1 or 0 for a grid cell, but the log probability will increase to infinity. Bounding the values prevents that from occurring and will keep the log prob bounded to the true probability between 0.01 and 0.99. To do this we use the [std::clamp](https://en.cppreference.com/w/cpp/algorithm/clamp) function that returns the closest value in the given range.
 
 ```C++
 auto probability = std::exp(-distance_coefficient_ * distance_robot_to_measurement);
 probability *= (obstacle_detected ? hit_log_odds_ : miss_log_odds_);
 map_data_[data_index] += probability;
-map_data_[data_index] = std::clamp(map_data_[data_index], 0.0, 1.0);
+map_data_[data_index] = std::clamp(map_data_[data_index], toLogOdds(0.01), toLogOdds(0.99));
 ```
 
 ### 3.6 Implement AddObstaclesToMap(): Iterate over obstacle cells
@@ -212,7 +220,7 @@ We've got one more function to implement: `AddObstaclesToMap`. This function tak
 1. Check that this map location is within our map bounds. Skip any cells that aren't.
 1. Call `UpdateProbability` to update the map data at this location.
 
-In this section, we'll implement step 1. 
+In this section, we'll implement step 1.
 
 Find the student code comment block in `AddObstaclesToMap`. Here, we need to create two, nested for loops. The outer loop should iterate through y values from `0` to `obstacles.info.height - 1`. The inner loop should iterate through x values from `0` to `obstacles.info.width - 1`.
 

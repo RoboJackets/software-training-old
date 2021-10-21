@@ -199,7 +199,8 @@ private:
 
     map_data_[data_index] += probability;
 
-    map_data_[data_index] = std::clamp(map_data_[data_index], 0.0, 1.0);
+    map_data_[data_index] = std::clamp(map_data_[data_index], toLogOdds(0.01),
+                                       toLogOdds(0.99));
     // END STUDENT CODE
   }
 
