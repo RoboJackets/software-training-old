@@ -12,7 +12,6 @@ find_package(tf2_ros REQUIRED)
 find_package(tf2_eigen REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
-  src/kalman_filter.cpp
   src/mineral_deposit_tracker.cpp
 )
 ament_target_dependencies(${PROJECT_NAME}

@@ -59,63 +59,64 @@ private:
   rclcpp::Subscription<stsl_interfaces::msg::MineralDepositArray>::SharedPtr deposit_subscription_;
   rclcpp::Service<stsl_interfaces::srv::ResetMineralDepositTracking>::SharedPtr reset_service_;
   int deposit_id_;
-  KalmanFilter filter_;
+  KalmanFilter<2> filter_;
 
   void DepositMeasurementCallback(const stsl_interfaces::msg::MineralDepositArray::SharedPtr msg)
   {
-    try {
-      filter_.TimeUpdate();
-      const auto found_deposit = std::find_if(
-        msg->deposits.begin(), msg->deposits.end(), [this](const auto & deposit) {
-          return deposit.id == deposit_id_;
-        });
-      if (found_deposit == msg->deposits.end()) {
-        return;
-      }
-      const auto & detection = *found_deposit;
-
-      const Eigen::Vector3d sensor_frame_position = detection.range * Eigen::Vector3d{std::cos(
-          detection.heading), std::sin(detection.heading), 0.0};
-
-      const auto transform =
-        tf_buffer_.lookupTransform(
-        "map", msg->header.frame_id, msg->header.stamp, rclcpp::Duration::from_seconds(
-          0.1));
-
-      Eigen::Vector3d map_frame_position;
-
-      tf2::doTransform(sensor_frame_position, map_frame_position, transform);
-
-      const Eigen::Vector2d measurement{map_frame_position.x(), map_frame_position.y()};
-
-      const Eigen::Matrix2d covariance = Eigen::Matrix2d::Identity() * 0.01;
-
-      filter_.MeasurementUpdate(measurement, covariance);
-
-      const auto estimated_position = filter_.GetEstimate();
-
-      geometry_msgs::msg::PoseStamped output_msg;
-      output_msg.header.stamp = now();
-      output_msg.header.frame_id = "map";
-      output_msg.pose.position.x = estimated_position.x();
-      output_msg.pose.position.y = estimated_position.y();
-      tracked_deposit_publisher_->publish(output_msg);
-    } catch (const tf2::TransformException & e) {
-      RCLCPP_ERROR(get_logger(), "TF Error: %s", e.what());
+    if(!tf_buffer_.canTransform("map", msg->header.frame_id, msg->header.stamp))
+    {
+      RCLCPP_INFO_ONCE(get_logger(), "Waiting for transform from %s to map.", msg->header.frame_id.c_str());
+      return;
     }
+    filter_.TimeUpdate();
+    const auto found_deposit = std::find_if(
+      msg->deposits.begin(), msg->deposits.end(), [this](const auto & deposit) {
+        return deposit.id == deposit_id_;
+      });
+    if (found_deposit == msg->deposits.end()) {
+      return;
+    }
+
+    tf2::Stamped<Eigen::Vector3d> sensor_frame_position;
+    sensor_frame_position.frame_id_ = msg->header.frame_id;
+    sensor_frame_position.stamp_ = tf2_ros::fromMsg(msg->header.stamp);
+    sensor_frame_position.x() = std::cos(found_deposit->heading);
+    sensor_frame_position.y() = std::sin(found_deposit->heading);
+    sensor_frame_position *= found_deposit->range;
+
+    auto map_frame_position = tf_buffer_.transform(sensor_frame_position, "map");
+
+    const Eigen::Vector2d measurement{map_frame_position.x(), map_frame_position.y()};
+
+    const Eigen::Matrix2d covariance = Eigen::Matrix2d::Identity() * 0.01;
+
+    filter_.MeasurementUpdate(measurement, covariance);
+
+    PublishEstimate(filter_.GetEstimate());
   }
 
   void ResetCallback(
     const stsl_interfaces::srv::ResetMineralDepositTracking::Request::SharedPtr request,
     stsl_interfaces::srv::ResetMineralDepositTracking::Response::SharedPtr response)
   {
-    RCLCPP_INFO(get_logger(), "Received reset request!");
+    RCLCPP_INFO(get_logger(), "Received reset request! Now tracking ID: %d", request->id);
     deposit_id_ = request->id;
     const Eigen::Vector2d position{request->pose.pose.position.x, request->pose.pose.position.y};
     Eigen::Matrix2d covariance;
     covariance << request->pose.covariance[0], request->pose.covariance[1],
       request->pose.covariance[3], request->pose.covariance[4];
     filter_.Reset(position, covariance);
+    PublishEstimate(position);
+  }
+
+  void PublishEstimate(const Eigen::Vector2d & estimate)
+  {
+    geometry_msgs::msg::PoseStamped output_msg;
+    output_msg.header.stamp = now();
+    output_msg.header.frame_id = "map";
+    output_msg.pose.position.x = estimate.x();
+    output_msg.pose.position.y = estimate.y();
+    tracked_deposit_publisher_->publish(output_msg);
   }
 };
 

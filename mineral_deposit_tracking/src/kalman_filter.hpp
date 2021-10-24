@@ -26,32 +26,73 @@
 namespace mineral_deposit_tracking
 {
 
+template<int StateSize>
 class KalmanFilter
 {
 public:
-  KalmanFilter(
-    const Eigen::Matrix2d & transition_matrix,
-    const Eigen::Matrix2d & process_covariance,
-    const Eigen::Matrix2d & observation_matrix);
+  using VectorType = Eigen::Matrix<double, StateSize, 1>;
+  using MatrixType = Eigen::Matrix<double, StateSize, StateSize>;
 
-  void TimeUpdate();
+  KalmanFilter(
+    const MatrixType & transition_matrix,
+    const MatrixType & process_covariance,
+    const MatrixType & observation_matrix)
+  : transition_matrix_(transition_matrix),
+    process_covariance_(process_covariance),
+    observation_matrix_(observation_matrix),
+    estimate_(0.0, 0.0),
+    estimate_covariance_(MatrixType::Identity() * 500)
+  {
+  }
+
+  void TimeUpdate()
+  {
+    estimate_ = transition_matrix_ * estimate_;
+    estimate_covariance_ = transition_matrix_ * estimate_covariance_ *
+      transition_matrix_.transpose() + process_covariance_;
+  }
 
   void MeasurementUpdate(
-    const Eigen::Vector2d & measurement,
-    const Eigen::Matrix2d & measurement_covariance);
+    const VectorType & measurement,
+    const MatrixType & measurement_covariance)
+  {
+    const MatrixType innovation_covariance =
+      (observation_matrix_ * estimate_covariance_ * observation_matrix_.transpose()) +
+      measurement_covariance;
 
-  void Reset(const Eigen::Vector2d & initial_state, const Eigen::Matrix2d & initial_covariance);
+    const MatrixType gain = estimate_covariance_ * observation_matrix_.transpose() *
+      innovation_covariance.inverse();
 
-  const Eigen::Vector2d & GetEstimate();
+    estimate_ = estimate_ + (gain * (measurement - (observation_matrix_ * estimate_)));
 
-  const Eigen::Matrix2d & GetEstimateCovariance();
+    const MatrixType tmp = MatrixType::Identity() - (gain * observation_matrix_);
+
+    estimate_covariance_ = (tmp * estimate_covariance_ * tmp.transpose()) +
+      (gain * measurement_covariance * gain.transpose());
+  }
+
+  void Reset(const VectorType & initial_state, const MatrixType & initial_covariance)
+  {
+    estimate_ = initial_state;
+    estimate_covariance_ = initial_covariance;
+  }
+
+  const VectorType & GetEstimate()
+  {
+    return estimate_;
+  }
+
+  const MatrixType & GetEstimateCovariance()
+  {
+    return estimate_covariance_;
+  }
 
 private:
-  const Eigen::Matrix2d transition_matrix_;
-  const Eigen::Matrix2d process_covariance_;
-  const Eigen::Matrix2d observation_matrix_;
-  Eigen::Vector2d estimate_;
-  Eigen::Matrix2d estimate_covariance_;
+  const MatrixType transition_matrix_;
+  const MatrixType process_covariance_;
+  const MatrixType observation_matrix_;
+  VectorType estimate_;
+  MatrixType estimate_covariance_;
 };
 
 }  // namespace mineral_deposit_tracking
