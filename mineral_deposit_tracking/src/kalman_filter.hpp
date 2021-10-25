@@ -18,6 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+// BEGIN STUDENT CODE
+
 #ifndef KALMAN_FILTER_HPP_
 #define KALMAN_FILTER_HPP_
 
@@ -40,9 +42,15 @@ public:
   : transition_matrix_(transition_matrix),
     process_covariance_(process_covariance),
     observation_matrix_(observation_matrix),
-    estimate_(0.0, 0.0),
+    estimate_(VectorType::Zero()),
     estimate_covariance_(MatrixType::Identity() * 500)
   {
+  }
+
+  void Reset(const VectorType & initial_state, const MatrixType & initial_covariance)
+  {
+    estimate_ = initial_state;
+    estimate_covariance_ = initial_covariance;
   }
 
   void TimeUpdate()
@@ -71,18 +79,12 @@ public:
       (gain * measurement_covariance * gain.transpose());
   }
 
-  void Reset(const VectorType & initial_state, const MatrixType & initial_covariance)
-  {
-    estimate_ = initial_state;
-    estimate_covariance_ = initial_covariance;
-  }
-
-  const VectorType & GetEstimate()
+  const VectorType & GetEstimate() const
   {
     return estimate_;
   }
 
-  const MatrixType & GetEstimateCovariance()
+  const MatrixType & GetEstimateCovariance() const
   {
     return estimate_covariance_;
   }
@@ -98,3 +100,5 @@ private:
 }  // namespace mineral_deposit_tracking
 
 #endif  // KALMAN_FILTER_HPP_
+
+// END STUDENT CODE
