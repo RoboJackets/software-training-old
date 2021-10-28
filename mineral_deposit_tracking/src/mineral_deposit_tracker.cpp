@@ -39,7 +39,7 @@ public:
   : rclcpp::Node("mineral_deposit_tracker", options),
     tf_buffer_(get_clock()),
     tf_listener_(tf_buffer_)
-  // END STUDENT CODE
+    // END STUDENT CODE
   {
     tracked_deposit_publisher_ = create_publisher<geometry_msgs::msg::PoseStamped>(
       "~/tracked_deposit", rclcpp::SystemDefaultsQoS());
@@ -65,9 +65,9 @@ private:
 
   void DepositMeasurementCallback(const stsl_interfaces::msg::MineralDepositArray::SharedPtr msg)
   {
-    if(!tf_buffer_.canTransform("map", msg->header.frame_id, msg->header.stamp))
-    {
-      RCLCPP_INFO_ONCE(get_logger(), "Waiting for transform from %s to map.", msg->header.frame_id.c_str());
+    if (!tf_buffer_.canTransform("map", msg->header.frame_id, msg->header.stamp)) {
+      RCLCPP_INFO_ONCE(
+        get_logger(), "Waiting for transform from %s to map.", msg->header.frame_id.c_str());
       return;
     }
     // BEGIN STUDENT CODE

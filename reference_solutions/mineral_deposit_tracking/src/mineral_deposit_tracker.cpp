@@ -42,7 +42,7 @@ public:
     tf_listener_(tf_buffer_),
     filter_(Eigen::Matrix2d::Identity(),
       Eigen::Matrix2d::Identity() * 1e-4, Eigen::Matrix2d::Identity())
-  // END STUDENT CODE
+    // END STUDENT CODE
   {
     tracked_deposit_publisher_ = create_publisher<geometry_msgs::msg::PoseStamped>(
       "~/tracked_deposit", rclcpp::SystemDefaultsQoS());
@@ -69,15 +69,15 @@ private:
 
   void DepositMeasurementCallback(const stsl_interfaces::msg::MineralDepositArray::SharedPtr msg)
   {
-    if(!tf_buffer_.canTransform("map", msg->header.frame_id, msg->header.stamp))
-    {
-      RCLCPP_INFO_ONCE(get_logger(), "Waiting for transform from %s to map.", msg->header.frame_id.c_str());
+    if (!tf_buffer_.canTransform("map", msg->header.frame_id, msg->header.stamp)) {
+      RCLCPP_INFO_ONCE(
+        get_logger(), "Waiting for transform from %s to map.", msg->header.frame_id.c_str());
       return;
     }
     // BEGIN STUDENT CODE
     filter_.TimeUpdate();
     // END STUDENT CODE
-    
+
     const auto found_deposit = std::find_if(
       msg->deposits.begin(), msg->deposits.end(), [this](const auto & deposit) {
         return deposit.id == deposit_id_;
