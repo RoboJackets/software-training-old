@@ -3,20 +3,36 @@ project(lqr_control)
 
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(rclcpp_action REQUIRED)
+find_package(rclcpp_components REQUIRED)
 find_package(nav2_core REQUIRED)
+find_package(nav2_msgs REQUIRED)
 find_package(tf2_eigen REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
 find_package(Eigen3 REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
+  src/controller_test_client.cpp
   src/lqr_controller.cpp
+  src/test_path_generator.cpp
 )
 ament_target_dependencies(${PROJECT_NAME}
   "rclcpp"
+  "rclcpp_action"
+  "rclcpp_components"
   "nav2_core"
+  "nav2_msgs"
   "tf2_eigen"
+  "tf2_geometry_msgs"
   "Eigen3"
 )
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
+
+rclcpp_components_register_node(
+  ${PROJECT_NAME}
+  PLUGIN "lqr_control::ControllerTestClient"
+  EXECUTABLE controller_test_client
+)
 
 install(TARGETS ${PROJECT_NAME}
   ARCHIVE DESTINATION lib
