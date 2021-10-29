@@ -114,7 +114,7 @@ In this new header file, add header guards (`#ifndef`,`#define`, `#endif`).
 
 Then, include `<Eigen/Dense>`.
 
-Finally, open the `mineral_deposit_tracking` namespace, and add a new class named `KalmanFilter`. This class should be templated with one non-type template parameter: an `int` named `StateSize`. This template parameter will hold the number of dimensions to the state vector tracked by our Kalman filter. To use our Kalman filter to track a 3D state, we would create a `KalmanFilter<3>`. 
+Finally, open the `mineral_deposit_tracking` namespace, and add a new class named `KalmanFilter`. This class should be templated with one non-type template parameter: an `int` named `StateSize`. This template parameter will hold the number of dimensions to the state vector tracked by our Kalman filter. To use our Kalman filter to track a 3D state, we would create a `KalmanFilter<3>`.
 
 <details>
 <summary><b>Hint:</b> Here's what the header should look like now.</summary>
@@ -177,26 +177,27 @@ const MatrixType observation_matrix_;
 VectorType estimate_;
 MatrixType estimate_covariance_;
 ```
+![System Equations](motion_and_sensor.png)
 
 * `transition_matrix_`
 
-   holds the matrix that describes how the state estimate changes with each time step of the filter.
+   holds the matrix that describes how the state estimate changes with each time step of the filter. This represents our motion equation. We are assuming that our B matrix is zero, therefore there is no control to consider. Furthermore for this example our tag location will not move so we can also set the A matrix to the identity. That means our next location is the previous location with respect to the motion update.
 
 * `process_covariance_`
 
-   holds the covariance associated with the step change represented by `transition_matrix_`.
+   holds the covariance associated with the step change represented by `transition_matrix_`. This matrix represents the Q matrix we talked about in the lecture. That is the covariance matrix of the stochastic noise of the dynamics (w).
 
 * `observation_matrix_`
 
-   maps our measurement vectors to state vectors.
+   maps our measurement vectors to state vectors. This is the H matrix we talked about in the lecture.
 
 * `estimate_`
 
-   is the current state estimate calculated by our filter.
+   is the current state estimate calculated by our filter. In this case this will represent the posteriori estimate of our position, we include the most recent measurement.
 
 * `estimate_covariance_`
 
-   is the covariance of the current state estimate.
+   is the covariance of the current state estimate. This is the posteriori estimate of the covariance, we include the current measurement.
 
 We want the estimate and estimate covariance to be accesible (in a read-only manner) by other objects, so we need to add some "getter functions." These functions just return a constant reference to the corresponding member variable. They should both be declared with public access.
 
@@ -214,7 +215,7 @@ const MatrixType & GetEstimateCovariance() const
 
 Note that the functions are declared as constant functions (with the `const` keyword at the end of the signature) since they don't modify the contents of the class.
 
-Now, users of our class can get the current estimate and covariance by calling `GetEstimate()` and `GetEstimateCovariance()`. 
+Now, users of our class can get the current estimate and covariance by calling `GetEstimate()` and `GetEstimateCovariance()`.
 
 ### 3.5 Add KalmanFilter constructor
 
@@ -225,7 +226,7 @@ Add a constructor to `KalmanFilter`. This constructor should take in values for 
 `estimate_covariance_` should be initialized as a diagonal matrix with all diagonal values being 500. We can do this by multiplying the identity matrix (`MatrixType::Identity`) by 500.
 
 <details>
-<summary><b>Hint:</b> Solution concstructor</summary>
+<summary><b>Hint:</b> Solution constructor</summary>
 <pre><code>KalmanFilter(
   const MatrixType & transition_matrix,
   const MatrixType & process_covariance,
@@ -261,7 +262,8 @@ Add a new function to `KalmanFilter` named `TimeUpdate`. This function takes no 
 
 In the body of this function, implement the predict step equations to update our estimate and estimate covariance.
 
-**TODO** Add equation screenshots with explanations of mapping between equation symbols and code variables. (ie. "where X is `estimate_`)
+![Motion Update Equations](mean_and_cov_update_equations.png)
+![Motion Update Meaning](motion_update_meaning.png)
 
 ### 3.8 Add MeasurementUpdate function
 
@@ -271,21 +273,18 @@ Add a new function to `KalmanFilter` called `MeasurementUpdate`. This function s
 
 `MeasurementUpdate` will implement the "measurement update" or "correct step" of the Kalman filter. In addition to the measurement and measurement covariance from the parameters, this function will make use of our observation matrix (`observation_matrix_`).
 
-Start by calculating the innovation covariance.
+![Kalman Measurement Update](measurement_update_equations.png)
+![Kalman Measurement Code Mapping](measurement_update_code_mapping.png)
 
-**TODO** Add innovation equation with explanation
+The first of these two images show you a broken down way of computing the kalman measurement update. The second image gives mapping to know values and recommended naming for the structures listed in the equations image.
 
-Next, calculate the Kalman gain.
+We recommend following the steps listed in the equation and each equals sign should be a line.
 
-**TODO** Add gain equation with explanation
-
-Now, we can update our state estimate.
-
-**TODO** Add estimate update equation with explanation
-
-Finally, update the estimate covariance.
-
-**TODO** Add covariance update equation with explanation. Note that it'll be easier if they break out the (I - KH) calculation into a temporary variable rather than computing it twice in the full equation.
+1. Calculate the innovation covariance.
+2. Calculate the Kalman gain
+3. Update the state estimate using steps 1 and 2
+4. Compute an intermediate step for simplicity
+5. Finally update the estimate covaraince
 
 ### 3.9 Add filter to tracking node
 
