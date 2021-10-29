@@ -24,7 +24,8 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
   - [3.6 Add Reset function](#36-add-reset-function)
   - [3.7 Add TimeUpdate function](#37-add-timeupdate-function)
   - [3.8 Add MeasurementUpdate function](#38-add-measurementupdate-function)
-  - [3.9 Commit your new code in git](#39-commit-your-new-code-in-git)
+  - [3.9 Add filter to tracking node](#39-add-filter-to-tracking-node)
+  - [3.10 Commit your new code in git](#310-commit-your-new-code-in-git)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
