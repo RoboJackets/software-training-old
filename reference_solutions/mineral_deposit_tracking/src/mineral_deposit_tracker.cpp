@@ -26,6 +26,7 @@
 #include <stsl_interfaces/srv/reset_mineral_deposit_tracking.hpp>
 #include <geometry_msgs/msg/pose_stamped.hpp>
 // BEGIN STUDENT CODE
+#include "kalman_filter.hpp"
 // END STUDENT CODE
 
 namespace mineral_deposit_tracking
@@ -38,7 +39,9 @@ public:
   // BEGIN STUDENT CODE
   : rclcpp::Node("mineral_deposit_tracker", options),
     tf_buffer_(get_clock()),
-    tf_listener_(tf_buffer_)
+    tf_listener_(tf_buffer_),
+    filter_(Eigen::Matrix2d::Identity(),
+      Eigen::Matrix2d::Identity() * 1e-4, Eigen::Matrix2d::Identity())
     // END STUDENT CODE
   {
     tracked_deposit_publisher_ = create_publisher<geometry_msgs::msg::PoseStamped>(
@@ -61,6 +64,7 @@ private:
   rclcpp::Service<stsl_interfaces::srv::ResetMineralDepositTracking>::SharedPtr reset_service_;
   int deposit_id_;
   // BEGIN STUDENT CODE
+  KalmanFilter<2> filter_;
   // END STUDENT CODE
 
   void DepositMeasurementCallback(const stsl_interfaces::msg::MineralDepositArray::SharedPtr msg)
@@ -71,6 +75,7 @@ private:
       return;
     }
     // BEGIN STUDENT CODE
+    filter_.TimeUpdate();
     // END STUDENT CODE
 
     const auto found_deposit = std::find_if(
@@ -95,7 +100,9 @@ private:
     const Eigen::Matrix2d covariance = Eigen::Matrix2d::Identity() * 0.01;
 
     // BEGIN STUDENT CODE
-    PublishEstimate(measurement);
+    filter_.MeasurementUpdate(measurement, covariance);
+
+    PublishEstimate(filter_.GetEstimate());
     // END STUDENT CODE
   }
 
@@ -110,6 +117,7 @@ private:
     covariance << request->pose.covariance[0], request->pose.covariance[1],
       request->pose.covariance[3], request->pose.covariance[4];
     // BEGIN STUDENT CODE
+    filter_.Reset(position, covariance);
     // END STUDENT CODE
     PublishEstimate(position);
   }

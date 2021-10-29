@@ -2,7 +2,33 @@
   pose:
     pose:
       position:
+        x: 0.3
+        y: 0.3
+        z: 0.0
+      orientation:
         x: 0.0
+        y: 0.0
+        z: 0.0
+        w: 1.0
+    covariance: [50,0,0,0,0,0, 0,50,0,0,0,0, 0,0,0,0,0,0, 0,0,0,0,0,0, 0,0,0,0,0,0, 0,0,0,0,0,0]
+- id: 11
+  pose:
+    pose:
+      position:
+        x: 0.4
+        y: -0.2
+        z: 0.0
+      orientation:
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        w: 1.0
+    covariance: [50,0,0,0,0,0, 0,50,0,0,0,0, 0,0,0,0,0,0, 0,0,0,0,0,0, 0,0,0,0,0,0, 0,0,0,0,0,0]
+- id: 12
+  pose:
+    pose:
+      position:
+        x: -0.4
         y: 0.3
         z: 0.0
       orientation:
