@@ -113,7 +113,7 @@ Week | Title |  | Description
 3 | Particle Filter Localization | [Instructions](projects/week_3/Instructions.md) | Use a particle filter to localize the robot based on fiducial detections.
 4 | Gradient Descent Optimization | [Instructions](projects/week_4/Instructions.md) | Use gradient ascent to guide the robot to the highest simulated elevation on the map.
 5 | Mapping | [Instructions](projects/week_5/Instructions.md) | Build a map of the environment with a probablistic occupancy grid.
-6 | Kalman Filter Tracking | | Track mineral deposits with a kalman filter.
+6 | Kalman Filter Tracking | [Instructions](projects/week_6/Instructions.md) | Track mineral deposits with a kalman filter.
 7 | LQR Controller | | Control the robot's motion with an LQR controller.
 8 | A-Star Path Planning | | Teach the robot how to avoid obstacles with the A-Star path planning algorithm.
 
@@ -125,6 +125,6 @@ Week | Title | Worksheet | Solutions
 3 | Particle Filters | [Sheet](https://drive.google.com/file/d/1ovqS1k6tqK4Txt3FhzIUuJiRUirwYU99/view?usp=sharing) | [Solutions](https://drive.google.com/file/d/1KoD2lEKV4r5nIR7G9aXvYRyaUUf7aoA8/view?usp=sharing)
 4 | Optimization | [Sheet](https://drive.google.com/file/d/1Aly66DlZdsVI6cXFvYiMf55G17Fb8wAP/view?usp=sharing) | [Solutions](https://drive.google.com/file/d/1NQUzBEHjBFmcptKXA6lt_mlFg_643osC/view?usp=sharing)
 5 | SLAM | [Sheet](https://drive.google.com/file/d/1o6NjqCvy8NcEIltzQVaopmZFODLcoPmy/view?usp=sharing) | [Solutions](https://drive.google.com/file/d/1_bqroLE8-UTiIGRiDryycg_3FNnZlOuA/view?usp=sharing)
-6 | | |
+6 | No worksheet this week | |
 7 | | |
 8 | | |
