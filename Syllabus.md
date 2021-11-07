@@ -99,7 +99,7 @@ Week | Robotics Theory | C++ | ROS
 4 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0975HYnqN-Jq4Jx0r7LiTu) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1B3HQldnfhFu4_rVZnW55q) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3QucE7Smr0-YvnV70fZkoq)
 5 | [Playlist](https://www.youtube.com/watch?v=CgiVz-KMBH0&list=PL1R5gSylLha1cX02r8hiMA85vPmfSYHP_) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1huMeonsTMxqU8DE7m_zWh) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2od_7P9YuSSLsKCd3vtCY7)
 6 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0j_tmn3YhTTs90-pUFuZH9) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3kQMd1tIxDywbOWNNYaiJM) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0IvTKCOckpL5QvVB4Hn-97)
-7 | | No C++ videos this week | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1qUf5ngWco_EnNfYsTzAUc)
+7 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3nYaE3PTmJIon7GgIxzr_M) | No C++ videos this week | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1qUf5ngWco_EnNfYsTzAUc)
 8 | | |
 
 ## Project Schedule
