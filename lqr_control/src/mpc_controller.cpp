@@ -23,7 +23,7 @@
 #include <tf2_eigen/tf2_eigen.h>
 #include <Eigen/Dense>
 
-namespace lqr_controller
+namespace mpc_controller
 {
 
 Eigen::Vector3d StateFromMsg(const geometry_msgs::msg::PoseStamped& pose) {
@@ -34,7 +34,7 @@ Eigen::Vector3d StateFromMsg(const geometry_msgs::msg::PoseStamped& pose) {
   return state;
 }
 
-class LqrController : public nav2_core::Controller
+class MpcController : public nav2_core::Controller
 {
 public:
   void configure(const rclcpp_lifecycle::LifecycleNode::SharedPtr & node, std::string name, const std::shared_ptr<tf2_ros::Buffer> & tf_buffer, const std::shared_ptr<nav2_costmap_2d::Costmap2DROS> & costmap) override {
@@ -42,6 +42,7 @@ public:
 
     T_ = node->declare_parameter<double>("T", 1.0);
     dt_ = node->declare_parameter<double>("dt", 0.1);
+    samples_ = node->declare_parameter<double>("samples", 100);
     std::vector<double> Q_temp = node->declare_parameter<std::vector<double>>("Q", {1.0, 1.0, 1.0});
     std::vector<double> Qf_temp = node->declare_parameter<std::vector<double>>("Qf", {1.0, 1.0, 1.0});
     std::vector<double> R_temp = node->declare_parameter<std::vector<double>>("R", {1.0, 1.0});
@@ -70,9 +71,7 @@ public:
     R_(0, 0) = R_temp[0];
     R_(1, 1) = R_temp[1];
 
-    S_.resize(T_/dt_);
     prev_u_.resize(T_/dt_);
-    prev_x_.resize(T_/dt_);
   }
 
   void activate() override {}
@@ -91,11 +90,11 @@ public:
     RCLCPP_INFO(node_->get_logger(), "Got request for control");
     Eigen::Vector3d state = StateFromMsg(pose);
 
-    computeRicattiEquation(state);
+    Eigen::Vector2d u = sampleTrajectories(state);
 
     geometry_msgs::msg::TwistStamped cmd_vel_msg;
-    cmd_vel_msg.twist.linear.x = prev_u_[0](0);
-    cmd_vel_msg.twist.angular.z = prev_u_[0](1);
+    cmd_vel_msg.twist.linear.x = u(0);
+    cmd_vel_msg.twist.angular.z = u(1);
     cmd_vel_msg.header.frame_id = "base_link";
     cmd_vel_msg.header.stamp = node_->now();
     return cmd_vel_msg;
@@ -113,35 +112,44 @@ public:
     return B;
   }
 
+  double computeRunningCost(const Eigen::Vector3d x, const Eigen::Vector2d u) {
+    double state = x.transpose() * Q_ * x;
+    double control = u.transpose() * R_ * u;
+    return 0.5 * state + 0.5 * control;
+  }
+
+  double computeTerminalCost(const Eigen::Vector3d xf) {
+    return 0.5 * xf.transpose() * Qf_ * xf;
+  }
+
   Eigen::Vector3d computeNextState(const Eigen::Vector3d x, const Eigen::Vector2d u) {
     return computeAMatrix(x, u) * x + computeBMatrix(x) * u;
   }
 
-  void computeRicattiEquation(const Eigen::Vector3d& init_x) {
-    // does the backwards pass of the ricatti equation
-    S_[S_.size()-1] = Qf_;
-    for(int t = T_/dt_ - 1; t > 0; t--) {
-      auto last_S = S_[t+1];
-      Eigen::Matrix3d A = computeAMatrix(prev_x_[t], prev_u_[t]);
-      Eigen::Matrix<double, 3, 2> B = computeBMatrix(prev_x_[t]);
-      auto K = (R_ + B.transpose() * last_S * B).inverse() * B.transpose() * last_S * A;
-      S_[t] = A.transpose() * last_S * A - (A.transpose() * last_S * B) * K + Q_;
+  Eigen::Vector2d sampleTrajectories(const Eigen::Vector3d x_init) {
+    double lowest_cost = 1e10;
+    std::vector<Eigen::Vector2d> u_star;
+    for(int sample = 0; sample < samples_; sample++) {
+      double cost = 0;
+      Eigen::Vector3d x = x_init;
+      std::vector<Eigen::Vector2d> controls;
+
+      Eigen::Vector2d u = prev_u_[0] + Eigen::Vector2d::Random().cwiseProduct(control_var_);
+      controls.push_back(u);
+      for(int t = 0; t < T_/dt_-1; t++) {
+        cost += computeRunningCost(x - trajectory_[t], u);
+        x = computeNextState(x - trajectory_[t], u);
+        u = prev_u_[t+1] + Eigen::Vector2d::Random().cwiseProduct(control_var_);
+        controls.push_back(u);
+      }
+      cost += computeTerminalCost(x);
+      if(cost < lowest_cost) {
+        lowest_cost = cost;
+        u_star = controls;
+      }
     }
-
-    // computes the forward pass to update the states and controls
-    Eigen::Vector3d cur_x = init_x;
-    for(int t = 0; t < T_/dt_; t++) {
-      Eigen::Matrix3d A = computeAMatrix(cur_x, prev_u_[t]);
-      Eigen::Matrix<double, 3, 2> B = computeBMatrix(prev_x_[t]);
-      auto current_S = S_[t];
-      auto K = (R_ + B.transpose() * current_S * B).inverse() * B.transpose() * current_S * A;
-      Eigen::Vector2d u_star = -K * (cur_x - trajectory_[t]);
-
-      prev_x_[t] = cur_x;
-      prev_u_[t] = u_star;
-
-      cur_x = computeNextState(cur_x, u_star);
-    }
+    prev_u_ = u_star;
+    return u_star[0];
   }
 
 private:
@@ -149,22 +157,22 @@ private:
   // dynamics
   double dt_ = 0.1;
   double T_ = 1;
+  double samples_ = 100;
 
   // cost function
   Eigen::Matrix3d Q_ = Eigen::Matrix3d::Identity();
   Eigen::Matrix3d Qf_ = Eigen::Matrix3d::Identity();
   Eigen::Matrix2d R_ = Eigen::Matrix2d::Identity();
 
-  // Ricatti equation
-  std::vector<Eigen::Matrix3d> S_;
-  std::vector<Eigen::Vector3d> prev_x_;
+  // importance sampler
   std::vector<Eigen::Vector2d> prev_u_;
+  Eigen::Vector2d control_var_;
 
   // trajectory to track
   std::vector<Eigen::Vector3d> trajectory_;
 
 };
 
-}  // namespace lqr_controller
+}  // namespace mpc_controller
 
-PLUGINLIB_EXPORT_CLASS(lqr_controller::LqrController, nav2_core::Controller)
+PLUGINLIB_EXPORT_CLASS(mpc_controller::MpcController, nav2_core::Controller)
