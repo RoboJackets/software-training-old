@@ -102,7 +102,10 @@ public:
   }
 
   Eigen::Matrix3d computeAMatrix(const Eigen::Vector3d& x, const Eigen::Vector2d& u) {
-    return Eigen::Matrix3d::Identity();
+    Eigen::Matrix3d A = Eigen::Matrix3d::Identity();
+    A(0, 2) = -u(0)*sin(x(2))*dt_;
+    A(1, 2) = u(0)*cos(x(2))*dt_;
+    return A;
   }
 
   Eigen::Matrix<double, 3, 2> computeBMatrix(const Eigen::Vector3d& x) {
