@@ -42,6 +42,33 @@ public:
 
     T_ = node->declare_parameter<double>("T", 1.0);
     dt_ = node->declare_parameter<double>("dt", 0.1);
+    std::vector<double> Q_temp = node->declare_parameter<std::vector<double>>("Q", {1.0, 1.0, 1.0});
+    std::vector<double> Qf_temp = node->declare_parameter<std::vector<double>>("Qf", {1.0, 1.0, 1.0});
+    std::vector<double> R_temp = node->declare_parameter<std::vector<double>>("R", {1.0, 1.0});
+    if(Q_temp.size() != 3) {
+      RCLCPP_ERROR(node_->get_logger(), "incorrect size Q, must be 3 values");
+      exit(0);
+    }
+    if(Qf_temp.size() != 3) {
+      RCLCPP_ERROR(node_->get_logger(), "incorrect size Qf, must be 3 values");
+      exit(0);
+    }
+    if(R_temp.size() != 2) {
+      RCLCPP_ERROR(node_->get_logger(), "incorrect size R, must be 2 values");
+      exit(0);
+    }
+
+    // set the diagonal elements from the launch file
+    Q_(0, 0) = Q_temp[0];
+    Q_(1, 1) = Q_temp[1];
+    Q_(2, 2) = Q_temp[2];
+
+    Qf_(0, 0) = Qf_temp[0];
+    Qf_(1, 1) = Qf_temp[1];
+    Qf_(2, 2) = Qf_temp[2];
+
+    R_(0, 0) = R_temp[0];
+    R_(1, 1) = R_temp[1];
 
     S_.resize(T_/dt_);
     prev_u_.resize(T_/dt_);

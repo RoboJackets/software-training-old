@@ -45,14 +45,11 @@ controller_server:
       yaw_goal_tolerance: 6.28318530718
     FollowPath:
         plugin: "lqr_control::LqrController"
-        xy_threshold: 0.01
-        max_theta_vel: 0.2
-        max_x_vel: 0.05
-        linear_controller:
-            kP: 10.0
-        angular_controller:
-            kP: 10.0
-            kD: 0.5
+        dt: 0.1
+        T: 1.0
+        Q: [0.025, 0.025, 0.05]
+        Qf: [0.025, 0.025, 0.05]
+        R: [0.025, 0.025, 0.05]
 
 controller_server_rclcpp_node:
   ros__parameters:
