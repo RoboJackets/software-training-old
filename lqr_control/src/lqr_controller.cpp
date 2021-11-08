@@ -23,7 +23,7 @@
 #include <tf2_eigen/tf2_eigen.h>
 #include <Eigen/Dense>
 
-namespace lqr_controller
+namespace lqr_control
 {
 
 Eigen::Vector3d StateFromMsg(const geometry_msgs::msg::PoseStamped& pose) {
@@ -168,6 +168,6 @@ private:
 
 };
 
-}  // namespace lqr_controller
+}  // namespace lqr_control
 
-PLUGINLIB_EXPORT_CLASS(lqr_controller::LqrController, nav2_core::Controller)
+PLUGINLIB_EXPORT_CLASS(lqr_control::LqrController, nav2_core::Controller)

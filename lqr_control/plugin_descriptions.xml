@@ -7,7 +7,7 @@
         </class>
     </library>
     <library path="mpc_control">
-        <class type="mpc_control::MpcController" base_class_type="nav2_core::Controller">
+        <class type="lqr_control::MpcController" base_class_type="nav2_core::Controller">
             <description>
                 An MPC controller for Nav2
             </description>

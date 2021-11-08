@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(control)
+project(lqr_control)
 
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
@@ -14,6 +14,7 @@ find_package(Eigen3 REQUIRED)
 add_library(lqr_control SHARED
   src/controller_test_client.cpp
   src/lqr_controller.cpp
+  src/mpc_controller.cpp
   src/test_path_generator.cpp
 )
 ament_target_dependencies(lqr_control
@@ -39,35 +40,6 @@ install(TARGETS lqr_control
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
 )
-
-add_library(mpc_control SHARED
-        src/controller_test_client.cpp
-        src/mpc_controller.cpp
-        src/test_path_generator.cpp
-        )
-ament_target_dependencies(mpc_control
-        "rclcpp"
-        "rclcpp_action"
-        "rclcpp_components"
-        "nav2_core"
-        "nav2_msgs"
-        "tf2_eigen"
-        "tf2_geometry_msgs"
-        "Eigen3"
-        )
-set_property(TARGET mpc_control PROPERTY CXX_STANDARD 17)
-
-rclcpp_components_register_node(
-        mpc_control
-        PLUGIN "mpc_control::ControllerTestClient"
-        EXECUTABLE mpc_controller_test_client
-)
-
-install(TARGETS mpc_control
-        ARCHIVE DESTINATION lib
-        LIBRARY DESTINATION lib
-        RUNTIME DESTINATION bin
-        )
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

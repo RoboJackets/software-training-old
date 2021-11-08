@@ -23,10 +23,10 @@
 #include <tf2_eigen/tf2_eigen.h>
 #include <Eigen/Dense>
 
-namespace mpc_controller
+namespace lqr_control
 {
 
-Eigen::Vector3d StateFromMsg(const geometry_msgs::msg::PoseStamped& pose) {
+Eigen::Vector3d MPCStateFromMsg(const geometry_msgs::msg::PoseStamped& pose) {
   Eigen::Quaterniond orientation;
   tf2::fromMsg(pose.pose.orientation, orientation);
   Eigen::Vector3d state;
@@ -82,13 +82,13 @@ public:
 
   void setPlan(const nav_msgs::msg::Path & path) override {
     trajectory_.clear();
-    std::transform(path.poses.begin(), path.poses.end(), std::back_inserter(trajectory_), StateFromMsg);
+    std::transform(path.poses.begin(), path.poses.end(), std::back_inserter(trajectory_), MPCStateFromMsg);
   }
 
   geometry_msgs::msg::TwistStamped computeVelocityCommands(const geometry_msgs::msg::PoseStamped & pose, const geometry_msgs::msg::Twist & velocity) override
   {
     RCLCPP_INFO(node_->get_logger(), "Got request for control");
-    Eigen::Vector3d state = StateFromMsg(pose);
+    Eigen::Vector3d state = MPCStateFromMsg(pose);
 
     Eigen::Vector2d u = sampleTrajectories(state);
 
@@ -173,6 +173,6 @@ private:
 
 };
 
-}  // namespace mpc_controller
+}  // namespace lqr_control
 
-PLUGINLIB_EXPORT_CLASS(mpc_controller::MpcController, nav2_core::Controller)
+PLUGINLIB_EXPORT_CLASS(lqr_control::MpcController, nav2_core::Controller)
