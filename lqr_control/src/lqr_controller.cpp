@@ -39,12 +39,16 @@ class LqrController : public nav2_core::Controller
 public:
   void configure(const rclcpp_lifecycle::LifecycleNode::SharedPtr & node, std::string name, const std::shared_ptr<tf2_ros::Buffer> & tf_buffer, const std::shared_ptr<nav2_costmap_2d::Costmap2DROS> & costmap) override {
     node_ = node;
+    traj_viz_pub_ = node_->create_publisher<nav_msgs::msg::Path>("~/tracking_traj", rclcpp::SystemDefaultsQoS());
 
     T_ = node->declare_parameter<double>("T", 1.0);
     dt_ = node->declare_parameter<double>("dt", 0.1);
-    std::vector<double> Q_temp = node->declare_parameter<std::vector<double>>("Q", {1.0, 1.0, 1.0});
-    std::vector<double> Qf_temp = node->declare_parameter<std::vector<double>>("Qf", {1.0, 1.0, 1.0});
-    std::vector<double> R_temp = node->declare_parameter<std::vector<double>>("R", {1.0, 1.0});
+    time_between_states_ = node->declare_parameter<double>("time_between_states", 4.0);
+
+    //assert(dt_ == 0.5);
+    std::vector<double> Q_temp = node->declare_parameter<std::vector<double>>("Q", {1.0, 1.0, 0.2});
+    std::vector<double> Qf_temp = node->declare_parameter<std::vector<double>>("Qf", {10.0, 10.0, 0.1});
+    std::vector<double> R_temp = node->declare_parameter<std::vector<double>>("R", {0.1, 0.1});
     if(Q_temp.size() != 3) {
       RCLCPP_ERROR(node_->get_logger(), "incorrect size Q, must be 3 values");
       exit(0);
@@ -73,6 +77,26 @@ public:
     S_.resize(T_/dt_);
     prev_u_.resize(T_/dt_);
     prev_x_.resize(T_/dt_);
+
+    std::fill(S_.begin(), S_.end(), Eigen::Matrix3d::Zero());
+    std::fill(prev_x_.begin(), prev_x_.end(), Eigen::Vector3d::Zero());
+    std::fill(prev_u_.begin(), prev_u_.end(), Eigen::Vector2d::Zero());
+  }
+
+  Eigen::Vector3d interpolateState(const rclcpp::Time time) {
+    if (time.seconds() > path_start_time_.seconds()+(time_between_states_*trajectory_.size())) {
+      return trajectory_.back();
+    }
+    if(time < path_start_time_) {
+      return trajectory_.front();
+    }
+
+    double rel_time = (time - path_start_time_).seconds();
+    int lower_idx = (int) (rel_time / time_between_states_);
+    int upper_idx = lower_idx+1;
+    double alpha = (rel_time - lower_idx * time_between_states_) / time_between_states_;
+
+    return (1-alpha)*trajectory_[lower_idx] + alpha*trajectory_[upper_idx];
   }
 
   void activate() override {}
@@ -84,14 +108,15 @@ public:
   void setPlan(const nav_msgs::msg::Path & path) override {
     trajectory_.clear();
     std::transform(path.poses.begin(), path.poses.end(), std::back_inserter(trajectory_), StateFromMsg);
+    path_start_time_ = node_->now();
   }
 
   geometry_msgs::msg::TwistStamped computeVelocityCommands(const geometry_msgs::msg::PoseStamped & pose, const geometry_msgs::msg::Twist & velocity) override
   {
-    RCLCPP_INFO(node_->get_logger(), "Got request for control");
     Eigen::Vector3d state = StateFromMsg(pose);
 
-    computeRicattiEquation(state);
+    computeRicattiEquation();
+    computeForwardPass(state, pose.header.stamp);
 
     geometry_msgs::msg::TwistStamped cmd_vel_msg;
     cmd_vel_msg.twist.linear.x = prev_u_[0](0);
@@ -120,17 +145,19 @@ public:
     return computeAMatrix(x, u) * x + computeBMatrix(x) * u;
   }
 
-  void computeRicattiEquation(const Eigen::Vector3d& init_x) {
+  void computeRicattiEquation() {
     // does the backwards pass of the ricatti equation
     S_[S_.size()-1] = Qf_;
-    for(int t = T_/dt_ - 1; t > 0; t--) {
+    for(int t = T_/dt_ - 2; t >= 0; t--) {
       auto last_S = S_[t+1];
       Eigen::Matrix3d A = computeAMatrix(prev_x_[t], prev_u_[t]);
       Eigen::Matrix<double, 3, 2> B = computeBMatrix(prev_x_[t]);
       auto K = (R_ + B.transpose() * last_S * B).inverse() * B.transpose() * last_S * A;
       S_[t] = A.transpose() * last_S * A - (A.transpose() * last_S * B) * K + Q_;
     }
+  }
 
+  void computeForwardPass(const Eigen::Vector3d& init_x, rclcpp::Time current_time) {
     // computes the forward pass to update the states and controls
     Eigen::Vector3d cur_x = init_x;
     for(int t = 0; t < T_/dt_; t++) {
@@ -138,20 +165,38 @@ public:
       Eigen::Matrix<double, 3, 2> B = computeBMatrix(prev_x_[t]);
       auto current_S = S_[t];
       auto K = (R_ + B.transpose() * current_S * B).inverse() * B.transpose() * current_S * A;
-      Eigen::Vector2d u_star = -K * (cur_x - trajectory_[t]);
+      Eigen::Vector3d state_error = (cur_x - interpolateState(current_time + rclcpp::Duration(dt_*t*1e9)));
+      if (state_error(2) > M_PI) {
+        state_error(2) -= 2*M_PI;
+      }
+      if (state_error(2) < -M_PI) {
+        state_error(2) += 2*M_PI;
+      }
+      Eigen::Vector2d u_star = -K * state_error;
 
       prev_x_[t] = cur_x;
       prev_u_[t] = u_star;
 
       cur_x = computeNextState(cur_x, u_star);
     }
+
+    nav_msgs::msg::Path path;
+    path.header.stamp = current_time;
+    path.header.frame_id = "/map";
+    for(const Eigen::Vector3d current_state : prev_x_) {
+      geometry_msgs::msg::PoseStamped pose;
+      pose.pose.position.x = current_state(0);
+      pose.pose.position.y = current_state(1);
+      path.poses.push_back(pose);
+    }
+    traj_viz_pub_->publish(path);
   }
 
 private:
   rclcpp_lifecycle::LifecycleNode::SharedPtr node_;
   // dynamics
-  double dt_ = 0.1;
-  double T_ = 1;
+  double dt_ = 0.5;
+  double T_ = 3;
 
   // cost function
   Eigen::Matrix3d Q_ = Eigen::Matrix3d::Identity();
@@ -165,6 +210,9 @@ private:
 
   // trajectory to track
   std::vector<Eigen::Vector3d> trajectory_;
+  double time_between_states_;
+  rclcpp::Time path_start_time_;
+  rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr traj_viz_pub_;
 
 };
 
