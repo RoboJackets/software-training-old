@@ -112,7 +112,9 @@ public:
     return interpolated;
   }
 
-  void activate() override {}
+  void activate() override {
+    traj_viz_pub_->on_activate();
+  }
 
   void deactivate() override {}
 
@@ -182,12 +184,7 @@ public:
       auto K = (R_ + B.transpose() * current_S * B).inverse() * B.transpose() * current_S * A;
       Eigen::Vector3d state_error = (cur_x - interpolateState(current_time + rclcpp::Duration(dt_*t*1e9)));
       state_error(2) = angles::normalize_angle(state_error(2));
-      //RCLCPP_INFO_STREAM(node_->get_logger(), "at time " << t << " K: " << K);
       Eigen::Vector2d u_star = -K * state_error;
-      //RCLCPP_INFO_STREAM(node_->get_logger(), "at time " << t << " u: " << u_star.transpose());
-      //RCLCPP_INFO_STREAM(node_->get_logger(), "at time " << t << " x: " << cur_x.transpose());
-      //RCLCPP_INFO_STREAM(node_->get_logger(), "at time " << t << " x_target: " <<
-      //  interpolateState(current_time + rclcpp::Duration(dt_*t*1e9)).transpose());
 
       prev_x_[t] = cur_x;
       prev_u_[t] = u_star;
@@ -228,7 +225,7 @@ private:
   std::vector<Eigen::Vector3d> trajectory_;
   double time_between_states_;
   rclcpp::Time path_start_time_;
-  rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr traj_viz_pub_;
+  rclcpp_lifecycle::LifecyclePublisher<nav_msgs::msg::Path>::SharedPtr traj_viz_pub_;
 
 };
 
