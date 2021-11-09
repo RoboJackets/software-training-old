@@ -22,6 +22,7 @@
 #include <pluginlib/class_list_macros.hpp>
 #include <tf2_eigen/tf2_eigen.h>
 #include <Eigen/Dense>
+#include <angles/angles.h>
 
 namespace lqr_control
 {
@@ -41,14 +42,14 @@ public:
     node_ = node;
     traj_viz_pub_ = node_->create_publisher<nav_msgs::msg::Path>("~/tracking_traj", rclcpp::SystemDefaultsQoS());
 
-    T_ = node->declare_parameter<double>("T", 1.0);
-    dt_ = node->declare_parameter<double>("dt", 0.1);
-    time_between_states_ = node->declare_parameter<double>("time_between_states", 4.0);
+    T_ = node->declare_parameter<double>(name+".T", 1.0);
+    dt_ = node->declare_parameter<double>(name+".dt", 0.1);
+    time_between_states_ = node->declare_parameter<double>(name+".time_between_states", 3.0);
+    iterations_ = node->declare_parameter<int>(name+".iterations", 1);
 
-    //assert(dt_ == 0.5);
-    std::vector<double> Q_temp = node->declare_parameter<std::vector<double>>("Q", {1.0, 1.0, 0.2});
-    std::vector<double> Qf_temp = node->declare_parameter<std::vector<double>>("Qf", {10.0, 10.0, 0.1});
-    std::vector<double> R_temp = node->declare_parameter<std::vector<double>>("R", {0.1, 0.1});
+    std::vector<double> Q_temp = node->declare_parameter<std::vector<double>>(name+".Q", {1.0, 1.0, 0.3});
+    std::vector<double> Qf_temp = node->declare_parameter<std::vector<double>>(name+".Qf", {10.0, 10.0, 0.1});
+    std::vector<double> R_temp = node->declare_parameter<std::vector<double>>(name+".R", {0.1, 0.05});
     if(Q_temp.size() != 3) {
       RCLCPP_ERROR(node_->get_logger(), "incorrect size Q, must be 3 values");
       exit(0);
@@ -96,7 +97,19 @@ public:
     int upper_idx = lower_idx+1;
     double alpha = (rel_time - lower_idx * time_between_states_) / time_between_states_;
 
-    return (1-alpha)*trajectory_[lower_idx] + alpha*trajectory_[upper_idx];
+    Eigen::Vector3d interpolated = (1-alpha)*trajectory_[lower_idx] + alpha*trajectory_[upper_idx];
+
+    // correct the angle average
+    // https://www.ri.cmu.edu/pub_files/pub4/kuffner_james_2004_1/kuffner_james_2004_1.pdf algorithm 7
+    if ((trajectory_[lower_idx](2) > 0 && trajectory_[upper_idx](2) < 0
+         || trajectory_[lower_idx](2) < 0 && trajectory_[upper_idx](2) > 0)
+        && (std::abs(trajectory_[lower_idx](2)) > M_PI_2 && std::abs(trajectory_[upper_idx](2)) > M_PI_2)) {
+      double angle_diff = angles::shortest_angular_distance(trajectory_[lower_idx](2), trajectory_[upper_idx](2));
+      interpolated(2) = trajectory_[lower_idx](2) + alpha*angle_diff;
+      interpolated(2) = angles::normalize_angle(interpolated(2));
+    }
+
+    return interpolated;
   }
 
   void activate() override {}
@@ -115,8 +128,10 @@ public:
   {
     Eigen::Vector3d state = StateFromMsg(pose);
 
-    computeRicattiEquation();
-    computeForwardPass(state, pose.header.stamp);
+    for(int i = 0;i < iterations_; i++) {
+      computeRicattiEquation();
+      computeForwardPass(state, pose.header.stamp);
+    }
 
     geometry_msgs::msg::TwistStamped cmd_vel_msg;
     cmd_vel_msg.twist.linear.x = prev_u_[0](0);
@@ -166,13 +181,13 @@ public:
       auto current_S = S_[t];
       auto K = (R_ + B.transpose() * current_S * B).inverse() * B.transpose() * current_S * A;
       Eigen::Vector3d state_error = (cur_x - interpolateState(current_time + rclcpp::Duration(dt_*t*1e9)));
-      if (state_error(2) > M_PI) {
-        state_error(2) -= 2*M_PI;
-      }
-      if (state_error(2) < -M_PI) {
-        state_error(2) += 2*M_PI;
-      }
+      state_error(2) = angles::normalize_angle(state_error(2));
+      //RCLCPP_INFO_STREAM(node_->get_logger(), "at time " << t << " K: " << K);
       Eigen::Vector2d u_star = -K * state_error;
+      //RCLCPP_INFO_STREAM(node_->get_logger(), "at time " << t << " u: " << u_star.transpose());
+      //RCLCPP_INFO_STREAM(node_->get_logger(), "at time " << t << " x: " << cur_x.transpose());
+      //RCLCPP_INFO_STREAM(node_->get_logger(), "at time " << t << " x_target: " <<
+      //  interpolateState(current_time + rclcpp::Duration(dt_*t*1e9)).transpose());
 
       prev_x_[t] = cur_x;
       prev_u_[t] = u_star;
@@ -195,8 +210,8 @@ public:
 private:
   rclcpp_lifecycle::LifecycleNode::SharedPtr node_;
   // dynamics
-  double dt_ = 0.5;
-  double T_ = 3;
+  double dt_;
+  double T_;
 
   // cost function
   Eigen::Matrix3d Q_ = Eigen::Matrix3d::Identity();
@@ -207,6 +222,7 @@ private:
   std::vector<Eigen::Matrix3d> S_;
   std::vector<Eigen::Vector3d> prev_x_;
   std::vector<Eigen::Vector2d> prev_u_;
+  int iterations_;
 
   // trajectory to track
   std::vector<Eigen::Vector3d> trajectory_;

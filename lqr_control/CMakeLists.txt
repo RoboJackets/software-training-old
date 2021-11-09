@@ -14,7 +14,6 @@ find_package(Eigen3 REQUIRED)
 add_library(lqr_control SHARED
   src/controller_test_client.cpp
   src/lqr_controller.cpp
-  src/mpc_controller.cpp
   src/test_path_generator.cpp
 )
 ament_target_dependencies(lqr_control
@@ -26,6 +25,7 @@ ament_target_dependencies(lqr_control
   "tf2_eigen"
   "tf2_geometry_msgs"
   "Eigen3"
+  "angles"
 )
 set_property(TARGET lqr_control PROPERTY CXX_STANDARD 17)
 

@@ -45,11 +45,13 @@ controller_server:
       yaw_goal_tolerance: 0.1
     FollowPath:
         plugin: "lqr_control::LqrController"
-        dt: 0.1
-        T: 1.0
+        dt: 0.25
+        T: 4.0
         Q: [1.0, 1.0, 0.2]
-        Qf: [10.0, 10.0, 1.0]
-        R: [0.1, 0.1]
+        Qf: [10.0, 10.0, 0.1]
+        R: [0.1, 0.05]
+        time_between_states: 2.0
+        iterations: 3
 
 controller_server_rclcpp_node:
   ros__parameters:
