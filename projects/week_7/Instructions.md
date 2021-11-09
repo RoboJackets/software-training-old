@@ -21,7 +21,7 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 ## 1 Background
 
 In this project we will be writing an implementation of Linear Quadratic Regulator.
-Really we will be doing something that looks more like an Model Predictive Control application of Linear Quadratic Regulator.
+Really we will be doing something that looks more like a Model Predictive Control application of the Linear Quadratic Regulator.
 All this means is that have to linearize our nonlinear system around of previous trajectory and we recompute the trajectory every time we get a new state.
 You will only be programming some of that linearization and the action client we will be putting into a ROS framework called Nav2.
 
@@ -33,8 +33,9 @@ For now we have given you a static trajectory to track using your LQR implementa
 
 Nav2 is an open source project that contains multiple planners, tracking controllers, and controllers.
 The diagram below breaks down the baseline architecture we will be using.
+![Diagram](https://navigation.ros.org/_images/architectural_diagram.png)
 
-You can see that there is a waypoint to navigate to (our mineral deposit) and a map (our occupancy grid).
+You can see that there is a waypoint to navigate to (our mineral deposits) and a map (our occupancy grid).
 The Nav2 architecture is based around things called plugins that implement action servers.
 This was chosen because things like planning and tracking a path are long running tasks.
 Furthermore, using actions allows the different parts of the nav stack to communicate progress.
@@ -42,10 +43,10 @@ The main coordination portion of the architecture is in the behavior tree.
 You can think of this as the nav stack deciding when each action should be called.
 We have implemented a basic decision tree for you that generates a path to track and then waits until the path tracking action is completed by reaching a goal point.
 
-The static path you are tracking comes from the test_path_generator class.
+The static path you are tracking comes from the [test_path_generator class](../../lqr_control/src/test_path_generator.cpp).
 You do not need to edit this file, everything should work as is.
-The lqr_controller.cpp class will be where we implement our LQR controller for path tracking.
-You will need to implement the controller_client from scratch.
+The [lqr_controller class](../../lqr_control/src/lqr_controller.cpp) class will be where we implement our LQR controller for path tracking.
+Finally there is a node you will implement from scratch that will act as an action client calling the Nav2 stack.
 
 ## 2 Running this project
 
