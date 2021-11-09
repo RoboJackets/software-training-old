@@ -40,6 +40,45 @@ class LqrController : public nav2_core::Controller
 public:
   void configure(const rclcpp_lifecycle::LifecycleNode::SharedPtr & node, std::string name, const std::shared_ptr<tf2_ros::Buffer> & tf_buffer, const std::shared_ptr<nav2_costmap_2d::Costmap2DROS> & costmap) override {
     // BEGIN STUDENT CODE
+    node_ = node;
+    traj_viz_pub_ = node_->create_publisher<nav_msgs::msg::Path>("~/tracking_traj", rclcpp::SystemDefaultsQoS());
+
+    T_ = node->declare_parameter<double>(name+".T", 1.0);
+    dt_ = node->declare_parameter<double>(name+".dt", 0.1);
+    time_between_states_ = node->declare_parameter<double>(name+".time_between_states", 3.0);
+    iterations_ = node->declare_parameter<int>(name+".iterations", 1);
+
+    std::vector<double> Q_temp = node->declare_parameter<std::vector<double>>(name+".Q", {1.0, 1.0, 0.3});
+    std::vector<double> Qf_temp = node->declare_parameter<std::vector<double>>(name+".Qf", {10.0, 10.0, 0.1});
+    std::vector<double> R_temp = node->declare_parameter<std::vector<double>>(name+".R", {0.1, 0.05});
+    if(Q_temp.size() != 3) {
+      RCLCPP_ERROR(node_->get_logger(), "incorrect size Q, must be 3 values");
+      exit(0);
+    }
+    if(Qf_temp.size() != 3) {
+      RCLCPP_ERROR(node_->get_logger(), "incorrect size Qf, must be 3 values");
+      exit(0);
+    }
+    if(R_temp.size() != 2) {
+      RCLCPP_ERROR(node_->get_logger(), "incorrect size R, must be 2 values");
+      exit(0);
+    }
+
+    // set the diagonal elements from the launch file
+    Q_(0, 0) = Q_temp[0];
+    Q_(1, 1) = Q_temp[1];
+    Q_(2, 2) = Q_temp[2];
+
+    Qf_(0, 0) = Qf_temp[0];
+    Qf_(1, 1) = Qf_temp[1];
+    Qf_(2, 2) = Qf_temp[2];
+
+    R_(0, 0) = R_temp[0];
+    R_(1, 1) = R_temp[1];
+
+    prev_u_ = std::vector<Eigen::Vector2d>(T_/dt_, Eigen::Vector2d::Zero());
+    prev_x_ = std::vector<Eigen::Vector3d>(T_/dt_, Eigen::Vector3d::Zero());
+    S_ = std::vector<Eigen::Matrix3d>(T_/dt_, Eigen::Matrix3d::Zero());
     // END STUDENT CODE
   }
 
@@ -72,8 +111,7 @@ public:
   }
 
   void activate() override {
-    // BEGIN STUDENT CODE
-    // END STUDENT CODE
+    traj_viz_pub_->on_activate();
   }
 
   void deactivate() override {}
@@ -105,19 +143,26 @@ public:
 
   Eigen::Matrix3d computeAMatrix(const Eigen::Vector3d& x, const Eigen::Vector2d& u) {
     // BEGIN STUDENT CODE
-    return Eigen::Matrix3d::Zero();
+    Eigen::Matrix3d A = Eigen::Matrix3d::Identity();
+    A(0, 2) = -u(0)*sin(x(2))*dt_;
+    A(1, 2) = u(0)*cos(x(2))*dt_;
+    return A;
     // END STUDENT CODE
   }
 
   Eigen::Matrix<double, 3, 2> computeBMatrix(const Eigen::Vector3d& x) {
     // BEGIN STUDENT CODE
-    return Eigen::Matrix<double, 3, 2>::Zero();
+    Eigen::Matrix<double, 3, 2> B = Eigen::Matrix<double, 3, 2>::Zero();
+    B(0, 0) = cos(x(2)) * dt_;
+    B(1, 0) = sin(x(2)) * dt_;
+    B(2, 1) = dt_;
+    return B;
     // END STUDENT CODE
   }
 
   Eigen::Vector3d computeNextState(const Eigen::Vector3d x, const Eigen::Vector2d u) {
     // BEGIN STUDENT CODE
-    return x;
+    return computeAMatrix(x, u) * x + computeBMatrix(x) * u;
     // END STUDENT CODE
   }
 
@@ -170,9 +215,9 @@ private:
   double T_;
 
   // cost function
-  Eigen::Matrix3d Q_ = Eigen::Matrix3d::Identity();
-  Eigen::Matrix3d Qf_ = Eigen::Matrix3d::Identity();
-  Eigen::Matrix2d R_ = Eigen::Matrix2d::Identity();
+  Eigen::Matrix3d Q_;
+  Eigen::Matrix3d Qf_;
+  Eigen::Matrix2d R_;
 
   // Ricatti equation
   std::vector<Eigen::Matrix3d> S_;

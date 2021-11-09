@@ -13,6 +13,7 @@ find_package(Eigen3 REQUIRED)
 
 add_library(lqr_control SHARED
   # BEGIN STUDENT CODE
+  src/controller_test_client.cpp
   # END STUDENT CODE
   src/lqr_controller.cpp
   src/test_path_generator.cpp
@@ -31,6 +32,11 @@ ament_target_dependencies(lqr_control
 set_property(TARGET lqr_control PROPERTY CXX_STANDARD 17)
 
 # BEGIN STUDENT CODE
+rclcpp_components_register_node(
+  lqr_control
+  PLUGIN "lqr_control::ControllerTestClient"
+  EXECUTABLE lqr_controller_test_client
+)
 # END STUDENT CODE
 
 install(TARGETS lqr_control
