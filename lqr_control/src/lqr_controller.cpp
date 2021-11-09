@@ -39,6 +39,7 @@ class LqrController : public nav2_core::Controller
 {
 public:
   void configure(const rclcpp_lifecycle::LifecycleNode::SharedPtr & node, std::string name, const std::shared_ptr<tf2_ros::Buffer> & tf_buffer, const std::shared_ptr<nav2_costmap_2d::Costmap2DROS> & costmap) override {
+    // BEGIN STUDENT CODE
     node_ = node;
     traj_viz_pub_ = node_->create_publisher<nav_msgs::msg::Path>("~/tracking_traj", rclcpp::SystemDefaultsQoS());
 
@@ -75,13 +76,10 @@ public:
     R_(0, 0) = R_temp[0];
     R_(1, 1) = R_temp[1];
 
-    S_.resize(T_/dt_);
-    prev_u_.resize(T_/dt_);
-    prev_x_.resize(T_/dt_);
-
-    std::fill(S_.begin(), S_.end(), Eigen::Matrix3d::Zero());
-    std::fill(prev_x_.begin(), prev_x_.end(), Eigen::Vector3d::Zero());
-    std::fill(prev_u_.begin(), prev_u_.end(), Eigen::Vector2d::Zero());
+    prev_u_ = std::vector<Eigen::Vector2d>(T_/dt_, Eigen::Vector2d::Zero());
+    prev_x_ = std::vector<Eigen::Vector3d>(T_/dt_, Eigen::Vector3d::Zero());
+    S_ = std::vector<Eigen::Matrix3d>(T_/dt_, Eigen::Matrix3d::Zero());
+    // END STUDENT CODE
   }
 
   Eigen::Vector3d interpolateState(const rclcpp::Time time) {
@@ -113,7 +111,9 @@ public:
   }
 
   void activate() override {
+    // BEGIN STUDENT CODE
     traj_viz_pub_->on_activate();
+    // END STUDENT CODE
   }
 
   void deactivate() override {}
@@ -144,22 +144,28 @@ public:
   }
 
   Eigen::Matrix3d computeAMatrix(const Eigen::Vector3d& x, const Eigen::Vector2d& u) {
+    // BEGIN STUDENT CODE
     Eigen::Matrix3d A = Eigen::Matrix3d::Identity();
     A(0, 2) = -u(0)*sin(x(2))*dt_;
     A(1, 2) = u(0)*cos(x(2))*dt_;
     return A;
+    // END STUDENT CODE
   }
 
   Eigen::Matrix<double, 3, 2> computeBMatrix(const Eigen::Vector3d& x) {
+    // BEGIN STUDENT CODE
     Eigen::Matrix<double, 3, 2> B = Eigen::Matrix<double, 3, 2>::Zero();
     B(0, 0) = cos(x(2)) * dt_;
     B(1, 0) = sin(x(2)) * dt_;
     B(2, 1) = dt_;
     return B;
+    // END STUDENT CODE
   }
 
   Eigen::Vector3d computeNextState(const Eigen::Vector3d x, const Eigen::Vector2d u) {
+    // BEGIN STUDENT CODE
     return computeAMatrix(x, u) * x + computeBMatrix(x) * u;
+    // END STUDENT CODE
   }
 
   void computeRicattiEquation() {
