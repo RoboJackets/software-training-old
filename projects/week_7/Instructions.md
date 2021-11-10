@@ -70,13 +70,6 @@ $ ros2 launch rj_training_bringup week_7.launch.xml
 
 As usual, this launch file will startup the simulator, rviz, and all of the other nodes the project requires.
 
-By default, this will use the particle filter localizer node you worked on in project 3. You can optionally use the fake localizer with the `use_fake_localizer` argument.
-We recommend starting off with the fake localizer and only using the particle filter as a final test to get a feeling for how estimation error can cause issues.
-
-```bash
-$ ros2 launch rj_training_bringup week_7.launch.xml use_fake_localizer:=true
-```
-
 In rviz you should just see the robot.
 It will not move until you implement LQR and the action client.
 
