@@ -1,0 +1,131 @@
+bt_navigator:
+  ros__parameters:
+    use_sim_time: True
+    enable_groot_monitoring: False
+    default_bt_xml_filename: "navigate_w_replanning_and_recovery.xml"
+    plugin_lib_names:
+    - nav2_compute_path_to_pose_action_bt_node
+    - nav2_follow_path_action_bt_node
+    - nav2_back_up_action_bt_node
+    - nav2_spin_action_bt_node
+    - nav2_wait_action_bt_node
+    - nav2_clear_costmap_service_bt_node
+    - nav2_is_stuck_condition_bt_node
+    - nav2_goal_reached_condition_bt_node
+    - nav2_goal_updated_condition_bt_node
+    - nav2_initial_pose_received_condition_bt_node
+    - nav2_reinitialize_global_localization_service_bt_node
+    - nav2_rate_controller_bt_node
+    - nav2_distance_controller_bt_node
+    - nav2_speed_controller_bt_node
+    - nav2_truncate_path_action_bt_node
+    - nav2_goal_updater_node_bt_node
+    - nav2_recovery_node_bt_node
+    - nav2_pipeline_sequence_bt_node
+    - nav2_round_robin_node_bt_node
+    - nav2_transform_available_condition_bt_node
+    - nav2_time_expired_condition_bt_node
+    - nav2_distance_traveled_condition_bt_node
+
+bt_navigator_rclcpp_node:
+  ros__parameters:
+    use_sim_time: True
+
+controller_server:
+  ros__parameters:
+    use_sim_time: True
+    progress_checker_plugin: "progress_checker"
+    goal_checker_plugin: "goal_checker"
+    controller_plugins: ["FollowPath"]
+    progress_checker:
+      plugin: "stsl_nav_plugins::NoProgressChecker"
+    goal_checker:
+      plugin: "nav2_controller::SimpleGoalChecker"
+      xy_goal_tolerance: 0.05
+      yaw_goal_tolerance: 0.1
+    FollowPath:
+        plugin: "lqr_control::LqrController"
+        dt: 0.25
+        T: 4.0
+        Q: [1.0, 1.0, 0.2]
+        Qf: [10.0, 10.0, 0.1]
+        R: [0.1, 0.05]
+        time_between_states: 2.0
+        iterations: 3
+
+controller_server_rclcpp_node:
+  ros__parameters:
+    use_sim_time: True
+
+local_costmap:
+  local_costmap:
+    ros__parameters:
+      update_frequency: 5.0
+      publish_frequency: 2.0
+      global_frame: odom
+      robot_base_frame: base_footprint
+      use_sim_time: True
+      rolling_window: true
+      width: 5
+      height: 5
+      origin_x: -2.5
+      origin_y: -2.5
+      resolution: 0.05
+      footprint: "[ [0.1, 0.09], [0.1, -0.09], [-0.05, -0.09], [-0.05, 0.09] ]"
+      plugins: ["static_layer"]
+      static_layer:
+        plugin: "nav2_costmap_2d::StaticLayer"
+        map_subscribe_transient_local: True
+        enabled: False
+      always_send_full_costmap: True
+  local_costmap_client:
+    ros__parameters:
+      use_sim_time: True
+  local_costmap_rclcpp_node:
+    ros__parameters:
+      use_sim_time: True
+
+global_costmap:
+  global_costmap:
+    ros__parameters:
+      update_frequency: 1.0
+      publish_frequency: 1.0
+      global_frame: map
+      robot_base_frame: base_footprint
+      use_sim_time: True
+      footprint: "[ [0.1, 0.09], [0.1, -0.09], [-0.05, -0.09], [-0.05, 0.09] ]"
+      resolution: 0.05
+      width: 5
+      height: 5
+      origin_x: -2.5
+      origin_y: -2.5
+      track_unknown_space: true
+      always_send_full_costmap: True
+      plugins: ["static_layer"]
+      static_layer:
+        plugin: "nav2_costmap_2d::StaticLayer"
+        map_subscribe_transient_local: True
+        enabled: False
+  global_costmap_client:
+    ros__parameters:
+      use_sim_time: True
+  global_costmap_rclcpp_node:
+    ros__parameters:
+      use_sim_time: True
+
+planner_server:
+  ros__parameters:
+    use_sim_time: True
+    GridBased:
+      plugin: "stsl_nav_plugins::StraightLinePlanner"
+
+planner_server_rclcpp_node:
+  ros__parameters:
+    use_sim_time: True
+
+recoveries_server:
+  ros__parameters:
+    recovery_plugins: ["wait"]
+    wait:
+      plugin: "nav2_recoveries/Wait"
+    use_sim_time: true
