@@ -13,8 +13,22 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 ## Contents
 
 - [1 Background](#1-background)
+  - [Nav2](#nav2)
 - [2 Running this project](#2-running-this-project)
 - [3 Instructions](#3-instructions)
+  - [3.1 Get the latest starter code](#31-get-the-latest-starter-code)
+  - [3.2 Creating the ControllerTestClient](#32-creating-the-controllertestclient)
+  - [3.3 Adding ControllerTestClient to CMakeLists.txt](#33-adding-controllertestclient-to-cmakeliststxt)
+  - [3.4 Setting up interface](#34-setting-up-interface)
+  - [3.5 Send the goal](#35-send-the-goal)
+  - [3.6 Create goal response callback](#36-create-goal-response-callback)
+  - [3.7 Feedback callback](#37-feedback-callback)
+  - [3.8 Result callback](#38-result-callback)
+  - [3.9 Calling actions](#39-calling-actions)
+  - [3.10 LQR controller configure function](#310-lqr-controller-configure-function)
+  - [3.11 LQR controller dynamics](#311-lqr-controller-dynamics)
+  - [3.12 Tuning LQR](#312-tuning-lqr)
+  - [3.13 Commit your new code in git](#313-commit-your-new-code-in-git)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -48,6 +62,13 @@ You do not need to edit this file, everything should work as is.
 The [lqr_controller class](../../lqr_control/src/lqr_controller.cpp) class will be where we implement our LQR controller for path tracking.
 Finally there is a node you will implement from scratch that will act as an action client calling the Nav2 stack.
 
+The final solution should look something like this
+
+![Working LQR](working_lqr.gif)
+
+Your tracking performance will heavily vary depending on your tuning.
+
+
 ## 2 Running this project
 
 To run this week's project, you'll need to run one launch file:
@@ -74,7 +95,6 @@ ros2 run lqr_control controller_test_client --ros-args -p use_sim_time:=True
 ```
 
 This runs the action client and sets use_sim_time to true so that all nodes are using the same time source.
-We will come back to this once we have that code finished.
 
 ## 3 Instructions
 
@@ -99,7 +119,7 @@ If you have done a different installation of stsl that is not through apt make s
 ### 3.2 Creating the ControllerTestClient
 
 Create a cpp file in the [lqr_control src folder](../../lqr_control/src) called ControllerTestClient.
-This will be a standard ROS2 node and will be in the lqr_control namespace.
+In this file you should write a standard ROS node class and constructor.
 
 <details>
 <summary><b>Hint:</b> A standard ROS2 node general form</summary>
@@ -170,17 +190,11 @@ using FollowPath = nav2_msgs::action::FollowPath;
 ```
 
 Next create a class member variable to store the client and initialize the client in the constructor.
-Your client should be a shared pointer.
-
-
-<details>
-<summary><b>Hint:</b> Reminder on how to initialize a client</summary>
-The client variable syntax is
-`rclcpp_action::Client<TYPE>::SharedPtr`.
+Your client should be a shared pointer of type `rclcpp_action::Client<TYPE>::SharedPtr`.
 the syntax to create a client is
 `rclcpp_action::create_client<TYPE>(this, "NAME")`
 where `TYPE` is the action type.
-</details>
+Here it should be the `FollowPath` type with the name `"follow_path"`.
 
 <details>
 <summary><b>Hint:</b> Written out code</summary>
@@ -199,7 +213,13 @@ rclcpp_action::Client<FollowPath>::SharedPtr client_;
 </details>
 
 The next thing you will need to do is create a `nav_msgs::msg::Path` publisher with specific QOS settings.
-We want our QOS settings to be `transient_local` because TODO.
+We want our QOS settings to be `transient_local` because it was handy for debugging because any new subscribers would get the plan message without the client having to continuously republish it.
+You can do this by doing the following
+```c++
+rclcpp::QoS qos_profile{1};
+qos_profile.transient_local();
+```
+and using qos_profile as the second argument to the publisher call.
 You should create this publisher so that is it a shared pointer and a member variable.
 
 ### 3.5 Send the goal
@@ -210,7 +230,8 @@ The method will return nothing and will use the client we just created to send a
 The Nav2 action server will end up calling the plugin we will be creating when we write LQR.
 For this step we will just be getting the visualization of the path to show up in rviz.
 
-Write the SendGoal method that
+Write the SendGoal method that takes in no parameters and return nothing.
+The method should do the following,
 1. Waits for the `/follow_path` action server for up to 10 seconds and prints an error message if it times out.
 You can use the following syntax to wait for a response from the action server
 ```c++
@@ -225,54 +246,66 @@ This method returns a `nav_msgs::msg::Path` object.
 20 is the number of points to use for the path, leave this at 20.
 You will need to set the time to the current ROS time and the frame_id to `/map` to properly see this visualization in rviz.
 The path should be stored in an object of type `FollowPath::Goal` in the member called path.
-3. publishes the goal path for visualization purposes
+Don't forget to add the include statement at the top of your file.
 
+3. publishes the goal path for visualization purposes
 Remember that you will want to run the `SendGoal` method in a separate detached thread.
 You can create a thread of a member function using this call.
 ```c++
 std::thread(&ControllerTestClient::SendGoal, this).detach();
 ```
 
-### 3.6 Create response callbacks
+### 3.6 Create goal response callback
 Before we call our action we need to create the methods that will be used by the Nav2 stack to communicate back to our client.
 All of these methods will just be printing out a message based on the feedback from the Nav2 stack and in one case ending the node.
 
 The first callback we will want to write is the GoalResponseCallback.
 This determines if the Nav2 server accepts our target goal.
-The method will take in the type `std::shared_future<GoalHandle::SharedPtr>.
+The method that you need to write will take in the type `std::shared_future<GoalHandle::SharedPtr> and return nothing.
 The GoalHandle shorthand should be declared at the top using
 ```c++
 using GoalHandle = rclcpp_action::ClientGoalHandle<FollowPath>;
 ```
-If the goal is accepted the value in the future will be true, otherwise it will be false.
+If the goal is accepted the value in the future will be not null, otherwise it will be null.
 You should use the ROS logger to print out if the server accepted or rejected the goal.
 The logger can be called using this syntax,
 ```c++
 RCLCPP_INFO(get_logger(), "MESSAGE");
 ```
 
+### 3.7 Feedback callback
+
 The second callback we will have is the FeedbackCallback.
 This is using another Nav2 plugin that is telling you the distance to the goal.
-Now we are following a trajectory not trying to reach a specific goal, so this number can increase as we follow the path.
+We are following a trajectory not trying to reach a specific goal, so this number can increase as we follow the path.
 The target point is the last position in the trajectory we are tracking.
-The method should have the following parameters,
-GoalHandle::SharedPtr,
-const std::shared_ptr<const FollowPath::Feedback> feedback)
-`
-We want the `distance_to_goal` field in the feedback message.
+
+Write a method that has the following parameters,
+`GoalHandle::SharedPtr,
+const std::shared_ptr<const FollowPath::Feedback> feedback` and return nothing.
+The `distance_to_goal` field in the feedback message will give you the current distance to the goal.
 It is of type [`nav2_msgs::action::FollowPath`](https://github.com/ros-planning/navigation2/blob/main/nav2_msgs/action/FollowPath.action).
 These fields are filled in by the Nav2 stack.
 Print out the distance to the waypoint using the logger.
 
-The third callback is the result callback.
-The method takes in a `const GoalHandle::WrappedResult & result`.
-Remember this result has 4 different statuses.
-Print out a message using the logger to indicate what result code was returned.
-Finally shutdown the down using `rclcpp::shutdown()`.
+### 3.8 Result callback
 
-### 3.7 Calling Actions
+The third callback is the result callback.
+Write a method takes in a `const GoalHandle::WrappedResult & result` and returns nothing.
+Remember this result has 4 different statuses.
+1. `rclcpp_action::ResultCode::SUCCEEDED`
+2. `rclcpp_action::ResultCode::ABORTED`
+3. `rclcpp_action::ResultCode::CANCELLED`
+4. `rclcpp_action::ResultCode::UNKNOWN`
+Print out a message using the logger to indicate what result code was returned.
+Simply printing out the "succeed" using the logger would be sufficient.
+Finally shutdown the down using `rclcpp::shutdown()`.
+We do this since once the result returns this client is no longer needed and can be shutdown.
+
+### 3.9 Calling actions
 
 In this section we will finish the SendGoal function by sending the action using our client.
+You will be finishing the SendGoal method.
 The first thing we need to do is to create an options variable of type `rclcpp_action::Client<FollowPath>::SendGoalOptions`.
 This will be included in our action call and tells the server what callbacks it can call.
 To finish off you will need to do the following
@@ -291,11 +324,11 @@ std::bind(&CLASS_NAME::CALLBACK_NAME, this, std::placeholders::_1, std::placehol
 
 This will finish the action client code.
 
-### 3.8 LQR controller configure function
+### 3.10 LQR controller configure function
 
 The code you are looking at is an implementation of a Nav2 controller plugin.
 This just means that the Nav2 stack is going to load this class and then call specific functions based on the behavior tree.
-The methods that Nav2 calls to setup are configure, then activate.
+The methods that Nav2 calls for setup are configure, then activate.
 Everytime we get a new path to track the setPlan method is called.
 Everytime we get a new state the computeVelocityCommands is called.
 This is where we will call the LQR controller iteratively to compute the next control.
@@ -322,14 +355,12 @@ Change the parameter name (here `T`) to the new name i.e. `node->declare_paramet
 There is a vector constructor that takes in the number of elements as well as the element to put in every location `std::vector<TYPE>(int number, TYPE element)`.
 You should be putting a zero value into all `Eigen::TYPE::Zero()` should help.
 
-
-
-### 3.9 LQR controller dynamics
+### 3.11 LQR controller dynamics
 
 Now that we have coded up our action client we will need to implement our LQR controller for path tracking.
 The first thing we will need to do is derive the dynamics equations, specifically our A and B matrices.
 Our A, B matrices depend on our current state because the differential drive system is nonlinear.
-LQR only work with linear A,B matrices, so we are doing a linear approximation using the previous state and control values.
+LQR only works with linear A,B matrices, so we are doing a linear approximation using the previous state and control values.
 The math for that is shown below
 
 TODO math
@@ -365,11 +396,29 @@ return B;
 </code></pre>
 </details>
 
+Finally implement the linear dynamics equation in the `computeNextState` function.
 
 
-Finally implement the dynamics equation in the `computeNextState` function.
+<details>
+<summary><b>Hint:</b>Dynamics Equation Solution</summary>
+<pre><code>
 
-### 3.10 Commit your new code in git
+return computeAMatrix(x, u) * x + computeBMatrix(x) * u;
+
+</code></pre>
+</details>
+
+### 3.12 Tuning LQR
+
+Try playing around with some of the parameters in [nav params](../../rj_training_bringup/config/lqr_control_project_nav_params.yaml).
+A couple interesting ideas we would recommend is
+
+1. Setting the Q,Qf for yaw equal to zero, without the yaw our controller performs very badly
+2. Decreasing T, this should make the controller short sighted and not work as well at the end
+3. Increasing R, this will make the controller lethargic
+4. Decreasing time_between_states, this will make our robot doot much faster but with worse tracking.
+
+### 3.13 Commit your new code in git
 
 Once you've got your code for this project working, use the command below to commit it into git. This will make it easier to grab changes to the starter code for the remaining projects.
 
