@@ -82,7 +82,7 @@ It will not move until you implement LQR and the action client.
 
 The second command that won't work until you implement you action client is
 ```bash
-ros2 run lqr_control controller_test_client --ros-args -p use_sim_time:=True
+ros2 run lqr_control lqr_controller_test_client --ros-args -p use_sim_time:=True
 ```
 
 This runs the action client and sets use_sim_time to true so that all nodes are using the same time source.

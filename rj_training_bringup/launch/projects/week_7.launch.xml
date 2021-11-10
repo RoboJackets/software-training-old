@@ -5,6 +5,10 @@
   <include file="$(find-pkg-share traini_bringup)/launch/tag_detector.launch.py">
     <param name="use_sim_time" value="$(var simulation)"/>
   </include>
+  <node pkg="coordinate_transform" exec="coordinate_transform_node">
+    <param name="use_sim_time" value="$(var simulation)"/>
+    <remap from="~/tags" to="/aruco_tag_detector/tags"/>
+  </node>
   <include if="$(var use_fake_localizer)" file="$(find-pkg-share rj_training_bringup)/launch/fake_localizer.launch.py">
     <arg name="use_sim_time" value="$(var simulation)"/>
   </include>
