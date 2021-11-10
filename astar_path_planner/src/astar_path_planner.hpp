@@ -32,6 +32,10 @@ namespace astar_path_planner
 class AStarPathPlanner
 {
 public:
+  using FrontierQueue = std::priority_queue<FrontierEntry, std::vector<FrontierEntry>,
+      FrontierEntryComparator>;
+  using ExpandedSet = std::unordered_set<Point, PointHash, PointEqualityComparator>;
+
   static void DeclareParameters(rclcpp_lifecycle::LifecycleNode::SharedPtr node);
 
   AStarPathPlanner(
@@ -40,20 +44,28 @@ public:
 
   std::vector<Point> Plan(const Point & start, const Point & goal);
 
+  const ExpandedSet & GetExpandedSet() const
+  {
+    return expanded_;
+  }
+
 private:
   rclcpp::Logger logger_;
   Point goal_;
   double goal_threshold_;
   double grid_size_;
+  double collision_radius_;
   std::shared_ptr<nav2_costmap_2d::Costmap2DROS> ros_costmap_;
+  ExpandedSet expanded_;
+  FrontierQueue frontier_;
 
   bool IsGoal(const Point & point);
 
   std::vector<Point> GetAdjacentPoints(const Point & point);
 
-  double GetHeuristicCost(const Point& point);
+  double GetHeuristicCost(const Point & point);
 
-  double GetStepCost(const Point& point, const Point& next);
+  double GetStepCost(const Point & point, const Point & next);
 
   bool PointInCollision(const Point & point);
 };

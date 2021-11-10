@@ -29,8 +29,9 @@ namespace astar_path_planner
 
 void AStarPathPlanner::DeclareParameters(rclcpp_lifecycle::LifecycleNode::SharedPtr node)
 {
-  node->declare_parameter("goal_threshold", 0.05);
+  node->declare_parameter("goal_threshold", 0.015);
   node->declare_parameter("grid_size", 0.01);
+  node->declare_parameter("collision_radius", 0.08);
 }
 
 AStarPathPlanner::AStarPathPlanner(
@@ -41,43 +42,63 @@ AStarPathPlanner::AStarPathPlanner(
 {
   goal_threshold_ = node->get_parameter("goal_threshold").as_double();
   grid_size_ = node->get_parameter("grid_size").as_double();
+  collision_radius_ = node->get_parameter("collision_radius").as_double();
 }
 
 std::vector<Point> AStarPathPlanner::Plan(const Point & start, const Point & goal)
 {
-  std::set<Point, PointComparator> expanded{PointComparator{}};
-  std::priority_queue<FrontierEntry, std::vector<FrontierEntry>,
-    FrontierEntryComparator> frontier{FrontierEntryComparator{}};
+  if (PointInCollision(goal)) {
+    RCLCPP_ERROR(logger_, "Provided goal position would cause a collision");
+    return {};
+  }
+
+  if (PointInCollision(start)) {
+    RCLCPP_ERROR(
+      logger_, "Starting position (%f, %f) is currently in a collision",
+      start.x(), start.y());
+    return {};
+  }
+
+  expanded_.clear();
+  frontier_ = FrontierQueue{};
 
   goal_ = goal;
 
-  frontier.push({{start}, GetHeuristicCost(start)});
+  frontier_.push({{start}, GetHeuristicCost(start)});
 
-  while (!frontier.empty()) {
-    const auto [path, cost] = frontier.top();
-    frontier.pop();
+  while (!frontier_.empty()) {
+    // Get next state to expand
+    const auto [path, cost] = frontier_.top();
+    frontier_.pop();
     const auto last_state = path.back();
 
-    if (expanded.find(last_state) == expanded.end()) {
-      expanded.insert(last_state);
+    // Skip if we've already expanded this state
+    if (expanded_.count(last_state) > 0) {
+      continue;
+    }
 
-      if (IsGoal(last_state)) {
-        return path;
-      }
+    // Add state to expanded set
+    expanded_.insert(last_state);
 
-      const auto neighbors = GetAdjacentPoints(last_state);
+    // Check if we've found our goal
+    if (IsGoal(last_state)) {
+      return path;
+    }
 
-      for (const auto & neighbor : neighbors) {
-        std::vector<Point> new_path(path);
-        new_path.push_back(neighbor);
-        const auto new_cost = cost - GetHeuristicCost(path.back()) +
-          GetStepCost(path.back(), neighbor) + GetHeuristicCost(neighbor);
-        frontier.push({new_path, new_cost});
-      }
+    const auto neighbors = GetAdjacentPoints(last_state);
+
+    // Add all neighbors to the frontier
+    for (const auto & neighbor : neighbors) {
+      std::vector<Point> new_path(path);
+      new_path.push_back(neighbor);
+      const auto new_cost = (cost - GetHeuristicCost(last_state)) +
+        GetStepCost(last_state, neighbor) + GetHeuristicCost(neighbor);
+      frontier_.push({new_path, new_cost});
     }
   }
 
-  throw std::runtime_error("Could not find path!");
+  RCLCPP_ERROR(logger_, "No path found after exhausting search space.");
+  return {};
 }
 
 bool AStarPathPlanner::IsGoal(const Point & point)
@@ -116,32 +137,25 @@ double AStarPathPlanner::GetStepCost(const Point & point, const Point & next)
 
 bool AStarPathPlanner::PointInCollision(const Point & point)
 {
-  const auto footprint = ros_costmap_->getRobotFootprintPolygon();
-
-  std::vector<nav2_costmap_2d::MapLocation> footprint_in_map;
-
-  auto transform_footprint_point = [&point](
-    const auto & footprint_point) {
-      nav2_costmap_2d::MapLocation location;
-      location.x = footprint_point.x + point.x();
-      location.y = footprint_point.y + point.y();
-      return location;
-    };
-
-  std::transform(
-    footprint.points.begin(), footprint.points.end(), std::back_inserter(
-      footprint_in_map), transform_footprint_point);
-
   auto costmap = ros_costmap_->getCostmap();
 
-  std::vector<nav2_costmap_2d::MapLocation> map_cells;
-  costmap->convexFillCells(footprint_in_map, map_cells);
+  const auto polygon = PolygonForCircle(*costmap, point, collision_radius_);
 
-  return std::any_of(
-    map_cells.begin(), map_cells.end(), [costmap](const auto & cell) {
+  std::vector<nav2_costmap_2d::MapLocation> map_cells;
+  costmap->convexFillCells(polygon, map_cells);
+
+  auto is_cell_lethal = [&costmap](const auto & cell) {
+      if (cell.x < 0 || cell.y < 0 || cell.x >= costmap->getSizeInCellsX() ||
+        cell.y >= costmap->getSizeInCellsY())
+      {
+        // out of bounds cells are assumed to be empty
+        return false;
+      }
       const auto cost = costmap->getCost(cell.x, cell.y);
-      return cost == 253;
-    });
+      return cost == nav2_costmap_2d::LETHAL_OBSTACLE;
+    };
+
+  return std::any_of(map_cells.begin(), map_cells.end(), is_cell_lethal);
 }
 
 }  // namespace astar_path_planner

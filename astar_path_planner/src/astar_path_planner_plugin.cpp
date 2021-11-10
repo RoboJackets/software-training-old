@@ -21,21 +21,14 @@
 #include "astar_path_planner.hpp"
 #include <nav2_core/global_planner.hpp>
 #include <pluginlib/class_list_macros.hpp>
+#include <visualization_msgs/msg/marker.hpp>
+#include <tf2_eigen/tf2_eigen.h>
 #include <memory>
 #include <string>
 #include <vector>
-#include "path_reduction.hpp"
 
 namespace astar_path_planner
 {
-
-geometry_msgs::msg::PoseStamped pointToMessage(const Point & point)
-{
-  geometry_msgs::msg::PoseStamped pose;
-  pose.pose.position.x = point.x();
-  pose.pose.position.y = point.y();
-  return pose;
-}
 
 class AStarPathPlannerPlugin : public nav2_core::GlobalPlanner
 {
@@ -49,11 +42,17 @@ public:
     global_frame_ = costmap_ros->getGlobalFrameID();
     costmap_ros_ = costmap_ros;
     AStarPathPlanner::DeclareParameters(node);
+    expanded_viz_pub_ = node->create_publisher<visualization_msgs::msg::Marker>(
+      "~/expanded_viz",
+      rclcpp::SystemDefaultsQoS());
   }
 
   void cleanup() override {}
 
-  void activate() override {}
+  void activate() override
+  {
+    expanded_viz_pub_->on_activate();
+  }
 
   void deactivate() override {}
 
@@ -86,14 +85,32 @@ public:
 
     const auto point_path = planner.Plan(start_point, goal_point);
 
-    std::vector<Point> reduced_point_path(point_path);
-    ReducePath(reduced_point_path);
+    PublishExpandedViz(planner.GetExpandedSet());
 
-    RCLCPP_INFO(node_->get_logger(), "Calculated path with %d points.", reduced_point_path.size());
+    if (point_path.empty()) {
+      RCLCPP_ERROR(node_->get_logger(), "Could not find path!");
+      return path;
+    }
+
+    RCLCPP_INFO(node_->get_logger(), "Calculated path with %d points.", point_path.size());
+
+    auto point_to_message = [prev = start_point](const auto & point) mutable {
+        const Eigen::Vector2d heading_vector = point - prev;
+        const auto heading = std::atan2(heading_vector.y(), heading_vector.x());
+        const Eigen::Quaterniond orientation{Eigen::AngleAxisd{heading, Eigen::Vector3d::UnitZ()}};
+        geometry_msgs::msg::PoseStamped pose;
+        pose.pose.position.x = point.x();
+        pose.pose.position.y = point.y();
+        pose.pose.orientation = tf2::toMsg(orientation);
+        prev = point;
+        return pose;
+      };
 
     std::transform(
-      reduced_point_path.begin(), reduced_point_path.end(),
-      std::back_inserter(path.poses), &pointToMessage);
+      point_path.begin(), point_path.end(),
+      std::back_inserter(path.poses), point_to_message);
+
+    path.poses.front().pose.orientation = start.pose.orientation;
 
     return path;
   }
@@ -102,6 +119,39 @@ private:
   rclcpp_lifecycle::LifecycleNode::SharedPtr node_;
   std::string global_frame_;
   std::shared_ptr<nav2_costmap_2d::Costmap2DROS> costmap_ros_;
+  rclcpp_lifecycle::LifecyclePublisher<visualization_msgs::msg::Marker>::SharedPtr expanded_viz_pub_;
+
+
+  void PublishExpandedViz(const AStarPathPlanner::ExpandedSet & expanded)
+  {
+    visualization_msgs::msg::Marker msg;
+
+    msg.header.frame_id = "map";
+    msg.header.stamp = node_->now();
+    msg.ns = "/planner/expanded";
+    msg.id = 0;
+    msg.type = visualization_msgs::msg::Marker::POINTS;
+    msg.action = visualization_msgs::msg::Marker::ADD;
+
+    msg.scale.x = 0.005;
+    msg.scale.y = 0.005;
+    msg.scale.z = 0.005;
+
+    msg.color.r = 0.0;
+    msg.color.g = 0.0;
+    msg.color.b = 1.0;
+    msg.color.a = 0.33;
+
+    std::transform(
+      expanded.begin(), expanded.end(), std::back_inserter(msg.points), [](const auto & p) {
+        geometry_msgs::msg::Point out;
+        out.x = p.x();
+        out.y = p.y();
+        return out;
+      });
+
+    expanded_viz_pub_->publish(msg);
+  }
 };
 
 }  // namespace astar_path_planner
