@@ -123,8 +123,8 @@ In this file you should write a standard ROS node class and constructor.
 
 <details>
 <summary><b>Hint:</b> A standard ROS2 node general form</summary>
-<pre><code>
 
+```c++
 // NAMESPACE is the name of the namespace
 // CLASS_NAME is the name of the class
 
@@ -145,8 +145,7 @@ explicit CLASS_NAME(const rclcpp::NodeOptions & options)
 
 } // namespace end for lqr_control
 RCLCPP_COMPONENTS_REGISTER_NODE(NAMESPACE::CLASS_NAME)
-
-</code></pre>
+```
 </details>
 
 ### 3.3 Adding ControllerTestClient to CMakeLists.txt
@@ -198,8 +197,8 @@ Here it should be the `FollowPath` type with the name `"follow_path"`.
 
 <details>
 <summary><b>Hint:</b> Written out code</summary>
-<pre><code>
 
+```c++
 explicit ControllerTestClient(const rclcpp::NodeOptions & options)
 : rclcpp::Node("controller_test_client", options)
 {
@@ -208,8 +207,7 @@ client_ = rclcpp_action::create_client<FollowPath>(this, "follow_path");
 
 private:
 rclcpp_action::Client<FollowPath>::SharedPtr client_;
-
-</code></pre>
+```
 </details>
 
 The next thing you will need to do is create a `nav_msgs::msg::Path` publisher with specific QOS settings.
@@ -363,7 +361,27 @@ Our A, B matrices depend on our current state because the differential drive sys
 LQR only works with linear A,B matrices, so we are doing a linear approximation using the previous state and control values.
 The math for that is shown below
 
-TODO math
+![Variable Names](variables.png)
+
+These equations define how to get the next state given the previous and some controls.
+I have broken this out into 3 different equations for convenience.
+![Equations](equations.png)
+To compute the A and B matrix just take the partials of the above equations with respect to what they are in the equations below.
+For example the first row first column would be the partial of f_1 with respect to x.
+![A and B](A_and_B.png)
+
+<details>
+<summary><b>Hint:</b>A Matrix Math Solution</summary>
+
+![A Solution 1](A_solution_1.png)
+![A Solution 2](A_solution_2.png)
+</details>
+
+<details>
+<summary><b>Hint:</b>B Matrix Math Solution</summary>
+
+![B Solution](B_solution.png)
+</details>
 
 A couple hints on Eigen
 * `Eigen::Matrix3d` creates a 3x3 matrix, `Eigen::Matrix2d' creates a 2x2 matrix, and `Eigen::Matrix<double, 3, 2>` creates a 3X2 matrix.
@@ -373,27 +391,26 @@ A couple hints on Eigen
 
 <details>
 <summary><b>Hint:</b>A Matrix Code Solution</summary>
-<pre><code>
 
+```c++
 Eigen::Matrix3d A = Eigen::Matrix3d::Identity();
 A(0, 2) = -u(0)*sin(x(2))*dt_;
 A(1, 2) = u(0)*cos(x(2))*dt_;
 return A;
+```
 
-</code></pre>
 </details>
 
 <details>
 <summary><b>Hint:</b>B Matrix Code Solution</summary>
-<pre><code>
 
+```c++
 Eigen::Matrix<double, 3, 2> B = Eigen::Matrix<double, 3, 2>::Zero();
 B(0, 0) = cos(x(2)) * dt_;
 B(1, 0) = sin(x(2)) * dt_;
 B(2, 1) = dt_;
 return B;
-
-</code></pre>
+```
 </details>
 
 Finally implement the linear dynamics equation in the `computeNextState` function.
@@ -401,11 +418,10 @@ Finally implement the linear dynamics equation in the `computeNextState` functio
 
 <details>
 <summary><b>Hint:</b>Dynamics Equation Solution</summary>
-<pre><code>
 
+```c++
 return computeAMatrix(x, u) * x + computeBMatrix(x) * u;
-
-</code></pre>
+```
 </details>
 
 ### 3.12 Tuning LQR
