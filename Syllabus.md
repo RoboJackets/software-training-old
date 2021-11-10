@@ -114,7 +114,7 @@ Week | Title |  | Description
 4 | Gradient Descent Optimization | [Instructions](projects/week_4/Instructions.md) | Use gradient ascent to guide the robot to the highest simulated elevation on the map.
 5 | Mapping | [Instructions](projects/week_5/Instructions.md) | Build a map of the environment with a probablistic occupancy grid.
 6 | Kalman Filter Tracking | [Instructions](projects/week_6/Instructions.md) | Track mineral deposits with a kalman filter.
-7 | LQR Controller | | Control the robot's motion with an LQR controller.
+7 | LQR Controller | [Instructions](projects/week_7/Instructions.md) | Control the robot's motion with an LQR controller.
 8 | A-Star Path Planning | | Teach the robot how to avoid obstacles with the A-Star path planning algorithm.
 
 ## Robotics Theory Worksheets
