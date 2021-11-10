@@ -13,22 +13,24 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 ## Contents
 
 - [1 Background](#1-background)
-  - [Nav2](#nav2)
+  - [1.1 The navigation stack](#11-the-navigation-stack)
+  - [1.2 The Code](#12-the-code)
 - [2 Running this project](#2-running-this-project)
-- [3 Instructions](#3-instructions)
+- [3 Creating the test action client](#3-creating-the-test-action-client)
   - [3.1 Get the latest starter code](#31-get-the-latest-starter-code)
   - [3.2 Creating the ControllerTestClient](#32-creating-the-controllertestclient)
   - [3.3 Adding ControllerTestClient to CMakeLists.txt](#33-adding-controllertestclient-to-cmakeliststxt)
-  - [3.4 Setting up interface](#34-setting-up-interface)
+  - [3.4 Setting up client interfaces](#34-setting-up-client-interfaces)
   - [3.5 Send the goal](#35-send-the-goal)
   - [3.6 Create goal response callback](#36-create-goal-response-callback)
   - [3.7 Feedback callback](#37-feedback-callback)
   - [3.8 Result callback](#38-result-callback)
   - [3.9 Calling actions](#39-calling-actions)
-  - [3.10 LQR controller configure function](#310-lqr-controller-configure-function)
-  - [3.11 LQR controller dynamics](#311-lqr-controller-dynamics)
-  - [3.12 Tuning LQR](#312-tuning-lqr)
-  - [3.13 Commit your new code in git](#313-commit-your-new-code-in-git)
+- [4 Implementing the LQR controller](#4-implementing-the-lqr-controller)
+  - [4.1 The configure function](#41-the-configure-function)
+  - [4.2 LQR controller dynamics](#42-lqr-controller-dynamics)
+  - [4.3 Tuning the LQR controller](#43-tuning-the-lqr-controller)
+  - [4.4 Commit your new code in git](#44-commit-your-new-code-in-git)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -36,37 +38,26 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 
 In this project we will be writing an implementation of Linear Quadratic Regulator.
 Really we will be doing something that looks more like a Model Predictive Control application of the Linear Quadratic Regulator.
-All this means is that have to linearize our nonlinear system around of previous trajectory and we recompute the trajectory every time we get a new state.
+All this means is that have to linearize our nonlinear system around a previous trajectory, and we recompute the trajectory every time we get a new state.
 You will only be programming some of that linearization and the action client we will be putting into a ROS framework called Nav2.
 
 In the final challenge for this semester, our robot will need to use every other project to complete the entire course.
 The key part of that for this week is following a trajectory.
 For now we have given you a static trajectory to track using your LQR implementation.
 
-### Nav2
+### 1.1 The navigation stack
 
-Nav2 is an open source project that contains multiple planners, tracking controllers, and controllers.
-The diagram below breaks down the baseline architecture we will be using.
+[Nav2](https://navigation.ros.org/) is ROS 2 "navigation stack". This is a collection of nodes and tools for handling the different parts of navigation for an autonomous robot, including path planning, path following, and recovery. Nav2 uses a plugin-based system to allow other developers to customize certain parts of the navigation stack. The diagram below shows the overall architecture of the Nav2 stack and highlights which parts are customizable with plugins.
+
 ![Diagram](https://navigation.ros.org/_images/architectural_diagram.png)
 
-You can see that there is a waypoint to navigate to (our mineral deposits) and a map (our occupancy grid).
-The Nav2 architecture is based around things called plugins that implement action servers.
-This was chosen because things like planning and tracking a path are long running tasks.
-Furthermore, using actions allows the different parts of the nav stack to communicate progress.
-The main coordination portion of the architecture is in the behavior tree.
-You can think of this as the nav stack deciding when each action should be called.
-We have implemented a basic decision tree for you that generates a path to track and then waits until the path tracking action is completed by reaching a goal point.
+Each part of the Nav2 stack communicates with the other parts primarily through ROS actions. For example, the "Planner Server" hosts an action, called `/compute_path_to_pose`, which will plan the path from the robot's current location to the given pose. The "BT Navigator Server" can then call that action whenever a new path needs to be planned. The "BT Navigator Server" itself also hosts an action `/navigate_to_pose` that acts as the main entry point for the navigation stack for most other parts of our ROS system. Whenever some part of our ROS system wants the robot to move, it can send the destination pose to the `/navigate_to_pose` action, which will take care of the rest.
 
-The static path you are tracking comes from the [test_path_generator class](../../lqr_control/src/test_path_generator.cpp).
-You do not need to edit this file, everything should work as is.
-The [lqr_controller class](../../lqr_control/src/lqr_controller.cpp) class will be where we implement our LQR controller for path tracking.
-Finally there is a node you will implement from scratch that will act as an action client calling the Nav2 stack.
+### 1.2 The Code
 
-The final solution should look something like this
+If this feels a bit overwhelming, don't worry. This is just to give a bit of context around the code we'll be writing this week. In this project, we're going to be implementing a controller plugin for the Nav2 stack. We've taken care of the Nav2 parts of the code in the starter code, and you'll just be filling out the math for the LQR control algorithm. You'll be implementing this controller in the `LQRController` class in [lqr_controller.cpp](../../lqr_control/src/lqr_controller.cpp).
 
-![Working LQR](working_lqr.gif)
-
-Your tracking performance will heavily vary depending on your tuning.
+We'll also be writing a test client for our controller that uses one of the "internal" actions of the Nav2 stack, `/follow_path`. This is the action hosted by the "Controller Server", which computes the command velocities needed to drive the robot along the path provided in the action goal. This client will be a separate node, which you'll implement from scratch. The path our test client uses will be generated by the `TestPathGenerator` class found in [test_path_generator.cpp](../../lqr_control/src/test_path_generator.cpp). You shouldn't need to edit this file. It's there if you're curious about how we create the figure-eight test path.
 
 
 ## 2 Running this project
@@ -96,7 +87,13 @@ ros2 run lqr_control controller_test_client --ros-args -p use_sim_time:=True
 
 This runs the action client and sets use_sim_time to true so that all nodes are using the same time source.
 
-## 3 Instructions
+Once you've finished writing the code for this project, you should see the robot follow a figure eight pattern like this:
+
+![Working LQR](working_lqr.gif)
+
+Your tracking performance will heavily vary depending on your tuning.
+
+## 3 Creating the test action client
 
 ### 3.1 Get the latest starter code
 
@@ -125,34 +122,30 @@ In this file you should write a standard ROS node class and constructor.
 <summary><b>Hint:</b> A standard ROS2 node general form</summary>
 
 ```c++
-// NAMESPACE is the name of the namespace
-// CLASS_NAME is the name of the class
-
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_components/register_node_macro.hpp>
 
-namespace NAMESPACE
+namespace my_package
 {
 
-class CLASS_NAME : public rclcpp::Node
+class MyNode : public rclcpp::Node
 {
 public:
 
-explicit CLASS_NAME(const rclcpp::NodeOptions & options)
-: rclcpp::Node("CLASS_NAME", options)
+explicit MyNode(const rclcpp::NodeOptions & options)
+: rclcpp::Node("my_node", options)
 {
 }
 
-} // namespace end for lqr_control
-RCLCPP_COMPONENTS_REGISTER_NODE(NAMESPACE::CLASS_NAME)
+}  // namespace my_package
+RCLCPP_COMPONENTS_REGISTER_NODE(my_package::MyNode)
 ```
 </details>
 
 ### 3.3 Adding ControllerTestClient to CMakeLists.txt
 You will need to add a couple lines to the [CMakeLists.txt](../../lqr_control/CMakeLists.txt) to compile your new node.
 
-The first change is to add your new class as a source to be compiled into the lqr_control library.
-This is done by adding the cpp file you created to the add_library call.
+The first change is to add your new class as a source to be compiled into the lqr_control library. This is done by adding the cpp file you created to the add_library call.
 
 ```cmake
 add_library(lqr_control SHARED
@@ -164,8 +157,7 @@ add_library(lqr_control SHARED
         )
 ```
 
-The second thing you will need to do is to register the node as a component.
-This uses a specific macro from ROS2 `rclcpp_components_register_node`.
+The second thing you will need to do is to register the node as a component. This is done with a function from the rclcpp_components package: `rclcpp_components_register_node`. (Review the week 2 ROS videos for more details about creating ROS 2 nodes in C++.)
 
 ```cmake
 # BEGIN STUDENT CODE
@@ -179,24 +171,22 @@ rclcpp_components_register_node(
 
 You should be able to run `colcon build` as you normally do without error.
 
-### 3.4 Setting up interface
+### 3.4 Setting up client interfaces
 
-The next thing we need to do in your ControllerTestClient code is to create an action client that uses the Nav2 FollowPath action type.
-You will want to create a using definition at the top of your class as a shorthand.
+The next thing we need to do in your ControllerTestClient code is to create an action client that uses the [nav2_msgs/action/FollowPath](https://github.com/ros-planning/navigation2/blob/foxy-devel/nav2_msgs/action/FollowPath.action) action type.
+
+For convenience, (and shorter code later on), let's create a type alias for our action type. This will let us use the short name, `FollowPath`, instead of the fully namespace-qualified name.
 
 ```c++
 using FollowPath = nav2_msgs::action::FollowPath;
 ```
 
-Next create a class member variable to store the client and initialize the client in the constructor.
-Your client should be a shared pointer of type `rclcpp_action::Client<TYPE>::SharedPtr`.
-the syntax to create a client is
-`rclcpp_action::create_client<TYPE>(this, "NAME")`
-where `TYPE` is the action type.
-Here it should be the `FollowPath` type with the name `"follow_path"`.
+Next create a class member variable of type `rclcpp_action::Client<FollowPath>::SharedPtr` to store the client, named `client_`.
+	
+Then, initialize the client in the node's constructor with the `rclcpp_action::create_client` function.
 
 <details>
-<summary><b>Hint:</b> Written out code</summary>
+<summary><b>Hint:</b> Solution</summary>
 
 ```c++
 explicit ControllerTestClient(const rclcpp::NodeOptions & options)
@@ -210,66 +200,74 @@ rclcpp_action::Client<FollowPath>::SharedPtr client_;
 ```
 </details>
 
-The next thing you will need to do is create a `nav_msgs::msg::Path` publisher with specific QOS settings.
-We want our QOS settings to be `transient_local` because it was handy for debugging because any new subscribers would get the plan message without the client having to continuously republish it.
-You can do this by doing the following
-```c++
+The other interface our test client node will use is a topic, on which it will publish the plan. This is just used for visualization in rviz. This topic will use [nav_msgs::msg::Path](https://docs.ros2.org/foxy/api/nav_msgs/msg/Path.html) messages. 
+
+Add a new publisher to your node class. The message type should be `nav_msgs::msg::Path`. The topic name should be "/plan". For the QoS settings, use these:
+
+```C++
 rclcpp::QoS qos_profile{1};
 qos_profile.transient_local();
 ```
-and using qos_profile as the second argument to the publisher call.
-You should create this publisher so that is it a shared pointer and a member variable.
+
+Why "transient local"? Well, our client is only going to publish this message once, so any visualization tools we start after the path is published wouldn't get any message if used "volatile" durability. With "transient local" durability, our late-starting tools will still get the path message published before they started. While this isn't strictly necessary for the demo in this project to run, it's pretty handy when debugging things.
 
 ### 3.5 Send the goal
 
-Our action client needs to send the target trajectory to the lqr controller.
-In order to do this we will implement a method called `SendGoal`.
-The method will return nothing and will use the client we just created to send a `FollowPath` action request to the Nav2 action server.
-The Nav2 action server will end up calling the plugin we will be creating when we write LQR.
-For this step we will just be getting the visualization of the path to show up in rviz.
+Our action client needs to send a goal to the "/follow_path" action without blocking the main ROS event loop. To do this, we'll wrap this step in a function and run it on another thread.
 
-Write the SendGoal method that takes in no parameters and return nothing.
-The method should do the following,
-1. Waits for the `/follow_path` action server for up to 10 seconds and prints an error message if it times out.
-You can use the following syntax to wait for a response from the action server
-```c++
-client_->wait_for_action_server(std::chrono::seconds(1))
-```
-This will wait for 1 second and will return `True` if the action server is ready and false if it times out before getting a response.
-2. Uses the TestPathGenerator to create some nominal path
-```c++
-TestPathGenerator(20).BuildPath();
-```
-This method returns a `nav_msgs::msg::Path` object.
-20 is the number of points to use for the path, leave this at 20.
-You will need to set the time to the current ROS time and the frame_id to `/map` to properly see this visualization in rviz.
-The path should be stored in an object of type `FollowPath::Goal` in the member called path.
-Don't forget to add the include statement at the top of your file.
+Create a function called `SendGoal` that takes no parameters and returns nothing. Implement this function so it follows these steps:
 
-3. publishes the goal path for visualization purposes
-Remember that you will want to run the `SendGoal` method in a separate detached thread.
-You can create a thread of a member function using this call.
+1. Wait for the "/follow_path" action server to be ready. Use a timeout duration of 10 seconds. If the wait timesout, print an error message and shutdown the node by calling `rclcpp::shutdown()`.
+
+   To wait for an action to be ready, use the `wait_for_action_server()` function on the client:
+   
+   ```C++
+   client_->wait_for_action_server(std::chrono::seconds(10))
+   ```
+
+1. Create the goal object. This will be a variable of type `FollowPath::Goal`. This type has one member, `path`. We can get a path from our `TestPathGenerator` class. Then we'll just need to set the frame ID and time stamp.
+
+   ```C++
+   FollowPath::Goal goal;
+   goal.path = TestPathGenerator(20).BuildPath();
+   goal.path.header.frame_id = "map";
+   goal.path.header.stamp = now();
+   ```
+
+1. Publish the path to our visualization topic. You can do this by passing `goal.path` to the `publish()` function on the visualization topic publisher you created in the previous section.
+
+You may have noticed we never actually sent the goal with the action client. We'll come back to finish this function in a bit.
+
+For now, let's wrap up this section by calling our new `SendGoal()` function in another thread. Back in the constructor, start and detach from a thread for the `SendGoal()` function.
+
 ```c++
 std::thread(&ControllerTestClient::SendGoal, this).detach();
 ```
 
 ### 3.6 Create goal response callback
-Before we call our action we need to create the methods that will be used by the Nav2 stack to communicate back to our client.
-All of these methods will just be printing out a message based on the feedback from the Nav2 stack and in one case ending the node.
+Before we call our action we need to create the methods that will be used by the action to communicate back to our client.
+All of these methods will just be printing out a message based on the feedback from the action server and in one case ending the node.
 
-The first callback we will want to write is the GoalResponseCallback.
-This determines if the Nav2 server accepts our target goal.
-The method that you need to write will take in the type `std::shared_future<GoalHandle::SharedPtr> and return nothing.
-The GoalHandle shorthand should be declared at the top using
+Create a new function called `GoalResponseCallback`. This checks if the action server accepts our target goal. This function should take in the type `std::shared_future<GoalHandle::SharedPtr>` and return nothing.
+
+You'll need to define another type alias at the top of your class for the `GoalHandle` type.
+
 ```c++
 using GoalHandle = rclcpp_action::ClientGoalHandle<FollowPath>;
 ```
+
 If the goal is accepted the value in the future will be not null, otherwise it will be null.
 You should use the ROS logger to print out if the server accepted or rejected the goal.
-The logger can be called using this syntax,
+
+<details>
+<summary><b>Hint: </b> Printing with ROS logs</summary>
+
+Use the ROS logging macros provided by rclcpp. In this example, "INFO" is the log level. This could also be set to "DEBUG", "WARN", "ERROR", or "FATAL".
+
 ```c++
 RCLCPP_INFO(get_logger(), "MESSAGE");
 ```
+</details>
 
 ### 3.7 Feedback callback
 
@@ -302,95 +300,172 @@ We do this since once the result returns this client is no longer needed and can
 
 ### 3.9 Calling actions
 
-In this section we will finish the SendGoal function by sending the action using our client.
-You will be finishing the SendGoal method.
-The first thing we need to do is to create an options variable of type `rclcpp_action::Client<FollowPath>::SendGoalOptions`.
-This will be included in our action call and tells the server what callbacks it can call.
-To finish off you will need to do the following
+In this section we will finish implementing the `SendGoal()` function by actually sending the goal with our client object.
+
+First, create a variable of type `rclcpp_action::Client<FollowPath>::SendGoalOptions`. This gets passed along with our goal message to tell our client what callbacks it should use.
+
+You'll need to set three member variables on this options object:
 1. Set the `goal_response_callback` to the `GoalResponseCallback` method
 2. Set the `feedback_callback` to the `FeedbackCallback` method
 3. Set the `result_callback` to the `ResultsCallback` method
-4. Send the action using the `async_send_goal` method
+```
 
-Remember that in order to bind a member function you will need to use std::bind.
-An example call for a method with 1 and 2 variables is below.
+For each of these, you'll need to use `std::bind` to bind the callback to the current object. Remember that you'll need to use placeholders to pass function parameters through the bound function.
 
-```c++
+```C++
+// Bind a member function with one parameter
 std::bind(&CLASS_NAME::CALLBACK_NAME, this,std::placeholders::_1);
+// Bind a member function with two parameters
 std::bind(&CLASS_NAME::CALLBACK_NAME, this, std::placeholders::_1, std::placeholders::_2);
 ```
 
-This will finish the action client code.
+Finally, send the goal by calling `async_send_goal` on the client passing in your goal message and options object.
 
-### 3.10 LQR controller configure function
+This completes our action client node.
 
-The code you are looking at is an implementation of a Nav2 controller plugin.
-This just means that the Nav2 stack is going to load this class and then call specific functions based on the behavior tree.
-The methods that Nav2 calls for setup are configure, then activate.
-Everytime we get a new path to track the setPlan method is called.
-Everytime we get a new state the computeVelocityCommands is called.
-This is where we will call the LQR controller iteratively to compute the next control.
+## 4 Implementing the LQR controller
 
-The function you need to implement is the configure function.
-In this function you need to
-1. save the lifecycle node pointer in a class member.
-The type should be `rclcpp_lifecycle::LifecyclePublisher<nav_msgs::msg::Path>::SharedPtr`.
-You can do this by just setting a variable of that type equal to the node parameter passed into configure.
-2. Pull the following parameters
-Note you will have to use the name parameter passed into the node like the following,
-`node->declare_parameter<double>(name+".T", 1.0);`.
-Change the parameter name (here `T`) to the new name i.e. `node->declare_parameter<std::vector<double>>(name+".Q", {1.0, 1.0, 0.3});`.
-   1. T (double): The time horizon of the controller
-   2. dt (double): The dt in our discrete dynamics
-   3. time_between_states (double): The time it should take the robot to traverse an edge in the trajectory
-   4. iterations (int): The number of iterations we should run LQR
-   5. Q (std::vector<double>): The diagonal elements of the Q matrix
-   6. Qf (std::vector<double>): The diagonal elements of the Qf matrix
-   7. R (std::vector<double>): The diagonal elements of the R matrix
-4. Ensure the Q,Qf, and R vector parameters are the correct length (3,3,2 respectively).
-5. Set the Q,Qf, and R values based on the parameters
-6. Allocate the correct size (T/dt) of `prev_x_` (previous states Vector3d), `prev_u_` (previous controls Vector2d), and `S_` (Ricatti Equation Result Matrix3d).
-There is a vector constructor that takes in the number of elements as well as the element to put in every location `std::vector<TYPE>(int number, TYPE element)`.
-You should be putting a zero value into all `Eigen::TYPE::Zero()` should help.
+All of the code in this section will be written in [lqr_controller.cpp](../../lqr_control/src/lqr_controller.cpp). The code in this file is an implementation of a Nav2 controller plugin. This just means that the Nav2 stack is going to load this class and then call specific functions when it wants to follow a path.
 
-### 3.11 LQR controller dynamics
+The following functions are declared by the `nav2_core::Controller` interface and implemented in our class:
 
-Now that we have coded up our action client we will need to implement our LQR controller for path tracking.
-The first thing we will need to do is derive the dynamics equations, specifically our A and B matrices.
-Our A, B matrices depend on our current state because the differential drive system is nonlinear.
-LQR only works with linear A,B matrices, so we are doing a linear approximation using the previous state and control values.
-The math for that is shown below
+- `configure`
+
+  First function to get called. Used for initialization, such as declaring ROS parameters and initializaing interface objects (topics/services/actions).
+
+- `activate`
+
+  Corresponds to the "activation" step of the underlying [lifecycle node](https://github.com/ros2/demos/blob/foxy/lifecycle/README.rst). Lifecycle nodes are used extensively throughout Nav2, but we won't cover them in any real detail here. They are a useful and neat feature in ROS 2, but beyond the scope of this training program.
+
+- `deactivate`
+
+  Corresponds to the "deactivation" step of the underlying lifecycle node. We'll be leaving this blank in this project.
+
+- `cleanup`
+
+  Gives us an opportunity to cleanup any resources we need to before our plugin is unloaded. We'll be leaving this blank in this project.
+
+- `setPlan`
+
+  Provides our controller with the planned path we're meant to be following.
+
+- `computeVelocityCommands`
+
+  Called repeatedly while the `/follow_path` action is running. This function is responsible for calculating new command velocities based on the robot's current pose, velocity, and the path we're following.
+
+### 4.1 The configure function
+
+The configure function is where we'll grab our ROS parameters and initialize our controller. Find the student code block in the `configure()` function.
+
+We're going to declare several ROS parameters. Note, all of our controller parameters will be namespaced under our plugin name, which you can get from the `name` parameter of the configure function. Thus, declaring a parameter named "T" would look like this:
+   
+```c++
+node->declare_parameter<double>(name+".T", 1.0);
+```
+
+There are four parameters which we'll store directly into member variables. For each of these, declare the parameter with `node_->declare_parameter` and store the returned value into the corresponding member variable (which has already been declared for you further down in the class).
+
+- T (`double`)
+
+  The time horizon of the controller.
+
+  Default: 1.0
+
+- dt (`double`)
+
+  The dt in our discrete dynamics.
+
+  Default: 0.1
+
+- time_between_states (`double`)
+
+  The time it should take the robot to traverse an edge in the trajectory.
+
+  Default: 3.0
+
+- iterations (`int`)
+
+  The number of iterations we should run LQR
+
+  Default: 1
+
+Three of our controller parameters are coefficients for the diagonal matrices `Q`, `Qf`, and `R`. In our parameters, these will show up as lists of the diagonal values. For each matrix, you'll need to declare a parameter of type `std::vector<double>`, check that the returned value has the right size, and copy the values into the matrix stored in the corresponding member variable (which again, has been declared for you).
+
+Here's an example of what this process looks like for the `Q` matrix:
+
+```c++
+std::vector<double> Q_temp = node->declare_parameter<std::vector<double>>(name+".Q", {1.0, 1.0, 0.3});
+if(Q_temp.size() != 3) {
+  RCLCPP_ERROR(node_->get_logger(), "incorrect size Q, must be 3 values");
+  exit(0);
+}
+Q_(0, 0) = Q_temp[0];
+Q_(1, 1) = Q_temp[1];
+Q_(2, 2) = Q_temp[2];
+```
+
+Now, do the same steps for these two matrices:
+
+- Qf
+
+  Size: 3
+
+  Default values: 10.0, 10.0, 0.1
+
+- R 
+
+  Size: 2
+
+  Default values: 0.1, 0.05
+
+Finally, there are three vectors which will store sequences of state data used by our controller. `prev_x_` will store previous state vectors (`Vector3d`). `prev_u_` will store previous control vectors (`Vector2d`). `S_` will store the Ricatti equation result matrices (`Matrix3d`). We need to initialize these vectors to the correct sizes now. All vectors should be initialize to be of size `T_/dt_` and all initial values should be zero.
+
+**Tip:** `std::vector` provides a constructor that initializes a vector with N copies of a value. ([Constructor 3 on cppreference.com](https://en.cppreference.com/w/cpp/container/vector/vector))
+
+**Tip:** All Eigen matrix and vector types provide a static `Zero()` function which returns a zero-initialized object. For example, `Eigen::Vector3d::Zero()` returns a 3-dimensional vector with all values set to zero.
+
+### 4.2 LQR controller dynamics
+
+To use an LQR controller, we need to derive the dynamics equations for our system. This takes the form of the A and B matrices used by the controller. Our controller class has two functions: `computeAMatrix` and `computeBMatrix` which we'll use to calculate these matrices. A third function, `computeNextState` will use our A and B matrix functions to implement the transition function from one state to the next based on control values.
+
+Let's start by deriving what our A and B matrices should look like. These matrices depend on our current state because the differential drive system is nonlinear. LQR technically only works with linear systems, so we are doing a linear approximation using the previous state and control values.
+
+In this math, we'll be using these variables:
 
 ![Variable Names](variables.png)
 
-These equations define how to get the next state given the previous and some controls.
-I have broken this out into 3 different equations for convenience.
+We can represent our system dynamcis with three equations, one for each dimension of our state vector: x, y, and heading.
+
 ![Equations](equations.png)
-To compute the A and B matrix just take the partials of the above equations with respect to what they are in the equations below.
-For example the first row first column would be the partial of f_1 with respect to x.
+
+To compute the A matrix, we need to take the partial derivatives of each equation with respect to each variable in our state vector. For the B matrix, we take the partials with respect to each element of the control vector. For example the first element of the A matrix is the partial of f_1 with respect to x.
+
 ![A and B](A_and_B.png)
 
 <details>
-<summary><b>Hint:</b>A Matrix Math Solution</summary>
+<summary><b>Hint:</b> A Matrix Math Solution</summary>
 
 ![A Solution 1](A_solution_1.png)
+
 ![A Solution 2](A_solution_2.png)
 </details>
 
 <details>
-<summary><b>Hint:</b>B Matrix Math Solution</summary>
+<summary><b>Hint:</b> B Matrix Math Solution</summary>
 
 ![B Solution](B_solution.png)
 </details>
 
-A couple hints on Eigen
-* `Eigen::Matrix3d` creates a 3x3 matrix, `Eigen::Matrix2d' creates a 2x2 matrix, and `Eigen::Matrix<double, 3, 2>` creates a 3X2 matrix.
-* To create an identity matrix use `TYPE::Identity()` where `TYPE` is the types from above.
-* To index into an Eigen matrix use `()` not `[]`. So to get the second row and second column use `A(1,1)`
-* To multiply the vectors/matrices use `*` like you would normally
+Now implement `computeAMatrix` and `computeBMatrix` to return the matrices as you just derived them. Each function should create a new matrix object, fill in the appropriate elements, and return the matrix.
+
+A couple hints for working with Eigen types:
+- The size is in the type name. `Eigen::Matrix3d` creates a 3x3 matrix, `Eigen::Matrix2d` creates a 2x2 matrix, and `Eigen::Matrix<double, 3, 2>` creates a 3X2 matrix.
+- To create an identity matrix use the static `Identity()` function provided by the type.
+- To index into an Eigen matrix use `()` not `[]`. So to get the second row and second column use `A(1,1)`.
+- You can multiply and add vectors / matrices with the normal arithmetic operators (`*` and `+`).
 
 <details>
-<summary><b>Hint:</b>A Matrix Code Solution</summary>
+<summary><b>Hint:</b> <code>computeAMatrix()</code> Solution</summary>
 
 ```c++
 Eigen::Matrix3d A = Eigen::Matrix3d::Identity();
@@ -402,7 +477,7 @@ return A;
 </details>
 
 <details>
-<summary><b>Hint:</b>B Matrix Code Solution</summary>
+<summary><b>Hint:</b> <code>computeBMatrix()</code> Solution</summary>
 
 ```c++
 Eigen::Matrix<double, 3, 2> B = Eigen::Matrix<double, 3, 2>::Zero();
@@ -413,31 +488,33 @@ return B;
 ```
 </details>
 
-Finally implement the linear dynamics equation in the `computeNextState` function.
-
+Finally, implement the `computeNextState` function using the linear dynamics equation. This function will need to call `computeAMatrix()` and `computeBMatrix()` to get the A and B matrices.
 
 <details>
-<summary><b>Hint:</b>Dynamics Equation Solution</summary>
+<summary><b>Hint:</b> <code>computeNextState()</code> Solution</summary>
 
 ```c++
 return computeAMatrix(x, u) * x + computeBMatrix(x) * u;
 ```
 </details>
 
-### 3.12 Tuning LQR
+### 4.3 Tuning the LQR controller
 
-Try playing around with some of the parameters in [nav params](../../rj_training_bringup/config/lqr_control_project_nav_params.yaml).
-A couple interesting ideas we would recommend is
+Try playing around with some of the parameters in [lqr_control_project_nav_params.yaml](../../rj_training_bringup/config/lqr_control_project_nav_params.yaml) (in the [rj_training_bringup package](../../rj_training_bringup)). The parameters for our controller appear at lines 48 - 54.
 
-1. Setting the Q,Qf for yaw equal to zero, without the yaw our controller performs very badly
-2. Decreasing T, this should make the controller short sighted and not work as well at the end
-3. Increasing R, this will make the controller lethargic
-4. Decreasing time_between_states, this will make our robot doot much faster but with worse tracking.
+A couple interesting ideas we would recommend are:
 
-### 3.13 Commit your new code in git
+1. Setting the Q and Qf elements for yaw equal to zero. Without considering the yaw, our controller should perform very badly.
+1. Decreasing T. This should make the controller short sighted and not work as well at the end.
+1. Increasing R. This should make the controller lethargic.
+1. Decreasing time_between_states. This should make our robot doot much faster but with worse tracking.
+
+Take a moment to reflect on why you see the results you see.
+
+### 4.4 Commit your new code in git
 
 Once you've got your code for this project working, use the command below to commit it into git. This will make it easier to grab changes to the starter code for the remaining projects.
 
 ```bash
-$ git commit -a -m "My project 6 code."
+$ git commit -a -m "My project 7 code."
 ```

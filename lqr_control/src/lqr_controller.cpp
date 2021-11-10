@@ -50,6 +50,9 @@ public:
     const std::shared_ptr<tf2_ros::Buffer> & tf_buffer,
     const std::shared_ptr<nav2_costmap_2d::Costmap2DROS> & costmap) override
   {
+    node_ = node;
+    traj_viz_pub_ = node_->create_publisher<nav_msgs::msg::Path>("~/tracking_traj", rclcpp::SystemDefaultsQoS());
+
     // BEGIN STUDENT CODE
     // END STUDENT CODE
   }
@@ -88,8 +91,7 @@ public:
 
   void activate() override
   {
-    // BEGIN STUDENT CODE
-    // END STUDENT CODE
+    traj_viz_pub_->on_activate();
   }
 
   void deactivate() override {}
@@ -211,8 +213,7 @@ private:
   std::vector<Eigen::Vector3d> trajectory_;
   double time_between_states_;
   rclcpp::Time path_start_time_;
-  rclcpp_lifecycle::LifecyclePublisher
-  <nav_msgs::msg::Path>::SharedPtr traj_viz_pub_;
+  rclcpp_lifecycle::LifecyclePublisher<nav_msgs::msg::Path>::SharedPtr traj_viz_pub_;
 };
 
 }  // namespace lqr_control
