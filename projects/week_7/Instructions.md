@@ -493,7 +493,7 @@ return computeAMatrix(x, u) * x + computeBMatrix(x) * u;
 
 ### 4.3 Tuning the LQR controller
 
-Try playing around with some of the parameters in [lqr_control_project_nav_params.yaml](../../rj_training_bringup/config/lqr_control_project_nav_params.yaml) (in the [rj_training_bringup package](../../rj_training_bringup)). The parameters for our controller appear at lines 48 - 54.
+Try playing around with some of the parameters in [nav_params_week_7.yaml](../../rj_training_bringup/config/nav_params_week_7.yaml) (in the [rj_training_bringup package](../../rj_training_bringup)). The parameters for our controller appear at lines 48 - 54.
 
 A couple interesting ideas we would recommend are:
 
