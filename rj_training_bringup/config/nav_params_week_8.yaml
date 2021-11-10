@@ -71,7 +71,7 @@ local_costmap:
       origin_x: -2.5
       origin_y: -2.5
       resolution: 0.05
-      footprint: "[ [0.1, 0.09], [0.1, -0.09], [-0.05, -0.09], [-0.05, 0.09] ]"
+      robot_radius: 0.08
       plugins: ["static_layer"]
       static_layer:
         plugin: "nav2_costmap_2d::StaticLayer"
@@ -88,24 +88,28 @@ local_costmap:
 global_costmap:
   global_costmap:
     ros__parameters:
-      update_frequency: 1.0
-      publish_frequency: 1.0
+      update_frequency: 10.0
+      publish_frequency: 10.0
       global_frame: map
       robot_base_frame: base_footprint
       use_sim_time: True
-      footprint: "[ [0.1, 0.09], [0.1, -0.09], [-0.05, -0.09], [-0.05, 0.09] ]"
+      robot_radius: 0.08
       resolution: 0.05
       width: 5
       height: 5
       origin_x: -2.5
       origin_y: -2.5
-      track_unknown_space: true
+      track_unknown_space: True
+      unknown_cost_value: -1
+      lethal_cost_threshold: 85
       always_send_full_costmap: True
       plugins: ["static_layer"]
       static_layer:
         plugin: "nav2_costmap_2d::StaticLayer"
         map_subscribe_transient_local: True
-        enabled: False
+        subscribe_to_updates: True
+        map_topic: "/map"
+        enabled: True
   global_costmap_client:
     ros__parameters:
       use_sim_time: True
