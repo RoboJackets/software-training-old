@@ -115,7 +115,7 @@ Week | Title |  | Description
 5 | Mapping | [Instructions](projects/week_5/Instructions.md) | Build a map of the environment with a probablistic occupancy grid.
 6 | Kalman Filter Tracking | [Instructions](projects/week_6/Instructions.md) | Track mineral deposits with a kalman filter.
 7 | LQR Controller | | Control the robot's motion with an LQR controller.
-8 | A-Star Path Planning | | Teach the robot how to avoid obstacles with the A-Star path planning algorithm.
+8 | A-Star Path Planning | [Instructions](projects/week_8/Instructions.md) | Teach the robot how to avoid obstacles with the A-Star path planning algorithm.
 
 ## Robotics Theory Worksheets
 Week | Title | Worksheet | Solutions
