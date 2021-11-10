@@ -28,9 +28,6 @@ from nav2_common.launch import RewrittenYaml
 
 
 def generate_launch_description():
-
-    use_sim_time = LaunchConfiguration('use_sim_time')
-
     tf_remappings = [('/tf', 'tf'), ('/tf_static', 'tf_static')]
 
     lifecycle_nodes = ['controller_server',
@@ -38,14 +35,16 @@ def generate_launch_description():
                        'recoveries_server',
                        'bt_navigator']
 
-    behavior_tree = os.path.join(get_package_share_directory(
+    default_behavior_tree = os.path.join(get_package_share_directory(
         'rj_training_bringup'), 'behavior_trees', 'navigate.xml')
 
     params_file = LaunchConfiguration('params_file')
 
+    use_sim_time = LaunchConfiguration('use_sim_time')
+
     param_substitutions = {
         'use_sim_time': use_sim_time,
-        'default_bt_xml_filename': behavior_tree
+        'default_bt_xml_filename': LaunchConfiguration('behavior_tree')
     }
 
     configured_params = RewrittenYaml(
@@ -60,13 +59,15 @@ def generate_launch_description():
             name='use_sim_time',
             default_value='false'
         ),
-
         DeclareLaunchArgument(
             name='params_file',
             default_value=os.path.join(get_package_share_directory(
                 'rj_training_bringup'), 'config', 'nav_params.yaml')
         ),
-
+        DeclareLaunchArgument(
+            name='behavior_tree',
+            default_value=default_behavior_tree
+        ),
         Node(
             package='nav2_bt_navigator',
             executable='bt_navigator',
@@ -75,7 +76,6 @@ def generate_launch_description():
             parameters=[configured_params],
             remappings=tf_remappings
         ),
-
         Node(
             package='nav2_controller',
             executable='controller_server',
@@ -83,7 +83,6 @@ def generate_launch_description():
             parameters=[configured_params],
             remappings=tf_remappings
         ),
-
         Node(
             package='nav2_planner',
             executable='planner_server',
@@ -92,7 +91,6 @@ def generate_launch_description():
             parameters=[configured_params],
             remappings=tf_remappings
         ),
-
         Node(
             package='nav2_recoveries',
             executable='recoveries_server',
@@ -101,16 +99,6 @@ def generate_launch_description():
             parameters=[configured_params],
             remappings=tf_remappings
         ),
-
-        # Node(
-        #     package='nav2_map_server',
-        #     executable='map_server',
-        #     name='map_server',
-        #     output='screen',
-        #     parameters=[],
-        #     remappings=tf_remappings
-        # ),
-
         Node(
             package='nav2_lifecycle_manager',
             executable='lifecycle_manager',
