@@ -66,6 +66,37 @@ std::vector<Point> AStarPathPlanner::Plan(const Point & start, const Point & goa
 
   // BEGIN STUDENT CODE
 
+  frontier_.push({{start}, GetHeuristicCost(start)});
+
+  while (!frontier_.empty()) {
+    // Get next state to expand
+    const auto entry = frontier_.top();
+    frontier_.pop();
+    const auto path = entry.path;
+    const auto cost = entry.cost;
+    const auto last_state = path.back();
+
+    // Skip if we've already expanded this state
+    if (expanded_.count(last_state) > 0) {
+      continue;
+    }
+
+    // Add state to expanded set
+    expanded_.insert(last_state);
+
+    // Check if we've found our goal
+    if (IsGoal(last_state)) {
+      return path;
+    }
+
+    const auto neighbors = GetAdjacentPoints(last_state);
+
+    std::for_each(neighbors.begin(), neighbors.end(), [this,&path,&cost](const auto& neighbor){
+      ExtendPathAndAddToFrontier(path,cost,neighbor);
+    });
+  }
+
+  RCLCPP_ERROR(logger_, "No path found after exhausting search space.");
   return {};
   // END STUDENT CODE
 }
@@ -75,14 +106,31 @@ void AStarPathPlanner::ExtendPathAndAddToFrontier(
   const Point & next_point)
 {
   // BEGIN STUDENT CODE
-
+  std::vector<Point> new_path(path);
+  new_path.push_back(next_point);
+  const auto new_cost = path_cost - GetHeuristicCost(path.back()) +
+    GetStepCost(path.back(), next_point) + GetHeuristicCost(next_point);
+  frontier_.push({new_path, new_cost});
   // END STUDENT CODE
 }
 
 std::vector<Point> AStarPathPlanner::GetAdjacentPoints(const Point & point)
 {
   // BEGIN STUDENT CODE
-  return {};
+  std::vector<Point> neighbors;
+
+  for (auto dx = -grid_size_; dx <= grid_size_; dx += grid_size_) {
+    for (auto dy = -grid_size_; dy <= grid_size_; dy += grid_size_) {
+      if (std::abs(dx) < 1e-4 && std::abs(dy) < 1e-4) {
+        continue;
+      }
+      const Point neighbor = point + Point{dx, dy};
+      if (!IsPointInCollision(neighbor)) {
+        neighbors.push_back(neighbor);
+      }
+    }
+  }
+  return neighbors;
   // END STUDENT CODE
 }
 
@@ -90,21 +138,21 @@ std::vector<Point> AStarPathPlanner::GetAdjacentPoints(const Point & point)
 double AStarPathPlanner::GetHeuristicCost(const Point & point)
 {
   // BEGIN STUDENT CODE
-  return 0.0;
+  return (point - goal_).norm();
   // END STUDENT CODE
 }
 
 double AStarPathPlanner::GetStepCost(const Point & point, const Point & next)
 {
   // BEGIN STUDENT CODE
-  return 0.0;
+  return (next - point).norm();
   // END STUDENT CODE
 }
 
 bool AStarPathPlanner::IsGoal(const Point & point)
 {
   // BEGIN STUDENT CODE
-  return false;
+  return (point - goal_).norm() < goal_threshold_;
   // END STUDENT CODE
 }
 
