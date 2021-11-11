@@ -44,14 +44,14 @@ controller_server:
       xy_goal_tolerance: 0.01
       yaw_goal_tolerance: 6.28318530718
     FollowPath:
-      plugin: "stsl_nav_plugins::PointAndShootController"
-      xy_threshold: 0.01
-      max_theta_vel: 1.0
-      linear_controller:
-        kP: 10.0
-      angular_controller:
-        kP: 10.0
-        kD: 0.5
+      plugin: "lqr_control::LqrController"
+      dt: 0.25
+      T: 4.0
+      Q: [1.0, 1.0, 0.2]
+      Qf: [10.0, 10.0, 0.1]
+      R: [0.1, 0.05]
+      time_between_states: 0.5
+      iterations: 3
 
 controller_server_rclcpp_node:
   ros__parameters:
