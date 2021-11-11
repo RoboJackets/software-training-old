@@ -59,7 +59,7 @@ private:
   ExpandedSet expanded_;
   FrontierQueue frontier_;
 
-  bool IsGoal(const Point & point);
+  void ExtendPathAndAddToFrontier(const std::vector<Point> & path, const double & path_cost, const Point & next_point);
 
   std::vector<Point> GetAdjacentPoints(const Point & point);
 
@@ -67,7 +67,9 @@ private:
 
   double GetStepCost(const Point & point, const Point & next);
 
-  bool PointInCollision(const Point & point);
+  bool IsGoal(const Point & point);
+
+  bool IsPointInCollision(const Point & point);
 };
 
 }  // namespace astar_path_planner

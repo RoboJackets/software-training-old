@@ -47,12 +47,12 @@ AStarPathPlanner::AStarPathPlanner(
 
 std::vector<Point> AStarPathPlanner::Plan(const Point & start, const Point & goal)
 {
-  if (PointInCollision(goal)) {
+  if (IsPointInCollision(goal)) {
     RCLCPP_ERROR(logger_, "Provided goal position would cause a collision");
     return {};
   }
 
-  if (PointInCollision(start)) {
+  if (IsPointInCollision(start)) {
     RCLCPP_ERROR(
       logger_, "Starting position (%f, %f) is currently in a collision",
       start.x(), start.y());
@@ -68,8 +68,10 @@ std::vector<Point> AStarPathPlanner::Plan(const Point & start, const Point & goa
 
   while (!frontier_.empty()) {
     // Get next state to expand
-    const auto [path, cost] = frontier_.top();
+    const auto entry = frontier_.top();
     frontier_.pop();
+    const auto path = entry.path;
+    const auto cost = entry.cost;
     const auto last_state = path.back();
 
     // Skip if we've already expanded this state
@@ -87,23 +89,24 @@ std::vector<Point> AStarPathPlanner::Plan(const Point & start, const Point & goa
 
     const auto neighbors = GetAdjacentPoints(last_state);
 
-    // Add all neighbors to the frontier
-    for (const auto & neighbor : neighbors) {
-      std::vector<Point> new_path(path);
-      new_path.push_back(neighbor);
-      const auto new_cost = (cost - GetHeuristicCost(last_state)) +
-        GetStepCost(last_state, neighbor) + GetHeuristicCost(neighbor);
-      frontier_.push({new_path, new_cost});
-    }
+    std::for_each(neighbors.begin(), neighbors.end(), [this,&path,&cost](const auto& neighbor){
+      ExtendPathAndAddToFrontier(path,cost,neighbor);
+    });
   }
 
   RCLCPP_ERROR(logger_, "No path found after exhausting search space.");
   return {};
 }
 
-bool AStarPathPlanner::IsGoal(const Point & point)
+void AStarPathPlanner::ExtendPathAndAddToFrontier(
+  const std::vector<Point> & path, const double & path_cost,
+  const Point & next_point)
 {
-  return (point - goal_).norm() < goal_threshold_;
+  std::vector<Point> new_path(path);
+  new_path.push_back(next_point);
+  const auto new_cost = path_cost - GetHeuristicCost(path.back()) +
+    GetStepCost(path.back(), next_point) + GetHeuristicCost(next_point);
+  frontier_.push({new_path, new_cost});
 }
 
 std::vector<Point> AStarPathPlanner::GetAdjacentPoints(const Point & point)
@@ -116,7 +119,7 @@ std::vector<Point> AStarPathPlanner::GetAdjacentPoints(const Point & point)
         continue;
       }
       const Point neighbor{point.x() + dx, point.y() + dy};
-      if (!PointInCollision(neighbor)) {
+      if (!IsPointInCollision(neighbor)) {
         neighbors.push_back(neighbor);
       }
     }
@@ -135,7 +138,12 @@ double AStarPathPlanner::GetStepCost(const Point & point, const Point & next)
   return (next - point).norm();
 }
 
-bool AStarPathPlanner::PointInCollision(const Point & point)
+bool AStarPathPlanner::IsGoal(const Point & point)
+{
+  return (point - goal_).norm() < goal_threshold_;
+}
+
+bool AStarPathPlanner::IsPointInCollision(const Point & point)
 {
   auto costmap = ros_costmap_->getCostmap();
 
