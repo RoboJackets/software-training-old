@@ -1,4 +1,3 @@
-
 * RoboJackets Virtual Machine Setup Guide
 
 This document will help you get started using the RoboJackets Software Virtualbox Image
@@ -65,4 +64,3 @@ This document will help you get started using the RoboJackets Software Virtualbo
     2. If you are having other graphical issues check how much VRAM is allocated by right clicking the virtualbox entry and hitting =Settings=. Then, go to the =Display= tab and confirm that =VRAM= is set to 128 MB and the =Enable 3D Acceleration= checkbox is checked. 
         
     3. Check to see if too much memory/cpu's have been allocated to the virtual machine by right clicking the virtualbox entry and hitting =Settings=. Then, go to the =System= tab and check that the=Memory= slider on the =Motherboard= tab is set to around half of your total system RAM. Finally, go to the =Processor= tab and check that the =Processor(s)= slider is set to between 1 and half of your total system CPU cores and that the =Exectuion Cap= is set to 100%.
-    
