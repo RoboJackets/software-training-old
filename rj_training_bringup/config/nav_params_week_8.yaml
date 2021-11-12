@@ -41,17 +41,17 @@ controller_server:
       plugin: "stsl_nav_plugins::NoProgressChecker"
     goal_checker:
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.01
+      xy_goal_tolerance: 0.025
       yaw_goal_tolerance: 6.28318530718
     FollowPath:
       plugin: "lqr_control::LqrController"
-      dt: 0.25
+      dt: 0.2
       T: 4.0
-      Q: [1.0, 1.0, 0.2]
-      Qf: [10.0, 10.0, 0.1]
-      R: [0.1, 0.05]
-      time_between_states: 0.5
-      iterations: 3
+      Q: [10.0, 10.0, 0.00]
+      Qf: [100.0, 100.0, 0.0]
+      R: [0.3, 0.05]
+      time_between_states: 0.2
+      iterations: 1
 
 controller_server_rclcpp_node:
   ros__parameters:
