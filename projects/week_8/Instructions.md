@@ -24,7 +24,8 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
   - [3.5 Implement ExtendPathAndAddToFrontier()](#35-implement-extendpathandaddtofrontier)
   - [3.6 Implement Plan()](#36-implement-plan)
   - [3.7 Practice using rosbag](#37-practice-using-rosbag)
-  - [3.8 Commit your new code in git](#38-commit-your-new-code-in-git)
+  - [3.8 Turn on replanning](#38-turn-on-replanning)
+  - [3.9 Commit your new code in git](#39-commit-your-new-code-in-git)
 - [4 Congrats!](#4-congrats)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -246,7 +247,21 @@ Back in either rviz or gazebo, you should see your robot driving along the same 
 
 You can find out more about using rosbag2 from the documentation in its [readme](https://github.com/ros2/rosbag2/blob/master/README.md).
 
-### 3.8 Commit your new code in git
+### 3.8 Turn on replanning
+
+You may have noticed that our robot doesn't update it's planned path as it discovers new obstacles. Thus, it may drive straight through an obstacle that wasn't on the map when it started. Nav2 has a lot of different ways to deal with this kind of situation. The high-level behavior of the navigation stack is governed by a [behavior tree](https://en.wikipedia.org/wiki/Behavior_tree_(artificial_intelligence,_robotics_and_control). Behavior trees are described in XML files where each tag represents a node in the tree.
+
+So far we've been using a very simple behavior tree, [navigate.xml](../../rj_training_bringup/behavior_trees/navigate.xml). This tree just plans the path and then follows it. This is pretty much the shortest functional tree you can write for Nav2.
+
+We've prepared a second behavior tree for you that is only a little more advanced, [navigate_w_replanning.xml](../../rj_training_bringup/behavior_trees/navigate_w_replanning.xml). This tree adds a `DistanceController` node which causes the robot to replan its path after its moved 0.1 meters. So, it will plan a path, follow it for 0.1m, and then repeat until it reaches the goal.
+
+Change the behavior tree given to the navigation stack in [week_8.launch.xml](../../rj_training_bringup/launch/projects/week_8.launch.xml). The new behavior tree is in the same location, so you should just need to change the file name to "navigate_w_replanning.xml".
+
+If you build your workspace and run the project again, you should see the plan get updated periodicaly as the robot moves. This still isn't foolproof. It's very possible for your robot to wander into an obstacle during that 0.1m of movement. It does, however, generally give your robot a better shot at avoiding new obstacles.
+
+If you're interested in learning more about Nav2 behavior trees, check out their [documentation](https://navigation.ros.org/behavior_trees/index.html).
+
+### 3.9 Commit your new code in git
 
 Once you've got your code for this project working, use the command below to commit it into git. This will make it easier to grab changes to the starter code for the remaining projects.
 
