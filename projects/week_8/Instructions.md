@@ -19,12 +19,13 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 - [3 Instructions](#3-instructions)
   - [3.1 Get the latest starter code](#31-get-the-latest-starter-code)
   - [3.2 Implement IsGoal()](#32-implement-isgoal)
-  - [3.3 Implement GetStepCost()](#33-implement-getstepcost)
-  - [3.4 Implement GetHeuristicCost()](#34-implement-getheuristiccost)
-  - [3.5 Implement GetAdjacentPoints()](#35-implement-getadjacentpoints)
-  - [3.6 Implement ExtendPathAndAddToFrontier()](#36-implement-extendpathandaddtofrontier)
-  - [3.7 Implement Plan()](#37-implement-plan)
-  - [3.10 Commit your new code in git](#310-commit-your-new-code-in-git)
+  - [3.3 Implement GetStepCost() and GetHeuristicCost()](#33-implement-getstepcost-and-getheuristiccost)
+  - [3.4 Implement GetAdjacentPoints()](#34-implement-getadjacentpoints)
+  - [3.5 Implement ExtendPathAndAddToFrontier()](#35-implement-extendpathandaddtofrontier)
+  - [3.6 Implement Plan()](#36-implement-plan)
+  - [3.7 Practice using rosbag](#37-practice-using-rosbag)
+  - [3.8 Commit your new code in git](#38-commit-your-new-code-in-git)
+- [4 Congrats!](#4-congrats)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -199,14 +200,62 @@ RCLCPP_ERROR(logger_, "No path found after exhausting search space.");
 return {};
 ```
 
-### 3.7 use rosbag
+### 3.7 Practice using rosbag
 
+At this point, we're done writing code. You should be able to build your workspace and run the project following the instructions in [section 2](#2-running-this-project). Make sure this works before continuing with this section.
 
+Now, let's get some practice with rosbag. Bag files are a way to record and playback messages sent across ROS topics. They are a super useful way to record data for testing or debugging.
+
+For this project, let's get some quick practice using the ros2 command line tool to record and playback a bag file. First, start up the project nodes with the week 8 launch file.
+
+```bash
+$ ros2 launch rj_training_bringup week_8.launch.xml
+```
+
+Now, in a second terminal, let's start recording the messages sent on the `/cmd_vel` topic.
+
+```bash
+$ ros2 bag record /cmd_vel
+```
+
+This will start recording messages into a bag file in your current working directory.
+
+In rviz, command the robot to drive to a spot with the "2D Goal Pose" button, as described in section 2. Wait for the robot to complete its navigation, then use Ctrl+C to kill both the bag recording and the main project file.
+
+You should now see a folder in the current working directory of your bag recording terminal. This folder contains the bag file and a metadata YAML file. We can use the `info` command to see the details about what this bag contains. (Make sure to replace the example name here with the actual name of your bag folder.)
+
+```bash
+$ ros2 bag info rosbag2_yyyy_mm_dd-hh_mm_ss/
+```
+
+In the output of this command you should see many details about the bag file, including when it was recorded, how long of a duration it covers, and how many messages it recorded on each topic included. If everything worked, you should see a couple hundred messages on the `/cmd_vel` topic. The exact amount will depend on how long your bag file is.
+
+Now we can play back the command velocities stored in our bag file to get the robot to replay the same trajectory. Start up the week 8 launch file again.
+
+```bash
+$ ros2 launch rj_training_bringup week_8.launch.xml
+```
+
+Now, in the second terminal, use the `play` command to start playback of the bag file.
+
+```bash
+$ ros2 bag play rosbag2_yyyy_mm_dd-hh_mm_ss/
+```
+
+Back in either rviz or gazebo, you should see your robot driving along the same route it drove moments ago. Notice that none of the navigation stack visuals (the path and the expanded points) show up in rviz. This is because we're not using the navigation stack! We're just playing back the same velocity commands the navigation stack had previously generated for us.
+
+You can find out more about using rosbag2 from the documentation in its [readme](https://github.com/ros2/rosbag2/blob/master/README.md).
 
 ### 3.8 Commit your new code in git
 
 Once you've got your code for this project working, use the command below to commit it into git. This will make it easier to grab changes to the starter code for the remaining projects.
 
 ```bash
-$ git commit -a -m "My project 6 code."
+$ git commit -a -m "My project 8 code."
 ```
+
+## 4 Congrats!
+
+Congratulations and thank you for completing the last of our 8 projects!
+
+<!-- TODO add link to instructions for running final challenge. -->
