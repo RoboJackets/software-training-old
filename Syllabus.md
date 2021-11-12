@@ -100,7 +100,7 @@ Week | Robotics Theory | C++ | ROS
 5 | [Playlist](https://www.youtube.com/watch?v=CgiVz-KMBH0&list=PL1R5gSylLha1cX02r8hiMA85vPmfSYHP_) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1huMeonsTMxqU8DE7m_zWh) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2od_7P9YuSSLsKCd3vtCY7)
 6 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0j_tmn3YhTTs90-pUFuZH9) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3kQMd1tIxDywbOWNNYaiJM) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0IvTKCOckpL5QvVB4Hn-97)
 7 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3nYaE3PTmJIon7GgIxzr_M) | No C++ videos this week | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1qUf5ngWco_EnNfYsTzAUc)
-8 | | |
+8 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1epFZYz_z2BKO0sSXNPcjM) | |
 
 ## Project Schedule
 
