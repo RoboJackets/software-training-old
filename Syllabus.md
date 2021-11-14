@@ -82,7 +82,7 @@ Week | Robotics Theory | ROS | C++
 5 | SLAM, Mapping | TF, Custom Interfaces | Lambdas
 6 | Kalman Filters | Quality of Service | Templates
 7 | Control | Actions |
-8 | Path Planning | rosbag | Iterators, Algorithms
+8 | Path Planning | Bags | Iterators, Algorithms
 
 ## Video Schedule
 
@@ -100,7 +100,7 @@ Week | Robotics Theory | C++ | ROS
 5 | [Playlist](https://www.youtube.com/watch?v=CgiVz-KMBH0&list=PL1R5gSylLha1cX02r8hiMA85vPmfSYHP_) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1huMeonsTMxqU8DE7m_zWh) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2od_7P9YuSSLsKCd3vtCY7)
 6 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0j_tmn3YhTTs90-pUFuZH9) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3kQMd1tIxDywbOWNNYaiJM) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0IvTKCOckpL5QvVB4Hn-97)
 7 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3nYaE3PTmJIon7GgIxzr_M) | No C++ videos this week | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1qUf5ngWco_EnNfYsTzAUc)
-8 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1epFZYz_z2BKO0sSXNPcjM) | |
+8 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1epFZYz_z2BKO0sSXNPcjM) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1l1f8OcxXCVtnh6XmPzFzU) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2i-XmvxwzfPgBKSJ6EKcF4)
 
 ## Project Schedule
 
@@ -126,5 +126,5 @@ Week | Title | Worksheet | Solutions
 4 | Optimization | [Sheet](https://drive.google.com/file/d/1Aly66DlZdsVI6cXFvYiMf55G17Fb8wAP/view?usp=sharing) | [Solutions](https://drive.google.com/file/d/1NQUzBEHjBFmcptKXA6lt_mlFg_643osC/view?usp=sharing)
 5 | SLAM | [Sheet](https://drive.google.com/file/d/1o6NjqCvy8NcEIltzQVaopmZFODLcoPmy/view?usp=sharing) | [Solutions](https://drive.google.com/file/d/1_bqroLE8-UTiIGRiDryycg_3FNnZlOuA/view?usp=sharing)
 6 | No worksheet this week | |
-7 | | |
-8 | | |
+7 | No worksheet this week | |
+8 | No worksheet this week | |
