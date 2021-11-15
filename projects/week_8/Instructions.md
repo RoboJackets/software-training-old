@@ -36,7 +36,7 @@ So far, our robot has been able to identify obstacles and map the world around i
 
 ### 1.1 The A* (A-Star) path planner
 
-The planning algorithm we'll be implementing is call [A*](https://en.wikipedia.org/wiki/A*_search_algorithm) (pronounced "a star"). This is a graph-search algorithm which can efficiently find paths accounting for impassible obstacles and differently weighted parts of the world.
+The planning algorithm we'll be implementing is called [A*](https://en.wikipedia.org/wiki/A*_search_algorithm) (pronounced "a star"). This is a graph-search algorithm which can efficiently find paths accounting for impassible obstacles and differently weighted parts of the world.
 
 We won't describe the whole A* algorithm here (check out the videos for that). We will be implementing the functions which
 
@@ -118,7 +118,7 @@ return (point - goal_).norm() < goal_threshold_;
 
 Next, we need to define the step cost and heuristic functions the A* planner will use. The step cost is the cost we assign to the robot moving from one graph node to the next. The heuristic is an estimate of the remaining cost from any node to the goal.
 
-When using A*, we need to pick our step cost and heuristic functions such that they are ["admissable"](https://en.wikipedia.org/wiki/A*_search_algorithm#Admissibility). One easy set of admissable cost and heuristic for 2D path planning is the euclidean distance between points.
+When using A*, we need to pick our step cost and heuristic functions such that they are ["admissable"](https://en.wikipedia.org/wiki/A*_search_algorithm#Admissibility). One easy set of admissable cost and heuristic for 2D path planning is the euclidean distance between points. This is always less than or equal to the true path traversal cost.
 
 Find the student code block in `GetStepCost()`. Implement this function such that it returns the distance between `next` and `point`. (This should use the same subtract and `norm()` approach we used in `IsGoal()`.)
 
@@ -150,7 +150,7 @@ Start by declaring a new `std::vector<Point>` named `new_path`. Initialize this 
 
 Next, append `next_point` to `new_path`.
 
-To calculate the cost of this new path, subtract the heuristic of the old path's last state from the old path's cost. Then, add the step cost to get from the old path's last state to the new point, and add the heuristic value for the new last point.
+To calculate the cost of this new path, subtract the heuristic of the old path's last state from the old path's cost. Then, add the step cost to get from the old path's last state to the new point, and add the heuristic value for the new last point. Remember the A* cost should be the summation of the true cost to get to the new node plus the heuristic at that node.
 
 Finally, add a new entry to the frontier for this new path and cost:
 
