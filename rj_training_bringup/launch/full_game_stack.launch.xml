@@ -19,6 +19,7 @@
     </include>
     <include file="$(find-pkg-share rj_training_bringup)/launch/navigation.launch.py">
         <arg name="use_sim_time" value="$(var use_sim_time)"/>
+        <arg name="behavior_tree" value="$(find-pkg-share rj_training_bringup)/behavior_trees/navigate_w_replanning.xml"/>
     </include>
     <node pkg="peak_finder" exec="peak_finder_node">
         <arg name="use_sim_time" value="$(var use_sim_time)"/>

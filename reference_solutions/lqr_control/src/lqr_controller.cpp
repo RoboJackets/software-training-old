@@ -45,7 +45,6 @@ public:
     const std::shared_ptr<tf2_ros::Buffer> & tf_buffer,
     const std::shared_ptr<nav2_costmap_2d::Costmap2DROS> & costmap) override
   {
-
     node_ = node;
     traj_viz_pub_ = node_->create_publisher<nav_msgs::msg::Path>(
       "~/tracking_traj",
@@ -77,7 +76,6 @@ public:
     Qf_(0, 0) = Qf_temp[0];
     Qf_(1, 1) = Qf_temp[1];
     Qf_(2, 2) = Qf_temp[2];
-
 
     std::vector<double> R_temp = node->declare_parameter<std::vector<double>>(
       name + ".R", {0.1,
@@ -144,6 +142,16 @@ public:
       path.poses.begin(), path.poses.end(), std::back_inserter(
         trajectory_), StateFromMsg);
     path_start_time_ = node_->now();
+    resetStates(Eigen::Vector3d::Zero());
+  }
+
+  void resetStates(Eigen::Vector3d init_state) {
+    prev_x_[0] = init_state;
+    for(int t = 1; t < T_/dt_; t++) {
+      prev_x_[t] = interpolateState(path_start_time_ + rclcpp::Duration(t*dt_*1e9));
+      RCLCPP_INFO_STREAM(node_->get_logger(), "got interpolated state: " << prev_x_[t].transpose());
+    }
+    prev_u_ = std::vector<Eigen::Vector2d>(T_ / dt_, Eigen::Vector2d::Zero());
   }
 
   geometry_msgs::msg::TwistStamped computeVelocityCommands(
@@ -158,8 +166,14 @@ public:
     }
 
     geometry_msgs::msg::TwistStamped cmd_vel_msg;
-    cmd_vel_msg.twist.linear.x = prev_u_[0](0);
-    cmd_vel_msg.twist.angular.z = prev_u_[0](1);
+    if (prev_u_[0].hasNaN()) {
+      RCLCPP_INFO_STREAM(node_->get_logger(), "fixing nan control: " << prev_u_[0].transpose());
+      resetStates(state);
+      prev_u_[0](0) = 0.1;
+    }
+
+    cmd_vel_msg.twist.linear.x = std::clamp(prev_u_[0](0), -2.0, 2.0);
+    cmd_vel_msg.twist.angular.z = std::clamp(prev_u_[0](1), -2.0, 2.0);
     cmd_vel_msg.header.frame_id = "base_link";
     cmd_vel_msg.header.stamp = node_->now();
     return cmd_vel_msg;
@@ -245,9 +259,9 @@ private:
   double T_;
 
   // cost function
-  Eigen::Matrix3d Q_;
-  Eigen::Matrix3d Qf_;
-  Eigen::Matrix2d R_;
+  Eigen::Matrix3d Q_ = Eigen::Matrix3d::Zero();
+  Eigen::Matrix3d Qf_ = Eigen::Matrix3d::Zero();
+  Eigen::Matrix2d R_ = Eigen::Matrix2d::Zero();
 
   // Ricatti equation
   std::vector<Eigen::Matrix3d> S_;
