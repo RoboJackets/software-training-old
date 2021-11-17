@@ -66,15 +66,15 @@ public:
 
     if (start.header.frame_id != global_frame_) {
       RCLCPP_ERROR(
-        node_->get_logger(), "Planner will only except start position from %s frame",
-        global_frame_.c_str());
+        node_->get_logger(), "Planner will only accept start position from %s frame. Got %s instead.",
+        global_frame_.c_str(), start.header.frame_id.c_str());
       return path;
     }
 
     if (goal.header.frame_id != global_frame_) {
       RCLCPP_INFO(
-        node_->get_logger(), "Planner will only except goal position from %s frame",
-        global_frame_.c_str());
+        node_->get_logger(), "Planner will only accept goal position from %s frame. Got %s instead.",
+        global_frame_.c_str(), goal.header.frame_id.c_str());
       return path;
     }
 
