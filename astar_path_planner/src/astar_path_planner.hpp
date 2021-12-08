@@ -23,6 +23,8 @@
 #include <nav2_costmap_2d/costmap_2d_ros.hpp>
 #include <rclcpp_lifecycle/lifecycle_node.hpp>
 #include <memory>
+#include <queue>
+#include <unordered_set>
 #include <vector>
 #include "utils.hpp"
 
@@ -59,7 +61,9 @@ private:
   ExpandedSet expanded_;
   FrontierQueue frontier_;
 
-  void ExtendPathAndAddToFrontier(const std::vector<Point> & path, const double & path_cost, const Point & next_point);
+  void ExtendPathAndAddToFrontier(
+    const std::vector<Point> & path, const double & path_cost,
+    const Point & next_point);
 
   std::vector<Point> GetAdjacentPoints(const Point & point);
 

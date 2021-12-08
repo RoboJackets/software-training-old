@@ -66,14 +66,16 @@ public:
 
     if (start.header.frame_id != global_frame_) {
       RCLCPP_ERROR(
-        node_->get_logger(), "Planner will only accept start position from %s frame. Got %s instead.",
+        node_->get_logger(),
+        "Planner will only accept start position from %s frame. Got %s instead.",
         global_frame_.c_str(), start.header.frame_id.c_str());
       return path;
     }
 
     if (goal.header.frame_id != global_frame_) {
       RCLCPP_INFO(
-        node_->get_logger(), "Planner will only accept goal position from %s frame. Got %s instead.",
+        node_->get_logger(),
+        "Planner will only accept goal position from %s frame. Got %s instead.",
         global_frame_.c_str(), goal.header.frame_id.c_str());
       return path;
     }
@@ -123,7 +125,8 @@ private:
   rclcpp_lifecycle::LifecycleNode::SharedPtr node_;
   std::string global_frame_;
   std::shared_ptr<nav2_costmap_2d::Costmap2DROS> costmap_ros_;
-  rclcpp_lifecycle::LifecyclePublisher<visualization_msgs::msg::Marker>::SharedPtr expanded_viz_pub_;
+  rclcpp_lifecycle::LifecyclePublisher<visualization_msgs::msg::Marker>::SharedPtr
+    expanded_viz_pub_;
 
 
   void PublishExpandedViz(const AStarPathPlanner::ExpandedSet & expanded)

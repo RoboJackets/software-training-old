@@ -51,7 +51,9 @@ public:
     const std::shared_ptr<nav2_costmap_2d::Costmap2DROS> & costmap) override
   {
     node_ = node;
-    traj_viz_pub_ = node_->create_publisher<nav_msgs::msg::Path>("~/tracking_traj", rclcpp::SystemDefaultsQoS());
+    traj_viz_pub_ = node_->create_publisher<nav_msgs::msg::Path>(
+      "~/tracking_traj",
+      rclcpp::SystemDefaultsQoS());
 
     // BEGIN STUDENT CODE
     // END STUDENT CODE

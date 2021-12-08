@@ -39,7 +39,6 @@ public:
 protected:
   std::vector<double> covariance_;
   double timeout_;
-
 };
 }  // namespace localization
 

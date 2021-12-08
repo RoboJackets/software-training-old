@@ -90,8 +90,9 @@ double ArucoSensorModel::ComputeLogProb(const Particle & particle)
 
 bool ArucoSensorModel::IsMeasurementAvailable(const rclcpp::Time & cur_time)
 {
-  if(last_msg_.header.stamp.sec == 0)
+  if (last_msg_.header.stamp.sec == 0) {
     return false;
+  }
   const auto time_since_last_msg = cur_time - rclcpp::Time(last_msg_.header.stamp);
   return time_since_last_msg.seconds() < timeout_;
 }

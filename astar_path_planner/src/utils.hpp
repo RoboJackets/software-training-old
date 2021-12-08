@@ -21,9 +21,9 @@
 #ifndef UTILS_HPP_
 #define UTILS_HPP_
 
+#include <nav2_costmap_2d/costmap_2d.hpp>
 #include <Eigen/Dense>
 #include <vector>
-#include <nav2_costmap_2d/costmap_2d.hpp>
 
 namespace astar_path_planner
 {

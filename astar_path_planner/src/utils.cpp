@@ -20,6 +20,7 @@
 
 #include "utils.hpp"
 #include <algorithm>
+#include <vector>
 
 namespace astar_path_planner
 {
@@ -66,4 +67,4 @@ std::vector<nav2_costmap_2d::MapLocation> PolygonForCircle(
   return polygon;
 }
 
-} // namespace astar_path_planner
+}  // namespace astar_path_planner

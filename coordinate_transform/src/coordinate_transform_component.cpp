@@ -76,7 +76,8 @@ private:
     const Eigen::Matrix4d camera_to_base_transform = tf2::transformToEigen(tf_transform).matrix();
 
     // creates a matrix that goes from camera to standard ROS coordinates
-    Eigen::Matrix4d camera_optical_to_conventional_transform = getTransformationMatrixForOpticalFrame();
+    Eigen::Matrix4d camera_optical_to_conventional_transform =
+      getTransformationMatrixForOpticalFrame();
 
     // BEGIN STUDENT CODE
     // END STUDENT CODE

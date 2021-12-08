@@ -84,8 +84,8 @@ private:
   Particle CalculateCovariance(const Particle & estimate);
   void ResampleParticles();
   void CalculateStateAndPublish();
-  void CalculateAllParticleWeights(const rclcpp::Time& current_time);
-  void CalculateParticleWeight(Particle& particle, const rclcpp::Time& current_time);
+  void CalculateAllParticleWeights(const rclcpp::Time & current_time);
+  void CalculateParticleWeight(Particle & particle, const rclcpp::Time & current_time);
 
   void PublishEstimateOdom(
     const Particle & estimate, const Particle & covariance,
