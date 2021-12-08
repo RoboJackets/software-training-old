@@ -1,15 +1,27 @@
 <launch>
     <arg name="use_sim_time" default="True"/>
+    <arg name="start_rviz" default="True"/>
+
     <include file="$(find-pkg-share traini_bringup)/launch/tag_detector.launch.py">
         <arg name="use_sim_time" value="$(var use_sim_time)"/>
     </include>
+    <node pkg="coordinate_transform" exec="coordinate_transform_node">
+      <param name="use_sim_time" value="$(var use_sim_time)"/>
+      <remap from="~/tags" to="/aruco_tag_detector/tags"/>
+    </node>
     <include file="$(find-pkg-share traini_bringup)/launch/mineral_deposit_detector.launch.py">
         <param name="use_sim_time" value="$(var use_sim_time)"/>
     </include>
     <include file="$(find-pkg-share rj_training_bringup)/launch/mineral_deposit_tracker.launch.py">
         <param name="use_sim_time" value="$(var use_sim_time)"/>
     </include>
-    <include file="$(find-pkg-share obstacle_detector)/launch/obstacle_detector.launch.py"/>
+    <include file="$(find-pkg-share obstacle_detector)/launch/obstacle_detector.launch.py">
+        <arg name="use_sim_time" value="$(var use_sim_time)"/>
+    </include>
+    <set_remap from="/mapping_node/map" to="/map"/>
+    <include file="$(find-pkg-share mapping)/launch/mapping.launch.xml">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+    </include>
     <include file="$(find-pkg-share rj_training_bringup)/launch/fake_localizer.launch.py">
         <!-- TODO (barulicm) Replace with particle filter localizer when it's ready -->
         <arg name="use_sim_time" value="$(var use_sim_time)"/>
@@ -19,7 +31,8 @@
     </include>
     <include file="$(find-pkg-share rj_training_bringup)/launch/navigation.launch.py">
         <arg name="use_sim_time" value="$(var use_sim_time)"/>
-        <arg name="behavior_tree" value="$(find-pkg-share rj_training_bringup)/behavior_trees/navigate_w_replanning.xml"/>
+        <arg name="params_file" value="$(find-pkg-share rj_training_bringup)/config/nav_params_final_challenge.yaml"/>
+        <arg name="behavior_tree" value="$(find-pkg-share rj_training_bringup)/behavior_trees/navigate.xml"/>
     </include>
     <node pkg="peak_finder" exec="peak_finder_node">
         <arg name="use_sim_time" value="$(var use_sim_time)"/>
@@ -28,4 +41,10 @@
         <arg name="use_sim_time" value="$(var use_sim_time)"/>
         <arg name="mineral_samples_file" value="$(find-pkg-share rj_training_bringup)/mineral_sample_sets/default.yaml"/>
     </include>
+    <node pkg="stsl_utils" exec="floor_mat_visualizer">
+        <param name="use_sim_time" value="$(var use_sim_time)"/>
+      </node>
+    <node if="$(var start_rviz)" pkg="rviz2" exec="rviz2" args="-d $(find-pkg-share rj_training_bringup)/rviz_config/final_challenge.rviz">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+    </node>
 </launch>

@@ -24,7 +24,7 @@
   </include>
   <include file="$(find-pkg-share mission_orchestration)/launch/mission_orchestrator.launch.py">
       <arg name="use_sim_time" value="$(var simulation)"/>
-      <arg name="behavior_tree" value="$(find-pkg-share mission_orchestration)/behavior_trees/mineral_tracking_test_tree.xml"/>
+      <arg name="mission_behavior_tree" value="$(find-pkg-share mission_orchestration)/behavior_trees/mineral_tracking_test_tree.xml"/>
       <arg name="mineral_samples_file" value="$(find-pkg-share rj_training_bringup)/mineral_sample_sets/default.yaml"/>
   </include>
   <node pkg="stsl_utils" exec="floor_mat_visualizer">
