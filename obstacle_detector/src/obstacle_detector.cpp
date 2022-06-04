@@ -25,7 +25,7 @@
 #include <opencv2/highgui.hpp>
 #include <nav_msgs/msg/occupancy_grid.hpp>
 #include <tf2_ros/transform_listener.h>
-#include <tf2_eigen/tf2_eigen.h>
+#include <tf2_eigen/tf2_eigen.hpp>
 #include <opencv2/core/eigen.hpp>
 #include <string>
 #include <algorithm>
@@ -94,7 +94,7 @@ private:
     {
       RCLCPP_WARN_THROTTLE(
         get_logger(), *get_clock(), 1000, "Could not lookup transform. %s",
-        tf_error_string);
+        tf_error_string.c_str());
       return;
     }
 

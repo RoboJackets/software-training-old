@@ -4,12 +4,14 @@ project(astar_path_planner)
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(nav2_core REQUIRED)
+find_package(tf2_eigen REQUIRED)
 find_package(Eigen3 REQUIRED)
 
 set(dependencies
   rclcpp
   nav2_core
   angles
+  tf2_eigen
   Eigen3
 )
 

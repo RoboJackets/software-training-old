@@ -21,7 +21,7 @@
 #ifndef ARUCO_SENSOR_MODEL_HPP_
 #define ARUCO_SENSOR_MODEL_HPP_
 
-#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
 #include <stsl_interfaces/msg/tag_array.hpp>
 #include <map>
 #include "sensor_model.hpp"
