@@ -21,10 +21,10 @@
 #ifndef NAVIGATOR_HPP_
 #define NAVIGATOR_HPP_
 
+#include <memory>
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_action/rclcpp_action.hpp>
 #include <nav2_msgs/action/navigate_to_pose.hpp>
-#include <memory>
 
 namespace peak_finder
 {

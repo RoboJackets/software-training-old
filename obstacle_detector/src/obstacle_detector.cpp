@@ -18,17 +18,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#include <cv_bridge/cv_bridge.h>
+#include <tf2_ros/transform_listener.h>
+#include <string>
+#include <algorithm>
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_components/register_node_macro.hpp>
-#include <cv_bridge/cv_bridge.h>
 #include <image_transport/image_transport.hpp>
 #include <opencv2/highgui.hpp>
 #include <nav_msgs/msg/occupancy_grid.hpp>
-#include <tf2_ros/transform_listener.h>
 #include <tf2_eigen/tf2_eigen.hpp>
 #include <opencv2/core/eigen.hpp>
-#include <string>
-#include <algorithm>
 
 // BEGIN STUDENT CODE
 // END STUDENT CODE

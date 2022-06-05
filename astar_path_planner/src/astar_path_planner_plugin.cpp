@@ -18,14 +18,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "astar_path_planner.hpp"
+#include <memory>
+#include <string>
+#include <vector>
 #include <nav2_core/global_planner.hpp>
 #include <pluginlib/class_list_macros.hpp>
 #include <visualization_msgs/msg/marker.hpp>
 #include <tf2_eigen/tf2_eigen.hpp>
-#include <memory>
-#include <string>
-#include <vector>
+#include "astar_path_planner.hpp"
 
 namespace astar_path_planner
 {
@@ -40,7 +40,7 @@ public:
   {
     node_ = node;
     auto node_shared = node_.lock();
-    if(!node_shared) {
+    if (!node_shared) {
       throw std::runtime_error{"Could not acquire node."};
     }
     global_frame_ = costmap_ros->getGlobalFrameID();
@@ -65,7 +65,7 @@ public:
     const geometry_msgs::msg::PoseStamped & goal) override
   {
     auto node_shared = node_.lock();
-    if(!node_shared) {
+    if (!node_shared) {
       throw std::runtime_error{"Could not acquire node."};
     }
 
@@ -141,7 +141,7 @@ private:
   void PublishExpandedViz(const AStarPathPlanner::ExpandedSet & expanded)
   {
     auto node_shared = node_.lock();
-    if(!node_shared) {
+    if (!node_shared) {
       throw std::runtime_error{"Could not acquire node."};
     }
 

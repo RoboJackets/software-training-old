@@ -18,19 +18,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#include <tf2_ros/transform_listener.h>
+#include <Eigen/Dense>
+#include <memory>
+#include <string>
+#include <vector>
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_components/register_node_macro.hpp>
 #include <rclcpp_action/rclcpp_action.hpp>
 #include <stsl_interfaces/action/park_at_peak.hpp>
 // BEGIN STUDENT CODE
 // END STUDENT CODE
-#include <tf2_ros/transform_listener.h>
 #include <tf2_eigen/tf2_eigen.hpp>
-#include <Eigen/Dense>
 #include <nav2_msgs/action/navigate_to_pose.hpp>
-#include <memory>
-#include <string>
-#include <vector>
 #include "navigator.hpp"
 
 namespace peak_finder

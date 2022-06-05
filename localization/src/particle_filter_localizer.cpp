@@ -20,11 +20,11 @@
 
 #include "particle_filter_localizer.hpp"
 #include <angles/angles.h>
-#include <rclcpp_components/register_node_macro.hpp>
 #include <algorithm>
 #include <memory>
 #include <vector>
 #include <utility>
+#include <rclcpp_components/register_node_macro.hpp>
 #include "aruco_sensor_model.hpp"
 // BEGIN STUDENT CODE
 // END STUDENT CODE

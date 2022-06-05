@@ -20,12 +20,12 @@
 #ifndef ASTAR_PATH_PLANNER_HPP_
 #define ASTAR_PATH_PLANNER_HPP_
 
-#include <nav2_costmap_2d/costmap_2d_ros.hpp>
-#include <rclcpp_lifecycle/lifecycle_node.hpp>
 #include <memory>
 #include <queue>
 #include <unordered_set>
 #include <vector>
+#include <nav2_costmap_2d/costmap_2d_ros.hpp>
+#include <rclcpp_lifecycle/lifecycle_node.hpp>
 #include "utils.hpp"
 
 namespace astar_path_planner

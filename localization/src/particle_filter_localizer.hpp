@@ -24,12 +24,11 @@
 #include <tf2_ros/buffer.h>
 #include <tf2_ros/transform_listener.h>
 #include <tf2_ros/transform_broadcaster.h>
+#include <memory>
+#include <vector>
 #include <rclcpp/rclcpp.hpp>
 #include <nav_msgs/msg/odometry.hpp>
 #include <visualization_msgs/msg/marker.hpp>
-#include <memory>
-#include <vector>
-
 #include "particle.hpp"
 #include "sensor_model.hpp"
 #include "motion_model.hpp"

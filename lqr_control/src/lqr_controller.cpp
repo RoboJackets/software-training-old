@@ -18,15 +18,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include <nav2_core/controller.hpp>
-#include <pluginlib/class_list_macros.hpp>
-#include <tf2_eigen/tf2_eigen.hpp>
-#include <Eigen/Dense>
 #include <angles/angles.h>
+#include <Eigen/Dense>
 #include <vector>
 #include <memory>
 #include <string>
 #include <algorithm>
+#include <nav2_core/controller.hpp>
+#include <pluginlib/class_list_macros.hpp>
+#include <tf2_eigen/tf2_eigen.hpp>
 
 namespace lqr_control
 {
@@ -53,7 +53,7 @@ public:
     node_ = node;
 
     auto node_shared = node_.lock();
-    if(!node_shared) {
+    if (!node_shared) {
       throw std::runtime_error{"Could not acquire node."};
     }
 
@@ -109,7 +109,7 @@ public:
   void setPlan(const nav_msgs::msg::Path & path) override
   {
     auto node_shared = node_.lock();
-    if(!node_shared) {
+    if (!node_shared) {
       throw std::runtime_error{"Could not acquire node."};
     }
 
@@ -125,9 +125,9 @@ public:
     const geometry_msgs::msg::Twist & velocity,
     nav2_core::GoalChecker * goal_checker) override
   {
-    // TODO goal_checker added in humble
+    // TODO(barulicm) goal_checker added in humble
     auto node_shared = node_.lock();
-    if(!node_shared) {
+    if (!node_shared) {
       throw std::runtime_error{"Could not acquire node."};
     }
 
@@ -146,8 +146,9 @@ public:
     return cmd_vel_msg;
   }
 
-  void setSpeedLimit(const double & speed_limit, const bool & percentage) override {
-    // TODO implement this
+  void setSpeedLimit(const double & speed_limit, const bool & percentage) override
+  {
+    // TODO(barulicm) implement this
   }
 
   Eigen::Matrix3d computeAMatrix(const Eigen::Vector3d & x, const Eigen::Vector2d & u)
