@@ -75,10 +75,10 @@ private:
     // find the transform from the camera to base footprint
     const auto tf_transform =
       tf_buffer_.lookupTransform("base_footprint", "camera_link", tag_array_msg->header.stamp);
-    const Eigen::Matrix4d base_to_camera_transform = tf2::transformToEigen(tf_transform).matrix();
+    const Eigen::Matrix4d camera_to_base_transform = tf2::transformToEigen(tf_transform).matrix();
 
     // creates a matrix that goes from camera to standard ROS coordinates
-    Eigen::Matrix4d camera_to_optical_transform = getTransformationMatrixForOpticalFrame();
+    Eigen::Matrix4d camera_optical_to_conventional_transform = getTransformationMatrixForOpticalFrame();
 
     // BEGIN STUDENT CODE
     std::vector<stsl_interfaces::msg::Tag> new_tags;
@@ -97,7 +97,7 @@ private:
         1);
 
       // Apply the transform to the position
-      position = base_to_camera_transform * camera_to_optical_transform * position;
+      position = camera_to_base_transform * camera_optical_to_conventional_transform * position;
 
       // Copy the new position into the new tag message
       new_tag.pose.position.x = position.x();
@@ -109,7 +109,7 @@ private:
         old_tag.pose.orientation);
 
       // Apply the transform to the orientation
-      tag_orientation = base_to_camera_transform * camera_to_optical_transform * tag_orientation;
+      tag_orientation = camera_to_base_transform * camera_optical_to_conventional_transform * tag_orientation;
 
       // Copy the new orientation into the new tag message
       new_tag.pose.orientation = transformationMatrixToQuaternionMessage(tag_orientation);

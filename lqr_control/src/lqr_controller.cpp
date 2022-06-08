@@ -115,9 +115,27 @@ public:
 
     trajectory_.clear();
     std::transform(
-      path.poses.begin(), path.poses.end(),
-      std::back_inserter(trajectory_), StateFromMsg);
+      path.poses.begin(), path.poses.end(), std::back_inserter(
+        trajectory_), StateFromMsg);
     path_start_time_ = node_shared->now();
+    resetStates(Eigen::Vector3d::Zero());
+  }
+
+  void resetStates(Eigen::Vector3d init_state)
+  {
+    auto node_shared = node_.lock();
+    if (!node_shared) {
+      throw std::runtime_error{"Could not acquire node."};
+    }
+
+    prev_x_[0] = init_state;
+    for (int t = 1; t < T_ / dt_; t++) {
+      prev_x_[t] =
+        interpolateState(path_start_time_ + rclcpp::Duration::from_seconds(t * dt_ * 1e9));
+      RCLCPP_INFO_STREAM(
+        node_shared->get_logger(), "got interpolated state: " << prev_x_[t].transpose());
+    }
+    prev_u_ = std::vector<Eigen::Vector2d>(T_ / dt_, Eigen::Vector2d::Zero());
   }
 
   geometry_msgs::msg::TwistStamped computeVelocityCommands(
@@ -139,8 +157,16 @@ public:
     }
 
     geometry_msgs::msg::TwistStamped cmd_vel_msg;
-    cmd_vel_msg.twist.linear.x = prev_u_[0](0);
-    cmd_vel_msg.twist.angular.z = prev_u_[0](1);
+    if (prev_u_[0].hasNaN()) {
+      RCLCPP_INFO_STREAM(
+        node_shared->get_logger(),
+        "fixing nan control: " << prev_u_[0].transpose());
+      resetStates(state);
+      prev_u_[0](0) = 0.1;
+    }
+
+    cmd_vel_msg.twist.linear.x = std::clamp(prev_u_[0](0), -2.0, 2.0);
+    cmd_vel_msg.twist.angular.z = std::clamp(prev_u_[0](1), -2.0, 2.0);
     cmd_vel_msg.header.frame_id = "base_link";
     cmd_vel_msg.header.stamp = node_shared->now();
     return cmd_vel_msg;

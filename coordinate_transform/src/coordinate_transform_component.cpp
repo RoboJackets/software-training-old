@@ -22,12 +22,12 @@
 #include <geometry_msgs/msg/quaternion.h>
 #include <tf2_ros/transform_listener.h>
 #include <string>
+// BEGIN STUDENT CODE
+// END STUDENT CODE
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_components/register_node_macro.hpp>
 #include <stsl_interfaces/msg/tag_array.hpp>
 #include <tf2_eigen/tf2_eigen.hpp>
-// BEGIN STUDENT CODE
-// END STUDENT CODE
 
 using namespace std::chrono_literals;
 
