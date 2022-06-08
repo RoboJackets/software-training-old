@@ -21,8 +21,8 @@
 #ifndef SENSOR_MODEL_HPP_
 #define SENSOR_MODEL_HPP_
 
-#include <rclcpp/time.hpp>
 #include <vector>
+#include <rclcpp/time.hpp>
 #include "particle.hpp"
 
 namespace localization
@@ -39,7 +39,6 @@ public:
 protected:
   std::vector<double> covariance_;
   double timeout_;
-
 };
 }  // namespace localization
 

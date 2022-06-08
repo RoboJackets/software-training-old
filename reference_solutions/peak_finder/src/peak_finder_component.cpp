@@ -18,6 +18,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#include <tf2_ros/transform_listener.h>
+#include <Eigen/Dense>
+#include <memory>
+#include <string>
+#include <vector>
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_components/register_node_macro.hpp>
 #include <rclcpp_action/rclcpp_action.hpp>
@@ -25,13 +30,8 @@
 // BEGIN STUDENT CODE
 #include <stsl_interfaces/srv/sample_elevation.hpp>
 // END STUDENT CODE
-#include <tf2_ros/transform_listener.h>
-#include <tf2_eigen/tf2_eigen.h>
-#include <Eigen/Dense>
+#include <tf2_eigen/tf2_eigen.hpp>
 #include <nav2_msgs/action/navigate_to_pose.hpp>
-#include <memory>
-#include <string>
-#include <vector>
 #include "navigator.hpp"
 
 namespace peak_finder
@@ -181,12 +181,12 @@ private:
     auto sample_request = std::make_shared<stsl_interfaces::srv::SampleElevation::Request>();
     sample_request->x = position.x();
     sample_request->y = position.y();
-    const auto result_future = elevation_client_->async_send_request(sample_request);
+    auto result_future = elevation_client_->async_send_request(sample_request);
 
-    if (result_future.wait_for(std::chrono::seconds(2)) != std::future_status::ready) {
+    if (result_future.future.wait_for(std::chrono::seconds(2)) != std::future_status::ready) {
       throw std::runtime_error("Elevation service call timed out.");
     }
-    const auto response = result_future.get();
+    const auto response = result_future.future.get();
 
     if (!response->success) {
       throw std::runtime_error("Elevation server reported failure.");
@@ -207,9 +207,8 @@ private:
     std::vector<Eigen::Vector2d> sample_positions;
 
     const double angle_delta = (2 * M_PI) / sample_count;
-    for(auto angle = 0.0; angle < (2 * M_PI); angle += angle_delta)
-    {
-      const Eigen::Vector2d pose = 
+    for (auto angle = 0.0; angle < (2 * M_PI); angle += angle_delta) {
+      const Eigen::Vector2d pose =
         (search_radius * Eigen::Vector2d(std::cos(angle), std::sin(angle))) + current_position;
       sample_positions.push_back(pose);
     }
