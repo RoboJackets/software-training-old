@@ -19,9 +19,9 @@
 // THE SOFTWARE.
 
 #include "test_path_generator.hpp"
-#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
-#include <tf2_eigen/tf2_eigen.h>
 #include <cmath>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
+#include <tf2_eigen/tf2_eigen.hpp>
 
 namespace lqr_control
 {

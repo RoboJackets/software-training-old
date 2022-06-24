@@ -10,6 +10,7 @@ find_package(nav2_msgs REQUIRED)
 find_package(tf2_eigen REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(Eigen3 REQUIRED)
+find_package(angles REQUIRED)
 
 add_library(lqr_control SHARED
   # BEGIN STUDENT CODE

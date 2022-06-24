@@ -18,16 +18,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#include <algorithm>
+#include <string>
+#include <vector>
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_components/register_node_macro.hpp>
 #include <nav_msgs/msg/occupancy_grid.hpp>
 #include <geometry_msgs/msg/point_stamped.hpp>
-#include <algorithm>
-#include <string>
-#include <vector>
 // BEGIN STUDENT CODE
+#include <tf2_ros/buffer.h>
 #include <tf2_ros/transform_listener.h>
-#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
 // END STUDENT CODE
 
 namespace mapping
@@ -199,8 +200,9 @@ private:
 
     map_data_[data_index] += probability;
 
-    map_data_[data_index] = std::clamp(map_data_[data_index], toLogOdds(0.01),
-                                       toLogOdds(0.99));
+    map_data_[data_index] = std::clamp(
+      map_data_[data_index], toLogOdds(0.01),
+      toLogOdds(0.99));
     // END STUDENT CODE
   }
 

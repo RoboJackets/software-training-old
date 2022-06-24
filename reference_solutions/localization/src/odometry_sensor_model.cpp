@@ -56,8 +56,9 @@ double OdometrySensorModel::ComputeLogProb(const Particle & particle)
 
 bool OdometrySensorModel::IsMeasurementAvailable(const rclcpp::Time & current_time)
 {
-  if(last_msg_.header.stamp.sec == 0)
+  if (last_msg_.header.stamp.sec == 0) {
     return false;
+  }
   const auto time_since_last_msg = current_time - rclcpp::Time(last_msg_.header.stamp);
   return time_since_last_msg.seconds() < timeout_;
 }
