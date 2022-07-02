@@ -139,7 +139,7 @@ Finally, add the declaration for our second function. This function should be na
 1. A constant `cv::Size` named `map_size`
 
 ```c++
-cv::Mat ProjectToGroundPlane(const cv::Mat input,
+cv::Mat ReprojectToGroundPlane(const cv::Mat input,
                              const cv::Mat homography,
                              const cv::Size map_size);
 ```
@@ -214,7 +214,7 @@ Finally, after the end of the nested loops, return our `output` image.
 Start by adding a definition for `ReprojectToGroundPlane`. It should create and return an output variable, named `output`, of type `cv::Mat`. Initialize it by passing `map_size` and `CV_8UC1` to its constructor. `map_size` just holds the desired height and width for our output image.
 
 ```c++
-cv::Mat ProjectToGroundPlane(const cv::Mat input,
+cv::Mat ReprojectToGroundPlane(const cv::Mat input,
                              const cv::Mat homography,
                              const cv::Size map_size)
 {
@@ -346,13 +346,13 @@ Build your training workspace with `colcon build`, and run the project using the
 
 Of course, because these two operations are so common, there are functions that come with OpenCV to do exactly these steps. We can rewrite both of our nested loop pairs with single calls to some library functions.
 
-In your `FindColors` implementation, the nested loops can be replaced with `cv::inRange`. This does exactly the same thing our loops did.
+In your `FindColors` implementation, the nested loops can be replaced with [cv::inRange](https://docs.opencv.org/4.6.0/d2/de8/group__core__array.html#ga48af0ab51e36436c5d04340e036ce981). This does exactly the same thing our loops did.
 
 ```c++
 cv::inRange(input_hsv, range_min, range_max, output);
 ```
 
-In `ReprojectToGroundPlane`, the nested loops can be replaced by calling `warpPerspective`. Again, this function does exactly the same thing that our loops implemented.
+In `ReprojectToGroundPlane`, the nested loops can be replaced by calling [cv::warpPerspective](https://docs.opencv.org/4.6.0/da/d54/group__imgproc__transform.html#gaf73673a7e8e18ec6963e3774e6a94b87). Again, this function does exactly the same thing that our loops implemented.
 
 ```c++
 cv::warpPerspective(
