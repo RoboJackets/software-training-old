@@ -21,11 +21,11 @@
 #ifndef MOTION_MODEL_HPP_
 #define MOTION_MODEL_HPP_
 
-#include <geometry_msgs/msg/twist.hpp>
-#include <rclcpp/rclcpp.hpp>
 #include <memory>
 #include <random>
 #include <vector>
+#include <geometry_msgs/msg/twist.hpp>
+#include <rclcpp/rclcpp.hpp>
 #include "particle.hpp"
 #include "random_helpers.hpp"
 

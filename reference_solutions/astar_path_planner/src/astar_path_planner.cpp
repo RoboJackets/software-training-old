@@ -91,9 +91,10 @@ std::vector<Point> AStarPathPlanner::Plan(const Point & start, const Point & goa
 
     const auto neighbors = GetAdjacentPoints(last_state);
 
-    std::for_each(neighbors.begin(), neighbors.end(), [this,&path,&cost](const auto& neighbor){
-      ExtendPathAndAddToFrontier(path,cost,neighbor);
-    });
+    std::for_each(
+      neighbors.begin(), neighbors.end(), [this, &path, &cost](const auto & neighbor) {
+        ExtendPathAndAddToFrontier(path, cost, neighbor);
+      });
   }
 
   RCLCPP_ERROR(logger_, "No path found after exhausting search space.");

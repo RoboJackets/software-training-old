@@ -30,7 +30,7 @@ namespace localization
 class OdometrySensorModel : public SensorModel
 {
 public:
-  OdometrySensorModel(rclcpp::Node & node);
+  explicit OdometrySensorModel(rclcpp::Node & node);
 
   void UpdateMeasurement(const nav_msgs::msg::Odometry::SharedPtr msg);
   double ComputeLogProb(const Particle & particle) override;

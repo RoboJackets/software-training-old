@@ -33,8 +33,8 @@ bool PointEqualityComparator::operator()(const Point & left, const Point & right
 std::size_t PointHash::operator()(const Point & point) const
 {
   std::size_t hash = 0;
-  hash ^= std::hash<int>{} (std::round(point.x() * 1000)) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
-  hash ^= std::hash<int>{} (std::round(point.y() * 1000)) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+  hash ^= std::hash<int>{}(std::round(point.x() * 1000)) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+  hash ^= std::hash<int>{}(std::round(point.y() * 1000)) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
   return hash;
 }
 

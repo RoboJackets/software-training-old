@@ -76,9 +76,8 @@ private:
     client_->async_send_goal(goal, options);
   }
 
-  void GoalResponseCallback(std::shared_future<GoalHandle::SharedPtr> goal_handle_future)
+  void GoalResponseCallback(GoalHandle::SharedPtr goal_handle)
   {
-    auto goal_handle = goal_handle_future.get();
     if (goal_handle) {
       RCLCPP_INFO(get_logger(), "Server accepted goal!");
     } else {
@@ -111,9 +110,8 @@ private:
     }
     rclcpp::shutdown();
   }
-
 };
 
-} // namespace lqr_control
+}  // namespace lqr_control
 
 RCLCPP_COMPONENTS_REGISTER_NODE(lqr_control::ControllerTestClient)

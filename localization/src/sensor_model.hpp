@@ -21,8 +21,8 @@
 #ifndef SENSOR_MODEL_HPP_
 #define SENSOR_MODEL_HPP_
 
-#include <rclcpp/time.hpp>
 #include <vector>
+#include <rclcpp/time.hpp>
 #include "particle.hpp"
 
 namespace localization

@@ -18,14 +18,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include <rclcpp/rclcpp.hpp>
-#include <rclcpp_components/register_node_macro.hpp>
-#include <stsl_interfaces/msg/tag_array.hpp>
 #include <geometry_msgs/msg/point.h>
 #include <geometry_msgs/msg/quaternion.h>
 #include <tf2_ros/transform_listener.h>
-#include <tf2_eigen/tf2_eigen.h>
 #include <string>
+// BEGIN STUDENT CODE
+#include <vector>
+#include <array>
+// END STUDENT CODE
+#include <rclcpp/rclcpp.hpp>
+#include <rclcpp_components/register_node_macro.hpp>
+#include <stsl_interfaces/msg/tag_array.hpp>
+#include <tf2_eigen/tf2_eigen.hpp>
 
 using namespace std::chrono_literals;
 
@@ -64,17 +68,17 @@ private:
     {
       RCLCPP_WARN_THROTTLE(
         get_logger(), *get_clock(), 1000, "Could not lookup transform. %s",
-        tf_error_string);
+        tf_error_string.c_str());
       return;
     }
 
     // find the transform from the camera to base footprint
     const auto tf_transform =
       tf_buffer_.lookupTransform("base_footprint", "camera_link", tag_array_msg->header.stamp);
-    const Eigen::Matrix4d base_to_camera_transform = tf2::transformToEigen(tf_transform).matrix();
+    const Eigen::Matrix4d camera_to_base_transform = tf2::transformToEigen(tf_transform).matrix();
 
     // creates a matrix that goes from camera to standard ROS coordinates
-    Eigen::Matrix4d camera_to_optical_transform = getTransformationMatrixForOpticalFrame();
+    Eigen::Matrix4d camera_optical_to_conventional_transform = getTransformationMatrixForOpticalFrame();
 
     // BEGIN STUDENT CODE
     std::vector<stsl_interfaces::msg::Tag> new_tags;
@@ -93,7 +97,7 @@ private:
         1);
 
       // Apply the transform to the position
-      position = base_to_camera_transform * camera_to_optical_transform * position;
+      position = camera_to_base_transform * camera_optical_to_conventional_transform * position;
 
       // Copy the new position into the new tag message
       new_tag.pose.position.x = position.x();
@@ -105,7 +109,7 @@ private:
         old_tag.pose.orientation);
 
       // Apply the transform to the orientation
-      tag_orientation = base_to_camera_transform * camera_to_optical_transform * tag_orientation;
+      tag_orientation = camera_to_base_transform * camera_optical_to_conventional_transform * tag_orientation;
 
       // Copy the new orientation into the new tag message
       new_tag.pose.orientation = transformationMatrixToQuaternionMessage(tag_orientation);
@@ -120,8 +124,12 @@ private:
     new_tag_array_msg.header.stamp = tag_array_msg->header.stamp;
     // change the frame_id to be the correct reference frame
     new_tag_array_msg.header.frame_id = "base_footprint";
+
+    // BEGIN STUDENT CODE
     // set message tags to new_tags vector
     new_tag_array_msg.tags = new_tags;
+    // END STUDENT CODE
+
     // publish new tag message
     tag_pub_->publish(new_tag_array_msg);
   }

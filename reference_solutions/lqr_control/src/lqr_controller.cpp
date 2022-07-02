@@ -18,11 +18,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#include <angles/angles.h>
+#include <Eigen/Dense>
+#include <vector>
+#include <memory>
+#include <string>
+#include <algorithm>
 #include <nav2_core/controller.hpp>
 #include <pluginlib/class_list_macros.hpp>
-#include <tf2_eigen/tf2_eigen.h>
-#include <Eigen/Dense>
-#include <angles/angles.h>
+#include <tf2_eigen/tf2_eigen.hpp>
 
 namespace lqr_control
 {
@@ -41,47 +45,56 @@ class LqrController : public nav2_core::Controller
 {
 public:
   void configure(
-    const rclcpp_lifecycle::LifecycleNode::SharedPtr & node, std::string name,
-    const std::shared_ptr<tf2_ros::Buffer> & tf_buffer,
-    const std::shared_ptr<nav2_costmap_2d::Costmap2DROS> & costmap) override
+    const rclcpp_lifecycle::LifecycleNode::WeakPtr & node,
+    std::string name,
+    std::shared_ptr<tf2_ros::Buffer> tf_buffer,
+    std::shared_ptr<nav2_costmap_2d::Costmap2DROS> costmap) override
   {
     node_ = node;
-    traj_viz_pub_ = node_->create_publisher<nav_msgs::msg::Path>(
+
+    auto node_shared = node_.lock();
+    if (!node_shared) {
+      throw std::runtime_error{"Could not acquire node."};
+    }
+
+    traj_viz_pub_ = node_shared->create_publisher<nav_msgs::msg::Path>(
       "~/tracking_traj",
       rclcpp::SystemDefaultsQoS());
 
-    T_ = node->declare_parameter<double>(name + ".T", 1.0);
-    dt_ = node->declare_parameter<double>(name + ".dt", 0.1);
-    time_between_states_ = node->declare_parameter<double>(name + ".time_between_states", 3.0);
-    iterations_ = node->declare_parameter<int>(name + ".iterations", 1);
+    // BEGIN STUDENT CODE
+    T_ = node_shared->declare_parameter<double>(name + ".T", 1.0);
+    dt_ = node_shared->declare_parameter<double>(name + ".dt", 0.1);
+    time_between_states_ =
+      node_shared->declare_parameter<double>(name + ".time_between_states", 3.0);
+    iterations_ = node_shared->declare_parameter<int>(name + ".iterations", 1);
 
-    std::vector<double> Q_temp = node->declare_parameter<std::vector<double>>(
+    std::vector<double> Q_temp = node_shared->declare_parameter<std::vector<double>>(
       name + ".Q", {1.0,
         1.0, 0.3});
     if (Q_temp.size() != 3) {
-      RCLCPP_ERROR(node_->get_logger(), "incorrect size Q, must be 3 values");
+      RCLCPP_ERROR(node_shared->get_logger(), "incorrect size Q, must be 3 values");
       exit(0);
     }
     Q_(0, 0) = Q_temp[0];
     Q_(1, 1) = Q_temp[1];
     Q_(2, 2) = Q_temp[2];
 
-    std::vector<double> Qf_temp = node->declare_parameter<std::vector<double>>(
+    std::vector<double> Qf_temp = node_shared->declare_parameter<std::vector<double>>(
       name + ".Qf", {10.0,
         10.0, 0.1});
     if (Qf_temp.size() != 3) {
-      RCLCPP_ERROR(node_->get_logger(), "incorrect size Qf, must be 3 values");
+      RCLCPP_ERROR(node_shared->get_logger(), "incorrect size Qf, must be 3 values");
       exit(0);
     }
     Qf_(0, 0) = Qf_temp[0];
     Qf_(1, 1) = Qf_temp[1];
     Qf_(2, 2) = Qf_temp[2];
 
-    std::vector<double> R_temp = node->declare_parameter<std::vector<double>>(
+    std::vector<double> R_temp = node_shared->declare_parameter<std::vector<double>>(
       name + ".R", {0.1,
         0.05});
     if (R_temp.size() != 2) {
-      RCLCPP_ERROR(node_->get_logger(), "incorrect size R, must be 2 values");
+      RCLCPP_ERROR(node_shared->get_logger(), "incorrect size R, must be 2 values");
       exit(0);
     }
     R_(0, 0) = R_temp[0];
@@ -103,7 +116,7 @@ public:
     }
 
     double rel_time = (time - path_start_time_).seconds();
-    int lower_idx = (int) (rel_time / time_between_states_);
+    int lower_idx = std::floor(rel_time / time_between_states_);
     int upper_idx = lower_idx + 1;
     double alpha = (rel_time - lower_idx * time_between_states_) / time_between_states_;
 
@@ -111,14 +124,13 @@ public:
       trajectory_[upper_idx];
 
     // correct the angle average
-    // https://www.ri.cmu.edu/pub_files/pub4/kuffner_james_2004_1/kuffner_james_2004_1.pdf algorithm 7
     if ((trajectory_[lower_idx](2) > 0 && trajectory_[upper_idx](2) < 0 ||
       trajectory_[lower_idx](2) < 0 && trajectory_[upper_idx](2) > 0) &&
-      (std::abs(trajectory_[lower_idx](2)) > M_PI_2 &&
-      std::abs(trajectory_[upper_idx](2)) > M_PI_2))
+      (std::abs(trajectory_[lower_idx](2)) > M_PI_2 && std::abs(
+        trajectory_[upper_idx](2)) > M_PI_2))
     {
-      double angle_diff =
-        angles::shortest_angular_distance(trajectory_[lower_idx](2), trajectory_[upper_idx](2));
+      double angle_diff = angles::shortest_angular_distance(
+        trajectory_[lower_idx](2), trajectory_[upper_idx](2));
       interpolated(2) = trajectory_[lower_idx](2) + alpha * angle_diff;
       interpolated(2) = angles::normalize_angle(interpolated(2));
     }
@@ -137,27 +149,47 @@ public:
 
   void setPlan(const nav_msgs::msg::Path & path) override
   {
+    auto node_shared = node_.lock();
+    if (!node_shared) {
+      throw std::runtime_error{"Could not acquire node."};
+    }
+
     trajectory_.clear();
     std::transform(
       path.poses.begin(), path.poses.end(), std::back_inserter(
         trajectory_), StateFromMsg);
-    path_start_time_ = node_->now();
+    path_start_time_ = node_shared->now();
     resetStates(Eigen::Vector3d::Zero());
   }
 
-  void resetStates(Eigen::Vector3d init_state) {
+  void resetStates(Eigen::Vector3d init_state)
+  {
+    auto node_shared = node_.lock();
+    if (!node_shared) {
+      throw std::runtime_error{"Could not acquire node."};
+    }
+
     prev_x_[0] = init_state;
-    for(int t = 1; t < T_/dt_; t++) {
-      prev_x_[t] = interpolateState(path_start_time_ + rclcpp::Duration(t*dt_*1e9));
-      RCLCPP_INFO_STREAM(node_->get_logger(), "got interpolated state: " << prev_x_[t].transpose());
+    for (int t = 1; t < T_ / dt_; t++) {
+      prev_x_[t] =
+        interpolateState(path_start_time_ + rclcpp::Duration::from_seconds(t * dt_ * 1e9));
+      RCLCPP_INFO_STREAM(
+        node_shared->get_logger(), "got interpolated state: " << prev_x_[t].transpose());
     }
     prev_u_ = std::vector<Eigen::Vector2d>(T_ / dt_, Eigen::Vector2d::Zero());
   }
 
   geometry_msgs::msg::TwistStamped computeVelocityCommands(
     const geometry_msgs::msg::PoseStamped & pose,
-    const geometry_msgs::msg::Twist & velocity) override
+    const geometry_msgs::msg::Twist & velocity,
+    nav2_core::GoalChecker * goal_checker) override
   {
+    // TODO(barulicm) goal_checker added in humble
+    auto node_shared = node_.lock();
+    if (!node_shared) {
+      throw std::runtime_error{"Could not acquire node."};
+    }
+
     Eigen::Vector3d state = StateFromMsg(pose);
 
     for (int i = 0; i < iterations_; i++) {
@@ -167,7 +199,9 @@ public:
 
     geometry_msgs::msg::TwistStamped cmd_vel_msg;
     if (prev_u_[0].hasNaN()) {
-      RCLCPP_INFO_STREAM(node_->get_logger(), "fixing nan control: " << prev_u_[0].transpose());
+      RCLCPP_INFO_STREAM(
+        node_shared->get_logger(),
+        "fixing nan control: " << prev_u_[0].transpose());
       resetStates(state);
       prev_u_[0](0) = 0.1;
     }
@@ -175,8 +209,13 @@ public:
     cmd_vel_msg.twist.linear.x = std::clamp(prev_u_[0](0), -2.0, 2.0);
     cmd_vel_msg.twist.angular.z = std::clamp(prev_u_[0](1), -2.0, 2.0);
     cmd_vel_msg.header.frame_id = "base_link";
-    cmd_vel_msg.header.stamp = node_->now();
+    cmd_vel_msg.header.stamp = node_shared->now();
     return cmd_vel_msg;
+  }
+
+  void setSpeedLimit(const double & speed_limit, const bool & percentage) override
+  {
+    // TODO(barulicm) implement this
   }
 
   Eigen::Matrix3d computeAMatrix(const Eigen::Vector3d & x, const Eigen::Vector2d & u)
@@ -229,8 +268,8 @@ public:
       Eigen::Matrix<double, 3, 2> B = computeBMatrix(prev_x_[t]);
       auto current_S = S_[t];
       auto K = (R_ + B.transpose() * current_S * B).inverse() * B.transpose() * current_S * A;
-      Eigen::Vector3d state_error =
-        (cur_x - interpolateState(current_time + rclcpp::Duration(dt_ * t * 1e9)));
+      Eigen::Vector3d state_error = (cur_x -
+        interpolateState(current_time + rclcpp::Duration::from_seconds(dt_ * t * 1e9)));
       state_error(2) = angles::normalize_angle(state_error(2));
       Eigen::Vector2d u_star = -K * state_error;
 
@@ -253,15 +292,15 @@ public:
   }
 
 private:
-  rclcpp_lifecycle::LifecycleNode::SharedPtr node_;
+  rclcpp_lifecycle::LifecycleNode::WeakPtr node_;
   // dynamics
   double dt_;
   double T_;
 
   // cost function
-  Eigen::Matrix3d Q_ = Eigen::Matrix3d::Zero();
-  Eigen::Matrix3d Qf_ = Eigen::Matrix3d::Zero();
-  Eigen::Matrix2d R_ = Eigen::Matrix2d::Zero();
+  Eigen::Matrix3d Q_ = Eigen::Matrix3d::Identity();
+  Eigen::Matrix3d Qf_ = Eigen::Matrix3d::Identity();
+  Eigen::Matrix2d R_ = Eigen::Matrix2d::Identity();
 
   // Ricatti equation
   std::vector<Eigen::Matrix3d> S_;
@@ -274,7 +313,6 @@ private:
   double time_between_states_;
   rclcpp::Time path_start_time_;
   rclcpp_lifecycle::LifecyclePublisher<nav_msgs::msg::Path>::SharedPtr traj_viz_pub_;
-
 };
 
 }  // namespace lqr_control
