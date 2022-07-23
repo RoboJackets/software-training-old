@@ -4,6 +4,7 @@
     <include file="$(find-pkg-share rj_training_bringup)/launch/fake_localizer.launch.py">
         <arg name="use_sim_time" value="$(var use_sim_time)"/>
     </include>
+    <include file="$(find-pkg-share rj_training_bringup)/launch/empty_map_server.launch.py"/>
     <include file="$(find-pkg-share rj_training_bringup)/launch/navigation.launch.py">
         <arg name="use_sim_time" value="$(var use_sim_time)"/>
     </include>
@@ -11,9 +12,9 @@
         <arg name="use_sim_time" value="$(var use_sim_time)"/>
     </include>
     <node pkg="peak_finder" exec="peak_finder_node">
-        <arg name="use_sim_time" value="$(var use_sim_time)"/>
+        <param name="use_sim_time" value="$(var use_sim_time)"/>
     </node>
     <node pkg="rviz2" exec="rviz2" args="-d $(find-pkg-share rj_training_bringup)/rviz_config/week_4.rviz">
-        <arg name="use_sim_time" value="$(var use_sim_time)"/>
+        <param name="use_sim_time" value="$(var use_sim_time)"/>
     </node>
 </launch>
