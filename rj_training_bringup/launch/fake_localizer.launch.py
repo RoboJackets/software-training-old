@@ -34,7 +34,7 @@ def generate_launch_description():
             name='fake_localizer',
             package='tf2_ros',
             executable='static_transform_publisher',
-            arguments=['0', '0', '0', '0', '0', '0', 'map', 'odom'],
+            arguments=['--frame-id', 'map', '--child-frame-id', 'odom'],
             parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')}]
         )
     ])
