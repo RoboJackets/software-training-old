@@ -73,7 +73,6 @@ private:
   double resample_rate_;
 
   int num_particles_ = 100;
-  bool enabled_ = false;
   double max_weight_ = 0;
   double min_weight_ = 0;
 

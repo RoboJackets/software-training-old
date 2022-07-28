@@ -29,9 +29,9 @@ namespace localization
 ArucoSensorModel::ArucoSensorModel(rclcpp::Node & node)
 {
   covariance_ = node.declare_parameter<std::vector<double>>(
-    "sensors/aruco/covariance", {0.025, 0.025,
+    "sensors.aruco.covariance", {0.025, 0.025,
       0.1});
-  timeout_ = node.declare_parameter<double>("sensors/aruco/measurement_timeout", 0.1);
+  timeout_ = node.declare_parameter<double>("sensors.aruco.measurement_timeout", 0.1);
 
   tags_ = {
     {0, TagLocation{0.6096, 0, -M_PI_2}},

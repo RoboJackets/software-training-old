@@ -32,7 +32,7 @@ MotionModel::MotionModel(rclcpp::Node & node)
   std::vector<double> motion_sigma = node.declare_parameter<std::vector<double>>(
     "motion_sigmas",
     {0.05, 0.05, 0.2,
-      0.05, 0.0});
+      0.05, 0.05});
   sigmas_.x = motion_sigma[0];
   sigmas_.y = motion_sigma[1];
   sigmas_.yaw = motion_sigma[2];
