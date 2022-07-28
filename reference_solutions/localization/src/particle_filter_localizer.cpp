@@ -48,7 +48,6 @@ ParticleFilterLocalizer::ParticleFilterLocalizer(const rclcpp::NodeOptions & opt
   num_particles_ = declare_parameter<int>("num_particles", 300);
   declare_parameter<double>("resample_threshold", 0.1);
   declare_parameter<double>("low_percentage_particles_to_drop", 0.1);
-  enabled_ = false;
 
   initial_range_.min_x = declare_parameter<double>("initial_range.min_x", -0.6);
   initial_range_.max_x = declare_parameter<double>("initial_range.max_x", 0.6);
@@ -63,8 +62,9 @@ ParticleFilterLocalizer::ParticleFilterLocalizer(const rclcpp::NodeOptions & opt
     std::bind(&ParticleFilterLocalizer::CalculateStateAndPublish, this));
 
   resample_rate_ = declare_parameter<double>("resample_rate", 10);
+  // ensure we poll for resample at higher than nyquist frequency
   resample_timer_ = create_wall_timer(
-    std::chrono::duration<double>(1.0 / 50),
+    std::chrono::duration<double>(1.0 / (resample_rate_*2 + 1)),
     std::bind(&ParticleFilterLocalizer::ResampleParticles, this));
 
   sensor_models_.push_back(std::make_unique<ArucoSensorModel>(*this));
@@ -75,7 +75,6 @@ ParticleFilterLocalizer::ParticleFilterLocalizer(const rclcpp::NodeOptions & opt
 
 void ParticleFilterLocalizer::CmdCallback(const geometry_msgs::msg::Twist::SharedPtr msg)
 {
-  enabled_ = true;
   motion_model_.updateParticles(particles_, msg, now());
 }
 
@@ -199,11 +198,14 @@ Particle ParticleFilterLocalizer::CalculateCovariance(const Particle & estimate)
 
 void ParticleFilterLocalizer::ResampleParticles()
 {
-  if(!enabled_) {
+  // prevents the filter from running without a motion update (will collapse particles)
+  const rclcpp::Time current_time = now();
+  if(!motion_model_.getEnabled(current_time)) {
+    RCLCPP_WARN_THROTTLE(
+        get_logger(), *get_clock(), 1000, "particle filter resample disabled since no input from /cmd_vel will diverge easily");
     return;
   }
-  const rclcpp::Time current_time = now();
-  if((current_time.seconds() - last_resample_time_.seconds()) < 1.0 / resample_rate_) {
+  if((current_time.seconds() - last_resample_time_.seconds()) <= 1.0 / resample_rate_) {
     return;
   }
   for (const auto & model : sensor_models_) {
@@ -273,13 +275,6 @@ void ParticleFilterLocalizer::CalculateParticleWeight(
 
 void ParticleFilterLocalizer::CalculateStateAndPublish()
 {
-  // prevents the filter from running without a motion update (will collapse particles)
-  if(!enabled_) {
-      RCLCPP_WARN_THROTTLE(
-              get_logger(), *get_clock(), 1000, "particle filter disabled since no input from /cmd_vel will diverge easily");
-      return;
-  }
-
   // create a weighted average of particles based off of the weights and publish it
 
   const rclcpp::Time current_time = now();
@@ -293,6 +288,12 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
   PublishEstimateOdom(best_estimate_particle, covariance, current_time);
 
   PublishEstimateTF(best_estimate_particle, current_time);
+
+  for (const auto & model : sensor_models_) {
+    if (!model->IsMeasurementAvailable(current_time)) {
+      return;
+    }
+  }
 
   PublishParticleVisualization();
 }

@@ -30,7 +30,7 @@ ArucoSensorModel::ArucoSensorModel(rclcpp::Node & node)
 {
   covariance_ = node.declare_parameter<std::vector<double>>(
     "sensors/aruco/covariance", {0.025, 0.025,
-      0.025});
+      0.1});
   timeout_ = node.declare_parameter<double>("sensors/aruco/measurement_timeout", 0.1);
 
   tags_ = {

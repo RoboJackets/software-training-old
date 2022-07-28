@@ -74,4 +74,9 @@ void MotionModel::updateParticles(
   }
   last_message_time_ = current_time;
 }
+
+bool MotionModel::getEnabled(const rclcpp::Time& current_time) {
+  double dt = current_time.seconds() - last_message_time_.seconds();
+  return dt < 0.25;
+}
 }  // namespace localization
