@@ -66,7 +66,8 @@ void MotionModel::updateParticles(
   double dt = current_time.seconds() - last_message_time_.seconds();
   if (dt > 1.0) {
     last_message_time_ = current_time;
-    return;
+    // very small motion can help with convergence
+    dt = 0.01;
   }
   for (Particle & particle : particles) {
     updateParticle(particle, dt, cmd_msg);

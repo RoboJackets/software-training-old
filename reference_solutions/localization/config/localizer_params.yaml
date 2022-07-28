@@ -2,10 +2,10 @@ particle_filter_localizer:
   ros__parameters:
     sensors:
       aruco:
-        covariance: [0.05, 0.05, 0.2]
+        covariance: [0.025, 0.025, 0.3]
         measurement_timeout: 0.05
       odom:
-        covariance: [0.1, 0.1]
+        covariance: [0.2, 0.2]
         measurement_timeout: 0.05
     motion_sigmas: [0.025, 0.025, 0.05, 0.025, 0.025]
     num_particles: 200
