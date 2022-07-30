@@ -13,8 +13,11 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 ## Contents
 
 - [1 Background](#1-background)
-  - [1.1 The Algorithm](#11-the-algorithm)
-  - [1.2 The Code](#12-the-code)
+  - [1.1 Occupancy Grid Mapping](#11-occupancy-grid-mapping)
+  - [1.2 Log Odds](#12-log-odds)
+  - [1.3 Cell Update Equation](#13-cell-update-equation)
+  - [1.4 Inverse Sensor Model](#14-inverse-sensor-model)
+  - [1.5 The Code](#15-the-code)
 - [2 Running this project](#2-running-this-project)
 - [3 Instructions](#3-instructions)
   - [3.1 Get the latest starter code](#31-get-the-latest-starter-code)
@@ -35,13 +38,78 @@ This week, we'll be implementing an algorithm for mapping our robot's environmen
 
 Note that this project depends on you having working solutions for projects 1, 2, and 3.
 
-### 1.1 The Algorithm
+### 1.1 Occupancy Grid Mapping
 
 The approach we'll be using for mapping is known as [occupancy grid mapping](https://en.wikipedia.org/wiki/Occupancy_grid_mapping). We layout a grid of cells across the entire mappable area, where each cell holds the probability that the space is occupied by an obstacle. By assuming that neighboring cells don't influence each other, we can treat all of these probabilities as independant. This lets us have simple update equations that only work with the data for a single cell.
 
-As usual, because of the realities of representing small fractional numbers in computers, we'll be using the log representation of our probabilities in our map. If you read through the starter code, you'll see two helper functions, `fromLogOdds` and `toLogOdds`, which convert between log-odds and direct probability representations. Ultimately, our node will publish a `nav_msgs::msg::OccupancyGrid` message that expects integral probability values between 0 and 100 (The usual 0 to 1, but scaled).
+### 1.2 Log Odds
 
-### 1.2 The Code
+As usual, because of the realities of representing small fractional numbers in computers, we'll be using the log representation of our probabilities in our map. The starter code contains two helper functions, `fromLogOdds` and `toLogOdds`:
+
+```C++
+double toLogOdds(double prob)
+{
+  return std::log(prob / (1.0 - prob));
+}
+
+double fromLogOdds(double log_odds)
+{
+  return 1.0 - (1.0 / (1.0 + std::exp(log_odds)));
+}
+```
+
+These functions convert between log odds and direct probability representations.
+
+Our node will only use log odds for its internal map representation. As output, it will publish a `nav_msgs::msg::OccupancyGrid` message that expects integral probability values between 0 and 100. 0 means we are certain that spot is clear, and 1 means we are certain that spot is blocked by an obstacle.
+
+### 1.3 Cell Update Equation
+
+For this project, we'll be using the log odds form of the occupancy grid update equation, as shown in this weeks theory videos. This equation defines how we'll update each cell of our map
+
+$l(m_{t+1}) = l(m_t) + InverseSensorModel(m_t, x_t, z_t) - l_0$
+
+$m_t$ is our estimated probability that the grid cell is occupied.
+
+$x_t$ is the state of the robot
+
+$z_t$ is our measurement
+
+$l_0$ is the log odds prior probability that the grid cell is occupied
+
+$l()$ is our conversion function to get log odds from probabilities
+
+We'll assume our world is mostly empty, so the prior liklihood that any individual cell is empty is pretty high. Thus, we can set $l_0$ to 0 and ignore it for our implementation of the udpate equation.
+
+This means, at each time step, our new map probability is just the sum of the previous estimate and the result of our inverse sensor model.
+
+### 1.4 Inverse Sensor Model
+
+The inverse sensor model gives us the probability that the cell is occupied given a measurement of that cell's location. We'll be using this as our inverse sensor model:
+
+$
+InverseSensorModel(m_t, x_t, z_t) = e^{(-K_d*D)} *  
+\begin{cases}
+  K_{hit} & if & z_t == 1 \\
+  K_{miss} & if & z_t == 0
+\end{cases}
+$
+
+This model has two parts. The first part, $e^{(-K_d*D)}$, is an arbitrary scaling factor we're including that effectively tells our robot it should be less confident in measurements farther away from it. We do this because farther measurements tend to be noisier than close measurements. $D$ is the distance from the robot to the measurement location. $K_d$ is a constant you can use to tweak the degree to which this effects the final result. 
+
+The second half of our inverse sensor model is a step function that simply returns one of two constants depending on the measurement. If we measured that the cell is occupied, it will return $K_{hit}$. If we measured that the cell is free space, it will return $K_{miss}$. So, here, $K_{hit}$ is the probability that the cell is occupied, given our measurement says it is, and $K_{miss}$ is the probability that the cell is occupied, given our measurement says it isn't. These probabilities could either be determined experimentally from testing the real sensor, or chosen arbitrarily as "close enough" values.
+
+Plugging this model into the update equation above gives us the final math we'll be using in this project to update each cell of our map based on the obstacle detections we get from the color detection code you wrote in project 2.
+
+$
+l(m_{t+1}) = l(m_t) + e^{(-K_d*D)} *  
+\begin{cases}
+  K_{hit} & if & z_t == 1 \\
+  K_{miss} & if & z_t == 0
+\end{cases}
+$
+
+
+### 1.5 The Code
 
 All of the code we'll be writing in this project will be in the [mapping package](../../mapping). Specifically, we'll be completing the implementation of [mapping_node.cpp](../../mapping/src/mapping_node.cpp).
 
@@ -69,7 +137,7 @@ or
 $ ros2 launch traini_bringup joystick_control.launch.py
 ```
 
-In rviz, you should see the robot, the obstacle detections (similar to Project 2), and the map being published by the mapping node. As you drive your robot around, you'll see the map get updated with the obstacles seen at that location. After a bit of exploring, your map should be complete, showing all of the red obstacles present on the floor mat.
+Once you've finished implementing the mapping node, you should see the robot, the obstacle detections (similar to Project 2), and the map in rviz. As you drive your robot around, you'll see the map get updated with the obstacles seen at that location. After a bit of exploring, your map should be complete, showing all of the red obstacles present on the floor mat.
 
 ![Animation of working mapping output](working_fake_localizer.gif)
 
@@ -101,11 +169,12 @@ If you have done a different installation of stsl that is not through apt make s
 
 ### 3.2 Setup TF Listener
 
-Since we'll be using data from the TF system in this node, we'll need to start by setting up our TF buffer and listener. First step, include the needed headers. The first, `transform_listener.h` provides the core TF utilities. `tf2_geometry_msgs.h` gives us specializations of the TF functions for the message types in the geometry_msgs package. Add these includes in the student code block among the other includes at the top of [mapping_node.cpp](../../mapping/src/mapping_node.cpp).
+Since we'll be using data from the TF system in this node, we'll need to start by setting up our TF buffer and listener. First step, include the needed headers. The first, `buffer.h` provides the `tf2_ros::Buffer` class which keeps track of the TF tree (with a short history). `transform_listener.h` gives us the `tf2_ros::TransformListener` class, which subscribes to the TF topic and updates our buffer. Finally, `tf2_geometry_msgs.hpp` declares specializations of the TF functions for the message types in the geometry_msgs package. Add these includes in the student code block among the other includes at the top of [mapping_node.cpp](../../mapping/src/mapping_node.cpp).
 
 ```C++
+#include <tf2_ros/buffer.h>
 #include <tf2_ros/transform_listener.h>
-#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
 ```
 
 Next, add two new member variables to hold our TF buffer and listener. These will go in the student code block with the other member variables of our class, just after the `private` access specifier.
@@ -192,22 +261,43 @@ const auto distance_robot_to_measurement = std::hypot(
   robot_location.y - map_location.y);
 ```
 
-Now we've got everything we need to update our map probability. Remember we are using the log odds probability equation to update our map.
+Recall from the Background section above that this is the update equation we'll be using:
 
-```
-l(m_{t+1}) = l(m_t) + inverse_sensor_model(m_t, x_t, z_t) - l_0
-```
+$
+l(m_{t+1}) = l(m_t) + e^{(-K_d*D)} *  
+\begin{cases}
+  K_{hit} & if & z_t == 1 \\
+  K_{miss} & if & z_t == 0
+\end{cases}
+$
 
-What is stored in our occupancy grid is l(m_t) (log odds of grid cell being occupied at time t). We have loaded some parameters that represent the inverse sensor model. Feel free to play around with those in the config file if you are interested. Furthermore we have set l_0 to be 0, this dropping it from the update equation. We have done this because our assumption is the world is very likely to be free.
-
-The second half of this is some arbitrary scaling on the probability due in relation to the distance from the detection. Often farther away detections are less certain, so we represent that through the exponential equation here. Since we are taking e to the power of a positive value (distance) * a fixed positive (negative with the -1), this gives a monotonically decreasing function (farther away is less trusted). [std::exp](https://en.cppreference.com/w/cpp/numeric/math/exp) takes e to the power of whatever we pass in. You can think of this as part of the inverse_sensor_model. Therefore probability here is the inverse_sensor_model even after applying the weighting.
-
-The final line ensures that our log odds space retains numerical stability. Our log odds will asymptotically approach 1 or 0 for a grid cell, but the log probability will increase to infinity. Bounding the values prevents that from occurring and will keep the log prob bounded to the true probability between 0.01 and 0.99. To do this we use the [std::clamp](https://en.cppreference.com/w/cpp/algorithm/clamp) function that returns the closest value in the given range.
+It's time for us to implement this in our code. [std::exp]() is the C++ standard library function for raising Euler's number ($e$) by a power. Then we multiply that by one of our probability constants ($K_{hit}$ or $K_{miss}$) depending on our obstacle detection.
 
 ```C++
 auto probability = std::exp(-distance_coefficient_ * distance_robot_to_measurement);
 probability *= (obstacle_detected ? hit_log_odds_ : miss_log_odds_);
 map_data_[data_index] += probability;
+```
+
+The second line above uses the [conditional operator](https://en.cppreference.com/w/cpp/language/operator_other#Conditional_operator) (also known as a "ternary" operator). It's a shorthand for selecting one of two values based on a boolean expression. The first part is the boolean condition. The second part is the value yielded when the condition is true, and the third part is the value yielded when the condition is false.
+
+```C++
+( condition ? true_value : false_value )
+```
+
+The conditional operator we used above would be equivalent to this code, written with if statements:
+
+```C++
+if ( obstacle_detected ) {
+  probability *= hit_log_odds_;
+} else {
+  probability *= miss_log_odds_;
+}
+```
+
+Finally, to ensure our log odds representation retains numerical stability, we need to keep it in a useful range. Our log odds will asymptotically approach 1 or 0 for a grid cell, but the log probability will increase to infinity. Bounding the values prevents that from occurring and will keep the log prob bounded to the true probability between 0.01 and 0.99. To do this we use the [std::clamp](https://en.cppreference.com/w/cpp/algorithm/clamp) function. `std::clamp` returns the first argument only if it's between the given min and max, otherwise it returns the corresponding boundary value. 
+
+```C++
 map_data_[data_index] = std::clamp(map_data_[data_index], toLogOdds(0.01), toLogOdds(0.99));
 ```
 
@@ -222,7 +312,7 @@ We've got one more function to implement: `AddObstaclesToMap`. This function tak
 
 In this section, we'll implement step 1.
 
-Find the student code comment block in `AddObstaclesToMap`. Here, we need to create two, nested for loops. The outer loop should iterate through y values from `0` to `obstacles.info.height - 1`. The inner loop should iterate through x values from `0` to `obstacles.info.width - 1`.
+Find the student code comment block in `AddObstaclesToMap`. Here, create two, nested for loops. The outer loop should iterate through y values from `0` to `obstacles.info.height - 1`. The inner loop should iterate through x values from `0` to `obstacles.info.width - 1`.
 
 In the body of the inner loop, the first thing we need to do is calculate the index into the `OccupancyGrid`'s data array from our cell location. This data array is in "row-major order". This is a method of flattening 2-dimensional data into a 1-dimensional container. In row-major order, we concatenate all of the rows of our 2D data into one long array. As we traverse the 1D array, we'll see all of the elements from the first row, then all of the elements from the second row, and so on. To get an index into the 1D array from our x and y cell coordinates, we first get the starting index of our row by multiplying our y coordinate by the 2D width, then add our x coordinate as an offset into that row.
 
