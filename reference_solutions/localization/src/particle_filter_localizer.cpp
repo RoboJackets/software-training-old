@@ -392,8 +392,8 @@ void ParticleFilterLocalizer::PublishParticleVisualization()
     double y = particles_[i].y;
     double yaw = particles_[i].yaw;
 
-    front_point.x = x + 0.05 * cos(yaw);
-    front_point.y = y - 0.05 * sin(yaw);
+    front_point.x = x + 0.1 * cos(yaw);
+    front_point.y = y - 0.1 * sin(yaw);
 
     right_point.x = x + 0.0125 * cos(yaw + M_PI_2);
     right_point.y = y - 0.0125 * sin(yaw + M_PI_2);

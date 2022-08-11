@@ -2,19 +2,19 @@ particle_filter_localizer:
   ros__parameters:
     sensors:
       aruco:
-        covariance: [0.05, 0.05, 0.2]
-        measurement_timeout: 0.1
+        covariance: [0.03, 0.1]
+        measurement_timeout: 0.2
       odom:
-        covariance: [0.2, 0.2]
-        measurement_timeout: 0.1
-    motion_sigmas: [0.025, 0.025, 0.1, 0.025, 0.025]
+        covariance: [0.05, 0.05]
+        measurement_timeout: 0.05
+    motion_sigmas: [0.01, 0.01, 0.01, 0.025, 0.05]
     num_particles: 200
     initial_range:
-      min_x: -0.6
-      max_x:  0.6
-      min_y: -0.3
-      max_y: 0.3
-    state_update_rate: 30.0
+      min_x: -0.3
+      max_x:  0.3
+      min_y: -0.15
+      max_y: 0.15
+    state_update_rate: 20.0
     resample_rate: 10.0
-    low_percentage_particles_to_drop: 0.05
+    low_percentage_particles_to_drop: 0.1
     resample_threshold: 0.0

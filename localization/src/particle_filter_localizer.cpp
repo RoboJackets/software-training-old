@@ -60,9 +60,10 @@ ParticleFilterLocalizer::ParticleFilterLocalizer(const rclcpp::NodeOptions & opt
     std::chrono::duration<double>(1.0 / state_update_rate),
     std::bind(&ParticleFilterLocalizer::CalculateStateAndPublish, this));
 
-  const double resample_rate = declare_parameter<double>("resample_rate", 10);
+  resample_rate_ = declare_parameter<double>("resample_rate", 10);
+  // ensure we poll for resample at higher than nyquist frequency
   resample_timer_ = create_wall_timer(
-    std::chrono::duration<double>(1.0 / resample_rate),
+    std::chrono::duration<double>(1.0 / (resample_rate_*2 + 1)),
     std::bind(&ParticleFilterLocalizer::ResampleParticles, this));
 
   sensor_models_.push_back(std::make_unique<ArucoSensorModel>(*this));
@@ -155,18 +156,16 @@ Particle ParticleFilterLocalizer::CalculateEstimate()
       return total + p.Weighted();
     });
 
-  double yaw_alternative = std::accumulate(
-    particles_.begin(), particles_.end(), 0.0, [](const auto & total, const auto & p) {
-      return total + (angles::normalize_angle_positive(p.yaw) * p.weight);
-    });
-
-  // if very close to the discontinuity of pi--pi, use the one with
-  // a discontinuity at a different place
-  if (std::abs(std::abs(estimate.yaw) - M_PI) < 1.0) {
-    estimate.yaw = yaw_alternative;
-  }
-
-  estimate.yaw = angles::normalize_angle(estimate.yaw);
+  // handles averaging over the discontinuity
+  double yaw_x = std::accumulate(
+            particles_.begin(), particles_.end(), 0.0, [](const auto & total, const auto & p) {
+                return total + cos(p.yaw) * p.weight;
+            });
+  double yaw_y = std::accumulate(
+          particles_.begin(), particles_.end(), 0.0, [](const auto & total, const auto & p) {
+              return total + sin(p.yaw) * p.weight;
+          });
+  estimate.yaw = atan2(yaw_y, yaw_x);
 
   return estimate;
 }
@@ -179,9 +178,7 @@ Particle ParticleFilterLocalizer::CalculateCovariance(const Particle & estimate)
   for (const Particle & particle : particles_) {
     cov.x += pow(estimate.x - particle.x, 2) * particle.weight;
     cov.y += pow(estimate.y - particle.y, 2) * particle.weight;
-    double yaw_error = estimate.yaw - particle.yaw;
-    yaw_error = angles::normalize_angle(yaw_error);
-    cov.yaw += pow(yaw_error, 2) * particle.weight;
+    cov.yaw += pow(angles::shortest_angular_distance(particle.yaw, estimate.yaw), 2) * particle.weight;
     cov.x_vel += pow(estimate.x_vel - particle.x_vel, 2) * particle.weight;
     cov.yaw_vel += pow(estimate.yaw_vel - particle.yaw_vel, 2) * particle.weight;
 
@@ -199,6 +196,23 @@ Particle ParticleFilterLocalizer::CalculateCovariance(const Particle & estimate)
 
 void ParticleFilterLocalizer::ResampleParticles()
 {
+  // prevents the filter from running without a motion update (will collapse particles)
+  const rclcpp::Time current_time = now();
+  if(!motion_model_.getEnabled(current_time)) {
+    RCLCPP_WARN_THROTTLE(
+        get_logger(), *get_clock(), 1000, "particle filter resample disabled since no input from /cmd_vel will diverge easily");
+    return;
+  }
+  if((current_time.seconds() - last_resample_time_.seconds()) <= 1.0 / resample_rate_) {
+    return;
+  }
+  for (const auto & model : sensor_models_) {
+      if (!model->IsMeasurementAvailable(current_time)) {
+          return;
+      }
+  }
+  last_resample_time_ = current_time;
+  CalculateAllParticleWeights(current_time);
   // resample particles uniformly across the entire state space
   std::vector<Particle> new_particles;
   for (int i = 0; i < num_particles_; i++) {
@@ -272,6 +286,12 @@ void ParticleFilterLocalizer::CalculateStateAndPublish()
   PublishEstimateOdom(best_estimate_particle, covariance, current_time);
 
   PublishEstimateTF(best_estimate_particle, current_time);
+
+  for (const auto & model : sensor_models_) {
+    if (!model->IsMeasurementAvailable(current_time)) {
+      return;
+    }
+  }
 
   PublishParticleVisualization();
 }
@@ -373,11 +393,11 @@ void ParticleFilterLocalizer::PublishParticleVisualization()
     front_point.x = x + 0.1 * cos(yaw);
     front_point.y = y - 0.1 * sin(yaw);
 
-    right_point.x = x + 0.025 * cos(yaw + M_PI_2);
-    right_point.y = y - 0.025 * sin(yaw + M_PI_2);
+    right_point.x = x + 0.0125 * cos(yaw + M_PI_2);
+    right_point.y = y - 0.0125 * sin(yaw + M_PI_2);
 
-    left_point.x = x + 0.025 * cos(yaw - M_PI_2);
-    left_point.y = y - 0.025 * sin(yaw - M_PI_2);
+    left_point.x = x + 0.0125 * cos(yaw - M_PI_2);
+    left_point.y = y - 0.0125 * sin(yaw - M_PI_2);
 
     marker.points.push_back(front_point);
     marker.points.push_back(right_point);
