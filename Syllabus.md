@@ -1,18 +1,16 @@
-# RoboJackets Software Training - Fall 2021
+# RoboJackets Software Training - Fall 2022
 
 The RoboJackets software training program is designed to prepare you to work on software for the RoboJackets competitive teams. This program offers practical experience writing code using C++ and ROS. It also covers some of the fundamental concepts of robotics used by all of our teams.
 
 ## Trainers
 
-- Navaneet Kadaba (Software Training Lead)
-- Nico Bartholomai
-- Isaac Dale
-- Hussain Gynai
+- Justin Johnson (Software Training Lead)
+- Aiden Stickan
 - Matthew Hannay
-- Charlie Jenkins
-- Nicolas Leone
-- Vivek Mhatre
-- Adithya Vasudev
+- Isaac Dale
+- Miles Gordon
+- Sumedh Garimella
+- Yashas Ambati
 
 ## Meeting Schedules
 
@@ -31,10 +29,10 @@ For more information about team meeting schedules and locations, check with each
 ### General Software Training Meetings
 - Wednesdays
   - 4:30 - 6:30pm
-  - Van Leer, room C241
+  - Location TBA
 - Thursdays
   - 4:30 - 6:30pm
-  - Molecular Science and Engineering Building (MoSE), room 1201A
+  - Lcoation TBA
 
 ## Resources
 
@@ -116,15 +114,3 @@ Week | Title |  | Description
 6 | Kalman Filter Tracking | [Instructions](projects/week_6/Instructions.md) | Track mineral deposits with a kalman filter.
 7 | LQR Controller | [Instructions](projects/week_7/Instructions.md) | Control the robot's motion with an LQR controller.
 8 | A-Star Path Planning | [Instructions](projects/week_8/Instructions.md) | Teach the robot how to avoid obstacles with the A-Star path planning algorithm.
-
-## Robotics Theory Worksheets
-Week | Title | Worksheet | Solutions
---- | --- | --- | ---
-1 | Coordinate Frames, Sensors, Linear | [Sheet](https://drive.google.com/file/d/1RSI5FDaifu5RI0Zk8mrcxu_oQC9gFEAS/view?usp=sharing) | [Solutions](https://drive.google.com/file/d/1LZhwLFQjPbsGK8R7Md7tE79cBLSYIphd/view?usp=sharing)
-2 | Computer Vision | [Sheet](https://drive.google.com/file/d/1WPaKruCqwO1BnkNg9nxosYZ5uVZSZLNn/view?usp=sharing) |
-3 | Particle Filters | [Sheet](https://drive.google.com/file/d/1ovqS1k6tqK4Txt3FhzIUuJiRUirwYU99/view?usp=sharing) | [Solutions](https://drive.google.com/file/d/1KoD2lEKV4r5nIR7G9aXvYRyaUUf7aoA8/view?usp=sharing)
-4 | Optimization | [Sheet](https://drive.google.com/file/d/1Aly66DlZdsVI6cXFvYiMf55G17Fb8wAP/view?usp=sharing) | [Solutions](https://drive.google.com/file/d/1NQUzBEHjBFmcptKXA6lt_mlFg_643osC/view?usp=sharing)
-5 | SLAM | [Sheet](https://drive.google.com/file/d/1o6NjqCvy8NcEIltzQVaopmZFODLcoPmy/view?usp=sharing) | [Solutions](https://drive.google.com/file/d/1_bqroLE8-UTiIGRiDryycg_3FNnZlOuA/view?usp=sharing)
-6 | No worksheet this week | |
-7 | No worksheet this week | |
-8 | No worksheet this week | |
