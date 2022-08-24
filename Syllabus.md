@@ -44,7 +44,7 @@ For more information about team meeting schedules and locations, check with each
 
   See details for all RoboJackets training meetings.
 
-- [Piazza](https://piazza.com/class/ktjbkl11ngk1lr)
+- [Piazza](https://piazza.com/class/l7889f6vhrf1nv)
 
   Get your questions answered any time by the instructors or other students.
 
