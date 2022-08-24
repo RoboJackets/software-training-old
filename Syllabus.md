@@ -28,10 +28,10 @@ For more information about team meeting schedules and locations, check with each
 
 ### General Software Training Meetings
 - Wednesdays
-  - 4:30 - 6:30pm
+  - 6:00 - 8:00pm
   - Location TBA
-- Thursdays
-  - 4:30 - 6:30pm
+- Friday
+  - 4:00 - 6:00pm
   - Lcoation TBA
 
 ## Resources
