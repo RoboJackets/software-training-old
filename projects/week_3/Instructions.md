@@ -34,25 +34,25 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 
 ## 1 Background
 
-In this project, we'll be implementing a particle filter. Our robot will use this particle filter to figure out where it is in the world. Even when we have identifiable landmarks, such as GPS satellites or our ArUco tags, there is always uncertainty associated with any measurement we get. Algorithms like the particle filter let us combine multiple sources of information to get an even more accurate estimate of our actual location.
+In this project, we'll be implementing a particle filter for localization. Our robot will use this particle filter to figure out where it is in the world. Even when we have direct measurements on our state variables, sch as GPS satellites, there is always uncertainty associated with any measurement we get. Sometimes we can get a reasonable estimate using only a single source of information, but algorithms like the particle filter let us combine multiple sources of information to get an even more accurate estimate of our actual location. This approach is often called sensor fusion or filtering and can be generally applied to any robotics problem. Here we will focus on finding position of the robot in world frame. 
 
 Our particle filter will incorporate three sources of information:
 
 1. ArUco tag sightings
 
-   Our robot can tell where it is relative to a tag visible to its camera. Each tag has a unique ID represented by the pattern of squares. Using the known locations of each tag, we can get an estimate of where our robot (x,y,yaw) is most likely to be. These measurements are susceptible to noise in the camera image and small errors in tag detection.
+   Our robot can determine the relative transform (in body frame) to an aruco tag from its camera. Using the known locations of each tag, we can get an estimate of where our robot (x,y,yaw) is most likely to be. the Problem is simplified since each tag has a unique ID represented by the pattern of squares.  These measurements are susceptible to noise in the camera image and small errors in tag detection.
 
 1. Odometry measurements
 
-   Our robot has encoders connected to its motors, so we can measure how fast our wheels are actually turning. Our system reports these measurements back to us as body velocities for the robot. We can use this to weight our particles by how closely they match the real motion of our robot.
+   Our robot has encoders connected to its motors, so we can measure how fast our wheels are actually turning. Our system reports these measurements back to us as body velocities for the robot (forward velocity, and yaw rate). We can use this to weight our particles by how closely they match the real motion of our robot.
 
 1. Motion commands
 
-   The motion commands we send to the robot, via our teleoperation nodes (or autonomous navigation code in the future), are also useful for our particle filter. These commands can act as our motion model, telling our particle filter how we expect our robot to move (with some uncertainty, of course).
+   The motion commands we send to the robot, via our teleoperation nodes (or autonomous navigation code in the future), are also useful for our particle filter. These commands can act as our motion model, telling our particle filter how we expect our robot to move (with some uncertainty, of course). Often your motion model will end up being another sensor, like an IMU, rather a command, but in simpler systems this can work.
 
 We'll be implemeneting the odometry sensor model and adding it to the list of models our particle fitler considers.
 
-To demonstrate our localizer this week, we'll be running your robot through the "[kidnapped robot problem](https://en.wikipedia.org/wiki/Kidnapped_robot_problem)." This involves putting our robot in a random location and making it figure out where it is on its own. Particle filters are pretty good at solving this problem if the environment around the robot is useful, since they can keep track of multiple possible locations for the robot at the same time.
+To demonstrate our localizer this week, we'll be running your robot through the "[kidnapped robot problem](https://en.wikipedia.org/wiki/Kidnapped_robot_problem)." This involves putting our robot in a random location and making it figure out where it is on its own. Particle filters are pretty good at solving this problem if the environment around the robot is useful, since they can keep track of multiple possible locations for the robot at the same time. Other filtering techniques cannot do this easily.
 
 ## 2 Running this project
 
@@ -63,8 +63,6 @@ $ ros2 launch rj_training_bringup week_3.launch.xml
 ```
 
 The second is any command for controlling the robot. You can use either the joystick control launch file or the keyboard control launch file, depending on if you'll be using your keyboard or joystick to control the robot.
-
-**NOTE:** The command for keyboard control has changed! There was a small problem with the old node, so we got a new one.
 
 ```bash
 $ ros2 run stsl_utils keyboard_teleop
@@ -80,9 +78,9 @@ This week, when you start up the simulator, you're robot will be moved to a rand
 
 If you drive the robot around, you'll see both displays show the same relative robot motion, but the rviz display is always off by some amount because it thought the robot started in a different place than it actually did.
 
-Once you get your localization code working, the "base_footprint" frame should converge onto the robot's real location. You'll also see a new could of triangles show up around the robot. These are the particles from your particle filter. Their location shows you the pose estimate associated with each particle, and their brightness represents their probabilistic weight. Bright particles are weighted higher, and dark particles have lower weights. The brightness of particles are relative to each other, therefore if you see a lot of bright particles that are in the wrong spot that means your filter has diverged and all particles have similar low weights.
+Once you get your localization code working, the "base_footprint" frame should converge onto the robot's real location. You'll also see a new cloud of triangles show up around the robot. These are the particles from your particle filter. Their location shows you the pose estimate associated with each particle, and their brightness represents their probabilistic weight. Bright particles are weighted higher, and dark particles have lower weights. The brightness of particles are relative to each other, therefore if you see a lot of bright particles that are in the wrong spot that means your filter has diverged and all particles have similar low weights.
 
-It may take a few seconds for your robot's estimate of its position to converge to the correct spot. The particles start randomly distributed across the whole map, and it'll take them a few iterations to settle on the right answer.
+It may take a few seconds for your robot's estimate of its position to converge to the correct spot. The particles start randomly distributed across the whole map, and it'll take them a few iterations to settle on the right answer. The distribution we are using to initialize the particles is a [uniform distribution](https://en.wikipedia.org/wiki/Continuous_uniform_distribution), this will evenly distribute the initial particles around the map. Going back to our problem definition, it makes sense that our robot could be anywhere on the map. If we had a strong initial guess or prior about our robot we could incorporate that into our initialization.
 
 ![Results with the localizer](LocalizerScreenshot.png)
 
@@ -120,7 +118,7 @@ We're going to be creating a new class, `OdometrySensorModel`, that acts as a se
 
 1. ComputeLogNormalizer
 
-   This function computes the normalizer for our sensor model probabilities. This method will handle the parts of the Gaussian distribution's probability density function that do not depend on the measurement.
+   This function computes the normalizer for our sensor model probabilities. This method will handle the parts of the Gaussian distribution's probability density function that only depend on the dimensionality (size) of our sensor output vector.
 
 1. IsMeasurementAvailable
 
