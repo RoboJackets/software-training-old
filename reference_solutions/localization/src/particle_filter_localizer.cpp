@@ -141,7 +141,9 @@ void ParticleFilterLocalizer::NormalizeWeights()
   min_weight_ = 1.0;
   max_weight_ = 0.0;
   for (Particle & particle : particles_) {
-    particle.weight /= normalizer;
+    if(particle.weight > 0) {
+      particle.weight /= normalizer;
+    }
     min_weight_ = std::min(min_weight_, particle.weight);
     max_weight_ = std::max(max_weight_, particle.weight);
     search_weights_.push_back(running_sum);
