@@ -34,13 +34,13 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 
 ## 1 Background
 
-In this project, we'll be implementing a particle filter for localization. Our robot will use this particle filter to figure out where it is in the world. Even when we have direct measurements on our state variables, sch as GPS satellites, there is always uncertainty associated with any measurement we get. Sometimes we can get a reasonable estimate using only a single source of information, but algorithms like the particle filter let us combine multiple sources of information to get an even more accurate estimate of our actual location. This approach is often called sensor fusion or filtering and can be generally applied to any robotics problem. Here we will focus on finding position of the robot in world frame. 
+In this project, we'll be implementing a particle filter for localization. Our robot will use this particle filter to figure out where it is in the world. Even when we have direct measurements on our state variables, sch as GPS satellites, there is always uncertainty associated with any measurement we get. Sometimes we can get a reasonable estimate using only a single source of information, but algorithms like the particle filter let us combine multiple sources of information to get an even more accurate estimate of our actual location. This approach is often called sensor fusion or filtering and can be generally applied to any robotics problem. Here we will focus on finding position of the robot in world frame.
 
 Our particle filter will incorporate three sources of information:
 
 1. ArUco tag sightings
 
-   Our robot can determine the relative transform (in body frame) to an aruco tag from its camera. Using the known locations of each tag, we can get an estimate of where our robot (x,y,yaw) is most likely to be. the Problem is simplified since each tag has a unique ID represented by the pattern of squares.  These measurements are susceptible to noise in the camera image and small errors in tag detection.
+   Our robot can determine the relative transform (in body frame) to an aruco tag from its camera. Using the known locations of each tag, we can get an estimate of where our robot should be given that sensor reading. This is done by comparing the distance and heading from the particle to the tag on a map with the measured distance and heading from the tag detection. the Problem is simplified since each tag has a unique ID represented by the pattern of squares.  These measurements are susceptible to noise in the camera image and small errors in tag detection.
 
 1. Odometry measurements
 
@@ -53,6 +53,18 @@ Our particle filter will incorporate three sources of information:
 We'll be implemeneting the odometry sensor model and adding it to the list of models our particle fitler considers.
 
 To demonstrate our localizer this week, we'll be running your robot through the "[kidnapped robot problem](https://en.wikipedia.org/wiki/Kidnapped_robot_problem)." This involves putting our robot in a random location and making it figure out where it is on its own. Particle filters are pretty good at solving this problem if the environment around the robot is useful, since they can keep track of multiple possible locations for the robot at the same time. Other filtering techniques cannot do this easily.
+
+### Log Probability
+
+In our particle filter implementation we will be computing the log probability as we discussed in the videos. Why are we computing the _log_ of the probability instead of just returning the probability? Well, these probabilities are likely to be very small (close to zero). There are practical limits to the kinds of numbers we can represent with a computer, and really small numbers are hard to work with accurately. Taking the log of a really small number tends to give us a more reasonable number. For example, log(0.00001) is about -11.5. This keeps the numbers we pass around in a more comfortable range for the computer.
+
+But we could do that shift in any number of ways, why log specifically? That's because logs can turn multiplication into addition. When we want to multiply two probabilities, we can just add their logs. When we want to divide, just subtract the logs. Addition and subtraction are usually a lot faster than multiplication and division, so this better representation also gives us faster code!
+
+Also remember that since we are only trying to find the most probable particle we just need to find something proportional to the probability rather than the full value. The following figure shows a full derivation starting from the PDF of a univariate (scalar) and a multivariate (vector). We are using the multivariate version. The math below is just using log rules to move things around and properties of diagonal matrices which we have not covered explicitly, so don't worry about it if you cannot follow it. If you are interested in that property look at the result of a x^T a I x, where x, x^T are the same vector, a is a scalar, and I is the identity matrix. Remember that A[ii] would be the ith row and ith column of a matrix.
+
+![Univariate](UnivariateGaussian.png)
+
+![Multivariate](MultivariateGaussian.png)
 
 ## 2 Running this project
 
@@ -72,13 +84,13 @@ $ ros2 launch traini_bringup joystick_control.launch.py
 
 In rviz, you'll see the boundary of the map and three coordinate frames. The "base_footprint" frame shows the robot's current estimate of where it is. The transformation from "odom" to "base_footprint" is tracked by our odometry system, using encoders. The robot will always start at <0,0> in the "odom" frame. The robot should move smoothly relative to the odom frame, but its absolute position will gradually build up error. In the "map" frame, we care more about absolute position than smooth trajectories, so the robot's position in the "map" frame is allowed to jump around. The conventions for these frame names are specified in [REP 105](https://www.ros.org/reps/rep-0105.html). The localization code we're writing this week will be publishing the "map" -> "odom" frame. This is a corrective transformation that accounts for the error built up in the "odom" frame. If our code works, the total transform through "map" -> "odom" -> "base_footprint" will give us the correct location for the robot.
 
-This week, when you start up the simulator, you're robot will be moved to a random location on the map. In the starter code, we're running a fake localizer node that always puts the "map" and "odom" frames in the same place. This effectively only uses the encoder measurements for localization. If you run the project with this fake localizer, you should see the robot is not showing up in the same place in rviz and in Gazebo.
+This week, when you start up the simulator, you're robot will be moved to a random location on the map. In the starter code, we're running a fake localizer node that always puts the "map" and "odom" frames in the same place. This effectively only uses the encoder measurements for localization. If you run the project with this fake localizer, you should see the robot is not showing up in the same place in rviz and in Gazebo. You can see the difference in the robot's predicted position and true postiion by seeing the divergence of the two odometry topics (colored arrows). The red arrow is where the robot predicts itself to be, and the green arrow is the true location.
 
 ![Results without the localizer](NoLocalizerScreenshot.png)
 
 If you drive the robot around, you'll see both displays show the same relative robot motion, but the rviz display is always off by some amount because it thought the robot started in a different place than it actually did.
 
-Once you get your localization code working, the "base_footprint" frame should converge onto the robot's real location. You'll also see a new cloud of triangles show up around the robot. These are the particles from your particle filter. Their location shows you the pose estimate associated with each particle, and their brightness represents their probabilistic weight. Bright particles are weighted higher, and dark particles have lower weights. The brightness of particles are relative to each other, therefore if you see a lot of bright particles that are in the wrong spot that means your filter has diverged and all particles have similar low weights.
+Once you get your localization code working, the "base_footprint" frame should converge onto the robot's real location. Also the red and green arrows should align. You'll also see a new cloud of triangles show up around the robot. These are the particles from your particle filter. Their location shows you the pose estimate associated with each particle, and their brightness represents their probabilistic weight. Bright particles are weighted higher, and dark particles have lower weights. The brightness of particles are relative to each other, therefore if you see a lot of bright particles that are in the wrong spot that means your filter has diverged and all particles have similar low weights.
 
 It may take a few seconds for your robot's estimate of its position to converge to the correct spot. The particles start randomly distributed across the whole map, and it'll take them a few iterations to settle on the right answer. The distribution we are using to initialize the particles is a [uniform distribution](https://en.wikipedia.org/wiki/Continuous_uniform_distribution), this will evenly distribute the initial particles around the map. Going back to our problem definition, it makes sense that our robot could be anywhere on the map. If we had a strong initial guess or prior about our robot we could incorporate that into our initialization.
 
@@ -124,7 +136,7 @@ We're going to be creating a new class, `OdometrySensorModel`, that acts as a se
 
    This function checks if this model has an up-to-date measurement available to be applied to the particle weighting process.
 
-Notice the the parameters for these functions are all constant references. This tells us that these functions only need to read values from the objects and won't be modifying them. Also, all three functions are pure virtual functions, so there is no default implementation for our model class to use. We must provide our own implementation for these functions.
+Notice the parameters for these functions are all constant references. This tells us that these functions only need to read values from the objects and won't be modifying them. Also, all three functions are pure virtual functions, so there is no default implementation for our model class to use. We must provide our own implementation for these functions.
 
 In addition to these three functions, `SensorModel` also gives every model class two member variables, `covariance_` and `timeout_`, for storing the values of common model parameters.
 
@@ -180,7 +192,7 @@ nav_msgs::msg::Odometry last_msg_;
 rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_sub_;
 ```
 
-Next, let's declare the member functions for our new class. All of the functions for this class should be declared with `public` access.
+Next, let's declare the member functions for our new class. All of the functions for this class should be declared with `public` access since they are called externally.
 
 First up, our constructor. Declare a constructor for `OdometrySensorModel` that takes a reference to an `rclcpp::Node`, called `node`.
 
@@ -204,7 +216,7 @@ Open up [odometry_sensor_model.cpp](../../localization/src/odometry_sensor_model
 #include <vector>
 ```
 
-Note that the header file that corresponds to this implmentation file always gets included first in the implementation file. The `<vector>` header gives us `std::vector`, and `<cmath>` gives us a variety of math constants and functions, such as pi and trigonometry functions.
+Note that the header file that corresponds to this implementation file always gets included first when writing in the implementation file. The `<vector>` header gives us `std::vector`, and `<cmath>` gives us a variety of math constants and functions, such as pi and trigonometry functions.
 
 This file should use the same namespace as the header file. Add a namespace block so we can put our function definitions in the `localization` namespace.
 
@@ -295,17 +307,7 @@ return time_since_last_msg.seconds() < timeout_;
 
 Add the definition for `ComputeLogProb`. (If you're not sure how, check out what we did for `IsMeasurementAvailable`).
 
-This function is going to compute the log of the exponential of the probability that the given particle is our true location given the latest odometry measurements, from now on we will just say log probability. It'll do this by comparing the particle's x and yaw velocities against the real x and yaw velocities reported in the odometry message. Remember both of these measurements and values in the filter are in body frame.
-
-Why are we computing the _log_ of the probability instead of just returning the probability? Well, these probabilities are likely to be very small (close to zero). There are practical limits to the kinds of numbers we can represent with a computer, and really small numbers are hard to work with accurately. Taking the log of a really small number tends to give us a more reasonable number. For example, log(0.00001) is about -11.5. This keeps the numbers we pass around in a more comfortable range for the computer.
-
-But we could do that shift in any number of ways, why log specifically? That's because logs can turn multiplication into addition. When we want to multiply two probabilities, we can just add their logs. When we want to divide, just subtract the logs. Addition and subtraction are usually a lot faster than multiplication and division, so this better representation also gives us faster code!
-
-Also remember that since we are only trying to find the most probable particle we just need to find something proportional to the probability rather than the full value. The following figure shows a full derivation starting from the PDF of a univariate (scalar) and a multivariate (vector). We are using the multivariate version. The math below is just using log rules to move things around and properties of diagonal matrices which we have not covered explicitly, so don't worry about it if you cannot follow it. If you are interested in that property look at the result of a x^T a I x, where x, x^T are the same vector, a is a scalar, and I is the identity matrix. Remember that A[ii] would be the ith row and ith column of a matrix.
-
-![Univariate](UnivariateGaussian.png)
-
-![Multivariate](MultivariateGaussian.png)
+This function is going to compute the log of the exponential of the probability that the given particle is our true location given the latest odometry measurements, from now on we will just say log probability. You can check the background section at the front if you want a refresher on log probability. It'll do this by comparing the particle's x and yaw velocities against the real x and yaw velocities reported in the odometry message. Remember both of these measurements and values in the filter are in body frame.
 
 To calculate the log probability we need here, we're going to divide the square error of each velocity by the covariance for that measurement. Then we'll add the two log probabilities together to get the total probability of the particle's state. This matches exactly with the log of the exponential part of the Gaussian PDF. The negative and 0.5 is added elsewhere in the code.
 
@@ -404,43 +406,90 @@ Open [week_3.launch.xml](../../rj_training_bringup/launch/week_3.launch.xml) in 
 
 Ok. Now, the week 3 launch file will run with the real particle filter localization node. You should now be able to run the project and see the particle cloud and better location estimate in rviz.
 
-### 3.13 Tune your particle filter
+### 3.13 Familiarizing yourself with the particle filter
 
 Here we will be changing parameters in the config file that you connected to your launch file ([localizer_params.yaml](../../localization/config/localizer_params.yaml)). For this section pay close attention to your mass of particles rather than the state estimate coming out. Often it is easier to tune based on a vague idea of the particles rather than the estimate coming out.
 
+The first thing you should do is run the project but no teleoperation node. That should look like this,
+
+Here you can see the particles where they initialze (the filter is disabled until we start giving control commands). This is a great tool for debugging, since you can selectively turn on and off things using the parameters and see their effect without motion jitter. You should see that the particle filter estimate is relatively near the ground truth arrow, but will likely have a small offset. Don't worry about that for now, just take a quick look at your particles and make sure things look reasonable (like the image). If not you likely have a bug in your code somewhere.
+
+Now that we have working code, let's try getting an intuition for what the covariance parameters do. We'll go through a couple changes to see what they do.
+
+1. Set the parameter everything in "sensors/aruco/covariance" to a very large number like 10000.0 (don't forget the .0 part). Given what we know of particle filter what do you expect to happen? Make sure you run `colcon build` when changing parameters to make sure your parameters change.
+
+    <details>
+    <summary><b>Hint:</b> Large Covariance For Aruco</summary>
+    <p>A large covariance means we do not trust the sensor, therefore we will mostly focus on the odometry sensor model you wrote. Since that does not have a direct measurement on position, you should see the particles average out to about the center of their mass. This is because each particle has similar weight without trust the aruco detection sensor.</p>
+    </details>
+
+1. Set the second value of the aruco covariance back to 0.1. This controls the part of the aruco marker sensor model that is comparing the distance to the tag, what do you expect the particles to look like?
+
+    <details>
+    <summary><b>Hint:</b> No Distance Measurement</summary>
+    <p>Here we expect to see that particle that are aligned with the markers we see, but at bad distance estimates. This is really a constraint on yaw. Look for low probability particles with incorrect yaw.</p>
+    </details>
+
+1. Set the aruco covariance to (0.03, 10000.0). This controls the part of the sensor model that looks at distance to the tag. Which particle do you think are most likely with this tuning?
+
+    <details>
+    <summary><b>Hint:</b> No Angular Measurement</summary>
+    <p>Here we expect to see that particle that are the correct distance, but could have the wrong yaw. </p>
+    </details>
+
+
+### 3.14 Tuning Your particle filter
+
+Now that we have a feel for what the different tuning parameters can do, let's try and tune our particle filter. Below is the general approach to tuning a particle filter. The most important thing is to carefully think through what the parameter change should do theoretically and compare that to what you see. Some tuning might affect the stopped particle filter, and some might only be noticible with motion. To get the particles to move all you need to do is run either teleop node.
+
 1. Number of particles:
 
-    a. The first thing we are going to tune is the number of particles. Let's start with a very small number of particles. Try setting the number of particles in the config file to 10 particles and run the filter. This should not work well and likely diverge.
+    a. The first thing we are going to tune is the number of particles. Let's start with a very small number of particles. Try setting the number of particles in the config file to 10 particles and run the filter. This should not work well and likely diverge. Why does this occur?
+    <details>
+    <summary><b>Hint:</b> Too Few Particles</summary>
+    <p>With too few particles there is a good chance none of them are good. The filter will choose the best particle, which could lead us in a very bad direction. Furthermore, a random sampling of noise in the motion model can make the particle move in the wrong direction. If we don't have any particles that move in the right direction, there is a good change we will diverge.</p>
+    </details>
 
-    b. Increase the number of partilces to be a very large number (like 1000 or 10000), what do you see? The filter should be relatively accurate at first but be very slow to keep up with the movement of the robot. You have too many particles here, remember the computation time of the filter scales linearly with the number of particles.
+    b. Increase the number of particles to be a very large number (like 1000 or 10000), what do you see?
+    <details>
+    <summary><b>Hint:</b> Too Many Particles</summary>
+    <p>The filter should be relatively accurate at first but be very slow to keep up with the movement of the robot. You have too many particles here, remember the computation time of the filter scales linearly with the number of particles.</p>
+    </details>
 
     c. Now slowly increase the number of particles in increments of 50 (50, 100, 150, 200, etc) until you think the filter is converging well. How many particles do you think we need?
-2. Motion model tuning
+1. Motion model tuning
 
-    a. Now that we have a reasonable number of particles (around 200 worked for us) let's try playing around the noise injected into the motion model. Play around with the values for the motion model, look for the motion_sigmas in the config file. This is the amount of noise added to each channel of the motion. We sample the noise from a zero mean Gaussian with unit variance (1) then multiply it by this value.
+    a. Now that we have a reasonable number of particles (around 200 worked for us) let's try playing around the noise injected into the motion model. Play around with the values for the motion model, look for the motion_sigmas in the config file. This is the amount of noise added to each channel of the motion. We sample the noise from a zero mean Gaussian with unit variance (1) then multiply it by this value. Try setting the amount of noise added to x, y, yaw to be 0. What happens with your filter? Why do you think these are useful for convergence?
 
-    b. Try setting the amount of noise added to x, y, yaw to be 0. What happens with your filter? Why do you think these are useful?
+    <details>
+    <summary><b>Hint:</b> Low Motion Noise</summary>
+    <p>You should see that by removing those noises our filter has a hard time converging to the right values. This is due to adding additional noise in x,y allows our filter to shift to align with the sensor reading easier without being constrained by the actual motion.</p>
+    </details>
 
-    You should see that by removing those noises our filter has a hard time converging to the right values. This is due to adding additional noise in x,y allows our filter to shift to align with the sensor reading easier without being constrained by the actual motion.
+    c. Now increase the motion sigmas on x, y, yaw to a very large number (like 0.5), What do you see and why is this occurring?
+    <details>
+    <summary><b>Hint:</b> High Motion Noise</summary>
+    <p>the filter will then have a hard time remaining converged. Often when tuning particle filters you want to ensure that your noise is small enough to encourage convergence but not too large to result in jumpy behavior. This is a tuning thing that will depend a lot on the current application.</p>
+    </details>
+1. Odometry sensor model tuning
 
-    c. Now increase the motion sigmas on x, y, yaw to a very large number (like 0.5), the filter will then have a hard time remaining converged. Often when tuning particle filters you want to ensure that your noise is smal enough to encourage convergence but not too large to result in jumpy behavior. This is a tuning thing that will depend a lot on the current application.
-3. Odometry sensor model tuning
+    a. Try setting the measurement covariance very small for the odometry measurement (like 0.001), what do you see and why is this occu4ring?
+    <details>
+    <summary><b>Hint:</b> Low Covariance </summary>
+    <p>You should see that the particle filter has a harder time converging to the correct values since particle with a small amount of motion have a low probability. Since our motion model is injecting noise it is very unlikely that a particle will have close to the correct velocity estimate.</p>
+    </details>
 
-    a. Try turning off the odometry sensor model by setting the measurement_timeout equal to 0. What do you see? How do you think this should effect the particle filter
+    b. Try setting the measurement covariance very high (like 0.5), what do you see and why is this occurring?
 
-    You should see that without the odometry measurement we have a tendency for particle to move away from the converged mass quicker. Since we don't have a direct measurment on our body velocities we can't say that since the robot is not moving the particles should have a low velocity. Try this while moving to see the full effect.
+    <details>
+    <summary><b>Hint:</b> High Covariance </summary>
+    <p>You should see the filter work well, but be a little less stable when you are not moving. The odometry sensor model is mostly used for stationary positions but as long as you can see an aruco marker the position should be relatively stable due to that sensor reading alone.</p>
+    </details>
 
-    b. Revert the value of the measurement_timeout to 0.05 and try setting the measurement covariance very small for the odometry measurement (like 0.001), what do you see?
-
-    You should see that the particle filter has a harder time converging to the correct values since particle with a small amount of motion have a low probability. Since our motion model is injecting noise it is very unlikely that a particle will have close to the correct velocity estimate.
-
-    c. Try setting the measurement covariance very high (like 0.5), what do you see?
-
-    You should see the filter work well, but be a little less stable when you are not moving. The odometry sensor model is mostly used for stationary positions but as long as you can see an aruco marker the position should be relatively stable due to that sensor reading alone.
 
 This was a short introduction to the ideas of tuning a particle filter. We encourage you to play around with all of the parameters.
 
-### 3.14 Commit your new code in git
+### 3.15 Commit your new code in git
 
 Once you've got your code for this project working, use the command below to commit it into git. This will make it easier to grab changes to the starter code for the remaining projects.
 
