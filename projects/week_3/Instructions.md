@@ -235,10 +235,10 @@ In the `OdometrySensorModel` constructor, let's start by grabbing the values of 
 Remember, to declare a ROS parameter (and get its value at the same time), we use the `declare_parameter` function. We need to template it for the type of data we want, give it the full name of the parameter, and give it a default value incase that parameter isn't given at run time. For our covariance parameter, that would look like this:
 
 ```C++
-covariance_ = node.declare_parameter<std::vector<double>>("sensors/odom/covariance", {0.1, 0.1});
+covariance_ = node.declare_parameter<std::vector<double>>("sensors.odom.covariance", {0.1, 0.1});
 ```
 
-We're storing the parameter value into the `covariance_` member variable. The type of the data we want is `std::vector<double>`. The parameter name is `"sensors/odom/covariance"`, and the default value is an array of two doubles.
+We're storing the parameter value into the `covariance_` member variable. The type of the data we want is `std::vector<double>`. The parameter name is `"sensors.odom.covariance"`, and the default value is an array of two doubles.
 
 Note that `declare_parameter` is a member function of `rclcpp::Node`, so we're calling it on the node object given to the constructor. Our sensor model class is not, itself, a ROS node, so we use a node reference to interact with ROS resources.
 
