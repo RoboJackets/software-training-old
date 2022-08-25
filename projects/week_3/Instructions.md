@@ -412,7 +412,11 @@ Here we will be changing parameters in the config file that you connected to you
 
 The first thing you should do is run the project but no teleoperation node. That should look like this,
 
-Here you can see the particles where they initialze (the filter is disabled until we start giving control commands). This is a great tool for debugging, since you can selectively turn on and off things using the parameters and see their effect without motion jitter. You should see that the particle filter estimate is relatively near the ground truth arrow, but will likely have a small offset. Don't worry about that for now, just take a quick look at your particles and make sure things look reasonable (like the image). If not you likely have a bug in your code somewhere.
+![Correct Filter Implementation](StoppedFilter.png)
+
+Here you can see the particles where they initialize (the filter is disabled until we start giving control commands). This is a great tool for debugging, since you can selectively turn on and off things using the parameters and see their effect without motion jitter. You should see that the particle filter estimate is relatively near the ground truth arrow, but will likely have a small offset. Don't worry about that for now, just take a quick look at your particles and make sure things look reasonable (like the image). If not you likely have a bug in your code somewhere.
+
+The purple circle around the red arrow represents the positional uncertainty of the particle filter estimate. The yellow cone represents the yaw uncertainty of the output. When running the filter these two should be relatively small, and if the true position ever goes outside the purple, that indicates your filter is poorly tuned.
 
 Now that we have working code, let's try getting an intuition for what the covariance parameters do. We'll go through a couple changes to see what they do.
 
