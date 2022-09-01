@@ -78,7 +78,7 @@ ros2 launch rj_training_bringup simluator.launch.py -->
 $ ros2 launch traini_bringup traini_simulation.launch.py
 ```
 
-**Tip:** Don't forget to source your ROS underlay first with `source /opt/ros/foxy/setup.bash`.
+**Tip:** Don't forget to source your ROS underlay first with `source /opt/ros/humble/setup.bash`.
 
 You should now see Gazebo with the virtual world we'll be using for our projects.
 
@@ -280,7 +280,7 @@ Before we can run our newly finished node, we need to build it. Open a terminal 
 Source the underlay setup script:
 
 ```bash
-$ source /opt/ros/foxy/setup.bash
+$ source /opt/ros/humble/setup.bash
 ```
 
 And use colcon to build the workspace
@@ -308,7 +308,7 @@ To run this project, we'll need two terminal windows or tabs.
 In both terminals, you'll need to start by sourcing the underlay setup file and the training workspace overlay setup file.
 
 ```bash
-source /opt/ros/foxy/setup.bash
+source /opt/ros/humble/setup.bash
 source ~/training_ws/install/setup.bash
 ```
 
