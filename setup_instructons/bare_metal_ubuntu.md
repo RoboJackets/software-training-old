@@ -1,2 +1,0 @@
-# Bare Metal Ubuntu Setup
-
