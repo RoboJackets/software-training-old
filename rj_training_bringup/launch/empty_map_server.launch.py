@@ -19,22 +19,29 @@
 # THE SOFTWARE.
 
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
-from launch.substitutions import LaunchConfiguration
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
+from launch_ros.substitutions import FindPackageShare
 
 
 def generate_launch_description():
+
     return LaunchDescription([
-        DeclareLaunchArgument(
-            name='use_sim_time',
-            default_value='True'
-        ),
         Node(
-            name='fake_localizer',
-            package='tf2_ros',
-            executable='static_transform_publisher',
-            arguments=['--frame-id', 'map', '--child-frame-id', 'odom'],
-            parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')}]
-        )
+            package='nav2_map_server',
+            executable='map_server',
+            output='screen',
+            parameters=[{
+                'use_sim_time': LaunchConfiguration('use_sim_time', default=False),
+                'yaml_filename': PathJoinSubstitution([FindPackageShare('rj_training_bringup'), 'maps', 'empty_map.yaml'])
+            }]),
+        Node(
+            package='nav2_lifecycle_manager',
+            executable='lifecycle_manager',
+            name='map_server_lifecycle_manager',
+            output='screen',
+            parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time', default=False)},
+                        {'autostart': True},
+                        {'node_names': ['map_server']}])
+
     ])

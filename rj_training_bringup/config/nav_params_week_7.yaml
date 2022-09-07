@@ -127,5 +127,5 @@ recoveries_server:
   ros__parameters:
     recovery_plugins: ["wait"]
     wait:
-      plugin: "nav2_recoveries/Wait"
+      plugin: "nav2_behaviors/Wait"
     use_sim_time: true

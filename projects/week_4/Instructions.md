@@ -32,19 +32,25 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 
 This is an exciting week. Our robot will move autonomously for the first time!
 
-This week, we'll be focussing on optimization by doing some literal (simulated) hill climbing. Part of the challenge our robot will need to complete at the end of the semester includes find the highest spot around it to park. While our real environment is flat, we have simulated terrain data which our robot can measure for the purposes of this task.
+This week, we'll be focussing on optimization by doing some literal (simulated) hill climbing. Part of the challenge our robot will need to complete at the end of the semester includes finding the highest spot around it to park. While our real environment is flat, we have simulated terrain data which our robot can measure for the purposes of this task.
 
 If our robot could see a terrain map of the entire world, this task would be really easy. We would just check every spot to find the max elevation and drive directly to it. Unfortunately, we don't have such a map in our scenario. The robot is limitted to checking the elevation at locations within a certain range of it's current position. Because our robot has this limitted view of the world around it, we need to use an iterative optimization algorithm to come up with individual steps that will take us to the peak.
 
 ### 1.1 The code
 
-The code we'll be writing this week is in the [peak_finder](../../peak_finder) package. This package features a node that provides a ROS action the drives the robot to the highest point and stops. We'll talk in detail about actions later. For now, just know that this is a behavior we can trigger and cancel.
+The code we'll be writing this week is in the [peak_finder](../../peak_finder) package. This package features a node that provides a ROS action, `/park_at_peak`, that drives the robot to the highest point and stops. We'll talk in detail about actions later. For now, just know that this is a behavior we can start and cancel.
 
-The bulk of the node has been setup for you. When the action is triggered, the node enters a loop where it picks a spot to move to using an optimization algorithm, moves to that location, and repeats. This loop ends when the optimization algorithm determines the robot is at the highest point.
+The bulk of the node has been setup for you. When the action is requested, `PeakFinderComponent::execute()` is called. This is, admittedly, a pretty complicated function since it's juggling a bunch of asynchronous systems. For this project, we only need to understand the high level of what this function is doing. The execute function performs these three steps in a loop:
 
-There are two things you'll be implementing. The first is the service client used to get our simulated terrain measurements. This will be a client for the `/sample_elevation` service. You'll be setting up the client and implementing the `SampleElevation()` function which uses this client to get the elevation at a specific location.
+1. Check the elevation of a few spots around the robot.
+1. Pick a spot to drive to.
+1. Tell the robot to drive to that location.
 
-The second part you'll be implementing is the optimization algorithm used to select the next pose for the robot to move to. This is wrapped up in the `PickNextGoalPosition()` function which takes the robot's current position and elevation and returns the next position the robot should move to. When the robot is at the peak, `PickNextGoalPosition()` will return `current_position`.
+These three steps keep repeating until the node determines the robot has reached a local maximum.
+
+There are two things you'll be implementing. The first is the service client used to get our simulated terrain measurements. This will be a client for the `/sample_elevation` service, which checks a location near the robot and replies with the elevation at that location. You'll be setting up the client and implementing the `SampleElevation()` function which uses this client to get the elevation at a specific location. We'll explore more of the details about this service in the steps below.
+
+The second part you'll be implementing is the optimization algorithm used to select the next pose for the robot to move to. This is wrapped up in the `PickNextGoalPosition()` function which takes the robot's current position and elevation and returns the next position the robot should move to. When the robot is at the peak, `PickNextGoalPosition()` should return `current_position` to tell the loop in the `execute()` function to stop.
 
 ## 2 Running this project
 
@@ -102,7 +108,7 @@ In that list, you should see `/sample_elevation`. Now, check this service's type
 ros2 service type /sample_elevation
 ```
 
-This command will show you the type of the service in the form `package_name/src/ServiceTypeName`. To see the fields in this type, use the `interface show` command shown below, replacing `<service_type>` with the service type you got from the previous command.
+This command will show you the type of the service in the form `package_name/srv/ServiceTypeName`. To see the fields in this type, use the `interface show` command shown below, replacing `<service_type>` with the service type you got from the previous command.
 
 ```bash
 ros2 interface show <service_type>
@@ -133,7 +139,7 @@ You can now close the week 4 launch session. It's time to start writing some cod
 
 Open up [peak_finder_component.cpp](../../peak_finder/src/peak_finder_component.cpp) in the `peak_finder` package. All of our code for this week will be written in this file.
 
-To use our `/sample_elevation` service, we need to setup a service client. We'll also need access to the `SampleElevation` service type. Start by including the header file for this service type in the student code comment block at the top of the file.
+To use our `/sample_elevation` service, we need to setup a service client. For that, we'll need access to the `SampleElevation` service type. Start by including the header file for this service type in the student code comment block at the top of the file.
 
 ```C++
 #include <stsl_interfaces/srv/sample_elevation.hpp>
@@ -163,6 +169,8 @@ Find the student code comment block in the `SampleElevation` function. The `Samp
 
 To send a request to a service, we need to create and populate a request object. Create a new shared pointer to a `stsl_interfaces::srv::SampleElevation::Request` object. Set the `x` member of the request object to the `x` value of `position`. Do the same for `y`.
 
+**Tip:** To get the x and y values from an `Eigen::Vector2d`, call its `x()` and `y()` member functions.
+
 Finally, call `async_send_request` on the client object, passing in the request object. This function returns a future. Store that future in a variable named `result_future`.
 
 ### 3.5 Elevation Sampling: Wait for SampleElevation response
@@ -178,6 +186,10 @@ if (result_future.wait_for(std::chrono::seconds(2)) != std::future_status::ready
   throw std::runtime_error("Elevation service call timed out.");
 }
 ```
+
+Here, we use `std::chrono::seconds(2)` to create a [`std::chrono::duration`](https://en.cppreference.com/w/cpp/chrono/duration) object representing 2 seconds. The [chrono library](https://en.cppreference.com/w/cpp/chrono) from the C++ standard gives us several types and functions for working with timepoints and durations.
+
+The `throw` keyword tells the computer to interrupt the normal execution of this function and indicate to the caller that an error has occurred. While we haven't covered exceptions in detail during software training, just know that `throw` marks the end of the function execution, kind of like `return` does. None of the code after the `throw` statement will get executed. If you're interested in learning more about exceptions, take a look at the [exceptions page](https://en.cppreference.com/w/cpp/language/exceptions) on cppreference.com.
 
 If we make it past this check, our future is ready. We can get the response message with the future's `get` function.
 
@@ -207,10 +219,11 @@ Now we're going to shift our attention to the `PickNextGoalPosition` function. T
 
 The algorithm we'll implement now is a simple one. It will check a fixed number of locations at a fixed radius around the robot's current location. It will then pick the location with the highest elevation from that set. This isn't the best approach to optimization, but it's easy to implement and smart enough to get the job done.
 
-Our algorithm has two tunable values, so we need to grab two parameters: the radius of our sample circle and the number of samples to take.
+Our algorithm has two tunable values, so we need to grab two parameters: the radius of our sample circle and the number of samples to take. Find the student code block inside the `PickNextGoalPosition` function and use `get_parameter` to retrieve our tunable values from ROS parameters.
 
 ```C++
-const double search_radius = get_parameter("search_radius").as_double();const int sample_count = get_parameter("sample_count").as_int();
+const double search_radius = get_parameter("search_radius").as_double();
+const int sample_count = get_parameter("sample_count").as_int();
 ```
 
 Now we're going to write the code that generates the sample positions. First, we'll need a container to hold the positions we create. Declare a vector of `Eigen::Vector2d` objects, named `sample_positions`.
