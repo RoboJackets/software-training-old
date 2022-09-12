@@ -6,7 +6,7 @@
   </include>
   <include file="$(find-pkg-share rj_training_bringup)/launch/navigation.launch.py">
     <arg name="use_sim_time" value="$(var simulation)"/>
-    <arg name="params_file" value="$(find-pkg-share rj_training_bringup)/config/nav_params_week_7.yaml"/>
+    <arg name="nav_params_file" value="$(find-pkg-share rj_training_bringup)/config/nav_params_week_7.yaml"/>
   </include>
   <node pkg="rviz2" exec="rviz2" args="-d $(find-pkg-share rj_training_bringup)/rviz_config/week_7.rviz">
     <arg name="use_sim_time" value="$(var simulation)"/>

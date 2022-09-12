@@ -20,8 +20,6 @@ Panels:
       - /Current View1
     Name: Views
     Splitter Ratio: 0.5
-  - Class: stsl_rviz_plugins/ParkAtPeakButton
-    Name: ParkAtPeakButton
   - Class: stsl_rviz_plugins/ParkAtPeak Button
     Name: ParkAtPeak Button
 Visualization Manager:

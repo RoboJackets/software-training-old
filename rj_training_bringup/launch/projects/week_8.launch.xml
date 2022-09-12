@@ -22,7 +22,7 @@
   </include>
   <include file="$(find-pkg-share rj_training_bringup)/launch/navigation.launch.py">
     <arg name="use_sim_time" value="$(var simulation)"/>
-    <arg name="params_file" value="$(find-pkg-share rj_training_bringup)/config/nav_params_week_8.yaml"/>
+    <arg name="nav_params_file" value="$(find-pkg-share rj_training_bringup)/config/nav_params_week_8.yaml"/>
     <!-- BEGIN STUDENT CODE -->
     <arg name="behavior_tree" value="$(find-pkg-share rj_training_bringup)/behavior_trees/navigate.xml"/>
     <!-- END STUDENT CODE -->

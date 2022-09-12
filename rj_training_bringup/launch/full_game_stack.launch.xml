@@ -31,7 +31,7 @@
     </include>
     <include file="$(find-pkg-share rj_training_bringup)/launch/navigation.launch.py">
         <arg name="use_sim_time" value="$(var use_sim_time)"/>
-        <arg name="params_file" value="$(find-pkg-share rj_training_bringup)/config/nav_params_final_challenge.yaml"/>
+        <arg name="nav_params_file" value="$(find-pkg-share rj_training_bringup)/config/nav_params_final_challenge.yaml"/>
         <arg name="behavior_tree" value="$(find-pkg-share rj_training_bringup)/behavior_trees/navigate.xml"/>
     </include>
     <node pkg="peak_finder" exec="peak_finder_node">

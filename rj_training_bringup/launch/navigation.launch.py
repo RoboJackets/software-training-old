@@ -32,19 +32,20 @@ def generate_launch_description():
 
     lifecycle_nodes = ['controller_server',
                        'planner_server',
-                       'recoveries_server',
+                       'behavior_server',
                        'bt_navigator']
 
     default_behavior_tree = os.path.join(get_package_share_directory(
         'rj_training_bringup'), 'behavior_trees', 'navigate.xml')
 
-    params_file = LaunchConfiguration('params_file')
+    params_file = LaunchConfiguration('nav_params_file')
 
     use_sim_time = LaunchConfiguration('use_sim_time')
 
     param_substitutions = {
         'use_sim_time': use_sim_time,
-        'default_bt_xml_filename': LaunchConfiguration('behavior_tree')
+        'default_nav_to_pose_bt_xml': LaunchConfiguration('behavior_tree'),
+        'default_nav_through_poses_bt_xml': LaunchConfiguration('behavior_tree')
     }
 
     configured_params = RewrittenYaml(
@@ -60,7 +61,7 @@ def generate_launch_description():
             default_value='false'
         ),
         DeclareLaunchArgument(
-            name='params_file',
+            name='nav_params_file',
             default_value=os.path.join(get_package_share_directory(
                 'rj_training_bringup'), 'config', 'nav_params.yaml')
         ),
@@ -92,9 +93,9 @@ def generate_launch_description():
             remappings=tf_remappings
         ),
         Node(
-            package='nav2_recoveries',
-            executable='recoveries_server',
-            name='recoveries_server',
+            package='nav2_behaviors',
+            executable='behavior_server',
+            name='behavior_server',
             output='screen',
             parameters=[configured_params],
             remappings=tf_remappings
