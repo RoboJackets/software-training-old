@@ -29,10 +29,10 @@ For more information about team meeting schedules and locations, check with each
 ### General Software Training Meetings
 - Wednesdays
   - 6:00 - 8:00pm
-  - Location TBA
+  - Skiles 255
 - Friday
   - 4:00 - 6:00pm
-  - Lcoation TBA
+  - Van Leer C341
 
 ## Resources
 
