@@ -87,13 +87,15 @@ do
     then
         echo "Overwriting $current_file"
         cp $solution_file $current_file
-    fi
 
-    kdiff3 --merge --L1 'Current Solution' --L2 'Reference Solution' --output "$current_file" "$current_file" "$solution_file"
+    else
+      kdiff3 --merge --L1 'Current Solution' --L2 'Reference Solution' --output "$current_file" "$current_file" "$solution_file"
 
-    if [ "$RM_ORIG_FILES" ]
-    then
-        rm $current_file.orig
+      if [ "$RM_ORIG_FILES" ]
+      then
+          rm $current_file.orig
+      fi
+
     fi
 
 done
