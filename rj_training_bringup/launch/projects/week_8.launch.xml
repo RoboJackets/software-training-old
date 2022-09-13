@@ -4,7 +4,7 @@
   <include if="$(var simulation)" file="$(find-pkg-share traini_bringup)/launch/traini_simulation.launch.py"/>
 
   <include file="$(find-pkg-share traini_bringup)/launch/tag_detector.launch.py">
-    <param name="use_sim_time" value="$(var simulation)"/>
+    <arg name="use_sim_time" value="$(var simulation)"/>
   </include>
   <node pkg="coordinate_transform" exec="coordinate_transform_node">
     <param name="use_sim_time" value="$(var simulation)"/>
@@ -28,6 +28,6 @@
     <!-- END STUDENT CODE -->
   </include>
   <node pkg="rviz2" exec="rviz2" args="-d $(find-pkg-share rj_training_bringup)/rviz_config/week_8.rviz">
-    <arg name="use_sim_time" value="$(var simulation)"/>
+    <param name="use_sim_time" value="$(var simulation)"/>
   </node>
 </launch>
