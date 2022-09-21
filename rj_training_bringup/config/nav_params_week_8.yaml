@@ -2,7 +2,8 @@ bt_navigator:
   ros__parameters:
     use_sim_time: True
     enable_groot_monitoring: False
-    default_bt_xml_filename: "navigate_w_replanning_and_recovery.xml"
+    default_nav_to_pose_bt_xml: "navigate_w_replanning_and_recovery.xml"
+    default_nav_through_poses_bt_xml: "navigate_w_replanning_and_recovery.xml"
     plugin_lib_names:
     - nav2_compute_path_to_pose_action_bt_node
     - nav2_follow_path_action_bt_node

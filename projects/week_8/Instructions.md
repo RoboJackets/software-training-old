@@ -50,13 +50,51 @@ The code we'll be writing this week will be in the [astar_path_planner package](
 
 This file contains the function definitions for the `AStarPathPlanner` class. This class is used by `AStarPathPlannerPlugin`, which provides a `GlobalPlanner` plugin for the Nav2 navigation stack. Global planners are used to calculate paths between the robot's current location and a destination pose.
 
-There are a number of helpers we've put together to make this code work. The first is the `Point` type alias for `Eigen::Vector2d`. We'll use this type to hold locations in our planning algorithm.
+There are a number of helpers we've put together to make this code work. The first is the `Point` type alias for `Eigen::Vector2d` (defined in [utils.hpp](../../astar_path_planner/src/utils.hpp)). We'll use this type to hold locations in our planning algorithm.
 
-We've also defined types for the priority queue used for the A* frontier and the set used for holding the expanded nodes. These are defined at the start of the `AStarPathPlanner` declaration in [astar_path_planner.hpp](../../astar_path_planner/src/astar_path_planner.hpp).
+```C++
+using Point = Eigen::Vector2d;
+```
+
+We've also defined types for the [priority queue](https://en.cppreference.com/w/cpp/container/priority_queue) used for the A* frontier and the [set](https://en.cppreference.com/w/cpp/container/set) used for holding the expanded nodes. These are defined at the start of the `AStarPathPlanner` declaration in [astar_path_planner.hpp](../../astar_path_planner/src/astar_path_planner.hpp).
+
+```C++
+using FrontierQueue = std::priority_queue<FrontierEntry, std::vector<FrontierEntry>,
+      FrontierEntryComparator>;
+ using ExpandedSet = std::unordered_set<Point, PointHash, PointEqualityComparator>;
+```
 
 The frontier priority queue holds `FrontierEntry` structs, which hold a path and the associated cost. This struct is defined in [utils.hpp](../../astar_path_planner/src/utils.hpp). We want the priority queue to sort entries by their cost, so we create a custom comparator object, `FrontierEntryComparator`. You can see more about how `std::priority_queue` uses this comparator on [cppreference.com](https://en.cppreference.com/w/cpp/container/priority_queue).
 
+```C++
+struct FrontierEntry
+{
+  std::vector<Point> path;
+  double cost;
+};
+
+struct FrontierEntryComparator
+{
+  // Returns true when a should be sorted before b
+  bool operator()(const FrontierEntry & a, const FrontierEntry & b) const;
+};
+```
+
 [utils.hpp](../../astar_path_planner/src/utils.hpp) and [utils.cpp](../../astar_path_planner/src/utils.cpp) also contain two helpers that let us store `Point` objects in a `std::unordered_set`. `PointEqualityComparator` and `PointHash` provide a comparator and hashing algorithm that work well with floating point locations at the scale we're working with. Again, you can find out more about the purposes these serve in the documentation for [`std::unordered_set`](https://en.cppreference.com/w/cpp/container/unordered_set).
+
+```C++
+struct PointEqualityComparator
+{
+  // Returns true when a should be sorted before b
+  bool operator()(const Point & left, const Point & right) const;
+};
+
+struct PointHash
+{
+  // Returns a hash representing the values stored in point
+  std::size_t operator()(const Point & point) const;
+};
+```
 
 ## 2 Running this project
 
@@ -106,7 +144,11 @@ This project will focus on implementing various functions used to make the A* pa
 
 `IsGoal()` takes in a location and returns whether or not that point is close enough to our destination to be considered in the goal state.
 
-Because `Point` in our is actually `Eigen::Vector2d`, we can use Eigen operators. To find the distance between two `Vector2d` objects, we can take the norm of the difference. So, to check if the given point is our goal position, we'll see if the distance to our goal is less than a configurable threshold.
+Because `Point` in our code is actually `Eigen::Vector2d`, we can use Eigen operators. To find the distance between two `Vector2d` objects, we can take the norm of the difference. So, to check if the given point is our goal position, we'll see if the distance to our goal is less than a configurable threshold.
+
+$
+|Point - Goal| < threshold
+$
 
 Find the student code block in the `IsGoal()` function and implement the function:
 
@@ -136,6 +178,8 @@ Next, create a pair of nested for loops. The outer loop should iterate from `dx 
 
 We don't want to consider our current point as a neighbor, so the first thing our inner loop body should do is check for that condition and skip that iteration. We can check for this by checking if both `dx` and `dy` are zero. Because these are floating point values, which don't behave well with equality checks, check instead if the absolute value of each is less than a very small number, like `1e-4`. If both values are zero (or nearly zero), continue to the next loop iteration.
 
+**Tip:** To get the absolute value of a number in C++, you can use [std::abs()](https://en.cppreference.com/w/cpp/numeric/math/abs).
+
 After that check, declare a new variable `neighbor`. This should be a constant `Point` which we can initialize by adding `point` and `Point{dx, dy}`.
 
 Then, if `IsPointInCollision(neighbor)` returns false, append `neighbor` to `neighbors`.
@@ -146,11 +190,19 @@ And finally, return `neighbors`.
 
 The last helper or intermediate function we have to implement is `ExtendPathAndAddtoFrontier()`. This function takes in a path, with associated cost, and the next point we'd like to add to the path. Note that the path cost includes the heuristic value of the last point in the path. The job of this function is to extend the path with the new point, calculate the estimated cost of the new path (including heuristic), and push a new entry to the frontier.
 
+Find the student code block in the `ExtendPathAndAddtoFrontier()` definition.
+
 Start by declaring a new `std::vector<Point>` named `new_path`. Initialize this by copying `path` with `std::vector`'s copy constructor.
 
 Next, append `next_point` to `new_path`.
 
-To calculate the cost of this new path, subtract the heuristic of the old path's last state from the old path's cost. Then, add the step cost to get from the old path's last state to the new point, and add the heuristic value for the new last point. Remember the A* cost should be the summation of the true cost to get to the new node plus the heuristic at that node.
+To calculate the cost of this new path, follow these steps:
+
+1. subtract the heuristic of the old path's last state from the old path's cost
+1. add the step cost to get from the old path's last state to the new point
+1. add the heuristic value for the new last point. 
+
+Remember the A* cost should be the summation of the true cost to get to the new node plus the heuristic at that node.
 
 Finally, add a new entry to the frontier for this new path and cost:
 
@@ -180,13 +232,13 @@ const auto cost = entry.cost;
 const auto last_state = path.back();
 ```
 
-The main purpose of this loop body is to expand the state we just popped off the frontier queue. Before we do that, we need to make sure we haven't already expanded this state before. We can check if `last_state` is already in our `expanded_` set using the `count()` function:
+The main purpose of this loop body is to expand the state we just popped off the frontier queue. Before we do that, we need to make sure we haven't already expanded this state before. We can check if `last_state` is already in our `expanded_` set using the `count()` function. If `count()` returns a number greater than zero, continue to the next loop iteration.
 
 ```c++
-expanded_.count(last_state)
+if(expanded_.count(last_state) > 0) {
+  continue;
+}
 ```
-
-If `count()` returns a number greater than zero, continue to the next loop iteration.
 
 Next, because we now know this is our first time trying to expand this state, we need to add `last_state` to `expanded_`. Do this with [the `insert()` function](https://en.cppreference.com/w/cpp/container/unordered_set/insert).
 
@@ -249,7 +301,7 @@ You can find out more about using rosbag2 from the documentation in its [readme]
 
 ### 3.8 Turn on replanning
 
-You may have noticed that our robot doesn't update it's planned path as it discovers new obstacles. Thus, it may drive straight through an obstacle that wasn't on the map when it started. Nav2 has a lot of different ways to deal with this kind of situation. The high-level behavior of the navigation stack is governed by a [behavior tree](https://en.wikipedia.org/wiki/Behavior_tree_(artificial_intelligence,_robotics_and_control). Behavior trees are described in XML files where each tag represents a node in the tree.
+You may have noticed that our robot doesn't update it's planned path as it discovers new obstacles. Thus, it may drive straight through an obstacle that wasn't on the map when it started. Nav2 has a lot of different ways to deal with this kind of situation. The high-level behavior of the navigation stack is governed by a [behavior tree](https://en.wikipedia.org/wiki/Behavior_tree_%28artificial_intelligence%2C_robotics_and_control%29). Behavior trees are described in XML files where each tag represents a node in the tree.
 
 So far we've been using a very simple behavior tree, [navigate.xml](../../rj_training_bringup/behavior_trees/navigate.xml). This tree just plans the path and then follows it. This is pretty much the shortest functional tree you can write for Nav2.
 
