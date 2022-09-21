@@ -11,7 +11,7 @@ set -e
 if ! command -v doctoc &> /dev/null
 then
   read -p "doctoc not found. Would you like to install it (y/N)?" install_response
-  if [ $REPLY =~ ^[Yy]$ ]; then
+  if [[ $install_response =~ ^[Yy]$ ]]; then
     echo "Installing doctoc..."
     sudo apt install npm
     sudo npm install -g doctoc
