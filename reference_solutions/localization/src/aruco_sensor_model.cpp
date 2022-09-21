@@ -29,17 +29,50 @@ namespace localization
 ArucoSensorModel::ArucoSensorModel(rclcpp::Node & node)
 {
   covariance_ = node.declare_parameter<std::vector<double>>(
-    "sensors/aruco/covariance", {0.025, 0.025,
-      0.025});
-  timeout_ = node.declare_parameter<double>("sensors/aruco/measurement_timeout", 0.1);
+    "sensors.aruco.covariance", {0.025, 0.025});
+  timeout_ = node.declare_parameter<double>("sensors.aruco.measurement_timeout", 0.1);
 
   tags_ = {
+      // side 1
     {0, TagLocation{0.6096, 0, -M_PI_2}},
-    {1, TagLocation{0.3, -0.381, M_PI}},
-    {2, TagLocation{-0.3, -0.381, M_PI}},
-    {3, TagLocation{-0.6096, 0, M_PI_2}},
-    {4, TagLocation{-0.3, 0.381, 0}},
-    {5, TagLocation{0.3, 0.381, 0}}
+    {1, TagLocation{0.6096, 0.11, -M_PI_2}},
+    {2, TagLocation{0.6096, 0.22, -M_PI_2}},
+    {3, TagLocation{0.6096, 0.33, -M_PI_2}},
+    {4, TagLocation{0.6096, -0.11, -M_PI_2}},
+    {5, TagLocation{0.6096, -0.22, -M_PI_2}},
+    {6, TagLocation{0.6096, -0.33, -M_PI_2}},
+    // side 2
+    {7, TagLocation{0.0, -0.381, M_PI}},
+    {8, TagLocation{0.11, -0.381, M_PI}},
+    {9, TagLocation{0.22, -0.381, M_PI}},
+    {13, TagLocation{0.33, -0.381, M_PI}},
+    {14, TagLocation{0.44, -0.381, M_PI}},
+    {15, TagLocation{0.55, -0.381, M_PI}},
+    {16, TagLocation{-0.11, -0.381, M_PI}},
+    {17, TagLocation{-0.22, -0.381, M_PI}},
+    {18, TagLocation{-0.33, -0.381, M_PI}},
+    {19, TagLocation{-0.44, -0.381, M_PI}},
+    {20, TagLocation{-0.55, -0.381, M_PI}},
+    // side 3
+    {21, TagLocation{-0.6096, 0, M_PI_2}},
+    {22, TagLocation{-0.6096, 0.11, M_PI_2}},
+    {23, TagLocation{-0.6096, 0.22, M_PI_2}},
+    {24, TagLocation{-0.6096, 0.33, M_PI_2}},
+    {25, TagLocation{-0.6096, -0.11, M_PI_2}},
+    {26, TagLocation{-0.6096, -0.22, M_PI_2}},
+    {27, TagLocation{-0.6096, -0.33, M_PI_2}},
+    // side 4
+    {28, TagLocation{0.0, 0.381, 0}},
+    {29, TagLocation{0.11, 0.381, 0}},
+    {30, TagLocation{0.22, 0.381, 0}},
+    {31, TagLocation{0.33, 0.381, 0}},
+    {32, TagLocation{0.44, 0.381, 0}},
+    {33, TagLocation{0.55, 0.381, 0}},
+    {34, TagLocation{-0.11, 0.381, 0}},
+    {35, TagLocation{-0.22, 0.381, 0}},
+    {36, TagLocation{-0.33, 0.381, 0}},
+    {37, TagLocation{-0.44, 0.381, 0}},
+    {38, TagLocation{-0.55, 0.381, 0}},
   };
 
   tag_sub_ = node.create_subscription<stsl_interfaces::msg::TagArray>(
@@ -53,8 +86,8 @@ void ArucoSensorModel::UpdateMeasurement(const stsl_interfaces::msg::TagArray::S
 
 double ArucoSensorModel::ComputeLogNormalizer()
 {
-  return log(sqrt(pow(2 * M_PI, 3))) +
-         log(sqrt(covariance_[0])) + log(sqrt(covariance_[1])) + log(sqrt(covariance_[2]));
+  return log(sqrt(pow(2 * M_PI, 2))) +
+         log(sqrt(covariance_[0])) + log(sqrt(covariance_[1]));
 }
 
 double ArucoSensorModel::ComputeLogProb(const Particle & particle)
@@ -68,22 +101,23 @@ double ArucoSensorModel::ComputeLogProb(const Particle & particle)
     }
     // convert the global location of the current tag id into body frame
     TagLocation map_location = tags_.at(tag.id);
-    body_location.x = map_location.x * cos(particle.yaw) - map_location.y * sin(particle.yaw) -
-      particle.x * cos(particle.yaw) + particle.y * sin(particle.yaw);
-    body_location.y = map_location.x * sin(particle.yaw) + map_location.y * cos(particle.yaw) -
-      particle.x * sin(particle.yaw) - particle.y * cos(particle.yaw);
+    double x_diff = map_location.x - particle.x;
+    double y_diff = map_location.y - particle.y;
 
-    double r, p, yaw;
-    tf2::Quaternion q;
-    tf2::fromMsg(tag.pose.orientation, q);
-    tf2::Matrix3x3(q).getRPY(r, p, yaw);
-    body_location.yaw = angles::normalize_angle(map_location.yaw + particle.yaw);
+    // rotation matrix is transposed
+    body_location.x = x_diff * cos(particle.yaw) - y_diff * sin(particle.yaw);
+    body_location.y = x_diff * sin(particle.yaw) + y_diff * cos(particle.yaw);
 
-    log_prob += pow(body_location.x - tag.pose.position.x, 2) / covariance_[0];
-    log_prob += pow(body_location.y - tag.pose.position.y, 2) / covariance_[1];
+    double expected_dist = sqrt(pow(body_location.x, 2) + pow(body_location.y, 2) + pow(0.05, 2));
+    double dist = sqrt(pow(tag.pose.position.x, 2) + pow(tag.pose.position.y, 2) + pow(tag.pose.position.z, 2));
 
-    const auto yaw_error = angles::shortest_angular_distance(yaw, body_location.yaw);
-    log_prob += pow(yaw_error, 2) / covariance_[2];
+    log_prob += pow(expected_dist - dist, 2) / covariance_[0];
+
+    double bearing = atan2(tag.pose.position.y, tag.pose.position.x);
+    double expected_bearing = atan2(body_location.y, body_location.x);
+
+    const auto angular_error = angles::shortest_angular_distance(expected_bearing, bearing);
+    log_prob += pow(angular_error, 2) / covariance_[1];
   }
   return log_prob;
 }
@@ -91,6 +125,9 @@ double ArucoSensorModel::ComputeLogProb(const Particle & particle)
 bool ArucoSensorModel::IsMeasurementAvailable(const rclcpp::Time & cur_time)
 {
   if (last_msg_.header.stamp.sec == 0) {
+    return false;
+  }
+  if(last_msg_.tags.size() == 0) {
     return false;
   }
   const auto time_since_last_msg = cur_time - rclcpp::Time(last_msg_.header.stamp);

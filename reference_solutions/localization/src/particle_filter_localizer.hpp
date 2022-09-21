@@ -69,6 +69,9 @@ private:
   std::vector<std::unique_ptr<SensorModel>> sensor_models_;
   MotionModel motion_model_;
 
+  rclcpp::Time last_resample_time_;
+  double resample_rate_;
+
   int num_particles_ = 100;
   double max_weight_ = 0;
   double min_weight_ = 0;

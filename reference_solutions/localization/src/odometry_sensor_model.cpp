@@ -27,8 +27,8 @@ namespace localization
 
 OdometrySensorModel::OdometrySensorModel(rclcpp::Node & node)
 {
-  covariance_ = node.declare_parameter<std::vector<double>>("sensors/odom/covariance", {0.1, 0.1});
-  timeout_ = node.declare_parameter<double>("sensors/odom/measurement_timeout", 0.1);
+  covariance_ = node.declare_parameter<std::vector<double>>("sensors.odom.covariance", {0.1, 0.1});
+  timeout_ = node.declare_parameter<double>("sensors.odom.measurement_timeout", 0.1);
 
   odom_sub_ = node.create_subscription<nav_msgs::msg::Odometry>(
     "/odom", rclcpp::SystemDefaultsQoS(),

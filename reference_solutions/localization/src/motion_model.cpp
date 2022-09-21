@@ -32,7 +32,7 @@ MotionModel::MotionModel(rclcpp::Node & node)
   std::vector<double> motion_sigma = node.declare_parameter<std::vector<double>>(
     "motion_sigmas",
     {0.05, 0.05, 0.2,
-      0.05, 0.0});
+      0.05, 0.05});
   sigmas_.x = motion_sigma[0];
   sigmas_.y = motion_sigma[1];
   sigmas_.yaw = motion_sigma[2];
@@ -66,11 +66,17 @@ void MotionModel::updateParticles(
   double dt = current_time.seconds() - last_message_time_.seconds();
   if (dt > 1.0) {
     last_message_time_ = current_time;
-    return;
+    // very small motion can help with convergence
+    dt = 0.01;
   }
   for (Particle & particle : particles) {
     updateParticle(particle, dt, cmd_msg);
   }
   last_message_time_ = current_time;
+}
+
+bool MotionModel::getEnabled(const rclcpp::Time& current_time) {
+  double dt = current_time.seconds() - last_message_time_.seconds();
+  return dt < 0.25;
 }
 }  // namespace localization
