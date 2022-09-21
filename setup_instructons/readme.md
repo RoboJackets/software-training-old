@@ -8,24 +8,20 @@ We've marked the solution we recommend for each scenario. These are the options 
 
 ## For Windows Computers
 
-- [TODO]() (Recommended)
 - [Windows Subsystem for Linux](wsl.md) 
 - [VirtualBox](virtualbox.md)
 
 ## For Intel-based Apple Computers
 
-- [TODO]() (Recommended)
 - [VirtualBox](virtualbox.md) 
 
 ## For Apple Silicon Computers (M1 / M2)
 
-- [TODO]() (Recommended)
 - [Docker](docker.md)
 - [VMware Fusion](vmware_fusion.md) 
 
 ## For Linux Computers
 
-- [TODO]() (Recommended)
 - [Linux Setup for amd64](bare_metal_ubuntu_amd64.md)
 - [Linux Setup for arm64](bare_metal_ubuntu_arm64.md)
 - [VirtualBox](virtualbox.md) 
