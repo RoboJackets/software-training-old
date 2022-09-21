@@ -6,7 +6,7 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
  - Opening this file in any other markdown viewer you prefer
 -->
 
-# Week 2 Project: Coordinate Frame Transformations
+# Week 2 Project: Color-based Obstacle Detection
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -35,13 +35,13 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 
 Color detection and homography are very common tasks for any robot that uses a camera to follow (or avoid) markings on the floor. In this project, we're going to make our robot aware of the "rocks" in our challenge mission, represented by red blobs on the challenge mat. You'll be implementing functions to isolate the red color in the image and use homography to reproject the camera's image into a top-down map for the robot.
 
-For this project, we'll be working in the [obstacle_detector](../../obstacle_detector) package. The starter code for this project has defined a node for you. This node, `ObstacleDetector`, will subscribe to an image topic. Each image that comes across that topic will need to be filtered to highlight the pixels that match our target color. You'll then re-project the image with a homography matrix we provide to turn the image into a top-down map that the node will publish as an occupancy grid message.
+For this project, we'll be working in the [obstacle_detector](../../obstacle_detector) package. The starter code for this project has defined a node for you in [obstacle_detector.cpp](../../obstacle_detector/src/obstacle_detector.cpp). This node, `ObstacleDetector`, will subscribe to an image topic. Each image that comes across that topic will need to be filtered to highlight the pixels that match our target color. You'll then re-project the image with a homography matrix we provide to turn the image into a top-down map that the node will publish as an occupancy grid message.
 
 ### 1.1 Color Spaces
 
 This project involves detecting colors in an image. When doing operations on the color data of our images, the color space we use is important. Different color spaces can make different operations on the colors easier or harder. The RGB image space you're probably most familiar with is great for storing images that will be displayed with a digitial screen. RGB breaks our colors into red, green, and blue components. This is convenient as most displays use red, green, and blue lights in each pixel to render the image. This is not a very helpful color space for color detection though, because it can be complicated to define the volume occupied by a single, conceptual color.
 
-A color space that's easier to work with for color detection is "HSV". This color space still uses three channels, but now these channels represent the hue, saturation, and value properties of the color. Hue tells us the dominant frequency of the light, or the part of light that we most associate with color. Hue is a cylcic value often associated with angles. Red lies at the wrap-around point (0 or 360 degrees). Saturation tells us how "pure" the color is, with low saturation being completely grayscale, and high saturation being the pure color. Value tells us the brightness of the color. Low values are dark colors, with 0 value being black.
+A color space that's easier to work with for color detection is "HSV". This color space still uses three channels, but now these channels represent the hue, saturation, and value properties of the color. Hue tells us the dominant frequency of the light, or the part of light that we most associate with color. Hue is a cylcic value often measured in degrees. Red lies at the wrap-around point (0 or 360 degrees). Saturation tells us how "pure" the color is, with low saturation being completely grayscale, and high saturation being the pure color. Value tells us the brightness of the color. Low values are dark colors, with 0 value being black.
 
 This color space isn't perfect. Note that there are certain kinds of singularities where multiple HSV values can be used to represent the exact same color, such as white or black. In practice, however, it's very useful for detecting most colors.
 
@@ -93,7 +93,7 @@ In the implementation file (student_functions.cpp), we need to include our new h
 
 <details>
 <summary><b>Hint:</b> How to include a header</summary>
-<p>To include a header file named "my_header.hpp", we'd write the code below. Note that the use of quotes ("") instead of angle brackets (<>) indicates that this header is part of our current package.</p>
+<p>To include a header file named "my_header.hpp", we would write the code below. Note that the use of quotes ("") instead of angle brackets (<>) indicates that this header is part of our current package.</p>
 <code>#include "my_header.hpp"</code>
 </details>
 
@@ -110,11 +110,11 @@ Finally, to include our new files into our package's build rules, we need to edi
 
 Find the student code block in the call to `add_library`. Add our new implementation file, `src/student_functions.cpp` to this function call.
 
-**Note:** We don't need to add our header file, because it gets compiled as part of the files that include it.
+**Note:** We don't need to add our header file, because it gets compiled as part of the *.cpp files that include it.
 
 ### 3.3 Declare functions
 
-Let's now declare the two functions we'll be creating for this project. First, because our functions will be using objects from the [OpenCV library](https://opencv.org/) for computer vision, we need to include a header from that library.
+Let's now declare the two functions we'll be creating for this project in the student functions header file. First, because our functions will be using objects from the [OpenCV library](https://opencv.org/) for computer vision, we need to include a header from that library.
 
 Add an include directive for "opencv2/opencv.hpp". Remember that all code in our header file should go inside of the header guard if block (between `#define` and `#endif`).
 
@@ -126,11 +126,23 @@ Next, add the declaration for our first function. This function should be named 
 1. A constant `cv::Scalar` named `range_min`
 1. A constant `cv::Scalar` named `range_max`
 
+```c++
+cv::Mat FindColors(const cv::Mat input,
+                   const cv::Scalar range_min, 
+                   const cv::Scalar range_max);
+```
+
 Finally, add the declaration for our second function. This function should be named `ReprojectToGroundPlane`. Its return type should be `cv::Mat`, and it should take these parameters:
 
 1. A constant `cv::Mat` named `input`
 1. A constant `cv::Mat` named `homography`
 1. A constant `cv::Size` named `map_size`
+
+```c++
+cv::Mat ReprojectToGroundPlane(const cv::Mat input,
+                             const cv::Mat homography,
+                             const cv::Size map_size);
+```
 
 ### 3.4 Convert Image to HSV in `FindColors`
 
@@ -165,6 +177,14 @@ cv::Mat output(input.size(), CV_8UC1);
 
 Now we need to iterate over each pixel position in our images. Create two nested loops. The first loop should iterate over each row index, from 0 to `input_hsv.rows`. The second loop should iterate over each column index, from 0 to `input_hsv.cols`. You can name the row index variable `r` and the column index variable `c`.
 
+```c++
+for(auto r = 0; r < input_hsv.rows; ++r) {
+  for(auto c = 0; c < input_hsv.cols; ++c) {
+    
+  }
+}
+```
+
 In the body of our column loop, we can get the color at that position using the `at` function of `cv::Mat`:
 
 ```c++
@@ -191,9 +211,30 @@ Finally, after the end of the nested loops, return our `output` image.
 
 `ReprojectToGroundPlane` warps `input` using the homography defined by the `homography` matrix. This function will create an output image with the size given by `map_size`. It will then iterate over each pixel position in the output image and calculate the corresponding pixel position in the input image with the homography matrix. Finally, it copies the value from the source position in the source image to the destination position in the output image. Any pixels that get mapped outside of the bounds of the source image will be set to 127 in the output image.
 
-Let's start by declaring our output image variable. We'll call it `output` and use `cv::Mat` as its type. Initialize it by passing `map_size` and `CV_8UC1` to its constructor. `map_size` just holds the desired height and width for our output image.
+Start by adding a definition for `ReprojectToGroundPlane`. It should create and return an output variable, named `output`, of type `cv::Mat`. Initialize it by passing `map_size` and `CV_8UC1` to its constructor. `map_size` just holds the desired height and width for our output image.
+
+```c++
+cv::Mat ReprojectToGroundPlane(const cv::Mat input,
+                             const cv::Mat homography,
+                             const cv::Size map_size)
+{
+  cv::Mat output(map_size, CV_8UC1);
+
+  // Rest of the code will go here
+
+  return output;
+}
+```
 
 Next, setup two nested loops to iterate over all pixel positions in `output`. The first loop should iterate from `y = 0` to `y = output.rows-1`. The second loop should iterator from `x = 0` to `x = output.cols-1`.
+
+```c++
+for(auto y = 0; y < output.rows; ++y) {
+  for(auto x = 0; x < output.cols; ++x) {
+
+  }
+}
+```
 
 In the body of our inner nested loop, we're going do these steps:
 
@@ -203,7 +244,7 @@ In the body of our inner nested loop, we're going do these steps:
 1. If source point is within bounds of source image, copy the color value to output image
 1. If source point is outside bounds of source image, set output position to 127
 
-Start by declaring a constant `cv::Vec3d` named `dest_vec`. Initialize it by passing `x`, `y`, and `1` to the constructor.
+Inside our nested loops, create a constant `cv::Vec3d` named `dest_vec`. Initialize it by passing `x`, `y`, and `1` to the constructor.
 
 Then, declare a constant `cv::Vec3d` named `src_vec`. Initialize this with the result of multiplying the inverse of `homography` by `dest_vec`. Unfortunately, to store this result as a `cv::Vec3d`, we first need to convert it to a `cv::Mat1d`. This is just a quirk of the way OpenCV's types work.
 
@@ -211,9 +252,20 @@ Then, declare a constant `cv::Vec3d` named `src_vec`. Initialize this with the r
 const cv::Vec3d src_vec = cv::Mat1d(homography.inv() * dest_vec);
 ```
 
-Next, create two constant `cv::Point2i` variables named `dest_point` and `src_point`. `dest_point` should just be initialized with `x` and `y`. `src_point` should be such that its x value is `src_vec[0] / src_vec[2]` and its y value is `src_vec[1] / src_vec[2]`. This division re-normalizes the homogeneous coordinate in `src_vec` so we can get back to 2D coordinates.
+Next, create two constant `cv::Point2i` variables named `dest_point` and `src_point`. `dest_point` should just be initialized with `x` and `y`. `src_point` should be initialized such that its x value is `src_vec[0] / src_vec[2]` and its y value is `src_vec[1] / src_vec[2]`. This division re-normalizes the homogeneous coordinate in `src_vec` so we can get back to 2D coordinates.
+
+```c++
+const cv::Point2i dest_point(x, y);
+const cv::Point2i src_point(src_vec[0] / src_vec[2], src_vec[1] / src_vec[2]);
+```
 
 Now we have the source and destination points. We just need to check if our source point is actually within the bounds of our source image. `cv::Point2i` gives us the `inside` function that can tell us if the given point is within a `cv::Rect` rectangle. We can create a `cv::Rect` from our input image with `cv::Rect(cv::Point(), input.size())`. Set up an if statement that checks the result of calling `inside` on `src_point` with the `cv::Rect` just described.
+
+```c++
+if(src_point.inside(cv::Rect(cv::Point(), input.size()))) {
+  
+}
+```
 
 Inside of the if statement, copy the value from `input` to `output`:
 
@@ -227,15 +279,21 @@ Add an else branch that sets the output location to 127:
 output.at<uint8_t>(dest_point) = 127;
 ```
 
-Finally, after the end of both nested loops, return `output`.
-
 ### 3.7 Call our functions in `ObstacleDetector`
 
 Both of our key functions are now implemented, so it's time to use them by calling them within `ObstacleDetector`. In [obstacle_detector.cpp](../../obstacle_detector/src/obstacle_detector.cpp), find the student code comment block at the end of the existing set of `#include` lines. Add an `#include` line for your header, "student_functions.hpp".
 
 Next, find the student code comments that include `// Call FindColors()`. Within that comment block, you'll see a declared but uninitialized variable named `detected_colors`. Add an initializer for this variable that calls `FindColors`. The input image for `FindColors` is `cv_image->image`, and the color range is given by `min_color` and `max_color`.
 
+```c++
+cv::Mat detected_colors = FindColors(cv_image->image, min_color, max_color);
+```
+
 In the same file, find the student code comment block that includes `// Call ReprojectToGroundPlane`. Again, you'll see an uninitialized variable, this time named `projected_colors`. Initialize it by calling `ReprojectToGroundPlane`. The input image here is `detected_colors`. The homography matrix is called `homography`, and the map size is called `map_size`.
+
+```c++
+cv::Mat projected_colors = ReprojectToGroundPlane(detected_colors, homography, map_size);
+```
 
 ### 3.8 Setup publisher
 
@@ -245,11 +303,15 @@ Find the student code comment block that includes `// Declare subscriber and pub
 
 Up in the `ObstacleDetector` constructor, find the student code comment block that includes `// Initialize publisher and subscriber`. Set `occupancy_grid_publisher_` to the returned value of `create_publisher`. The topic should be `"~/occupancy_grid"` and the quality of service setting should be `rclcpp::SystemDefaultsQoS()`. Don't forget to specify the message type (`nav_msgs::msg::OccupancyGrid`) as a template parameter.
 
+```c++
+occupancy_grid_publisher_ = create_publisher<nav_msgs::msg::OccupancyGrid>("~/occupancy_grid", rclcpp::SystemDefaultsQoS());
+```
+
 Now scroll down to find the student code comment block that includes `// Publish occupancy_grid_msg`. Here, call `publish` on `occupancy_grid_publisher_`, passing it `occupancy_grid_msg`. Remember, our publisher object is a shared pointer, so we'll use the arrow syntax (`->`) for accessing the member function.
 
 ### 3.9 Setup subscriber
 
-Now that our publisher is setup to get the map data out of our node, we need to setup the subscriber that will pull data into the node. There is a library called "image_transport" that gives us special publisher and subscriber types for efficiently working with image messages and cameras data. We'll be using image_transport's `CameraSubscriber`. This object subscribes to both the image topic and the camera info topic that includes metadata like our cameras intrinsics matrix (sometimes called the "K matrix"). We can then get both the image and camera info data in the same subscriber.
+Now that our publisher is setup to get the map data out of our node, we need to setup the subscriber that will pull data into the node. There is a library called "image_transport" that gives us special publisher and subscriber types for efficiently working with image messages and camera data. We'll be using image_transport's `CameraSubscriber`. This object subscribes to both the image topic and the camera info topic that includes metadata like our camera's intrinsics matrix (sometimes called the "K matrix"). We can then get both the image and camera info data in the same subscriber.
 
 Back in the `// Declare subscriber and publisher members` comment block, declare another member variable of type `image_transport::CameraSubscriber` named `camera_subscriber_`. 
 
@@ -284,13 +346,13 @@ Build your training workspace with `colcon build`, and run the project using the
 
 Of course, because these two operations are so common, there are functions that come with OpenCV to do exactly these steps. We can rewrite both of our nested loop pairs with single calls to some library functions.
 
-In your `FindColors` implementation, the nested loops can be replaced with `cv::inRange`. This does exactly the same thing our loops did.
+In your `FindColors` implementation, the nested loops can be replaced with [cv::inRange](https://docs.opencv.org/4.6.0/d2/de8/group__core__array.html#ga48af0ab51e36436c5d04340e036ce981). This does exactly the same thing our loops did.
 
 ```c++
 cv::inRange(input_hsv, range_min, range_max, output);
 ```
 
-In `ReprojectToGroundPlane`, the nested loops can be replaced by calling `warpPerspective`. Again, this function does exactly the same thing that our loops implemented.
+In `ReprojectToGroundPlane`, the nested loops can be replaced by calling [cv::warpPerspective](https://docs.opencv.org/4.6.0/da/d54/group__imgproc__transform.html#gaf73673a7e8e18ec6963e3774e6a94b87). Again, this function does exactly the same thing that our loops implemented.
 
 ```c++
 cv::warpPerspective(
