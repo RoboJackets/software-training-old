@@ -14,6 +14,7 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 
 - [1 Background](#1-background)
   - [1.1 The Code](#11-the-code)
+  - [1.2 Support Nodes](#12-support-nodes)
 - [2 Running this project](#2-running-this-project)
 - [3 Instructions](#3-instructions)
   - [3.1 Get the latest starter code](#31-get-the-latest-starter-code)
@@ -53,6 +54,10 @@ For this project, we'll be writing code in the [mineral_deposit_tracking](../../
 
 Specifically, you'll be adding a new header file to this package which defines a templatized `KalmanFilter` class, and editing [mineral_deposit_tracker.cpp](../../mineral_deposit_tracking/mineral_deposit_tracker.cpp) to use your new filter.
 
+### 1.2 Support Nodes
+
+There are a couple other noteworth nodes running behind the scenes to help make this project work.
+
 The sensor readings are coming from the `mineral_deposit_detector` node installed with the STSL packages. That node will subscribe to the ArUco tag detections and publish stsl_interfaces/msg/MineralDepositArray messages. Each deposit detection is derived by adding some Gaussian noise to an ArUco tag detection. The mineral deposit ID is actually the ID of the underlying ArUco tag.
 
 The `mission_orchestrator` node, from the `mission_orchestration` package in STSL, is the node that actually iterates over the list of initial estimates, calls the reset service on the tracking node, and consumes the pose estimates published by the tracking node. This node uses a [behavior tree](https://en.wikipedia.org/wiki/Behavior_tree_(artificial_intelligence,_robotics_and_control)) to control the robot's high-level behavior and decision making. This includes triggering navigation and blinking the signaling LED. You shouldn't need to understand the code in this package to complete this project, but for those curious about how such a node is made, you can find the [mission_orchestration source](https://github.com/RoboJackets/stsl/tree/main/mission_orchestration) in the STSL repository.
@@ -77,7 +82,7 @@ In rviz, you should see a panel that includes an "Execute Mission" button. This 
 
 In the rviz viewport, you'll see the floor mat and the robot. When the robot starts tracking a deposit, the estimated location of that deposit will show up as a 3D axis (red, green, and blue lines). The estimated location will only update while the blue tag for that deposit is in the field of view of the robot's camera. You can see which ArUco tags are seen by looking at the "Tag Detection Image" panel.
 
-With the starter code, you robot will follow the raw sensor readings, so you'll probably see the deposit location in rviz jump around a lot. Once you've finished adding your Kalman filter, the deposit location will still move around, but it should be smoother, and it should generally trend towards the true center of the deposit tag.
+With the starter code, your robot will follow the raw sensor readings, so you'll probably see the deposit location in rviz jump around a lot. Once you've finished adding your Kalman filter, the deposit location will still move around, but it should be smoother, and it should generally trend towards the true center of the deposit tag.
 
 Here's what it looks like with everything working:
 
@@ -111,7 +116,7 @@ We'll be writing a new, templatized class for our Kalman filter, called `KalmanF
 
 Note that, since we're writing a templated class, we'll be writing all of our code in this header file. There won't be a `kalman_filter.cpp` file. All function declarations in the `KalmanFilter` class will also be function definitions.
 
-In this new header file, add header guards (`#ifndef`,`#define`, `#endif`).
+In this new header file, add header guards (`#ifndef`, `#define`, `#endif`).
 
 Then, include `<Eigen/Dense>`.
 
@@ -122,12 +127,12 @@ Finally, open the `mineral_deposit_tracking` namespace, and add a new class name
 <pre><code>#ifndef KALMAN_FILTER_HPP_
 #define KALMAN_FILTER_HPP_
 
-#include <Eigen/Dense>
+#include \<Eigen/Dense\>
 
 namespace mineral_deposit_tracking
 {
 
-template<int StateSize>
+template\<int StateSize\>
 class KalmanFilter
 {
 public:
@@ -169,7 +174,7 @@ Now, the rest of our class's code can use `VectorType` and `MatrixType` to get t
 
 ### 3.4 Add member variables
 
-Our `KalmanFilter` class will need to hold five private member variables. Three are constant matrices used by the filter math, the other two are the tracked state and its covariance.
+Our `KalmanFilter` class will need to hold five private member variables. Three are constant matrices used by the filter math, the other two are the tracked state and its covariance. Add these to your class declaration:
 
 ```C++
 const MatrixType transition_matrix_;
@@ -178,19 +183,27 @@ const MatrixType observation_matrix_;
 VectorType estimate_;
 MatrixType estimate_covariance_;
 ```
-![System Equations](motion_and_sensor.png)
 
-* `transition_matrix_`
+The first three variables come from the model the Kalman Filter assumes about our system. This model features two equations that describe how our system's state changes with each time step and how our measurements are derived from our system's state.
 
-   holds the matrix that describes how the state estimate changes with each time step of the filter. This represents our motion equation. We are assuming that our B matrix is zero, therefore there is no control to consider. Furthermore for this example our tag location will not move so we can also set the A matrix to the identity. That means our next location is the previous location with respect to the motion update.
+$
+y_t = Hx_t+v_t \\
+x_{t+1} = Ax_t+Bu_t+w_t \\
+$
 
-* `process_covariance_`
+* `transition_matrix_` ($A$)
 
-   holds the covariance associated with the step change represented by `transition_matrix_`. This matrix represents the Q matrix we talked about in the lecture. That is the covariance matrix of the stochastic noise of the dynamics (w).
+   holds the matrix that describes how the state estimate changes with each time step of the filter. This represents our motion equation. We are assuming that our $B$ matrix is zero, therefore there is no control to consider. Furthermore for this example our tag location will not move so we can also set the $A$ matrix to the identity. That means our next location is the previous location with respect to the motion update.
 
-* `observation_matrix_`
+* `process_covariance_` ($w_t$)
 
-   maps our measurement vectors to state vectors. This is the H matrix we talked about in the lecture.
+   holds the covariance associated with the step change represented by `transition_matrix_`. This matrix represents the $Q$ matrix we talked about in the lecture. That is the covariance matrix of the stochastic noise of the dynamics ($w$).
+
+* `observation_matrix_` ($H$)
+
+   maps our measurement vectors to state vectors.
+
+The other two variables hold the outputs of our filter:
 
 * `estimate_`
 
@@ -263,8 +276,22 @@ Add a new function to `KalmanFilter` named `TimeUpdate`. This function takes no 
 
 In the body of this function, implement the predict step equations to update our estimate and estimate covariance.
 
-![Motion Update Equations](mean_and_cov_update_equations.png)
-![Motion Update Meaning](motion_update_meaning.png)
+$
+\hat{x}^-_t = A\hat{x}^+_{t-1} \\
+P^-_t = AP^+_{t-1}A^T+Q
+$
+
+$\hat{x}^+_{t-1}$ = extimate, before update
+
+$\hat{x}^-_t$ = estimate, after update
+
+$P^+_{t-1}$ = estimate covariance, before update
+
+$P^-_t$ = estimate covariance, after update
+
+$A$ = transition matrix
+
+$Q$ = process covariance
 
 ### 3.8 Add MeasurementUpdate function
 
@@ -274,10 +301,33 @@ Add a new function to `KalmanFilter` called `MeasurementUpdate`. This function s
 
 `MeasurementUpdate` will implement the "measurement update" or "correct step" of the Kalman filter. In addition to the measurement and measurement covariance from the parameters, this function will make use of our observation matrix (`observation_matrix_`).
 
-![Kalman Measurement Update](measurement_update_equations.png)
-![Kalman Measurement Code Mapping](measurement_update_code_mapping.png)
+Here's a break down of how to compute the Kalman measurement update.
 
-The first of these two images show you a broken down way of computing the kalman measurement update. The second image gives mapping to know values and recommended naming for the structures listed in the equations image.
+$
+S_t = H_tP^-_tH^T_t+R_t \\
+K_t = P^-_tH^T_tS^{-1}_t \\
+\hat{x}^+_t = \hat{x}^-_t+K_t(y_t - H_k\hat{x}^-_t) \\
+T_t = I-K_tH_t \\
+P^+_t = (T)P^-_t(T)^T+K_tR_tK^T_t
+$
+
+$\hat{x}^-_t$ = estimate, before update
+
+$\hat{x}^+_t$ = estimate, after update
+
+$P^-_t$ = estimate covariance, before update
+
+$P^+_t$ = estimate covariance, after update
+
+$S_t$ = innovation covariance
+
+$K_t$ = Kalman gain
+
+$T_t$ = temporary variable for equation readability
+
+$H$ = observation matrix
+
+$R$ = measurement covariance
 
 We recommend following the steps listed in the equation and each equals sign should be a line.
 
@@ -286,6 +336,28 @@ We recommend following the steps listed in the equation and each equals sign sho
 3. Update the state estimate using steps 1 and 2
 4. Compute an intermediate step for simplicity
 5. Finally update the estimate covaraince
+
+Here are a few tips for implementing this function:
+- $S_t$, $K_t$, and $T_t$ can all be stored in `MatrixType` variables.
+- To get the transpose of a matrix variable, `mat`, use `mat.transpose()`.
+- To get the inverse of a matrix variable, `mat`, use `mat.inverse()`.
+- You can add and multiply matrices and vectors in Eigen with the normal `*` and `+` operators.
+- While there are operator precedence rules defined in C++ to determine what order your operators will be evaluated in, it's usually a good idea to use parentheses to make the order explicit. For example, `a + (b*c)` makes it clear that `b` and `c` will be multiplied by each other before that result is added to `a`.
+
+<details>
+<summary><b>Hint:</b> Solution implementation.</summary>
+<pre><code>const MatrixType innovation_covariance = (observation_matrix_ * estimate_covariance_ * observation_matrix_.transpose()) + measurement_covariance;
+
+const MatrixType gain = estimate_covariance_ * observation_matrix_.transpose() * innovation_covariance.inverse();
+
+estimate_ = estimate_ + (gain * (measurement - (observation_matrix_ * estimate_)));
+
+const MatrixType tmp = MatrixType::Identity() - (gain * observation_matrix_);
+
+estimate_covariance_ = (tmp * estimate_covariance_ * tmp.transpose()) + (gain * measurement_covariance * gain.transpose());
+</code></pre>
+</details>
+</br>
 
 ### 3.9 Add filter to tracking node
 
@@ -308,9 +380,11 @@ Finally, in the `DepositMeasurementCallback`, we need to call our two update fun
 
 Find the first student code comment block in this function. Add a call to `filter_.TimeUpdate()`. This will cause our time update to run once for every sensor message. Normally, we might call this function from a timer. In our case, our sensor measurements come in at a fixed rate, so we can rely on that to time our calls.
 
-Now find the second student code comment block in the `DepositMeasurementCallback` function. It contains a call to `PublishEstimate`. Right now, that call just publishes the raw measurement. Add a call to `filter_.MeasurementUpdate(...)`. Our measurement is `position`, which is built from the x and y coordinates in the detection. The covariance should be set to `covariance`, which is set to a constant value further up in the code. It's normal for filters on sensor data to use constant estimates of a sensors covariance, since we often don't have strong empirical values or values specified in a data sheet.
+Now find the second student code comment block in the `DepositMeasurementCallback` function. It contains a call to `PublishEstimate`. Right now, that call just publishes the raw measurement. Add a call to `filter_.MeasurementUpdate(...)`. Our measurement is `measurement`, which is built from the x and y coordinates in the detection. The covariance should be set to `covariance`, which is set to a constant value further up in the code. It's normal for filters on sensor data to use constant estimates of a sensor's covariance, since we often don't have strong empirical values or values specified in a data sheet.
 
 Now that the measurement update's been run, change the call to `PublishEstimate` to publish the filter's estimate, which you can get by calling `filter_.GetEstimate()`.
+
+And that's it. You should now be able to build and run the project. As described in Section 2 above, the targets you see the robot tracking should stick closer to their true locations in the real environment.
 
 ### 3.10 Commit your new code in git
 
