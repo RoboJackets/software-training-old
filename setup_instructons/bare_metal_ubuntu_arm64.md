@@ -33,10 +33,10 @@
    sudo apt upgrade
    ```
 
-1. Install core ROS packages and colcon build tool
+1. Install core ROS packages, rosdep tool, and colcon build tool
 
    ```bash
-   sudo apt install ros-humble-desktop python3-colcon-common-extensions
+   sudo apt install ros-humble-desktop python3-rosdep2 python3-colcon-common-extensions
    ```
 
 ## 2 Install STSL
@@ -65,13 +65,13 @@
 
    ```bash
    cd ~
-   mkdir -p rj_training_ws/src
+   mkdir -p training_ws/src
    ```
 
 1. Clone the repo
 
    ```bash
-   cd ~/rj_training_ws/src
+   cd ~/training_ws/src
    git clone https://github.com/RoboJackets/software-training.git
    ````
 
@@ -92,7 +92,7 @@
 1. Clone ros_gazebo_pkgs repository
 
    ```bash
-   cd ~/rj_training_ws/src
+   cd ~/training_ws/src
    git clone --branch=3.7.0 https://github.com/ros-simulation/gazebo_ros_pkgs.git
    ```
 
@@ -116,7 +116,7 @@
 1. Go to training workspace directory
 
    ```bash
-   cd ~/rj_training_ws
+   cd ~/training_ws
    ```
 
 1. Source ROS system underlay script
