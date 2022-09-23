@@ -39,27 +39,7 @@
    sudo apt install ros-humble-desktop python3-rosdep2 python3-colcon-common-extensions
    ```
 
-## 2 Install STSL
-
-1. Get the public key
-
-   ```bash
-   wget -qO - https://stslaptstorage.z13.web.core.windows.net/pubkey.txt | sudo apt-key add -
-   ```
-
-1. Add the STSL package repository
-
-   ```bash
-   sudo apt-add-repository "deb https://stslaptstorage.z13.web.core.windows.net/ jammy main"
-   ```
-
-1. Install the STSL ackages
-
-   ```bash
-   sudo apt install ros-humble-stsl-desktop
-   ```
-
-## 3 Clone software_training Repository
+## 3 Clone Training Repositories
 
 1. Create training workspace directory
 
@@ -68,12 +48,19 @@
    mkdir -p training_ws/src
    ```
 
-1. Clone the repo
+1. Clone the software_training repo
 
    ```bash
    cd ~/training_ws/src
    git clone https://github.com/RoboJackets/software-training.git
    ````
+
+1. Clone the stsl repo
+
+   ```bash
+   cd ~/training_ws/src
+   git clone https://github.com/RoboJackets/stsl.git
+   ```
 
 ## 4 Install Gazebo
 
