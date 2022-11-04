@@ -36,16 +36,95 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 
 ## 1 Background
 
-In this project we will be writing an implementation of Linear Quadratic Regulator.
-Really we will be doing something that looks more like a Model Predictive Control application of the Linear Quadratic Regulator.
-All this means is that have to linearize our nonlinear system around a previous trajectory, and we recompute the trajectory every time we get a new state.
-You will only be programming some of that linearization and the action client we will be putting into a ROS framework called Nav2.
+In this project we will be writing an implementation of both a PID controller and a Linear Quadratic Regulator controller.
+To complete the final challenge of the semester our robot will need to use every project.
+This week we will give our robot the ability to follow a trajectory, a very important part of navigation.
+Next week you will learn how to generate a trajectory to track, but this week we will focus on tracking a static trajectory.
+Often you will want to start of tracking a static trajectory when you implement a new controller to verify things are working well and to tune it.
+This project will investigate the differences between the two controllers, but both controllers are capable of performing trajectory tracking.
 
-In the final challenge for this semester, our robot will need to use every other project to complete the entire course.
-The key part of that for this week is following a trajectory.
-For now we have given you a static trajectory to track using your LQR implementation.
+### 1.1 PID Controller
 
-### 1.1 The navigation stack
+The PID (Proportional Integral Derivative) controller was covered in the first video of week seven (TODO link).
+The basic idea of a PID controller can be summarized by the equation below,
+
+TODO PID
+
+Here we see 
+The constant K_P (the K with a subscript of p) is applied to the current error of the system. 
+P gains are used to account for offsets in errors, if the error is large it will apply a large control, if the error is small it will apply a small control.
+This is the main gain you should be tuning when using a PID controller.
+The idea is to get a P gain such that you have decent convergence to your setpoint even if you have a little bit of overshooting.
+This will make more sense later.
+
+The constant K_D is applied to the derivative of the error.
+Since our system is in discrete time we will use the finite difference between the previous error and the current error (difference divided by time).
+This is the second gain you should be tuning when using a PID controller.
+The idea is that the D gain is applied in the negative sign of the derivative of the error.
+It should help will dampening (reducing) the oscillations you see from a high P gain.
+
+Finally the K_P is applied to the integral of the error.
+Since our system is discrete it will just be summation of the past errors.
+Theoretically the integral should be able to take any value, but often this can lead to a failure case known as integral windup.
+Essentially the integral gets so large the system becomes unstable. 
+We will look at this more in depth later in the exercise, but the solution is to cap the amount of the integral can be.
+Typically you will want a very small integral gain, and it should be there to solve steady state error.
+Steady state error is typically the small amount of error you will expect when the system stops oscillating.
+
+The important thing to note is that the PID controller is model free.
+Model free means we do not need a concept of our dynamics (how the robot state changes over time).
+PID is model free since we have no dynamics, PID only looks at the current instant with some history encoded into the integral term and derivative term.
+This means our controller can tend to be very short sighted, meaning it will sometimes poorly setup for future actions.
+You will see this behavior more once you get to tuning the controller.
+
+### 1.2 LQR Controller
+
+The second controller that we implemented for you is the LQR (Linear Quadratic Regulator) controller.
+This uses a neat bit of theory (covered in the videos) to compute the optimal (best) controls possible to track a given trajectory.
+Typically LQR is used over the entire horizon of the problem (from the start time until it thinks it reaches the goal), but that poses a problem if we don't know how long that should be.
+Here we will run LQR in an MPC (Model Predictive Control) fashion. 
+This just means we will run it from the current time for a fixed time horizon (like 1 second) repeatedly.
+
+To use an LQR controller, we need to derive the dynamics equations for our system.
+We are using a nonlinear dynamics model in our LQR implementation which raises an issue.
+We need to be able to write it as a system of linear equations for LQR to work, therefore we linearize around some previous control and state trajectory.
+This takes the form of the A and B matrices used by the controller. 
+Our controller class has two functions: `computeAMatrix` and `computeBMatrix` which we'll use to calculate these matrices. 
+
+Let's start by deriving what our A and B matrices should look like. 
+These matrices depend on our current state because the differential drive system is nonlinear. 
+
+In this math, we'll be using these variables:
+
+![Variable Names](variables.png)
+
+We can represent our system dynamcis with three equations, one for each dimension of our state vector: x, y, and heading.
+
+![Equations](equations.png)
+
+To compute the A matrix, we need to take the partial derivatives of each equation with respect to each variable in our state vector. For the B matrix, we take the partials with respect to each element of the control vector. For example the first element of the A matrix is the partial of f_1 with respect to x.
+
+![A and B](A_and_B.png)
+
+<details>
+<summary><b>Hint:</b> A Matrix Math Solution</summary>
+
+![A Solution 1](A_solution_1.png)
+
+![A Solution 2](A_solution_2.png)
+</details>
+
+<details>
+<summary><b>Hint:</b> B Matrix Math Solution</summary>
+
+![B Solution](B_solution.png)
+</details>
+
+Now that we have derived the dynamics equations of our LQR controller, we can use them with a standard path tracking error cost function to track a trajectory.
+You will see some performance benefits from LQR since it is able to reason about the future of the trajectory it is tracking.
+The myopic behavior of the PID controller should look sad in comparison. 
+
+### 1.3 The navigation stack
 
 [Nav2](https://navigation.ros.org/) is ROS 2 "navigation stack". This is a collection of nodes and tools for handling the different parts of navigation for an autonomous robot, including path planning, path following, and recovery. Nav2 uses a plugin-based system to allow other developers to customize certain parts of the navigation stack. The diagram below shows the overall architecture of the Nav2 stack and highlights which parts are customizable with plugins.
 
@@ -53,11 +132,12 @@ For now we have given you a static trajectory to track using your LQR implementa
 
 Each part of the Nav2 stack communicates with the other parts primarily through ROS actions. For example, the "Planner Server" hosts an action, called `/compute_path_to_pose`, which will plan the path from the robot's current location to the given pose. The "BT Navigator Server" can then call that action whenever a new path needs to be planned. The "BT Navigator Server" itself also hosts an action `/navigate_to_pose` that acts as the main entry point for the navigation stack for most other parts of our ROS system. Whenever some part of our ROS system wants the robot to move, it can send the destination pose to the `/navigate_to_pose` action, which will take care of the rest.
 
-### 1.2 The Code
+### 1.4 The Code
 
-If this feels a bit overwhelming, don't worry. This is just to give a bit of context around the code we'll be writing this week. In this project, we're going to be implementing a controller plugin for the Nav2 stack. We've taken care of the Nav2 parts of the code in the starter code, and you'll just be filling out the math for the LQR control algorithm. You'll be implementing this controller in the `LQRController` class in [lqr_controller.cpp](../../lqr_control/src/lqr_controller.cpp).
+If this feels a bit overwhelming, don't worry. This is just to give a bit of context around the code we'll be writing this week. In this project, we're going to be implementing a controller plugin for the Nav2 stack. We've taken care of the Nav2 parts of the code in the starter code, and you'll just be filling out the math for the PID controller and parameters for LQR control algorithm.
+You'll be implementing the PID controller in the `PIDController` class in [pid_controller.cpp](../../controllers/src/pid_controller.cpp) and the `LQRController` class in [lqr_controller.cpp](../../controllers/src/lqr_controller.cpp).
 
-We'll also be writing a test client for our controller that uses one of the "internal" actions of the Nav2 stack, `/follow_path`. This is the action hosted by the "Controller Server", which computes the command velocities needed to drive the robot along the path provided in the action goal. This client will be a separate node, which you'll implement from scratch. The path our test client uses will be generated by the `TestPathGenerator` class found in [test_path_generator.cpp](../../lqr_control/src/test_path_generator.cpp). You shouldn't need to edit this file. It's there if you're curious about how we create the figure-eight test path.
+We'll also be writing a test client for our controller that uses one of the "internal" actions of the Nav2 stack, `/follow_path`. This is the action hosted by the "Controller Server", which computes the command velocities needed to drive the robot along the path provided in the action goal. This client will be a separate node, which you'll implement from scratch. The path our test client uses will be generated by the `TestPathGenerator` class found in [test_path_generator.cpp](../../controllers/src/test_path_generator.cpp). You shouldn't need to edit this file. It's there if you're curious about how we create the figure-eight test path.
 
 
 ## 2 Running this project
@@ -71,20 +151,26 @@ $ ros2 launch rj_training_bringup week_7.launch.xml
 As usual, this launch file will startup the simulator, rviz, and all of the other nodes the project requires.
 
 In rviz you should just see the robot.
-It will not move until you implement LQR and the action client.
+It will not move until you implement LQR or PID and the action client.
 
-The second command that won't work until you implement you action client is
+The second command that won't work until you implement your action client is
 ```bash
-ros2 run lqr_control lqr_controller_test_client --ros-args -p use_sim_time:=True
+ros2 run controller pid_controller_test_client --ros-args -p use_sim_time:=True
 ```
 
 This runs the action client and sets use_sim_time to true so that all nodes are using the same time source.
+
+to run the LQR controller after you implement your action client use
+```bash
+ros2 run controller pid_controller_test_client --ros-args -p use_sim_time:=True
+```
 
 Once you've finished writing the code for this project, you should see the robot follow a figure eight pattern like this:
 
 ![Working LQR](working_lqr.gif)
 
-Your tracking performance will heavily vary depending on your tuning.
+Your tracking performance will heavily vary depending on your tuning and what controller you are using.
+Try to investigate multiple tunings and what the different controllers will tend to do.
 
 ## 3 Creating the test action client
 
@@ -108,7 +194,7 @@ If you have done a different installation of stsl that is not through apt make s
 
 ### 3.2 Creating the ControllerTestClient
 
-Create a cpp file in the [lqr_control src folder](../../lqr_control/src) called ControllerTestClient.
+Create a cpp file in the [lqr_control src folder](../../controllers/src) called ControllerTestClient.
 In this file you should write a standard ROS node class and constructor.
 
 <details>
@@ -136,16 +222,17 @@ RCLCPP_COMPONENTS_REGISTER_NODE(my_package::MyNode)
 </details>
 
 ### 3.3 Adding ControllerTestClient to CMakeLists.txt
-You will need to add a couple lines to the [CMakeLists.txt](../../lqr_control/CMakeLists.txt) to compile your new node.
+You will need to add a couple lines to the [CMakeLists.txt](../../controllers/CMakeLists.txt) to compile your new node.
 
-The first change is to add your new class as a source to be compiled into the lqr_control library. This is done by adding the cpp file you created to the add_library call.
+The first change is to add your new class as a source to be compiled into the controller library. This is done by adding the cpp file you created to the add_library call.
 
 ```cmake
-add_library(lqr_control SHARED
+add_library(controllers SHARED
         # BEGIN STUDENT CODE
         src/controller_test_client.cpp
         # END STUDENT CODE
         src/lqr_controller.cpp
+        src/pid_controller.cpp
         src/test_path_generator.cpp
         )
 ```
@@ -155,8 +242,13 @@ The second thing you will need to do is to register the node as a component. Thi
 ```cmake
 # BEGIN STUDENT CODE
 rclcpp_components_register_node(
-        lqr_control
-        PLUGIN "lqr_control::ControllerTestClient"
+        pid_control
+        PLUGIN "pid_control::ControllerTestClient"
+        EXECUTABLE pid_controller_test_client
+)
+rclcpp_components_register_node(
+        controllers
+        PLUGIN "controllers::ControllerTestClient"
         EXECUTABLE lqr_controller_test_client
 )
 # END STUDENT CODE
@@ -318,7 +410,7 @@ This completes our action client node.
 
 ## 4 Implementing the LQR controller
 
-All of the code in this section will be written in [lqr_controller.cpp](../../lqr_control/src/lqr_controller.cpp). The code in this file is an implementation of a Nav2 controller plugin. This just means that the Nav2 stack is going to load this class and then call specific functions when it wants to follow a path.
+All of the code in this section will be written in [lqr_controller.cpp](../../controllers/src/lqr_controller.cpp). The code in this file is an implementation of a Nav2 controller plugin. This just means that the Nav2 stack is going to load this class and then call specific functions when it wants to follow a path.
 
 The following functions are declared by the `nav2_core::Controller` interface and implemented in our class:
 
@@ -419,69 +511,27 @@ Finally, there are three vectors which will store sequences of state data used b
 
 ### 4.2 LQR controller dynamics
 
-To use an LQR controller, we need to derive the dynamics equations for our system. This takes the form of the A and B matrices used by the controller. Our controller class has two functions: `computeAMatrix` and `computeBMatrix` which we'll use to calculate these matrices. A third function, `computeNextState` will use our A and B matrix functions to implement the transition function from one state to the next based on control values.
+To use an LQR controller, we need to derive the dynamics equations for our system.
+This takes the form of the A and B matrices used by the controller.
+Our controller class has two functions: `computeAMatrix` and `computeBMatrix` which we'll use to calculate these matrices.
+A third function, `computeNextState` will use our A and B matrix functions to implement the transition function from one state to the next based on control values.
 
-Let's start by deriving what our A and B matrices should look like. These matrices depend on our current state because the differential drive system is nonlinear. LQR technically only works with linear systems, so we are doing a linear approximation using the previous state and control values.
+We have implemented `computeAMatrix` and `computeBMatrix` to return the matrices as you derived them in the introduction.
+Each function creates a new matrix object, fills in the appropriate elements, and returns the matrix.
+All you need to implement is the `computeNextState` function using the helper functions `computeAMatrix` and `computeBMatrix`.
+This function will need to call `computeAMatrix()` and `computeBMatrix()` to get the A and B matrices.
+Eigen types are really cool and normal arithmetic operators (`*` and `+`) can be used on matrices and vectors like you would normally use them.
+If I have a vector x and a matrix A, I could write that as
 
-In this math, we'll be using these variables:
-
-![Variable Names](variables.png)
-
-We can represent our system dynamcis with three equations, one for each dimension of our state vector: x, y, and heading.
-
-![Equations](equations.png)
-
-To compute the A matrix, we need to take the partial derivatives of each equation with respect to each variable in our state vector. For the B matrix, we take the partials with respect to each element of the control vector. For example the first element of the A matrix is the partial of f_1 with respect to x.
-
-![A and B](A_and_B.png)
-
-<details>
-<summary><b>Hint:</b> A Matrix Math Solution</summary>
-
-![A Solution 1](A_solution_1.png)
-
-![A Solution 2](A_solution_2.png)
-</details>
-
-<details>
-<summary><b>Hint:</b> B Matrix Math Solution</summary>
-
-![B Solution](B_solution.png)
-</details>
-
-Now implement `computeAMatrix` and `computeBMatrix` to return the matrices as you just derived them. Each function should create a new matrix object, fill in the appropriate elements, and return the matrix.
+```c++
+result = A * x
+```
 
 A couple hints for working with Eigen types:
+- You can multiply and add vectors / matrices with the normal arithmetic operators (`*` and `+`).
 - The size is in the type name. `Eigen::Matrix3d` creates a 3x3 matrix, `Eigen::Matrix2d` creates a 2x2 matrix, and `Eigen::Matrix<double, 3, 2>` creates a 3X2 matrix.
 - To create an identity matrix use the static `Identity()` function provided by the type.
 - To index into an Eigen matrix use `()` not `[]`. So to get the second row and second column use `A(1,1)`.
-- You can multiply and add vectors / matrices with the normal arithmetic operators (`*` and `+`).
-
-<details>
-<summary><b>Hint:</b> <code>computeAMatrix()</code> Solution</summary>
-
-```c++
-Eigen::Matrix3d A = Eigen::Matrix3d::Identity();
-A(0, 2) = -u(0)*sin(x(2))*dt_;
-A(1, 2) = u(0)*cos(x(2))*dt_;
-return A;
-```
-
-</details>
-
-<details>
-<summary><b>Hint:</b> <code>computeBMatrix()</code> Solution</summary>
-
-```c++
-Eigen::Matrix<double, 3, 2> B = Eigen::Matrix<double, 3, 2>::Zero();
-B(0, 0) = cos(x(2)) * dt_;
-B(1, 0) = sin(x(2)) * dt_;
-B(2, 1) = dt_;
-return B;
-```
-</details>
-
-Finally, implement the `computeNextState` function using the linear dynamics equation. This function will need to call `computeAMatrix()` and `computeBMatrix()` to get the A and B matrices.
 
 <details>
 <summary><b>Hint:</b> <code>computeNextState()</code> Solution</summary>

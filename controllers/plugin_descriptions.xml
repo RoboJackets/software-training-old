@@ -1,0 +1,14 @@
+<class_libraries>
+    <library path="controllers">
+        <class type="controllers::LqrController" base_class_type="nav2_core::Controller">
+            <description>
+                An LQR controller for Nav2
+            </description>
+        </class>
+        <class type="controllers::PIDController" base_class_type="nav2_core::Controller">
+            <description>
+                An PID controller for Nav2
+            </description>
+        </class>
+    </library>
+</class_libraries>

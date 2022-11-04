@@ -23,7 +23,7 @@
 #include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
 #include <tf2_eigen/tf2_eigen.hpp>
 
-namespace lqr_control
+namespace controllers
 {
 
 TestPathGenerator::TestPathGenerator(const std::size_t point_count)
@@ -63,4 +63,4 @@ geometry_msgs::msg::PoseStamped TestPathGenerator::GetNextPoint()
   return pose;
 }
 
-}  // namespace lqr_control
+}  // namespace controllers

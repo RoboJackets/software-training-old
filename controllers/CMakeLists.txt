@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(lqr_control)
+project(controllers)
 
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
@@ -12,13 +12,15 @@ find_package(tf2_geometry_msgs REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(angles REQUIRED)
 
-add_library(lqr_control SHARED
+add_library(controllers SHARED
   # BEGIN STUDENT CODE
+  src/controller_test_client.cpp
   # END STUDENT CODE
   src/lqr_controller.cpp
+  src/pid_controller.cpp
   src/test_path_generator.cpp
 )
-ament_target_dependencies(lqr_control
+ament_target_dependencies(controllers
   "rclcpp"
   "rclcpp_action"
   "rclcpp_components"
@@ -29,12 +31,17 @@ ament_target_dependencies(lqr_control
   "Eigen3"
   "angles"
 )
-set_property(TARGET lqr_control PROPERTY CXX_STANDARD 17)
+set_property(TARGET controllers PROPERTY CXX_STANDARD 17)
 
 # BEGIN STUDENT CODE
+rclcpp_components_register_node(
+        controllers
+        PLUGIN "controllers::ControllerTestClient"
+        EXECUTABLE controller_test_client
+)
 # END STUDENT CODE
 
-install(TARGETS lqr_control
+install(TARGETS controllers
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin

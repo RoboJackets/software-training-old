@@ -23,7 +23,7 @@
 
 #include <nav_msgs/msg/path.hpp>
 
-namespace lqr_control
+namespace controllers
 {
 
 class TestPathGenerator
@@ -42,6 +42,6 @@ private:
   geometry_msgs::msg::PoseStamped GetNextPoint();
 };
 
-}  // namespace lqr_control
+}  // namespace controllers
 
 #endif  // TEST_PATH_GENERATOR_HPP_

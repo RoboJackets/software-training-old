@@ -27,21 +27,12 @@
 #include <nav2_core/controller.hpp>
 #include <pluginlib/class_list_macros.hpp>
 #include <tf2_eigen/tf2_eigen.hpp>
+#include "controller_helpers.h"
 
-namespace lqr_control
+namespace controllers
 {
 
-Eigen::Vector3d StateFromMsg(const geometry_msgs::msg::PoseStamped & pose)
-{
-  Eigen::Quaterniond orientation;
-  tf2::fromMsg(pose.pose.orientation, orientation);
-  Eigen::Vector3d state;
-  state << pose.pose.position.x, pose.pose.position.y,
-    orientation.toRotationMatrix().eulerAngles(0, 1, 2)[2];
-  return state;
-}
-
-class LqrController : public nav2_core::Controller
+class PIDController : public nav2_core::Controller
 {
 public:
   void configure(
@@ -148,6 +139,7 @@ public:
     if (!node_shared) {
       throw std::runtime_error{"Could not acquire node."};
     }
+    RCLCPP_INFO_STREAM(node_shared->get_logger(), "compute vel commands");
 
     Eigen::Vector3d state = StateFromMsg(pose);
 
@@ -267,6 +259,6 @@ private:
   rclcpp_lifecycle::LifecyclePublisher<nav_msgs::msg::Path>::SharedPtr traj_viz_pub_;
 };
 
-}  // namespace lqr_control
+}  // namespace controllers
 
-PLUGINLIB_EXPORT_CLASS(lqr_control::LqrController, nav2_core::Controller)
+PLUGINLIB_EXPORT_CLASS(controllers::PIDController, nav2_core::Controller)
