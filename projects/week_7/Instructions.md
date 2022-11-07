@@ -13,8 +13,11 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 ## Contents
 
 - [1 Background](#1-background)
-  - [1.1 The navigation stack](#11-the-navigation-stack)
-  - [1.2 The Code](#12-the-code)
+  - [1.1 PID Controller](#11-pid-controller)
+  - [1.2 LQR Controller](#12-lqr-controller)
+  - [1.3 The navigation stack](#13-the-navigation-stack)
+- [1.4 Tracking a trajectory](#14-tracking-a-trajectory)
+  - [1.5 The Code](#15-the-code)
 - [2 Running this project](#2-running-this-project)
 - [3 Creating the test action client](#3-creating-the-test-action-client)
   - [3.1 Get the latest starter code](#31-get-the-latest-starter-code)
@@ -26,11 +29,15 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
   - [3.7 Feedback callback](#37-feedback-callback)
   - [3.8 Result callback](#38-result-callback)
   - [3.9 Calling actions](#39-calling-actions)
-- [4 Implementing the LQR controller](#4-implementing-the-lqr-controller)
+- [4 Implementing the PID controller](#4-implementing-the-pid-controller)
   - [4.1 The configure function](#41-the-configure-function)
-  - [4.2 LQR controller dynamics](#42-lqr-controller-dynamics)
-  - [4.3 Tuning the LQR controller](#43-tuning-the-lqr-controller)
-  - [4.4 Commit your new code in git](#44-commit-your-new-code-in-git)
+  - [4.1 Computing error](#41-computing-error)
+  - [4.2 Implementing PID](#42-implementing-pid)
+  - [4.3 Tuning PID](#43-tuning-pid)
+- [5 Implementing the LQR controller](#5-implementing-the-lqr-controller)
+  - [5.1 The configure function](#51-the-configure-function)
+  - [5.2 Tuning the LQR controller](#52-tuning-the-lqr-controller)
+  - [5.3 Commit your new code in git](#53-commit-your-new-code-in-git)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

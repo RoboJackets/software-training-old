@@ -5,8 +5,7 @@
 ## Contents
 
 - [1 Install ROS](#1-install-ros)
-- [2 Install STSL](#2-install-stsl)
-- [3 Clone software_training Repository](#3-clone-software_training-repository)
+- [3 Clone Training Repositories](#3-clone-training-repositories)
 - [4 Install Gazebo](#4-install-gazebo)
 - [5 Clone ROS Gazebo packages](#5-clone-ros-gazebo-packages)
 - [6 Install ROS dependencies](#6-install-ros-dependencies)
