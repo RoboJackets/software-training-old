@@ -24,7 +24,7 @@
 #include <nav2_msgs/action/follow_path.hpp>
 #include "test_path_generator.hpp"
 
-namespace lqr_control
+namespace controllers
 {
 
 class ControllerTestClient : public rclcpp::Node
@@ -112,6 +112,6 @@ private:
   }
 };
 
-}  // namespace lqr_control
+}  // namespace controllers
 
-RCLCPP_COMPONENTS_REGISTER_NODE(lqr_control::ControllerTestClient)
+RCLCPP_COMPONENTS_REGISTER_NODE(controllers::ControllerTestClient)
