@@ -8,14 +8,15 @@
 
 namespace controllers {
 
-inline Eigen::Vector3d StateFromMsg(const geometry_msgs::msg::PoseStamped &pose) {
-  Eigen::Quaterniond orientation;
-  tf2::fromMsg(pose.pose.orientation, orientation);
-  Eigen::Vector3d state;
-  state << pose.pose.position.x, pose.pose.position.y,
+  inline Eigen::Vector3d StateFromMsg(const geometry_msgs::msg::PoseStamped & pose)
+  {
+    Eigen::Quaterniond orientation;
+    tf2::fromMsg(pose.pose.orientation, orientation);
+    Eigen::Vector3d state;
+    state << pose.pose.position.x, pose.pose.position.y,
       orientation.toRotationMatrix().eulerAngles(0, 1, 2)[2];
-  return state;
-}
+    return state;
+  }
 
 }
 

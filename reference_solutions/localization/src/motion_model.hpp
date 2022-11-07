@@ -42,7 +42,7 @@ public:
     std::vector<Particle> & particles,
     geometry_msgs::msg::Twist::SharedPtr cmd_msg,
     rclcpp::Time current_time);
-  bool getEnabled(const rclcpp::Time& time);
+  bool getEnabled(const rclcpp::Time & time);
 
 private:
   Particle sigmas_;
