@@ -53,18 +53,6 @@ public:
       rclcpp::SystemDefaultsQoS());
 
     // BEGIN STUDENT CODE
-    prev_error_ = Eigen::Vector3d::Zero();
-    integral_error_ = Eigen::Vector3d::Zero();
-    std::vector<double> integral_max_temp = node_shared->declare_parameter<std::vector<double>>(
-        name + ".integral_max", {1.0, 1.0, 1.0});
-    if (integral_max_temp.size() != 3) {
-      RCLCPP_ERROR(node_shared->get_logger(), "incorrect size integral_max, must be 3 values");
-      exit(0);
-    }
-    integral_max_(0) = integral_max_temp[0];
-    integral_max_(1) = integral_max_temp[1];
-    integral_max_(2) = integral_max_temp[2];
-
     time_between_states_ =
         node_shared->declare_parameter<double>(name + ".time_between_states", 3.0);
 
@@ -79,6 +67,15 @@ public:
     yaw_P_ = node_shared->declare_parameter<double>(name + ".yaw.P", 1.0);
     yaw_I_ = node_shared->declare_parameter<double>(name + ".yaw.I", 0.0);
     yaw_D_ = node_shared->declare_parameter<double>(name + ".yaw.D", 0.0);
+
+    prev_error_ = Eigen::Vector3d::Zero();
+    integral_error_ = Eigen::Vector3d::Zero();
+    integral_max_ = node_shared->declare_parameter<std::vector<double>>(
+        name + ".integral_max", {1.0, 1.0, 1.0});
+    if (integral_max_.size() != 3) {
+      RCLCPP_ERROR(node_shared->get_logger(), "incorrect size integral_max, must be 3 values");
+      exit(0);
+    }
 
     // END STUDENT CODE
   }
@@ -137,12 +134,9 @@ public:
         trajectory_), StateFromMsg);
     path_start_time_ = node_shared->now();
 
-    // BEGIN STUDENT CODE
     prev_error_ = Eigen::Vector3d::Zero();
     integral_error_ = Eigen::Vector3d::Zero();
     prev_time_ = 0;
-
-    // END STUDENT CODE
   }
 
   void resetStates(Eigen::Vector3d init_state)
@@ -156,12 +150,13 @@ public:
   void computeError(const Eigen::Vector3d& state, const Eigen::Vector3d target_state, double dt,
                                Eigen::Vector3d& error_delta, Eigen::Vector3d& error)
   {
+    Eigen::Matrix3d R;
+    R << cos(state(2)), -sin(state(2)), 0, sin(state(2)), cos(state(2)), 0, 0, 0, 1;
+
     // BEGIN STUDENT CODE
     error = target_state - state;
     error(2) = angles::shortest_angular_distance(state(2), target_state(2));
 
-    Eigen::Matrix3d R;
-    R << cos(state(2)), -sin(state(2)), 0, sin(state(2)), cos(state(2)), 0, 0, 0, 1;
     error = R.transpose() * error;
 
     error_delta = (error - prev_error_) / dt;
@@ -208,14 +203,12 @@ public:
 
     // clamps the maximum value of the integral
     for(int i = 0; i < 3; i++) {
-      integral_error_(i) = std::clamp(integral_error_(i), -integral_max_(i), integral_max_(i));
+      integral_error_(i) = std::clamp(integral_error_(i), -integral_max_[i], integral_max_[i]);
     }
 
-    // BEGIN STUDENT CODE
     double bx_pid = computePID(error(0), error_delta(0), integral_error_(0), bx_P_, bx_D_, bx_I_);
     double by_pid = computePID(error(1), error_delta(1), integral_error_(1), by_P_, by_D_, by_I_);
     double yaw_pid = computePID(error(2), error_delta(2), integral_error_(2), yaw_P_, yaw_D_, yaw_I_);
-    // END STUDENT CODE
 
     // setup variables for the next iteration
     error = prev_error_;
@@ -253,7 +246,7 @@ private:
 
   Eigen::Vector3d prev_error_;
   Eigen::Vector3d integral_error_;
-  Eigen::Vector3d integral_max_;
+  std::vector<double> integral_max_;
 
   double prev_time_;
 

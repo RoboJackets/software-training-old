@@ -63,7 +63,7 @@ This is the second gain you should be tuning when using a PID controller.
 The idea is that the D gain is applied in the negative sign of the derivative of the error.
 It should help will dampening (reducing) the oscillations you see from a high P gain.
 
-Finally the K_P is applied to the integral of the error.
+Finally the K_I is applied to the integral of the error.
 Since our system is discrete it will just be summation of the past errors.
 Theoretically the integral should be able to take any value, but often this can lead to a failure case known as integral windup.
 Essentially the integral gets so large the system becomes unstable. 
@@ -82,7 +82,7 @@ You will see this behavior more once you get to tuning the controller.
 The second controller that we implemented for you is the LQR (Linear Quadratic Regulator) controller.
 This uses a neat bit of theory (covered in the videos) to compute the optimal (best) controls possible to track a given trajectory.
 Typically LQR is used over the entire horizon of the problem (from the start time until it thinks it reaches the goal), but that poses a problem if we don't know how long that should be.
-Here we will run LQR in an MPC (Model Predictive Control) fashion. 
+Here we will run iLQR in an MPC (Model Predictive Control) fashion. 
 This just means we will run it from the current time for a fixed time horizon (like 1 second) repeatedly.
 
 To use an LQR controller, we need to derive the dynamics equations for our system.
@@ -122,7 +122,7 @@ To compute the A matrix, we need to take the partial derivatives of each equatio
 
 Now that we have derived the dynamics equations of our LQR controller, we can use them with a standard path tracking error cost function to track a trajectory.
 You will see some performance benefits from LQR since it is able to reason about the future of the trajectory it is tracking.
-The myopic behavior of the PID controller should look sad in comparison. 
+The myopic behavior of the PID controller should look sad in comparison once you get both running.
 
 ### 1.3 The navigation stack
 
@@ -132,7 +132,15 @@ The myopic behavior of the PID controller should look sad in comparison.
 
 Each part of the Nav2 stack communicates with the other parts primarily through ROS actions. For example, the "Planner Server" hosts an action, called `/compute_path_to_pose`, which will plan the path from the robot's current location to the given pose. The "BT Navigator Server" can then call that action whenever a new path needs to be planned. The "BT Navigator Server" itself also hosts an action `/navigate_to_pose` that acts as the main entry point for the navigation stack for most other parts of our ROS system. Whenever some part of our ROS system wants the robot to move, it can send the destination pose to the `/navigate_to_pose` action, which will take care of the rest.
 
-### 1.4 The Code
+## 1.4 Tracking a trajectory
+
+In this exercise we will use two different controllers to track a trajectory. 
+They way this works is that we have all the nodes on the path that is visualized in rviz.
+We take the time we receive the path at the start time and index into the path to get where the robot should be if it is moving from point to point in `time_between_states` (a parameter) seconds.
+When the time is in between two states we do a linear interpolation of the setpoint. 
+This gives us relatively smooth behavior with a variety of controllers and is quick to implement.
+
+### 1.5 The Code
 
 If this feels a bit overwhelming, don't worry. This is just to give a bit of context around the code we'll be writing this week. In this project, we're going to be implementing a controller plugin for the Nav2 stack. We've taken care of the Nav2 parts of the code in the starter code, and you'll just be filling out the math for the PID controller and parameters for LQR control algorithm.
 You'll be implementing the PID controller in the `PIDController` class in [pid_controller.cpp](../../controllers/src/pid_controller.cpp) and the `LQRController` class in [lqr_controller.cpp](../../controllers/src/lqr_controller.cpp).
@@ -408,9 +416,12 @@ Finally, send the goal by calling `async_send_goal` on the client passing in you
 
 This completes our action client node.
 
-## 4 Implementing the LQR controller
+## 4 Implementing the PID controller
 
-All of the code in this section will be written in [lqr_controller.cpp](../../controllers/src/lqr_controller.cpp). The code in this file is an implementation of a Nav2 controller plugin. This just means that the Nav2 stack is going to load this class and then call specific functions when it wants to follow a path.
+
+All of the code in this section will be written in [pid_controller.cpp](../../controllers/src/pid_controller.cpp). 
+The code in this file is an implementation of a Nav2 controller plugin. 
+This just means that the Nav2 stack is going to load this class and then call specific functions when it wants to follow a path.
 
 The following functions are declared by the `nav2_core::Controller` interface and implemented in our class:
 
@@ -438,7 +449,167 @@ The following functions are declared by the `nav2_core::Controller` interface an
 
   Called repeatedly while the `/follow_path` action is running. This function is responsible for calculating new command velocities based on the robot's current pose, velocity, and the path we're following.
 
+
 ### 4.1 The configure function
+
+The configure function is where we'll grab our ROS parameters and initialize our controller. 
+Find the student code block in the `configure()` function.
+
+We're going to declare several ROS parameters. 
+Note, all of our controller parameters will be namespaced under our plugin name, which you can get from the `name` parameter of the configure function. 
+Thus, declaring a parameter named "T" would look like this:
+
+```c++
+node_shared->declare_parameter<double>(name + ".bx.P", 1.0);
+```
+
+There are ten parameters which we'll store directly into member variables. For each of these, declare the parameter with `node_->declare_parameter` and store the returned value into the corresponding member variable (which has already been declared for you further down in the class).
+
+- bx_P, by_P, yaw_P (`double`)
+
+  P gains for the controller
+
+  Default: 1.0
+
+- bx_D, by_D, yaw_D (`double`)
+
+  D gains for the controller
+
+  Default: 0.0
+
+- bx_I, by_I, yaw_I (`double`)
+
+  I gains for the controller
+
+  Default: 0.0
+
+- time_between_states (`double`)
+
+  The time it should take the robot to traverse an edge in the trajectory.
+
+  Default: 3.0
+
+One of the parameters is a vector that gives the maximum values of the integral error (to prevent windup).
+Three of our controller parameters are coefficients for the diagonal matrices `Q`, `Qf`, and `R`. 
+In our parameters, these will show up as lists of the values. 
+You'll need to declare a parameter of type `std::vector<double>`, check that the returned value has the right size, and copy the values into the class member vector (which again, has been declared for you).
+
+Here's an example of what this process looks like:
+
+```c++
+node_shared->declare_parameter<std::vector<double>>(name + ".integral_max", {1.0, 1.0, 1.0});
+if (integral_max_temp.size() != 3) {
+  RCLCPP_ERROR(node_shared->get_logger(), "incorrect size integral_max, must be 3 values");
+  exit(0);
+}
+```
+
+Finally, there are two vectors which will store data used by our controller. 
+`prev_error_` will store previous error vector (`Vector3d`). 
+`integral_error_` will store integration of error (`Vector3d`). 
+
+**Tip:** All Eigen matrix and vector types provide a static `Zero()` function which returns a zero-initialized object. For example, `Eigen::Vector3d::Zero()` returns a 3-dimensional vector with all values set to zero.
+
+### 4.1 Computing error
+
+Next scroll until you see the student code blocks in the compute error function.
+In this function we will be computed the difference between the target state and the current state as well as some other variables.
+This is what is used in the PID equation in the background section.
+
+Some of our variables are Eigen types to allow for easy math.
+A couple hints for working with Eigen types:
+- You can multiply and add vectors / matrices with the normal arithmetic operators (`*` and `+`).
+- The size is in the type name. `Eigen::Matrix3d` creates a 3x3 matrix, `Eigen::Matrix2d` creates a 2x2 matrix, and `Eigen::Matrix<double, 3, 2>` creates a 3X2 matrix.
+- To create an identity matrix use the static `Identity()` function provided by the type.
+- To index into an Eigen matrix use `()` not `[]`. So to get the second row and second column use `A(1,1)`.
+
+There are a couple tricks that we are using to compute the error.
+We use this form since it gives a simple way to compute the controls given the error using PID.
+
+1. Compute the error between the target state variables and the current state.
+
+2. We need to properly handle the difference between two angles using the helper function `angles::shortest_angular_distance`.
+This is needed since yaw is a discontinuous function from [-pi, pi].
+If we had two yaw angles, one at pi and the other at -pi, the error between them should be zero.
+A normal subtraction would not properly handle this.
+The `shortest_angular_distance` takes in two doubles and returns the correct angular distance between them.
+The first argument is the target angle and the second is the current angle.
+Correct the angular error (index 2) after you compute the difference as outlined above.
+
+3. Finally we need to rotate the error vector into body frame.
+This allows us to decouple how much we need to rotate vs how much we need to move forward.
+Create the standard rotation matrix in the Z, and use it to rotate the error vector from global frame to body frame.
+Remember that the current yaw in the state (index 2) transforms from body to global frame.
+We have written the rotation matrix for you and you can take the transpose of a matrix in Eigen using the method `transpose()` on the object.
+What was that important property about the transpose of a rotation matrix again?
+
+<details>
+<summary><b>Hint: </b> Rotation Matrix Property</summary>
+
+The transpose of a rotation matrix is its inverse.
+Therefore you can use the transpose to reveerse the direction of the transform
+
+</details>
+
+<details>
+<summary><b>Hint: </b> Error Equation Code</summary>
+
+We just find the difference between the vectors and then correct the angular error.
+Then we rotation by the transpose (since we need the opposite transform)
+
+```c++
+error = target_state - state;
+error(2) = angles::shortest_angular_distance(state(2), target_state(2));
+error = R.transpose() * error;
+```
+</details>
+
+4. The final thing to do is to compute the error_delta using finite difference (difference divided by dt) and the integration of the error (error multiplied by dt).
+
+<details>
+<summary><b>Hint: </b> Error delta and integral</summary>
+
+```c++
+error_delta = (error - prev_error_) / dt;
+integral_error_ += error_delta * dt;
+```
+</details>
+
+### 4.2 Implementing PID
+
+Scroll until you find the `computePID` method. Here you need to write the PID equation given the inputs.
+Refer to the background for the equation.
+
+<details>
+<summary><b>Hint: </b> </summary>
+
+```c++
+return error * P + error_delta * D + integral_error * I;
+```
+</details>
+
+### 4.3 Tuning PID
+
+Try playing around with some of the parameters in [nav_params_week_7.yaml](../../rj_training_bringup/config/nav_params_week_7.yaml) (in the [rj_training_bringup package](../../rj_training_bringup)). 
+The parameters for the PID controller appear at lines 58 - 72.
+
+A couple interesting ideas we would recommend are:
+
+1. Setting the by_P equal to zero. 
+1. Setting the yaw_P equal to zero and by_P to 20.
+1. Decreasing time_between_states. This should make our robot doot much faster but with worse tracking.
+1. Increasing yaw_P to a very large number (like 100)
+1. Increasing yaw_I to a very large number while playing with different windup values
+1. Try to get a value to oscillate and then change the D until it corrects
+
+Take a moment to reflect on why you see the results you see.
+
+## 5 Implementing the LQR controller
+
+All of the code in this section will be written in [lqr_controller.cpp](../../controllers/src/lqr_controller.cpp). 
+We will have the same functions as the PID controller, just implemented differently.
+
+### 5.1 The configure function
 
 The configure function is where we'll grab our ROS parameters and initialize our controller. Find the student code block in the `configure()` function.
 
@@ -509,52 +680,24 @@ Finally, there are three vectors which will store sequences of state data used b
 
 **Tip:** All Eigen matrix and vector types provide a static `Zero()` function which returns a zero-initialized object. For example, `Eigen::Vector3d::Zero()` returns a 3-dimensional vector with all values set to zero.
 
-### 4.2 LQR controller dynamics
+### 5.2 Tuning the LQR controller
 
-To use an LQR controller, we need to derive the dynamics equations for our system.
-This takes the form of the A and B matrices used by the controller.
-Our controller class has two functions: `computeAMatrix` and `computeBMatrix` which we'll use to calculate these matrices.
-A third function, `computeNextState` will use our A and B matrix functions to implement the transition function from one state to the next based on control values.
-
-We have implemented `computeAMatrix` and `computeBMatrix` to return the matrices as you derived them in the introduction.
-Each function creates a new matrix object, fills in the appropriate elements, and returns the matrix.
-All you need to implement is the `computeNextState` function using the helper functions `computeAMatrix` and `computeBMatrix`.
-This function will need to call `computeAMatrix()` and `computeBMatrix()` to get the A and B matrices.
-Eigen types are really cool and normal arithmetic operators (`*` and `+`) can be used on matrices and vectors like you would normally use them.
-If I have a vector x and a matrix A, I could write that as
-
-```c++
-result = A * x
-```
-
-A couple hints for working with Eigen types:
-- You can multiply and add vectors / matrices with the normal arithmetic operators (`*` and `+`).
-- The size is in the type name. `Eigen::Matrix3d` creates a 3x3 matrix, `Eigen::Matrix2d` creates a 2x2 matrix, and `Eigen::Matrix<double, 3, 2>` creates a 3X2 matrix.
-- To create an identity matrix use the static `Identity()` function provided by the type.
-- To index into an Eigen matrix use `()` not `[]`. So to get the second row and second column use `A(1,1)`.
-
-<details>
-<summary><b>Hint:</b> <code>computeNextState()</code> Solution</summary>
-
-```c++
-return computeAMatrix(x, u) * x + computeBMatrix(x) * u;
-```
-</details>
-
-### 4.3 Tuning the LQR controller
-
-Try playing around with some of the parameters in [nav_params_week_7.yaml](../../rj_training_bringup/config/nav_params_week_7.yaml) (in the [rj_training_bringup package](../../rj_training_bringup)). The parameters for our controller appear at lines 48 - 54.
+Try playing around with some of the parameters in [nav_params_week_7.yaml](../../rj_training_bringup/config/nav_params_week_7.yaml) (in the [rj_training_bringup package](../../rj_training_bringup)).
+The parameters for the LQR controller appear at lines 49 - 56.
+You can change what controller is used by altering line 41 to be `LQRController` compared to `PIDContorller`.
+This determines which controller is run.
 
 A couple interesting ideas we would recommend are:
 
 1. Setting the Q and Qf elements for yaw equal to zero. Without considering the yaw, our controller should perform very badly.
 1. Decreasing T. This should make the controller short sighted and not work as well at the end.
 1. Increasing R. This should make the controller lethargic.
-1. Decreasing time_between_states. This should make our robot doot much faster but with worse tracking.
+1. Decreasing time_between_states. This should make our robot doot much faster but with worse tracking, but much better performance than the PID controller.
 
 Take a moment to reflect on why you see the results you see.
+Hopefully you can notice how LQR is better about handling the sharp turn that is required half way through and just generally better reasoning about how to get to a position faster.
 
-### 4.4 Commit your new code in git
+### 5.3 Commit your new code in git
 
 Once you've got your code for this project working, use the command below to commit it into git. This will make it easier to grab changes to the starter code for the remaining projects.
 
