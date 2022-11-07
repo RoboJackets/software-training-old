@@ -53,47 +53,6 @@ public:
       rclcpp::SystemDefaultsQoS());
 
     // BEGIN STUDENT CODE
-    T_ = node_shared->declare_parameter<double>(name + ".T", 1.0);
-    dt_ = node_shared->declare_parameter<double>(name + ".dt", 0.1);
-    time_between_states_ =
-      node_shared->declare_parameter<double>(name + ".time_between_states", 3.0);
-    iterations_ = node_shared->declare_parameter<int>(name + ".iterations", 1);
-
-    std::vector<double> Q_temp = node_shared->declare_parameter<std::vector<double>>(
-      name + ".Q", {1.0,
-        1.0, 0.3});
-    if (Q_temp.size() != 3) {
-      RCLCPP_ERROR(node_shared->get_logger(), "incorrect size Q, must be 3 values");
-      exit(0);
-    }
-    Q_(0, 0) = Q_temp[0];
-    Q_(1, 1) = Q_temp[1];
-    Q_(2, 2) = Q_temp[2];
-
-    std::vector<double> Qf_temp = node_shared->declare_parameter<std::vector<double>>(
-      name + ".Qf", {10.0,
-        10.0, 0.1});
-    if (Qf_temp.size() != 3) {
-      RCLCPP_ERROR(node_shared->get_logger(), "incorrect size Qf, must be 3 values");
-      exit(0);
-    }
-    Qf_(0, 0) = Qf_temp[0];
-    Qf_(1, 1) = Qf_temp[1];
-    Qf_(2, 2) = Qf_temp[2];
-
-    std::vector<double> R_temp = node_shared->declare_parameter<std::vector<double>>(
-      name + ".R", {0.1,
-        0.05});
-    if (R_temp.size() != 2) {
-      RCLCPP_ERROR(node_shared->get_logger(), "incorrect size R, must be 2 values");
-      exit(0);
-    }
-    R_(0, 0) = R_temp[0];
-    R_(1, 1) = R_temp[1];
-
-    prev_u_ = std::vector<Eigen::Vector2d>(T_ / dt_, Eigen::Vector2d::Zero());
-    prev_x_ = std::vector<Eigen::Vector3d>(T_ / dt_, Eigen::Vector3d::Zero());
-    S_ = std::vector<Eigen::Matrix3d>(T_ / dt_, Eigen::Matrix3d::Zero());
     // END STUDENT CODE
   }
 

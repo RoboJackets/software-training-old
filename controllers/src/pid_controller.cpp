@@ -53,30 +53,6 @@ public:
       rclcpp::SystemDefaultsQoS());
 
     // BEGIN STUDENT CODE
-    time_between_states_ =
-      node_shared->declare_parameter<double>(name + ".time_between_states", 3.0);
-
-    bx_P_ = node_shared->declare_parameter<double>(name + ".bx.P", 1.0);
-    bx_I_ = node_shared->declare_parameter<double>(name + ".bx.I", 0.0);
-    bx_D_ = node_shared->declare_parameter<double>(name + ".bx.D", 0.0);
-
-    by_P_ = node_shared->declare_parameter<double>(name + ".by.P", 1.0);
-    by_I_ = node_shared->declare_parameter<double>(name + ".by.I", 0.0);
-    by_D_ = node_shared->declare_parameter<double>(name + ".by.D", 0.0);
-
-    yaw_P_ = node_shared->declare_parameter<double>(name + ".yaw.P", 1.0);
-    yaw_I_ = node_shared->declare_parameter<double>(name + ".yaw.I", 0.0);
-    yaw_D_ = node_shared->declare_parameter<double>(name + ".yaw.D", 0.0);
-
-    prev_error_ = Eigen::Vector3d::Zero();
-    integral_error_ = Eigen::Vector3d::Zero();
-    integral_max_ = node_shared->declare_parameter<std::vector<double>>(
-      name + ".integral_max", {1.0, 1.0, 1.0});
-    if (integral_max_.size() != 3) {
-      RCLCPP_ERROR(node_shared->get_logger(), "incorrect size integral_max, must be 3 values");
-      exit(0);
-    }
-
     // END STUDENT CODE
   }
 
@@ -155,13 +131,6 @@ public:
     R << cos(state(2)), -sin(state(2)), 0, sin(state(2)), cos(state(2)), 0, 0, 0, 1;
 
     // BEGIN STUDENT CODE
-    error = target_state - state;
-    error(2) = angles::shortest_angular_distance(state(2), target_state(2));
-
-    error = R.transpose() * error;
-
-    error_delta = (error - prev_error_) / dt;
-    integral_error_ += error_delta * dt;
     // END STUDENT CODE
   }
 
@@ -170,7 +139,7 @@ public:
     double P, double D, double I)
   {
     // BEGIN STUDENT CODE
-    return error * P + error_delta * D + integral_error * I;
+    return 0;
     // END STUDENT CODE
   }
 

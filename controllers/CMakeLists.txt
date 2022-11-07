@@ -14,7 +14,6 @@ find_package(angles REQUIRED)
 
 add_library(controllers SHARED
   # BEGIN STUDENT CODE
-  src/controller_test_client.cpp
   # END STUDENT CODE
   src/lqr_controller.cpp
   src/pid_controller.cpp
@@ -34,11 +33,6 @@ ament_target_dependencies(controllers
 set_property(TARGET controllers PROPERTY CXX_STANDARD 17)
 
 # BEGIN STUDENT CODE
-rclcpp_components_register_node(
-        controllers
-        PLUGIN "controllers::ControllerTestClient"
-        EXECUTABLE controller_test_client
-)
 # END STUDENT CODE
 
 install(TARGETS controllers
