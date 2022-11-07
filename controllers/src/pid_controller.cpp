@@ -53,6 +53,33 @@ public:
       rclcpp::SystemDefaultsQoS());
 
     // BEGIN STUDENT CODE
+    prev_error_ = Eigen::Vector3d::Zero();
+    integral_error_ = Eigen::Vector3d::Zero();
+    std::vector<double> integral_max_temp = node_shared->declare_parameter<std::vector<double>>(
+        name + ".integral_max", {1.0, 1.0, 1.0});
+    if (integral_max_temp.size() != 3) {
+      RCLCPP_ERROR(node_shared->get_logger(), "incorrect size integral_max, must be 3 values");
+      exit(0);
+    }
+    integral_max_(0) = integral_max_temp[0];
+    integral_max_(1) = integral_max_temp[1];
+    integral_max_(2) = integral_max_temp[2];
+
+    time_between_states_ =
+        node_shared->declare_parameter<double>(name + ".time_between_states", 3.0);
+
+    bx_P_ = node_shared->declare_parameter<double>(name + ".bx.P", 1.0);
+    bx_I_ = node_shared->declare_parameter<double>(name + ".bx.I", 0.0);
+    bx_D_ = node_shared->declare_parameter<double>(name + ".bx.D", 0.0);
+
+    by_P_ = node_shared->declare_parameter<double>(name + ".by.P", 1.0);
+    by_I_ = node_shared->declare_parameter<double>(name + ".by.I", 0.0);
+    by_D_ = node_shared->declare_parameter<double>(name + ".by.D", 0.0);
+
+    yaw_P_ = node_shared->declare_parameter<double>(name + ".yaw.P", 1.0);
+    yaw_I_ = node_shared->declare_parameter<double>(name + ".yaw.I", 0.0);
+    yaw_D_ = node_shared->declare_parameter<double>(name + ".yaw.D", 0.0);
+
     // END STUDENT CODE
   }
 
@@ -109,7 +136,13 @@ public:
       path.poses.begin(), path.poses.end(), std::back_inserter(
         trajectory_), StateFromMsg);
     path_start_time_ = node_shared->now();
-    resetStates(Eigen::Vector3d::Zero());
+
+    // BEGIN STUDENT CODE
+    prev_error_ = Eigen::Vector3d::Zero();
+    integral_error_ = Eigen::Vector3d::Zero();
+    prev_time_ = 0;
+
+    // END STUDENT CODE
   }
 
   void resetStates(Eigen::Vector3d init_state)
@@ -118,15 +151,30 @@ public:
     if (!node_shared) {
       throw std::runtime_error{"Could not acquire node."};
     }
+  }
 
-    prev_x_[0] = init_state;
-    for (int t = 1; t < T_ / dt_; t++) {
-      prev_x_[t] =
-        interpolateState(path_start_time_ + rclcpp::Duration::from_seconds(t * dt_ * 1e9));
-      RCLCPP_INFO_STREAM(
-        node_shared->get_logger(), "got interpolated state: " << prev_x_[t].transpose());
-    }
-    prev_u_ = std::vector<Eigen::Vector2d>(T_ / dt_, Eigen::Vector2d::Zero());
+  void computeError(const Eigen::Vector3d& state, const Eigen::Vector3d target_state, double dt,
+                               Eigen::Vector3d& error_delta, Eigen::Vector3d& error)
+  {
+    // BEGIN STUDENT CODE
+    error = target_state - state;
+    error(2) = angles::shortest_angular_distance(state(2), target_state(2));
+
+    Eigen::Matrix3d R;
+    R << cos(state(2)), -sin(state(2)), 0, sin(state(2)), cos(state(2)), 0, 0, 0, 1;
+    error = R.transpose() * error;
+
+    error_delta = (error - prev_error_) / dt;
+    integral_error_ += error_delta * dt;
+    // END STUDENT CODE
+  }
+
+  double computePID(double error, double error_delta, double integral_error,
+                    double P, double D, double I)
+  {
+    // BEGIN STUDENT CODE
+    return error * P + error_delta * D + integral_error * I;
+    // END STUDENT CODE
   }
 
   geometry_msgs::msg::TwistStamped computeVelocityCommands(
@@ -139,26 +187,54 @@ public:
     if (!node_shared) {
       throw std::runtime_error{"Could not acquire node."};
     }
-    RCLCPP_INFO_STREAM(node_shared->get_logger(), "compute vel commands");
+
+    if(prev_time_ == 0) {
+      // on the first call return a zero control to get a dt estimate
+      prev_time_ = node_shared->now().seconds();
+      geometry_msgs::msg::TwistStamped cmd_vel_msg;
+      cmd_vel_msg.twist.linear.x = 0;
+      cmd_vel_msg.twist.angular.z = 0;
+      cmd_vel_msg.header.frame_id = "base_link";
+      cmd_vel_msg.header.stamp = node_shared->now();
+      return cmd_vel_msg;
+    }
 
     Eigen::Vector3d state = StateFromMsg(pose);
+    Eigen::Vector3d target_state = interpolateState(pose.header.stamp);
+    double dt = node_shared->now().seconds() - prev_time_;
 
-    for (int i = 0; i < iterations_; i++) {
-      computeRicattiEquation();
-      computeForwardPass(state, pose.header.stamp);
+    // compute state error for PID using transform
+
+    // BEGIN STUDENT CODE
+    Eigen::Vector3d error, error_delta;
+    computeError(state, target_state, dt, error_delta, error);
+
+    // END STUDENT CODE
+
+    // clamps the maximum value of the integral
+    for(int i = 0; i < 3; i++) {
+      integral_error_(i) = std::clamp(integral_error_(i), -integral_max_(i), integral_max_(i));
     }
 
+    // based on the error compute the PID
+    // double bx_pid = error(0) * bx_P_ + error_delta(0) * bx_D_ + integral_error_(0) * bx_I_;
+    // double by_pid = error(1) * by_P_ + error_delta(1) * by_D_ + integral_error_(1) * by_I_;
+    // double yaw_pid = error(2) * yaw_P_ + error_delta(2) * yaw_D_ + integral_error_(2) * yaw_I_;
+
+    // BEGIN STUDENT CODE
+    double bx_pid = computePID(error(0), error_delta(0), integral_error_(0), bx_P_, bx_D_, bx_I_);
+    double by_pid = computePID(error(1), error_delta(1), integral_error_(1), by_P_, by_D_, by_I_);
+    double yaw_pid = computePID(error(2), error_delta(2), integral_error_(2), yaw_P_, yaw_D_, yaw_I_);
+    // END STUDENT CODE
+
+    // setup variables for the next iteration
+    error = prev_error_;
+    prev_time_ = node_shared->now().seconds();
+
+    // convert the pid components into the controls
     geometry_msgs::msg::TwistStamped cmd_vel_msg;
-    if (prev_u_[0].hasNaN()) {
-      RCLCPP_INFO_STREAM(
-        node_shared->get_logger(),
-        "fixing nan control: " << prev_u_[0].transpose());
-      resetStates(state);
-      prev_u_[0](0) = 0.1;
-    }
-
-    cmd_vel_msg.twist.linear.x = std::clamp(prev_u_[0](0), -2.0, 2.0);
-    cmd_vel_msg.twist.angular.z = std::clamp(prev_u_[0](1), -2.0, 2.0);
+    cmd_vel_msg.twist.linear.x = std::clamp(bx_pid, -1.0, 1.0);
+    cmd_vel_msg.twist.angular.z = std::clamp(yaw_pid + by_pid, -1.5, 1.5);
     cmd_vel_msg.header.frame_id = "base_link";
     cmd_vel_msg.header.stamp = node_shared->now();
     return cmd_vel_msg;
@@ -169,88 +245,27 @@ public:
     // TODO(barulicm) implement this
   }
 
-  Eigen::Matrix3d computeAMatrix(const Eigen::Vector3d & x, const Eigen::Vector2d & u)
-  {
-    // BEGIN STUDENT CODE
-    return Eigen::Matrix3d::Zero();
-    // END STUDENT CODE
-  }
-
-  Eigen::Matrix<double, 3, 2> computeBMatrix(const Eigen::Vector3d & x)
-  {
-    // BEGIN STUDENT CODE
-    return Eigen::Matrix<double, 3, 2>::Zero();
-    // END STUDENT CODE
-  }
-
-  Eigen::Vector3d computeNextState(const Eigen::Vector3d x, const Eigen::Vector2d u)
-  {
-    // BEGIN STUDENT CODE
-    return x;
-    // END STUDENT CODE
-  }
-
-  void computeRicattiEquation()
-  {
-    // does the backwards pass of the ricatti equation
-    S_[S_.size() - 1] = Qf_;
-    for (int t = T_ / dt_ - 2; t >= 0; t--) {
-      auto last_S = S_[t + 1];
-      Eigen::Matrix3d A = computeAMatrix(prev_x_[t], prev_u_[t]);
-      Eigen::Matrix<double, 3, 2> B = computeBMatrix(prev_x_[t]);
-      auto K = (R_ + B.transpose() * last_S * B).inverse() * B.transpose() * last_S * A;
-      S_[t] = A.transpose() * last_S * A - (A.transpose() * last_S * B) * K + Q_;
-    }
-  }
-
-  void computeForwardPass(const Eigen::Vector3d & init_x, rclcpp::Time current_time)
-  {
-    // computes the forward pass to update the states and controls
-    Eigen::Vector3d cur_x = init_x;
-    for (int t = 0; t < T_ / dt_; t++) {
-      Eigen::Matrix3d A = computeAMatrix(cur_x, prev_u_[t]);
-      Eigen::Matrix<double, 3, 2> B = computeBMatrix(prev_x_[t]);
-      auto current_S = S_[t];
-      auto K = (R_ + B.transpose() * current_S * B).inverse() * B.transpose() * current_S * A;
-      Eigen::Vector3d state_error = (cur_x -
-        interpolateState(current_time + rclcpp::Duration::from_seconds(dt_ * t * 1e9)));
-      state_error(2) = angles::normalize_angle(state_error(2));
-      Eigen::Vector2d u_star = -K * state_error;
-
-      prev_x_[t] = cur_x;
-      prev_u_[t] = u_star;
-
-      cur_x = computeNextState(cur_x, u_star);
-    }
-
-    nav_msgs::msg::Path path;
-    path.header.stamp = current_time;
-    path.header.frame_id = "/map";
-    for (const Eigen::Vector3d current_state : prev_x_) {
-      geometry_msgs::msg::PoseStamped pose;
-      pose.pose.position.x = current_state(0);
-      pose.pose.position.y = current_state(1);
-      path.poses.push_back(pose);
-    }
-    traj_viz_pub_->publish(path);
-  }
-
 private:
   rclcpp_lifecycle::LifecycleNode::WeakPtr node_;
   // dynamics
-  double dt_;
-  double T_;
 
-  // cost function
-  Eigen::Matrix3d Q_ = Eigen::Matrix3d::Identity();
-  Eigen::Matrix3d Qf_ = Eigen::Matrix3d::Identity();
-  Eigen::Matrix2d R_ = Eigen::Matrix2d::Identity();
+  double bx_P_;
+  double bx_D_;
+  double bx_I_;
 
-  // Ricatti equation
-  std::vector<Eigen::Matrix3d> S_;
-  std::vector<Eigen::Vector3d> prev_x_;
-  std::vector<Eigen::Vector2d> prev_u_;
-  int iterations_;
+  double by_P_;
+  double by_D_;
+  double by_I_;
+
+  double yaw_P_;
+  double yaw_D_;
+  double yaw_I_;
+
+  Eigen::Vector3d prev_error_;
+  Eigen::Vector3d integral_error_;
+  Eigen::Vector3d integral_max_;
+
+  double prev_time_;
 
   // trajectory to track
   std::vector<Eigen::Vector3d> trajectory_;

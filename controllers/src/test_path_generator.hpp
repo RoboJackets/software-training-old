@@ -36,7 +36,7 @@ public:
 private:
   const double scale_ = 0.5;
   const std::size_t point_count_;
-  const double t_delta_;
+  double t_delta_;
   double t_ = 0.0;
 
   geometry_msgs::msg::PoseStamped GetNextPoint();

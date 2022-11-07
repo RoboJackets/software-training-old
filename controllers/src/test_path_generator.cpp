@@ -37,6 +37,9 @@ nav_msgs::msg::Path TestPathGenerator::BuildPath()
   nav_msgs::msg::Path path;
   t_ = 0.0;
   std::generate_n(std::back_inserter(path.poses), point_count_, [this] {return GetNextPoint();});
+  t_delta_ = -t_delta_;
+  t_ += t_delta_;
+  std::generate_n(std::back_inserter(path.poses), point_count_, [this] {return GetNextPoint();});
   return path;
 }
 
@@ -53,10 +56,16 @@ geometry_msgs::msg::PoseStamped TestPathGenerator::GetNextPoint()
   const auto dx = scale_ * std::cos(t_);
   const auto dy = (scale_ * std::cos(t_) * std::cos(t_)) - (scale_ * std::sin(t_) * std::sin(t_));
 
+  double yaw = std::atan2(dy, dx);
+
+  if (t_delta_ < 0)
+  {
+    yaw += M_PI;
+    pose.pose.position.y -= 0.1;
+  }
+
   pose.pose.orientation = tf2::toMsg(
-    Eigen::Quaterniond{Eigen::AngleAxisd{std::atan2(
-          dy,
-          dx),
+    Eigen::Quaterniond{Eigen::AngleAxisd{yaw,
         Eigen::Vector3d::UnitZ()}});
 
   t_ += t_delta_;
