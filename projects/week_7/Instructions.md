@@ -50,41 +50,50 @@ Next week you will learn how to generate a trajectory to track, but this week we
 Often you will want to start of tracking a static trajectory when you implement a new controller to verify things are working well and to tune it.
 This project will investigate the differences between the two controllers, but both controllers are capable of performing trajectory tracking.
 
-### 1.1 PID Controller
+## 1.1 Tracking a trajectory
+
+In this exercise we will use two different controllers to track a trajectory.
+They way this works is that we have all the nodes on the path that is visualized in rviz.
+We take the time we receive the path at the start time and index into the path to get where the robot should be if it is moving from point to point in `time_between_states` (a parameter) seconds.
+When the time is in between two states we do a linear interpolation of the setpoint.
+This gives us relatively smooth behavior with a variety of controllers and is quick to implement.
+
+### 1.2 PID Controller
 
 The PID (Proportional Integral Derivative) controller was covered in the first video of week seven (TODO link).
 The basic idea of a PID controller can be summarized by the equation below,
 
-TODO PID
+![PID Equations](pid_equations.png)
 
 Here we see 
 The constant K_P (the K with a subscript of p) is applied to the current error of the system. 
 P gains are used to account for offsets in errors, if the error is large it will apply a large control, if the error is small it will apply a small control.
 This is the main gain you should be tuning when using a PID controller.
-The idea is to get a P gain such that you have decent convergence to your setpoint even if you have a little bit of overshooting.
+The idea is to get a P gain such that you have decent convergence to your setpoint even if you have a small amount of overshooting.
 This will make more sense later.
 
 The constant K_D is applied to the derivative of the error.
 Since our system is in discrete time we will use the finite difference between the previous error and the current error (difference divided by time).
 This is the second gain you should be tuning when using a PID controller.
-The idea is that the D gain is applied in the negative sign of the derivative of the error.
-It should help will dampening (reducing) the oscillations you see from a high P gain.
+It should help will dampen (reduce) the oscillations you see from a high P gain.
 
-Finally the K_I is applied to the integral of the error.
+Finally, the K_I is applied to the integral of the error.
 Since our system is discrete it will just be summation of the past errors.
 Theoretically the integral should be able to take any value, but often this can lead to a failure case known as integral windup.
 Essentially the integral gets so large the system becomes unstable. 
 We will look at this more in depth later in the exercise, but the solution is to cap the amount of the integral can be.
 Typically you will want a very small integral gain, and it should be there to solve steady state error.
 Steady state error is typically the small amount of error you will expect when the system stops oscillating.
+In our task it will be very hard to see steady state error since we will be tracking a moving trajectory.
+Look for a constant offset in yaw as the right way to see this kind of error.
 
 The important thing to note is that the PID controller is model free.
 Model free means we do not need a concept of our dynamics (how the robot state changes over time).
 PID is model free since we have no dynamics, PID only looks at the current instant with some history encoded into the integral term and derivative term.
-This means our controller can tend to be very short sighted, meaning it will sometimes poorly setup for future actions.
+This means our controller can tend to be very short-sighted, meaning it will sometimes poorly setup for future actions.
 You will see this behavior more once you get to tuning the controller.
 
-### 1.2 LQR Controller
+### 1.3 LQR Controller
 
 The second controller that we implemented for you is the LQR (Linear Quadratic Regulator) controller.
 This uses a neat bit of theory (covered in the videos) to compute the optimal (best) controls possible to track a given trajectory.
@@ -105,7 +114,7 @@ In this math, we'll be using these variables:
 
 ![Variable Names](variables.png)
 
-We can represent our system dynamcis with three equations, one for each dimension of our state vector: x, y, and heading.
+We can represent our system dynamics with three equations, one for each dimension of our state vector: x, y, and heading.
 
 ![Equations](equations.png)
 
@@ -131,7 +140,7 @@ Now that we have derived the dynamics equations of our LQR controller, we can us
 You will see some performance benefits from LQR since it is able to reason about the future of the trajectory it is tracking.
 The myopic behavior of the PID controller should look sad in comparison once you get both running.
 
-### 1.3 The navigation stack
+### 1.4 The navigation stack
 
 [Nav2](https://navigation.ros.org/) is ROS 2 "navigation stack". This is a collection of nodes and tools for handling the different parts of navigation for an autonomous robot, including path planning, path following, and recovery. Nav2 uses a plugin-based system to allow other developers to customize certain parts of the navigation stack. The diagram below shows the overall architecture of the Nav2 stack and highlights which parts are customizable with plugins.
 
@@ -139,13 +148,6 @@ The myopic behavior of the PID controller should look sad in comparison once you
 
 Each part of the Nav2 stack communicates with the other parts primarily through ROS actions. For example, the "Planner Server" hosts an action, called `/compute_path_to_pose`, which will plan the path from the robot's current location to the given pose. The "BT Navigator Server" can then call that action whenever a new path needs to be planned. The "BT Navigator Server" itself also hosts an action `/navigate_to_pose` that acts as the main entry point for the navigation stack for most other parts of our ROS system. Whenever some part of our ROS system wants the robot to move, it can send the destination pose to the `/navigate_to_pose` action, which will take care of the rest.
 
-## 1.4 Tracking a trajectory
-
-In this exercise we will use two different controllers to track a trajectory. 
-They way this works is that we have all the nodes on the path that is visualized in rviz.
-We take the time we receive the path at the start time and index into the path to get where the robot should be if it is moving from point to point in `time_between_states` (a parameter) seconds.
-When the time is in between two states we do a linear interpolation of the setpoint. 
-This gives us relatively smooth behavior with a variety of controllers and is quick to implement.
 
 ### 1.5 The Code
 
@@ -170,15 +172,10 @@ It will not move until you implement LQR or PID and the action client.
 
 The second command that won't work until you implement your action client is
 ```bash
-ros2 run controller pid_controller_test_client --ros-args -p use_sim_time:=True
+ros2 run controller controller_test_client --ros-args -p use_sim_time:=True
 ```
 
 This runs the action client and sets use_sim_time to true so that all nodes are using the same time source.
-
-to run the LQR controller after you implement your action client use
-```bash
-ros2 run controller pid_controller_test_client --ros-args -p use_sim_time:=True
-```
 
 Once you've finished writing the code for this project, you should see the robot follow a figure eight pattern like this:
 
@@ -209,7 +206,7 @@ If you have done a different installation of stsl that is not through apt make s
 
 ### 3.2 Creating the ControllerTestClient
 
-Create a cpp file in the [lqr_control src folder](../../controllers/src) called ControllerTestClient.
+Create a cpp file in the [controller src folder](../../controllers/src) called ControllerTestClient.
 In this file you should write a standard ROS node class and constructor.
 
 <details>
@@ -257,14 +254,9 @@ The second thing you will need to do is to register the node as a component. Thi
 ```cmake
 # BEGIN STUDENT CODE
 rclcpp_components_register_node(
-        pid_control
-        PLUGIN "pid_control::ControllerTestClient"
-        EXECUTABLE pid_controller_test_client
-)
-rclcpp_components_register_node(
         controllers
         PLUGIN "controllers::ControllerTestClient"
-        EXECUTABLE lqr_controller_test_client
+        EXECUTABLE controller_test_client
 )
 # END STUDENT CODE
 ```
@@ -464,7 +456,7 @@ Find the student code block in the `configure()` function.
 
 We're going to declare several ROS parameters. 
 Note, all of our controller parameters will be namespaced under our plugin name, which you can get from the `name` parameter of the configure function. 
-Thus, declaring a parameter named "T" would look like this:
+Thus, declaring a parameter named "P" under "bx" in our name space would look like this:
 
 ```c++
 node_shared->declare_parameter<double>(name + ".bx.P", 1.0);
@@ -497,7 +489,6 @@ There are ten parameters which we'll store directly into member variables. For e
   Default: 3.0
 
 One of the parameters is a vector that gives the maximum values of the integral error (to prevent windup).
-Three of our controller parameters are coefficients for the diagonal matrices `Q`, `Qf`, and `R`. 
 In our parameters, these will show up as lists of the values. 
 You'll need to declare a parameter of type `std::vector<double>`, check that the returned value has the right size, and copy the values into the class member vector (which again, has been declared for you).
 
@@ -515,6 +506,8 @@ Finally, there are two vectors which will store data used by our controller.
 `prev_error_` will store previous error vector (`Vector3d`). 
 `integral_error_` will store integration of error (`Vector3d`). 
 
+These should be zeroed out to ensure that they start at zero values.
+
 **Tip:** All Eigen matrix and vector types provide a static `Zero()` function which returns a zero-initialized object. For example, `Eigen::Vector3d::Zero()` returns a 3-dimensional vector with all values set to zero.
 
 ### 4.1 Computing error
@@ -531,9 +524,11 @@ A couple hints for working with Eigen types:
 - To index into an Eigen matrix use `()` not `[]`. So to get the second row and second column use `A(1,1)`.
 
 There are a couple tricks that we are using to compute the error.
+We are going to compute the error for x,y in the body frame of the robot.
 We use this form since it gives a simple way to compute the controls given the error using PID.
+The steps to compute the body frame are outlined below,
 
-1. Compute the error between the target state variables and the current state.
+1. Compute the error between the target state variables and the current state (subtract them).
 
 2. We need to properly handle the difference between two angles using the helper function `angles::shortest_angular_distance`.
 This is needed since yaw is a discontinuous function from [-pi, pi].
@@ -545,7 +540,7 @@ Correct the angular error (index 2) after you compute the difference as outlined
 
 3. Finally we need to rotate the error vector into body frame.
 This allows us to decouple how much we need to rotate vs how much we need to move forward.
-Create the standard rotation matrix in the Z, and use it to rotate the error vector from global frame to body frame.
+Create the standard rotation matrix in the Z (done for you), and use it to rotate the error vector from global frame to body frame.
 Remember that the current yaw in the state (index 2) transforms from body to global frame.
 We have written the rotation matrix for you and you can take the transpose of a matrix in Eigen using the method `transpose()` on the object.
 What was that important property about the transpose of a rotation matrix again?
@@ -554,7 +549,7 @@ What was that important property about the transpose of a rotation matrix again?
 <summary><b>Hint: </b> Rotation Matrix Property</summary>
 
 The transpose of a rotation matrix is its inverse.
-Therefore you can use the transpose to reveerse the direction of the transform
+Therefore, you can use the transpose to reverse the direction of the transform
 
 </details>
 
@@ -562,7 +557,7 @@ Therefore you can use the transpose to reveerse the direction of the transform
 <summary><b>Hint: </b> Error Equation Code</summary>
 
 We just find the difference between the vectors and then correct the angular error.
-Then we rotation by the transpose (since we need the opposite transform)
+Then we rotate it by the transpose (since we need the opposite transform) of the rotation matrix to get the error in body frame.
 
 ```c++
 error = target_state - state;
@@ -685,8 +680,6 @@ Finally, there are three vectors which will store sequences of state data used b
 
 **Tip:** `std::vector` provides a constructor that initializes a vector with N copies of a value. ([Constructor 3 on cppreference.com](https://en.cppreference.com/w/cpp/container/vector/vector))
 
-**Tip:** All Eigen matrix and vector types provide a static `Zero()` function which returns a zero-initialized object. For example, `Eigen::Vector3d::Zero()` returns a 3-dimensional vector with all values set to zero.
-
 ### 5.2 Tuning the LQR controller
 
 Try playing around with some of the parameters in [nav_params_week_7.yaml](../../rj_training_bringup/config/nav_params_week_7.yaml) (in the [rj_training_bringup package](../../rj_training_bringup)).
@@ -697,12 +690,12 @@ This determines which controller is run.
 A couple interesting ideas we would recommend are:
 
 1. Setting the Q and Qf elements for yaw equal to zero. Without considering the yaw, our controller should perform very badly.
-1. Decreasing T. This should make the controller short sighted and not work as well at the end.
+1. Decreasing T. This should make the controller short-sighted and not work as well at the end.
 1. Increasing R. This should make the controller lethargic.
 1. Decreasing time_between_states. This should make our robot doot much faster but with worse tracking, but much better performance than the PID controller.
 
 Take a moment to reflect on why you see the results you see.
-Hopefully you can notice how LQR is better about handling the sharp turn that is required half way through and just generally better reasoning about how to get to a position faster.
+Hopefully you can notice how LQR is better about handling the sharp turn that is required half-way through and just generally better reasoning about how to get to a position faster.
 
 ### 5.3 Commit your new code in git
 
