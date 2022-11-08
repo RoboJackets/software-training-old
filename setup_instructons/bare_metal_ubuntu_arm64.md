@@ -5,11 +5,11 @@
 ## Contents
 
 - [1 Install ROS](#1-install-ros)
-- [3 Clone Training Repositories](#3-clone-training-repositories)
-- [4 Install Gazebo](#4-install-gazebo)
-- [5 Clone ROS Gazebo packages](#5-clone-ros-gazebo-packages)
-- [6 Install ROS dependencies](#6-install-ros-dependencies)
-- [7 Build training workspace](#7-build-training-workspace)
+- [2 Clone Training Repositories](#2-clone-training-repositories)
+- [3 Install Gazebo](#3-install-gazebo)
+- [4 Clone ROS Gazebo packages](#4-clone-ros-gazebo-packages)
+- [5 Install ROS dependencies](#5-install-ros-dependencies)
+- [6 Build training workspace](#6-build-training-workspace)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -38,7 +38,7 @@
    sudo apt install ros-humble-desktop python3-rosdep2 python3-colcon-common-extensions
    ```
 
-## 3 Clone Training Repositories
+## 2 Clone Training Repositories
 
 1. Create training workspace directory
 
@@ -61,7 +61,7 @@
    git clone https://github.com/RoboJackets/stsl.git
    ```
 
-## 4 Install Gazebo
+## 3 Install Gazebo
 
 1. Install the arm64 version of gazebo
 
@@ -73,7 +73,7 @@
    sudo apt install gazebo
    ```
 
-## 5 Clone ROS Gazebo packages
+## 4 Clone ROS Gazebo packages
 
 1. Clone ros_gazebo_pkgs repository
 
@@ -82,7 +82,7 @@
    git clone --branch=3.7.0 https://github.com/ros-simulation/gazebo_ros_pkgs.git
    ```
 
-## 6 Install ROS dependencies
+## 5 Install ROS dependencies
 
 1. Initialize rosdep
 
@@ -97,7 +97,7 @@
    rosdep install --from-paths . --ignore-src -y
    ```
 
-## 7 Build training workspace
+## 6 Build training workspace
 
 1. Go to training workspace directory
 
