@@ -1,9 +1,0 @@
-<class_libraries>
-    <library path="lqr_control">
-        <class type="lqr_control::LqrController" base_class_type="nav2_core::Controller">
-            <description>
-                An LQR controller for Nav2
-            </description>
-        </class>
-    </library>
-</class_libraries>

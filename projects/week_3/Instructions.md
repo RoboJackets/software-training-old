@@ -13,6 +13,7 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
 ## Contents
 
 - [1 Background](#1-background)
+  - [Log Probability](#log-probability)
 - [2 Running this project](#2-running-this-project)
 - [3 Instructions](#3-instructions)
   - [3.1 Get the latest starter code](#31-get-the-latest-starter-code)
@@ -27,8 +28,9 @@ We strongly recommend viewing this file with a rendered markdown viewer. You can
   - [3.10 Add sensor model to vector of models](#310-add-sensor-model-to-vector-of-models)
   - [3.11 Add parameter file to launch file](#311-add-parameter-file-to-launch-file)
   - [3.12 Replace fake localizer in week 3 launch file](#312-replace-fake-localizer-in-week-3-launch-file)
-  - [3.13 Tune your particle filter](#313-tune-your-particle-filter)
-  - [3.14 Commit your new code in git](#314-commit-your-new-code-in-git)
+  - [3.13 Familiarizing yourself with the particle filter](#313-familiarizing-yourself-with-the-particle-filter)
+  - [3.14 Tuning Your particle filter](#314-tuning-your-particle-filter)
+  - [3.15 Commit your new code in git](#315-commit-your-new-code-in-git)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

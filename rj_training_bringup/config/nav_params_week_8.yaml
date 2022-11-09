@@ -45,7 +45,7 @@ controller_server:
       xy_goal_tolerance: 0.025
       yaw_goal_tolerance: 6.28318530718
     FollowPath:
-      plugin: "lqr_control::LqrController"
+      plugin: "controllers::LqrController"
       dt: 0.2
       T: 4.0
       Q: [10.0, 10.0, 0.00]

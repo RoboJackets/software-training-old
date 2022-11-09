@@ -33,7 +33,7 @@ ArucoSensorModel::ArucoSensorModel(rclcpp::Node & node)
   timeout_ = node.declare_parameter<double>("sensors.aruco.measurement_timeout", 0.1);
 
   tags_ = {
-      // side 1
+    // side 1
     {0, TagLocation{0.6096, 0, -M_PI_2}},
     {1, TagLocation{0.6096, 0.11, -M_PI_2}},
     {2, TagLocation{0.6096, 0.22, -M_PI_2}},
@@ -109,7 +109,11 @@ double ArucoSensorModel::ComputeLogProb(const Particle & particle)
     body_location.y = x_diff * sin(particle.yaw) + y_diff * cos(particle.yaw);
 
     double expected_dist = sqrt(pow(body_location.x, 2) + pow(body_location.y, 2) + pow(0.05, 2));
-    double dist = sqrt(pow(tag.pose.position.x, 2) + pow(tag.pose.position.y, 2) + pow(tag.pose.position.z, 2));
+    double dist =
+      sqrt(
+      pow(
+        tag.pose.position.x,
+        2) + pow(tag.pose.position.y, 2) + pow(tag.pose.position.z, 2));
 
     log_prob += pow(expected_dist - dist, 2) / covariance_[0];
 
@@ -127,7 +131,7 @@ bool ArucoSensorModel::IsMeasurementAvailable(const rclcpp::Time & cur_time)
   if (last_msg_.header.stamp.sec == 0) {
     return false;
   }
-  if(last_msg_.tags.size() == 0) {
+  if (last_msg_.tags.size() == 0) {
     return false;
   }
   const auto time_since_last_msg = cur_time - rclcpp::Time(last_msg_.header.stamp);

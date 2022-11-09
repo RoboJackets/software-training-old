@@ -4,6 +4,8 @@ bt_navigator:
     enable_groot_monitoring: False
     default_bt_xml_filename: "navigate_w_replanning_and_recovery.xml"
     plugin_lib_names:
+    - nav2_remove_passed_goals_action_bt_node
+    - nav2_compute_path_through_poses_action_bt_node
     - nav2_compute_path_to_pose_action_bt_node
     - nav2_follow_path_action_bt_node
     - nav2_back_up_action_bt_node
@@ -36,22 +38,38 @@ controller_server:
     use_sim_time: True
     progress_checker_plugin: "progress_checker"
     goal_checker_plugin: "goal_checker"
-    controller_plugins: ["FollowPath"]
+    controller_plugins: ["LQRController"]
     progress_checker:
       plugin: "stsl_nav_plugins::NoProgressChecker"
     goal_checker:
       plugin: "nav2_controller::SimpleGoalChecker"
       xy_goal_tolerance: 0.05
       yaw_goal_tolerance: 0.1
-    FollowPath:
-        plugin: "lqr_control::LqrController"
-        dt: 0.25
-        T: 4.0
-        Q: [1.0, 1.0, 0.2]
-        Qf: [10.0, 10.0, 0.1]
-        R: [0.1, 0.05]
-        time_between_states: 2.0
-        iterations: 3
+    LQRController:
+      time_between_states: 1.0
+      plugin: "controllers::LqrController"
+      dt: 0.05
+      T: 2.0
+      Q: [2.0, 2.0, 0.1]
+      Qf: [10.0, 10.0, 0.5]
+      R: [0.1, 0.01]
+      iterations: 3
+    PIDController:
+      time_between_states: 1.0
+      plugin: "controllers::PIDController"
+      integral_max: [1.0, 1.0, 1.0]
+      bx:
+        P: 10.0
+        I: 0.0
+        D: 0.0
+      by:
+        P: 20.0
+        I: 0.0
+        D: 0.0
+      yaw:
+        P: 10.0
+        I: 0.0
+        D: 0.0
 
 controller_server_rclcpp_node:
   ros__parameters:

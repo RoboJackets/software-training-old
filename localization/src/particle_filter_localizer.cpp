@@ -63,7 +63,7 @@ ParticleFilterLocalizer::ParticleFilterLocalizer(const rclcpp::NodeOptions & opt
   resample_rate_ = declare_parameter<double>("resample_rate", 10);
   // ensure we poll for resample at higher than nyquist frequency
   resample_timer_ = create_wall_timer(
-    std::chrono::duration<double>(1.0 / (resample_rate_*2 + 1)),
+    std::chrono::duration<double>(1.0 / (resample_rate_ * 2 + 1)),
     std::bind(&ParticleFilterLocalizer::ResampleParticles, this));
 
   sensor_models_.push_back(std::make_unique<ArucoSensorModel>(*this));
@@ -139,7 +139,7 @@ void ParticleFilterLocalizer::NormalizeWeights()
   min_weight_ = 1.0;
   max_weight_ = 0.0;
   for (Particle & particle : particles_) {
-    if(particle.weight > 0) {
+    if (particle.weight > 0) {
       particle.weight /= normalizer;
     }
     running_sum += particle.weight;
@@ -160,13 +160,13 @@ Particle ParticleFilterLocalizer::CalculateEstimate()
 
   // handles averaging over the discontinuity
   double yaw_x = std::accumulate(
-            particles_.begin(), particles_.end(), 0.0, [](const auto & total, const auto & p) {
-                return total + cos(p.yaw) * p.weight;
-            });
+    particles_.begin(), particles_.end(), 0.0, [](const auto & total, const auto & p) {
+      return total + cos(p.yaw) * p.weight;
+    });
   double yaw_y = std::accumulate(
-          particles_.begin(), particles_.end(), 0.0, [](const auto & total, const auto & p) {
-              return total + sin(p.yaw) * p.weight;
-          });
+    particles_.begin(), particles_.end(), 0.0, [](const auto & total, const auto & p) {
+      return total + sin(p.yaw) * p.weight;
+    });
   estimate.yaw = atan2(yaw_y, yaw_x);
 
   return estimate;
@@ -180,7 +180,8 @@ Particle ParticleFilterLocalizer::CalculateCovariance(const Particle & estimate)
   for (const Particle & particle : particles_) {
     cov.x += pow(estimate.x - particle.x, 2) * particle.weight;
     cov.y += pow(estimate.y - particle.y, 2) * particle.weight;
-    cov.yaw += pow(angles::shortest_angular_distance(particle.yaw, estimate.yaw), 2) * particle.weight;
+    cov.yaw +=
+      pow(angles::shortest_angular_distance(particle.yaw, estimate.yaw), 2) * particle.weight;
     cov.x_vel += pow(estimate.x_vel - particle.x_vel, 2) * particle.weight;
     cov.yaw_vel += pow(estimate.yaw_vel - particle.yaw_vel, 2) * particle.weight;
 
@@ -200,18 +201,20 @@ void ParticleFilterLocalizer::ResampleParticles()
 {
   // prevents the filter from running without a motion update (will collapse particles)
   const rclcpp::Time current_time = now();
-  if(!motion_model_.getEnabled(current_time)) {
+  if (!motion_model_.getEnabled(current_time)) {
     RCLCPP_WARN_THROTTLE(
-        get_logger(), *get_clock(), 1000, "particle filter resample disabled since no input from /cmd_vel will diverge easily");
+      get_logger(),
+      *get_clock(), 1000,
+      "particle filter resample disabled since no input from /cmd_vel will diverge easily");
     return;
   }
-  if((current_time.seconds() - last_resample_time_.seconds()) <= 1.0 / resample_rate_) {
+  if ((current_time.seconds() - last_resample_time_.seconds()) <= 1.0 / resample_rate_) {
     return;
   }
   for (const auto & model : sensor_models_) {
-      if (!model->IsMeasurementAvailable(current_time)) {
-          return;
-      }
+    if (!model->IsMeasurementAvailable(current_time)) {
+      return;
+    }
   }
   last_resample_time_ = current_time;
   CalculateAllParticleWeights(current_time);

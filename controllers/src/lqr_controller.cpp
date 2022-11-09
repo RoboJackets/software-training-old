@@ -27,19 +27,10 @@
 #include <nav2_core/controller.hpp>
 #include <pluginlib/class_list_macros.hpp>
 #include <tf2_eigen/tf2_eigen.hpp>
+#include "controller_helpers.h"
 
-namespace lqr_control
+namespace controllers
 {
-
-Eigen::Vector3d StateFromMsg(const geometry_msgs::msg::PoseStamped & pose)
-{
-  Eigen::Quaterniond orientation;
-  tf2::fromMsg(pose.pose.orientation, orientation);
-  Eigen::Vector3d state;
-  state << pose.pose.position.x, pose.pose.position.y,
-    orientation.toRotationMatrix().eulerAngles(0, 1, 2)[2];
-  return state;
-}
 
 class LqrController : public nav2_core::Controller
 {
@@ -62,47 +53,6 @@ public:
       rclcpp::SystemDefaultsQoS());
 
     // BEGIN STUDENT CODE
-    T_ = node_shared->declare_parameter<double>(name + ".T", 1.0);
-    dt_ = node_shared->declare_parameter<double>(name + ".dt", 0.1);
-    time_between_states_ =
-      node_shared->declare_parameter<double>(name + ".time_between_states", 3.0);
-    iterations_ = node_shared->declare_parameter<int>(name + ".iterations", 1);
-
-    std::vector<double> Q_temp = node_shared->declare_parameter<std::vector<double>>(
-      name + ".Q", {1.0,
-        1.0, 0.3});
-    if (Q_temp.size() != 3) {
-      RCLCPP_ERROR(node_shared->get_logger(), "incorrect size Q, must be 3 values");
-      exit(0);
-    }
-    Q_(0, 0) = Q_temp[0];
-    Q_(1, 1) = Q_temp[1];
-    Q_(2, 2) = Q_temp[2];
-
-    std::vector<double> Qf_temp = node_shared->declare_parameter<std::vector<double>>(
-      name + ".Qf", {10.0,
-        10.0, 0.1});
-    if (Qf_temp.size() != 3) {
-      RCLCPP_ERROR(node_shared->get_logger(), "incorrect size Qf, must be 3 values");
-      exit(0);
-    }
-    Qf_(0, 0) = Qf_temp[0];
-    Qf_(1, 1) = Qf_temp[1];
-    Qf_(2, 2) = Qf_temp[2];
-
-    std::vector<double> R_temp = node_shared->declare_parameter<std::vector<double>>(
-      name + ".R", {0.1,
-        0.05});
-    if (R_temp.size() != 2) {
-      RCLCPP_ERROR(node_shared->get_logger(), "incorrect size R, must be 2 values");
-      exit(0);
-    }
-    R_(0, 0) = R_temp[0];
-    R_(1, 1) = R_temp[1];
-
-    prev_u_ = std::vector<Eigen::Vector2d>(T_ / dt_, Eigen::Vector2d::Zero());
-    prev_x_ = std::vector<Eigen::Vector3d>(T_ / dt_, Eigen::Vector3d::Zero());
-    S_ = std::vector<Eigen::Matrix3d>(T_ / dt_, Eigen::Matrix3d::Zero());
     // END STUDENT CODE
   }
 
@@ -170,13 +120,12 @@ public:
     }
 
     prev_x_[0] = init_state;
+    prev_u_ = std::vector<Eigen::Vector2d>(T_ / dt_, Eigen::Vector2d::Ones());
     for (int t = 1; t < T_ / dt_; t++) {
-      prev_x_[t] =
-        interpolateState(path_start_time_ + rclcpp::Duration::from_seconds(t * dt_ * 1e9));
-      RCLCPP_INFO_STREAM(
-        node_shared->get_logger(), "got interpolated state: " << prev_x_[t].transpose());
+      prev_x_[t] = computeNextState(prev_x_[t - 1], prev_u_[t]);
     }
-    prev_u_ = std::vector<Eigen::Vector2d>(T_ / dt_, Eigen::Vector2d::Zero());
+
+    pubPath();
   }
 
   geometry_msgs::msg::TwistStamped computeVelocityCommands(
@@ -202,8 +151,6 @@ public:
       RCLCPP_INFO_STREAM(
         node_shared->get_logger(),
         "fixing nan control: " << prev_u_[0].transpose());
-      resetStates(state);
-      prev_u_[0](0) = 0.1;
     }
 
     cmd_vel_msg.twist.linear.x = std::clamp(prev_u_[0](0), -2.0, 2.0);
@@ -220,30 +167,28 @@ public:
 
   Eigen::Matrix3d computeAMatrix(const Eigen::Vector3d & x, const Eigen::Vector2d & u)
   {
-    // BEGIN STUDENT CODE
     Eigen::Matrix3d A = Eigen::Matrix3d::Identity();
     A(0, 2) = -u(0) * sin(x(2)) * dt_;
     A(1, 2) = u(0) * cos(x(2)) * dt_;
     return A;
-    // END STUDENT CODE
   }
 
   Eigen::Matrix<double, 3, 2> computeBMatrix(const Eigen::Vector3d & x)
   {
-    // BEGIN STUDENT CODE
     Eigen::Matrix<double, 3, 2> B = Eigen::Matrix<double, 3, 2>::Zero();
     B(0, 0) = cos(x(2)) * dt_;
     B(1, 0) = sin(x(2)) * dt_;
     B(2, 1) = dt_;
     return B;
-    // END STUDENT CODE
   }
 
-  Eigen::Vector3d computeNextState(const Eigen::Vector3d x, const Eigen::Vector2d u)
+  Eigen::Vector3d computeNextState(const Eigen::Vector3d & x, const Eigen::Vector2d & u)
   {
-    // BEGIN STUDENT CODE
-    return computeAMatrix(x, u) * x + computeBMatrix(x) * u;
-    // END STUDENT CODE
+    Eigen::Vector3d result;
+    result(0) = x(0) + u(0) * cos(x(2)) * dt_;
+    result(1) = x(1) + u(0) * sin(x(2)) * dt_;
+    result(2) = x(2) + u(1) * dt_;
+    return result;
   }
 
   void computeRicattiEquation()
@@ -268,9 +213,12 @@ public:
       Eigen::Matrix<double, 3, 2> B = computeBMatrix(prev_x_[t]);
       auto current_S = S_[t];
       auto K = (R_ + B.transpose() * current_S * B).inverse() * B.transpose() * current_S * A;
-      Eigen::Vector3d state_error = (cur_x -
-        interpolateState(current_time + rclcpp::Duration::from_seconds(dt_ * t * 1e9)));
-      state_error(2) = angles::normalize_angle(state_error(2));
+
+      Eigen::Vector3d target_x =
+        interpolateState(current_time + rclcpp::Duration::from_seconds(dt_ * t));
+      Eigen::Vector3d state_error = cur_x - target_x;
+      state_error(2) = angles::shortest_angular_distance(target_x(2), cur_x(2));
+
       Eigen::Vector2d u_star = -K * state_error;
 
       prev_x_[t] = cur_x;
@@ -279,8 +227,18 @@ public:
       cur_x = computeNextState(cur_x, u_star);
     }
 
+    pubPath();
+  }
+
+  void pubPath()
+  {
+    auto node_shared = node_.lock();
+    if (!node_shared) {
+      throw std::runtime_error{"Could not acquire node."};
+    }
+
     nav_msgs::msg::Path path;
-    path.header.stamp = current_time;
+    path.header.stamp = node_shared->now();
     path.header.frame_id = "/map";
     for (const Eigen::Vector3d current_state : prev_x_) {
       geometry_msgs::msg::PoseStamped pose;
@@ -315,6 +273,6 @@ private:
   rclcpp_lifecycle::LifecyclePublisher<nav_msgs::msg::Path>::SharedPtr traj_viz_pub_;
 };
 
-}  // namespace lqr_control
+}  // namespace controllers
 
-PLUGINLIB_EXPORT_CLASS(lqr_control::LqrController, nav2_core::Controller)
+PLUGINLIB_EXPORT_CLASS(controllers::LqrController, nav2_core::Controller)
