@@ -1,6 +1,7 @@
-# RoboJackets Software Training
+# RoboJackets Software Training (Advanced Version
 
-This is repository contains resources for the RoboJackets Software Training program.
+This repository contains the former RoboJackets software training content.
+It is not required for new RoboJackets software members, but can serve as a very helpful resource for learning about various topics in ROS2, C++ and Robotics Theory.
 
 The syllabus for training can be found [here](Syllabus.md).
 
