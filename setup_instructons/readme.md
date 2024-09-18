@@ -6,22 +6,26 @@ Virtualization can get complicated. There are many options for VM technology and
 
 We've marked the solution we recommend for each scenario. These are the options that we feel are most reliable and easiest for us to help you with should you have any problems.
 
-## For Windows Computers
+## Recomeded Method For ALL Operating Systems:
+- [Docker](docker.md)
 
+
+## For Windows Computers
+If you have an NVIDIA GPU we recomend using WSL for best use of the CUDA acceration
 - [Windows Subsystem for Linux](wsl.md) 
-- [VirtualBox](virtualbox.md)
+~~ - [VirtualBox](virtualbox.md)~~
 
 ## For Intel-based Apple Computers
 
-- [VirtualBox](virtualbox.md) 
+~~- [VirtualBox](virtualbox.md) ~~
 
 ## For Apple Silicon Computers (M1 / M2)
 
 - [Docker](docker.md)
-- [VMware Fusion](vmware_fusion.md) 
+~~- [VMware Fusion](vmware_fusion.md) ~~
 
 ## For Linux Computers
 
 - [Linux Setup for amd64](bare_metal_ubuntu_amd64.md)
 - [Linux Setup for arm64](bare_metal_ubuntu_arm64.md)
-- [VirtualBox](virtualbox.md) 
+~~- [VirtualBox](virtualbox.md) ~~

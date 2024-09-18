@@ -24,17 +24,26 @@ You can install the Windows Terminal app from the Microsoft Store: [App Store Pa
 
 ## 2 Install WSL
 
-1. Open a PowerShell instance.
+1. Check WSL Status
+   ```wsl --status```  
 
-   Either search the start menu for PowerShell or open the Windows Terminal app and select "PowerShell" profile from the drop down at the top.
+> **_NOTE_** wsl should already be installed in your os (windows 11) look for default version 2
+> IF WSL is not installed, then follow the download [instructions] (https://learn.microsoft.com/en-us/windows/wsl/insta
 
-1. Run the install command
+2. Identify WSL version:
+   ```wsl -v``` equivilant to (```wsl --version```)
+
+> **_NOTE_** you can list all of your available distros of Linux by running:
+> ```wsl -l -o``` equivilant to (```wsl --list --online```)
+
+
+3. Run the install command install Ubuntu-22.04 (alternatively you can install this on the Microsoft Store)
 
    ```
    wsl --install --distribution Ubuntu-22.04
    ```
 
-## 3 Install ROS
+## 3 Install ROS2 Humble
 
 1. Add ROS package repository
 
@@ -59,43 +68,31 @@ You can install the Windows Terminal app from the Microsoft Store: [App Store Pa
    sudo apt install ros-humble-desktop python3-rosdep2 python3-colcon-common-extensions
    ```
 
-## 4 Install STSL
+## 4 Create a Worksapce
 
-1. Get the public key
-
-   ```bash
-   wget -qO - https://stslaptstorage.z13.web.core.windows.net/pubkey.txt | sudo apt-key add -
-   ```
-
-1. Add the STSL package repository
-
-   ```bash
-   sudo apt-add-repository "deb https://stslaptstorage.z13.web.core.windows.net/ jammy main"
-   ```
-
-1. Install the STSL ackages
-
-   ```bash
-   sudo apt install ros-humble-stsl-desktop
-   ```
-
-## 5 Clone software_training Repository
-
-1. Create training workspace directory
-
-   ```bash
+```bash
    cd ~
    mkdir -p training_ws/src
+```
+
+## 5 Install STSL
+
+1. Clone the Software Training Support Library (STSL)
+   ```bash
+   cd ~/training_ws/src
+   git clone https://github.com/RoboJackets/stsl.git
    ```
+
+## 6 Clone software_training Repository
 
 1. Clone the repo
 
    ```bash
    cd ~/training_ws/src
-   git clone https://github.com/RoboJackets/software-training.git
+   git clone https://github.com/RoboJackets/software-training-old.git
    ````
 
-## 6 Install ROS dependencies
+## 7 Install ROS dependencies
 
 1. Initialize rosdep
 
@@ -104,13 +101,13 @@ You can install the Windows Terminal app from the Microsoft Store: [App Store Pa
    rosdep update
    ```
 
-1. Run rosdep
+2. Run rosdep
 
    ```bash
    rosdep install --from-paths . --ignore-src -y
    ```
 
-## 7 Build training workspace
+## 8 Build training workspace
 
 1. Go to training workspace directory
 
@@ -118,13 +115,13 @@ You can install the Windows Terminal app from the Microsoft Store: [App Store Pa
    cd ~/training_ws
    ```
 
-1. Source ROS system underlay script
+2. Source ROS system underlay script
 
    ```bash
    source /opt/ros/humble/setup.bash
    ```
 
-1. Run colcon
+3. Run colcon
 
    ```bash
    colcon build
@@ -136,7 +133,7 @@ You can install the Windows Terminal app from the Microsoft Store: [App Store Pa
    Summary: 9 packages finished [1min 46s]
    ```
 
-## 8 Install VS Code
+## 9 Install VS Code
 
 1. Install VS Code from the Microsoft Store: [App Store Page](https://apps.microsoft.com/store/detail/XP9KHM4BK9FZ7Q)
 
