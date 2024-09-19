@@ -28,7 +28,7 @@ You can install the Windows Terminal app from the Microsoft Store: [App Store Pa
    ```wsl --status```  
 
 > **_NOTE_** wsl should already be installed in your os (windows 11) look for default version 2
-> IF WSL is not installed, then follow the download [instructions] (https://learn.microsoft.com/en-us/windows/wsl/insta
+> IF WSL is not installed, then follow the download [instructions] (https://learn.microsoft.com/en-us/windows/wsl/install)
 
 2. Identify WSL version:
    ```wsl -v``` equivilant to (```wsl --version```)
@@ -44,6 +44,8 @@ You can install the Windows Terminal app from the Microsoft Store: [App Store Pa
    ```
 
 ## 3 Install ROS2 Humble
+
+> **_NOTE_** the following instructions are being udpated. in the meantime please navigate to [ROS2](https://docs.ros.org/en/humble/Installation.html)
 
 1. Add ROS package repository
 

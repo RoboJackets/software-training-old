@@ -59,6 +59,12 @@ mkdir rj_training_container
 
 ## 5. [Download our installation script](setup.sh)
 
+//TODO
+
+link to setup.sh 
+where to move setup.sh when you run it
+then rn it
+
 Our installation script will:
 - Make sure you have all necessary software
 - Clone all necessary repos

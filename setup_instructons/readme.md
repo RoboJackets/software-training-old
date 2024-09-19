@@ -6,6 +6,9 @@ Virtualization can get complicated. There are many options for VM technology and
 
 We've marked the solution we recommend for each scenario. These are the options that we feel are most reliable and easiest for us to help you with should you have any problems.
 
+## ROS2 and IsaacROS
+The teams with access to a Jetson platform are using ISAAC ROS built and maintained by NVIDIA. ISAAC ROS is built on ROS 2 Humble and has all the capabilites of ROS 2 Humble and can nominally be used as such. ISAAC ROS comes with a few libraries that can prove to be useful but can only be run optimized on Nvidia hardware (use the isaac_ros development container) [instructions] (isaac_ros_WSL.md)
+
 ## Recomeded Method For ALL Operating Systems:
 - [Docker](docker.md)
 
