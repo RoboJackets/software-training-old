@@ -47,23 +47,24 @@ Search for and install the following extensions in VS Code
 
 [Install Git using the instructions here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
+2. clone this repo
+    ```bash
+        git clone https://github.com/RoboJackets/software-training-old.git
+    ```
+
 ## 4. Create directory to mount container
 
 The docker container is essentially a self-contained instance of Ubuntu 22.04, with access to any files in the directory you mount it in. We do this so the container can see the repositories you clone locally, that way both local development and containerized testing can be done seamlessly. 
 
 **You can place this directory wherever you want**, I recommend `/home` for Mac/Linux and `C:\Users\[Username]\` for Windows
+1. Open Terminal
 
-```bash
-mkdir rj_training_container
-```
+2. create a directory where robojackets material will live
+    ```bash
+    mkdir rj_training_container
+    ```
 
 ## 5. [Download our installation script](setup.sh)
-
-//TODO
-
-link to setup.sh 
-where to move setup.sh when you run it
-then rn it
 
 Our installation script will:
 - Make sure you have all necessary software
