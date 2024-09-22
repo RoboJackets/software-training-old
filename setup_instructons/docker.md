@@ -127,7 +127,11 @@ sudo apt upgrade
 
 
 ## Software Training Support Library Download
-This section is now updated via bash set up script
+
+**__NOTE__** bash script should have installed stsl and software training old, if you can not find the directory then install them manually/ move stsl into `/training_ws/src`
+```bash
+cd /training_ws/src
+```
 ```bash
 git clone https://github.com/RoboJackets/stsl.git
 ```
@@ -143,7 +147,7 @@ rosdep update && rosdep install --from-paths src --ignore-src -r -y
 ## Colcon Build
 go back to training_ws
 ```bash
-cd ..
+cd /training_ws
 ```
 
 
