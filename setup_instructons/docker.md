@@ -93,7 +93,7 @@ For beginners to Docker:
 - Go to `localhost:6060` in your web browser of choice
 
 Recommended way:
-- Open up VS Code
+- Open up VS Code 
 - Click on the whale Docker icon on your left
 - Right click the currently running container (Green arrow next to name)
 - Select open in browser
@@ -122,10 +122,6 @@ sudo apt update
 sudo apt upgrade
 ```
 
-
-
-
-
 ## Software Training Support Library Download
 
 **__NOTE__** bash script should have installed stsl and software training old, if you can not find the directory then install them manually/ move stsl into `/training_ws/src`
@@ -145,23 +141,28 @@ rosdep update && rosdep install --from-paths src --ignore-src -r -y
 
 
 ## Colcon Build
-go back to training_ws
-```bash
-cd /training_ws
-```
+1. Navigate to training_ws
+    ```bash
+    cd /training_ws
+    ```
 
+2. Run Colcon
+    ```bash
+    colcon build
+    ```
+<blockquote>
+**__NOTE__** if this is failing:
+- check that `stsl` exists in the directory `/training_ws/src` 
+- run `source `/opt/ros/humble/setup.bash`
+- make sure you have enough RAM available
+</blockquote>
 
-```bash
-colcon build
-```
+3. source the result for future projects
+    ```bash
+    source install/setup.bash
+    ```
 
-
-```bash
-source install/setup.bash
-```
-
-
-
+# You've set up your enviornemnt. Congratulations! 
 
 ## DEBUG COMMANDS
 
