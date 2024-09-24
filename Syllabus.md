@@ -1,4 +1,4 @@
-# RoboJackets Software Training - Fall 2022
+# RoboJackets Software Training - Fall 2024
 
 The RoboJackets software training program is designed to prepare you to work on software for the RoboJackets competitive teams. This program offers practical experience writing code using C++ and ROS. It also covers some of the fundamental concepts of robotics used by all of our teams.
 
