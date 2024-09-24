@@ -98,7 +98,7 @@ Recommended way:
 - Right click the currently running container (Green arrow next to name)
 - Select open in browser
 
-![Picture of where to head in VS Code](../pictures/docker_tab.png)
+![Picture of where to head in VS Code](./pictures/docker_tab.png)
 
 ## 9. Head to your mounted directory
 
@@ -106,7 +106,7 @@ Open terminator on the desktop (this is the recommended terminal for commands in
 
 right click on terminal -> profiles -> profile preferences -> scrolling -> set to a pretty high number
 
-![You can find terminator at the top right](../pictures/terminator_location.png)
+![You can find terminator at the top right](./pictures/terminator_location.png)
 
 In terminator, run
 ```bash
