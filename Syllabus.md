@@ -16,7 +16,7 @@ For more information about team meeting schedules and locations, check with each
 ### New Member Team Meetings
 RoboWrestling | RoboRacing | RoboNav | RoboCup
 --- | --- | --- | ---
-Sundays, 1:00 - 4:00pm | Sunday, 4:00 - 7:00pm<br>Mondays, 7:00 - 9:30pm | Sundays, 4:00 - 7:00pm | Sundays, 7:00 - 9:30pm
+Thrusdays, 7:00 - 9:00pm | Sunday, 4:00 - 7:00pm<br>Mondays, 7:00 - 9:30pm | Sundays, 4:00 - 7:00pm | Sundays, 7:00 - 9:30pm
 
 
 ### General Software Training Meetings
