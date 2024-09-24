@@ -28,23 +28,23 @@ MoSE G011 | MoSE G011
 
 ## Resources
 
-- [Software Training Mailing List](https://lists.gatech.edu/sympa/robojackets-training-sw)
+<!-- - [Software Training Mailing List](https://lists.gatech.edu/sympa/robojackets-training-sw)
 
-  An email list for official training-related announcements.
+  An email list for official training-related announcements.~~ -->
 
-- [Training Calendar](https://robojackets.org/calendar/action~month/cat_ids~12/request_format~html/)
+<!-- - [Training Calendar](https://robojackets.org/calendar/action~month/cat_ids~12/request_format~html/)
 
-  See details for all RoboJackets training meetings.
+  See details for all RoboJackets training meetings. -->
 
-- [Piazza](https://piazza.com/class/l7889f6vhrf1nv)
+<!-- - [Piazza](https://piazza.com/class/l7889f6vhrf1nv)
 
-  Get your questions answered any time by the instructors or other students.
+  Get your questions answered any time by the instructors or other students. -->
 
 - [RoboJackets Training YouTube Channel](https://www.youtube.com/channel/UCh3TLV-vQzzcWGQ4u2jsMOw)
 
   Where all training videos will be posted.
 
-- [Software Training Repository](https://github.com/RoboJackets/software-training)
+- [Software Training Repository](https://github.com/RoboJackets/software-training-old)
 
   The GitHub repository that hosts most of the resources for the software training program, including project instructions and starter code.
 
