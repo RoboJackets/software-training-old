@@ -14,24 +14,17 @@ All new software members will attend two meetings each week. One meeting will be
 For more information about team meeting schedules and locations, check with each team's leadership.
 
 ### New Member Team Meetings
-- RoboCup
-  - Sundays, 7:00 - 9:30pm
-- RoboNav
-  - Sundays, 4:00 - 7:00pm
-- RoboRacing
-  - Sunday, 4:00 - 7:00pm
-  - Mondays, 7:00 - 9:30pm
-- RoboWrestling
-  - Sundays, 1:00 - 4:00pm
+| RoboWrestling | RoboRacing | RoboNav | RoboCup |
+|Sundays, 1:00 - 4:00pm | Sunday, 4:00 - 7:00pm | Sundays, 4:00 - 7:00pm | Sundays, 7:00 - 9:30pm |
+|| Mondays, 7:00 - 9:30pm ||| 
+
 
 
 ### General Software Training Meetings
-- Modays
-  - 5:00 - 6:00pm
-  - MoSE G011
-- Friday
-  - 5:00 - 6:00pm
-  - MoSE G011
+Modays | Fridays
+5:00 - 6:00pm | 5:00 - 6:00pm 
+MoSE G011 | MoSE G011
+
 
 ## Resources
 
@@ -76,7 +69,7 @@ Week | Robotics Theory | ROS | C++
 --- | --- | --- | ---
 0 | | | [AP CS Review](https://youtube.com/playlist?list=PL1R5gSylLha2AOCmSaLdDlBMug5XFNfwv)
 1 | [Linear Algebra, Sensors, Coordinate Frames](https://youtube.com/playlist?list=PL1R5gSylLha2RjafLHG9lqNqZ2rzH_hdQ) | [Introduction to ROS and useful tools](https://youtube.com/playlist?list=PL1R5gSylLha0y1U3yHAkCYJXXL-GiJDwF) | [Introduction to C++](https://youtube.com/playlist?list=PL1R5gSylLha1TChL2Lkm6PQQnOPRSIpDK)
-2 | [Computer Vision](https://youtube.com/playlist?list=PL1R5gSylLha0cFU3nGomLr8cIUaKun6bl) | [rclcpp Basics, Timers, Topics](https://youtube.com/playlist?list=PL1R5gSylLha0wxbvXIiNeEr12aoO_VX_8) | [Classes, Inheritance, std::bind][Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3KemZ2wqInhNm-db8kR88r)
+2 | [Computer Vision](https://youtube.com/playlist?list=PL1R5gSylLha0cFU3nGomLr8cIUaKun6bl) | [rclcpp Basics, Timers, Topics](https://youtube.com/playlist?list=PL1R5gSylLha0wxbvXIiNeEr12aoO_VX_8) | [Classes, Inheritance, std::bind](https://youtube.com/playlist?list=PL1R5gSylLha3KemZ2wqInhNm-db8kR88r)
 3 | [Probability, Particle Filters](https://youtube.com/playlist?list=PL1R5gSylLha2ylxbALvguW15qf-mHjsGm)  | [Launch, Parameters](https://youtube.com/playlist?list=PL1R5gSylLha3YMGovXmHZGn9wVrAChkxk) | [Lifetime, References, Pointers](https://youtube.com/playlist?list=PL1R5gSylLha2BEzoEGSt-EAmx4HbvQ7RZ)
 4 | [Optimization](https://youtube.com/playlist?list=PL1R5gSylLha0975HYnqN-Jq4Jx0r7LiTu) | [Services](https://youtube.com/playlist?list=PL1R5gSylLha3QucE7Smr0-YvnV70fZkoq) | [Concurrency Basics](https://youtube.com/playlist?list=PL1R5gSylLha1B3HQldnfhFu4_rVZnW55q)
 5 | [SLAM, Mapping](https://www.youtube.com/watch?v=CgiVz-KMBH0&list=PL1R5gSylLha1cX02r8hiMA85vPmfSYHP_) | [TF, Custom Interfaces](https://youtube.com/playlist?list=PL1R5gSylLha2od_7P9YuSSLsKCd3vtCY7) | [Lambdas](https://youtube.com/playlist?list=PL1R5gSylLha1huMeonsTMxqU8DE7m_zWh)
