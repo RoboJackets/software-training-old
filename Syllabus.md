@@ -3,14 +3,9 @@
 The RoboJackets software training program is designed to prepare you to work on software for the RoboJackets competitive teams. This program offers practical experience writing code using C++ and ROS. It also covers some of the fundamental concepts of robotics used by all of our teams.
 
 ## Trainers
+- Mukilan Karthikeyan (Software Core Chair)
+- Aalind Tyagi (Software Training Lead) [using software-v3](https://github.com/RoboJackets/software-training-v3)
 
-- Justin Johnson (Software Training Lead)
-- Aiden Stickan
-- Matthew Hannay
-- Isaac Dale
-- Miles Gordon
-- Sumedh Garimella
-- Yashas Ambati
 
 ## Meeting Schedules
 
@@ -24,15 +19,19 @@ For more information about team meeting schedules and locations, check with each
 - RoboNav
   - Sundays, 4:00 - 7:00pm
 - RoboRacing
+  - Sunday, 4:00 - 7:00pm
   - Mondays, 7:00 - 9:30pm
+- RoboWrestling
+  - Sundays, 1:00 - 4:00pm
+
 
 ### General Software Training Meetings
-- Wednesdays
-  - 6:00 - 8:00pm
-  - Skiles 255
+- Modays
+  - 5:00 - 6:00pm
+  - MoSE G011
 - Friday
-  - 4:00 - 6:00pm
-  - Van Leer C341
+  - 5:00 - 6:00pm
+  - MoSE G011
 
 ## Resources
 
@@ -69,36 +68,46 @@ Students should also be comfortable with math at the level of [AP Calculus AB](h
 ## Topic Schedule
 
 The content of this program is divided into three tracks: Robotics Theory, ROS, and C++. The Robotics Theory track will survey the concepts and math that make intelligent mobile robots work. The ROS track will cover how to use the Robot Operating System to program robots. The C++ track will introduce the C++ programming language, popular in robotics applications.
-
-Week | Robotics Theory | ROS | C++
---- | --- | --- | ---
-0 | | | AP CS Review
-1 | Linear Algebra, Sensors, Coordinate Frames | Introduction to ROS and useful tools | Introduction to C++
-2 | Computer Vision | rclcpp Basics, Timers, Topics | Classes, Inheritance, std::bind
-3 | Probability, Particle Filters | Launch, Parameters | Lifetime, References, Pointers
-4 | Optimization | Services | Concurrency Basics
-5 | SLAM, Mapping | TF, Custom Interfaces | Lambdas
-6 | Kalman Filters | Quality of Service | Templates
-7 | Control | Actions |
-8 | Path Planning | Bags | Iterators, Algorithms
-
-## Video Schedule
-
 Robotics theory videos should be watched before your team-specific meetings. C++ and ROS videos should be watched before the general training meetings. You should watch the C++ videos before the ROS videos for a given week.
 
 [Course Introduction Video](https://youtu.be/LZ4-nDEAFcY)
 
-Week | Robotics Theory | C++ | ROS
+Week | Robotics Theory | ROS | C++
 --- | --- | --- | ---
-0 | | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2AOCmSaLdDlBMug5XFNfwv) |
-1 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2RjafLHG9lqNqZ2rzH_hdQ) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1TChL2Lkm6PQQnOPRSIpDK) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0y1U3yHAkCYJXXL-GiJDwF)
-2 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0cFU3nGomLr8cIUaKun6bl) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3KemZ2wqInhNm-db8kR88r) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0wxbvXIiNeEr12aoO_VX_8)
-3 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2ylxbALvguW15qf-mHjsGm) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2BEzoEGSt-EAmx4HbvQ7RZ) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3YMGovXmHZGn9wVrAChkxk)
-4 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0975HYnqN-Jq4Jx0r7LiTu) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1B3HQldnfhFu4_rVZnW55q) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3QucE7Smr0-YvnV70fZkoq)
-5 | [Playlist](https://www.youtube.com/watch?v=CgiVz-KMBH0&list=PL1R5gSylLha1cX02r8hiMA85vPmfSYHP_) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1huMeonsTMxqU8DE7m_zWh) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2od_7P9YuSSLsKCd3vtCY7)
-6 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0j_tmn3YhTTs90-pUFuZH9) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3kQMd1tIxDywbOWNNYaiJM) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0IvTKCOckpL5QvVB4Hn-97)
-7 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3nYaE3PTmJIon7GgIxzr_M) | No C++ videos this week | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1qUf5ngWco_EnNfYsTzAUc)
-8 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1epFZYz_z2BKO0sSXNPcjM) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1l1f8OcxXCVtnh6XmPzFzU) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2i-XmvxwzfPgBKSJ6EKcF4)
+0 | | | [AP CS Review](https://youtube.com/playlist?list=PL1R5gSylLha2AOCmSaLdDlBMug5XFNfwv)
+1 | [Linear Algebra, Sensors, Coordinate Frames](https://youtube.com/playlist?list=PL1R5gSylLha2RjafLHG9lqNqZ2rzH_hdQ) | [Introduction to ROS and useful tools](https://youtube.com/playlist?list=PL1R5gSylLha0y1U3yHAkCYJXXL-GiJDwF) | [Introduction to C++](https://youtube.com/playlist?list=PL1R5gSylLha1TChL2Lkm6PQQnOPRSIpDK)
+2 | [Computer Vision](https://youtube.com/playlist?list=PL1R5gSylLha0cFU3nGomLr8cIUaKun6bl) | [rclcpp Basics, Timers, Topics](https://youtube.com/playlist?list=PL1R5gSylLha0wxbvXIiNeEr12aoO_VX_8) | [Classes, Inheritance, std::bind][Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3KemZ2wqInhNm-db8kR88r)
+3 | [Probability, Particle Filters](https://youtube.com/playlist?list=PL1R5gSylLha2ylxbALvguW15qf-mHjsGm)  | [Launch, Parameters](https://youtube.com/playlist?list=PL1R5gSylLha3YMGovXmHZGn9wVrAChkxk) | [Lifetime, References, Pointers](https://youtube.com/playlist?list=PL1R5gSylLha2BEzoEGSt-EAmx4HbvQ7RZ)
+4 | [Optimization](https://youtube.com/playlist?list=PL1R5gSylLha0975HYnqN-Jq4Jx0r7LiTu) | [Services](https://youtube.com/playlist?list=PL1R5gSylLha3QucE7Smr0-YvnV70fZkoq) | [Concurrency Basics](https://youtube.com/playlist?list=PL1R5gSylLha1B3HQldnfhFu4_rVZnW55q)
+5 | [SLAM, Mapping](https://www.youtube.com/watch?v=CgiVz-KMBH0&list=PL1R5gSylLha1cX02r8hiMA85vPmfSYHP_) | [TF, Custom Interfaces](https://youtube.com/playlist?list=PL1R5gSylLha2od_7P9YuSSLsKCd3vtCY7) | [Lambdas](https://youtube.com/playlist?list=PL1R5gSylLha1huMeonsTMxqU8DE7m_zWh)
+6 | [Kalman Filters](https://youtube.com/playlist?list=PL1R5gSylLha0j_tmn3YhTTs90-pUFuZH9) | [Quality of Service](https://youtube.com/playlist?list=PL1R5gSylLha0IvTKCOckpL5QvVB4Hn-97) | [Templates](https://youtube.com/playlist?list=PL1R5gSylLha3kQMd1tIxDywbOWNNYaiJM)
+7 | [Control](https://youtube.com/playlist?list=PL1R5gSylLha3nYaE3PTmJIon7GgIxzr_M) | [Actions](https://youtube.com/playlist?list=PL1R5gSylLha1qUf5ngWco_EnNfYsTzAUc) |
+8 | [Path Planning](https://youtube.com/playlist?list=PL1R5gSylLha1epFZYz_z2BKO0sSXNPcjM) | [Bags](https://youtube.com/playlist?list=PL1R5gSylLha2i-XmvxwzfPgBKSJ6EKcF4) | [Iterators, Algorithms](https://youtube.com/playlist?list=PL1R5gSylLha1l1f8OcxXCVtnh6XmPzFzU)
+
+## Video Schedule
+
+
+
+
+<!-- 
+Week | Robotics Theory | ROS | C++ 
+--- | --- | --- | ---
+0 | | | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2AOCmSaLdDlBMug5XFNfwv)
+1 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2RjafLHG9lqNqZ2rzH_hdQ) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0y1U3yHAkCYJXXL-GiJDwF) |[Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1TChL2Lkm6PQQnOPRSIpDK)
+
+2 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0cFU3nGomLr8cIUaKun6bl) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0wxbvXIiNeEr12aoO_VX_8) |[Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3KemZ2wqInhNm-db8kR88r)
+
+3 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2ylxbALvguW15qf-mHjsGm) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3YMGovXmHZGn9wVrAChkxk)| [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2BEzoEGSt-EAmx4HbvQ7RZ)
+
+4 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0975HYnqN-Jq4Jx0r7LiTu) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3QucE7Smr0-YvnV70fZkoq)| [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1B3HQldnfhFu4_rVZnW55q)
+
+5 | [Playlist](https://www.youtube.com/watch?v=CgiVz-KMBH0&list=PL1R5gSylLha1cX02r8hiMA85vPmfSYHP_) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2od_7P9YuSSLsKCd3vtCY7) |[Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1huMeonsTMxqU8DE7m_zWh)
+
+6 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0j_tmn3YhTTs90-pUFuZH9) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0IvTKCOckpL5QvVB4Hn-97)| [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3kQMd1tIxDywbOWNNYaiJM)
+
+7 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3nYaE3PTmJIon7GgIxzr_M) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1qUf5ngWco_EnNfYsTzAUc) | No C++ videos this week 
+
+8 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1epFZYz_z2BKO0sSXNPcjM) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2i-XmvxwzfPgBKSJ6EKcF4) |[Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1l1f8OcxXCVtnh6XmPzFzU) -->
 
 ## Project Schedule
 
