@@ -14,14 +14,16 @@ All new software members will attend two meetings each week. One meeting will be
 For more information about team meeting schedules and locations, check with each team's leadership.
 
 ### New Member Team Meetings
-| RoboWrestling | RoboRacing | RoboNav | RoboCup |
-|Sundays, 1:00 - 4:00pm | Sunday, 4:00 - 7:00pm | Sundays, 4:00 - 7:00pm | Sundays, 7:00 - 9:30pm |
-|| Mondays, 7:00 - 9:30pm ||| 
+RoboWrestling | RoboRacing | RoboNav | RoboCup
+--- | --- | --- | ---
+Sundays, 1:00 - 4:00pm | Sunday, 4:00 - 7:00pm | Sundays, 4:00 - 7:00pm | Sundays, 7:00 - 9:30pm
+ | Mondays, 7:00 - 9:30pm | | 
 
 
 
 ### General Software Training Meetings
 Modays | Fridays
+--- | --- 
 5:00 - 6:00pm | 5:00 - 6:00pm 
 MoSE G011 | MoSE G011
 
