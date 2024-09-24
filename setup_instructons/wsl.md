@@ -32,7 +32,13 @@ You can install the Windows Terminal app from the Microsoft Store: [App Store Pa
 
 > IF WSL is not installed, then follow the download [instructions](https://learn.microsoft.com/en-us/windows/wsl/install)
 
-2. Identify WSL version:
+2. Update WSL
+
+   ```bash
+      wsl --update
+   ```
+
+3. Identify WSL version:
 
    ```wsl -v``` equivilant to (```wsl --version```)
 
@@ -40,8 +46,7 @@ You can install the Windows Terminal app from the Microsoft Store: [App Store Pa
 
 > ```wsl -l -o``` equivilant to (```wsl --list --online```)
 
-
-3. Run the install command install Ubuntu-22.04 (alternatively you can install this on the Microsoft Store)
+4. Run the install command install Ubuntu-22.04 (alternatively you can install this on the Microsoft Store)
 
    ```
    wsl --install --distribution Ubuntu-22.04

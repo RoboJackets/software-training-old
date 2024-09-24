@@ -17,11 +17,19 @@ find version:
 ```wsl -v``` equivilant to (```wsl --version```)
 
 ## 2. Install Distro
-list all of your available distros of Linux:
-```wsl -l -o``` equivilant to (```wsl --list --online```)
+1. Check the list all of your available distros of Linux:
 
-run following command to isntall Ubuntu-22.04 (alternatively you can install this on the Microsoft Store)
-```wsl --install -d Ubuntu-22.04```
+    ```wsl -l -o``` equivilant to (```wsl --list --online```)
+
+2. Update wsl
+
+    ```bash
+    wsl --update
+    ```
+
+3. run following command to isntall Ubuntu-22.04 (alternatively you can install this on the Microsoft Store)
+
+    ```wsl --install -d Ubuntu-22.04```
 
 ## 3. Bootup and Setup
 Once the desired distro is installed. 
