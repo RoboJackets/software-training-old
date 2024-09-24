@@ -25,15 +25,19 @@ You can install the Windows Terminal app from the Microsoft Store: [App Store Pa
 ## 2 Install WSL
 
 1. Check WSL Status
+
    ```wsl --status```  
 
 > **_NOTE_** wsl should already be installed in your os (windows 11) look for default version 2
-> IF WSL is not installed, then follow the download [instructions] (https://learn.microsoft.com/en-us/windows/wsl/install)
+
+> IF WSL is not installed, then follow the download [instructions](https://learn.microsoft.com/en-us/windows/wsl/install)
 
 2. Identify WSL version:
+
    ```wsl -v``` equivilant to (```wsl --version```)
 
 > **_NOTE_** you can list all of your available distros of Linux by running:
+
 > ```wsl -l -o``` equivilant to (```wsl --list --online```)
 
 

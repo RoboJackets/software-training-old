@@ -84,6 +84,14 @@ Week | Robotics Theory | ROS | C++
 7 | [Control](https://youtube.com/playlist?list=PL1R5gSylLha3nYaE3PTmJIon7GgIxzr_M) | [Actions](https://youtube.com/playlist?list=PL1R5gSylLha1qUf5ngWco_EnNfYsTzAUc) |
 8 | [Path Planning](https://youtube.com/playlist?list=PL1R5gSylLha1epFZYz_z2BKO0sSXNPcjM) | [Bags](https://youtube.com/playlist?list=PL1R5gSylLha2i-XmvxwzfPgBKSJ6EKcF4) | [Iterators, Algorithms](https://youtube.com/playlist?list=PL1R5gSylLha1l1f8OcxXCVtnh6XmPzFzU)
 
+
+<!-- Coming Soon: 
+- What is Docker?
+- How to use Git Effectively
+- C++ practice 
+  - indexing, sorting, mattrix operations -->
+
+
 ## Additional Resources
 The following resources are great supplemental material to learn more about software for robotics applications.
 
