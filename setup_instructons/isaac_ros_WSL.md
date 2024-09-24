@@ -46,7 +46,7 @@ download docker desktop
 go to settings -> go to resoruces -> wsl integration -> enable integration with additional distros
 apply and restart
 
-github clone repo for issac ros common for the dev enviorrment with 
+github clone repo for isaac ros common for the dev enviorrment with 
 
 ```git clone https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common.git```
 clone the Isaac ros dev evniornment repo
