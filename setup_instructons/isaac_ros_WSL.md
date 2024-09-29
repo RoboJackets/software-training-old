@@ -109,3 +109,43 @@ then navigate to reposotory and launch container
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh -d ${ISAAC_ROS_WS}
 ```
+
+## Running Isaac Ros SLAM
+
+# connecting realsense camera
+
+
+
+
+
+## USB passthrough 
+[usb passthrough offical microsoft instructions](https://learn.microsoft.com/en-us/windows/wsl/connect-usb)
+
+1. download `.msi` file
+[usbip download](https://github.com/dorssel/usbipd-win/releases)
+
+2. list all usb devices
+    ```bash 
+    usbpid list
+    ```
+3. change usb to being shared:
+    ```
+    usbipd bind --busid <busid>
+    ```
+4. check if usb is shared
+    ```
+    usbipd list
+    ```
+5. attach usb to wsl
+    ```
+    usbipd attach --wsl --busid <busid>
+    ```
+
+6. check if the usb is visible in ubuntu wsl
+    ```
+    lsusb
+    ```
+7. Disconnect physically or run command:
+    ```
+    usbipd detach --busid <busid>
+    ```
