@@ -14,12 +14,12 @@ In addition, you can still run GUI applications like Gazebo using the NoVNC desk
 
 [Ubuntu Instructions](https://docs.docker.com/engine/install/ubuntu/)
 
-### NOTE
-* If you are on Linux, add yourself to the `docker` group. Being a member of the `docker` group allows you to run `docker` without `sudo`.
-```bash
-sudo groupadd docker
-sudo usermod -aG docker $USER
-```
+> **_NOTE_**
+> If you are on Linux, add yourself to the `docker` group. Being a member of the `docker` group allows you to run `docker` without `sudo`.
+> ```bash
+>   sudo groupadd docker
+>   sudo usermod -aG docker $USER
+> ```
 
 After you complete the installation, **restart your computer**!
 
@@ -39,15 +39,15 @@ VS Code is the text editor of choice for most veteran RoboJackets members, thank
 Search for and install the following extensions in VS Code
 
 * [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
-* ROS
-* C/C++
-* CMake
+* [ROS](https://marketplace.visualstudio.com/items?itemName=ms-iot.vscode-ros)
+* [C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
+* [CMake](https://marketplace.visualstudio.com/items?itemName=twxs.cmake)
 
 ## 3. Install Git
 
 [Install Git using the instructions here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
-2. clone this repo
+1. clone this repo
     ```bash
         git clone https://github.com/RoboJackets/software-training-old.git
     ```
@@ -59,7 +59,7 @@ The docker container is essentially a self-contained instance of Ubuntu 22.04, w
 **You can place this directory wherever you want**, I recommend `/home` for Mac/Linux and `C:\Users\[Username]\` for Windows
 1. Open Terminal
 
-2. create a directory where robojackets material will live
+1. create a directory where robojackets material will live
     ```bash
     mkdir rj_training_container
     ```
@@ -78,13 +78,13 @@ Our installation script will:
    cd rj_training_container
    ```
 
-2. Download the script
+1. Download the script
 
    ```bash
    wget https://github.com/RoboJackets/software-training-old/blob/main/setup_instructons/setup.sh
    ```
 
-3. Run the script
+1. Run the script
 
    ```bash
    bash setup.sh
@@ -128,7 +128,7 @@ sudo apt upgrade
 
 ## Software Training Support Library Download
 
-**__NOTE__** bash script should have installed stsl and software training old, if you can not find the directory then install them manually/ move stsl into `/training_ws/src`
+> **_NOTE_** bash script should have installed stsl and software training old, if you can not find the directory then install them manually/ move stsl into `/training_ws/src`
 ```bash
 cd /training_ws/src
 ```
@@ -150,18 +150,16 @@ rosdep update && rosdep install --from-paths src --ignore-src -r -y
     cd /training_ws
     ```
 
-2. Run Colcon
+1. Run Colcon
     ```bash
     colcon build
     ```
-<blockquote>
-**__NOTE__** if this is failing:
-- check that `stsl` exists in the directory `/training_ws/src` 
-- run `source `/opt/ros/humble/setup.bash`
-- make sure you have enough RAM available
-</blockquote>
+> **_NOTE_** if this is failing:
+> - check that `stsl` exists in the directory `/training_ws/src` 
+> - run `source `/opt/ros/humble/setup.bash`
+> - make sure you have enough RAM available
 
-3. source the result for future projects
+1. source the result for future projects
     ```bash
     source install/setup.bash
     ```

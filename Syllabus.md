@@ -28,18 +28,6 @@ MoSE G011 | MoSE G011
 
 ## Resources
 
-<!-- - [Software Training Mailing List](https://lists.gatech.edu/sympa/robojackets-training-sw)
-
-  An email list for official training-related announcements.~~ -->
-
-<!-- - [Training Calendar](https://robojackets.org/calendar/action~month/cat_ids~12/request_format~html/)
-
-  See details for all RoboJackets training meetings. -->
-
-<!-- - [Piazza](https://piazza.com/class/l7889f6vhrf1nv)
-
-  Get your questions answered any time by the instructors or other students. -->
-
 - [RoboJackets Training YouTube Channel](https://www.youtube.com/channel/UCh3TLV-vQzzcWGQ4u2jsMOw)
 
   Where all training videos will be posted.
@@ -79,8 +67,6 @@ Week | Robotics Theory | ROS | C++
 
 
 <!-- Coming Soon: 
-- What is Docker?
-- How to use Git Effectively
 - C++ practice 
   - indexing, sorting, mattrix operations -->
 
@@ -94,25 +80,7 @@ The following resources are great supplemental material to learn more about soft
 - [Broader view on Controls Matlab videos ](https://www.mathworks.com/videos/tech-talks.html)
 <!-- [Nvidia's Isaac ROS](https://developer.nvidia.com/isaac/ros) -->
 
-<!-- 
-Week | Robotics Theory | ROS | C++ 
---- | --- | --- | ---
-0 | | | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2AOCmSaLdDlBMug5XFNfwv)
-1 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2RjafLHG9lqNqZ2rzH_hdQ) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0y1U3yHAkCYJXXL-GiJDwF) |[Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1TChL2Lkm6PQQnOPRSIpDK)
 
-2 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0cFU3nGomLr8cIUaKun6bl) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0wxbvXIiNeEr12aoO_VX_8) |[Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3KemZ2wqInhNm-db8kR88r)
-
-3 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2ylxbALvguW15qf-mHjsGm) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3YMGovXmHZGn9wVrAChkxk)| [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2BEzoEGSt-EAmx4HbvQ7RZ)
-
-4 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0975HYnqN-Jq4Jx0r7LiTu) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3QucE7Smr0-YvnV70fZkoq)| [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1B3HQldnfhFu4_rVZnW55q)
-
-5 | [Playlist](https://www.youtube.com/watch?v=CgiVz-KMBH0&list=PL1R5gSylLha1cX02r8hiMA85vPmfSYHP_) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2od_7P9YuSSLsKCd3vtCY7) |[Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1huMeonsTMxqU8DE7m_zWh)
-
-6 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0j_tmn3YhTTs90-pUFuZH9) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha0IvTKCOckpL5QvVB4Hn-97)| [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3kQMd1tIxDywbOWNNYaiJM)
-
-7 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha3nYaE3PTmJIon7GgIxzr_M) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1qUf5ngWco_EnNfYsTzAUc) | No C++ videos this week 
-
-8 | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1epFZYz_z2BKO0sSXNPcjM) | [Playlist](https://youtube.com/playlist?list=PL1R5gSylLha2i-XmvxwzfPgBKSJ6EKcF4) |[Playlist](https://youtube.com/playlist?list=PL1R5gSylLha1l1f8OcxXCVtnh6XmPzFzU) -->
 
 ## Project Schedule
 
