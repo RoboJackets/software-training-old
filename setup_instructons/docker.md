@@ -38,7 +38,7 @@ VS Code is the text editor of choice for most veteran RoboJackets members, thank
 
 Search for and install the following extensions in VS Code
 
-* Docker
+* [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
 * ROS
 * C/C++
 * CMake
