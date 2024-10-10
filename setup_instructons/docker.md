@@ -64,7 +64,7 @@ The docker container is essentially a self-contained instance of Ubuntu 22.04, w
     mkdir rj_training_container
     ```
 
-## 5. [Download our installation script](setup.sh)
+## 5. Download and run our installation script.
 
 Our installation script will:
 - Make sure you have all necessary software
@@ -72,20 +72,24 @@ Our installation script will:
 - Pull the Docker image
 - Automatically setup your desktop NoVNC environment
 
-## 6. Move the script into your `rj_training_container` directory
+1. Go to your `rj_training_container` directory
 
-## 7. Run the script
+   ```bash
+   cd rj_training_container
+   ```
 
-**If on Windows, you will need to use Git Bash to run the following commands!**
+2. Download the script
 
-Run this command **only if you are on Mac/Linux**
-```bash
-chmod +x setup.sh
-```
+   ```bash
+   wget https://github.com/RoboJackets/software-training-old/blob/main/setup_instructons/setup.sh
+   ```
 
-```bash
-./setup.sh
-```
+3. Run the script
+
+   ```bash
+   bash setup.sh
+   ```
+
 
 ## 8. Access your new container
 
