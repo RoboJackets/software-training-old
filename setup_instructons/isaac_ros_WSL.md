@@ -1,14 +1,13 @@
 # WSL + IsaacROS on Windows
-This guide assumes a few things that you are:
-- running Windows 11
-- want a way to run ROS2 Humble natively without dual booting
+This guide assumes:
+- you are running Windows 11
+- you want a way to run ROS2 Humble natively without dual booting
 
+Here's an easy way to get Ubuntu 22.04 using WSL (Windows Subsystem for Linux)
 
-the easier way to get ubuntu 22.04:
+> **_CODER BEWARE_** USB passthrough is finicky in WSL and might not always work with all programs 
 
-> **_CODER BEWARE_** USB passthrough is finicky and might not always work with all programs
-
-## 1. Chech WSL Status
+## 1. Check WSL Status
 
 run ```wsl --status```  
 // wsl should already be installed in your os (windows 11) look for default version 2
@@ -22,13 +21,13 @@ find version:
 
     ```wsl -l -o``` equivilant to (```wsl --list --online```)
 
-2. Update wsl
+1. Update wsl
 
     ```bash
     wsl --update
     ```
 
-3. run following command to isntall Ubuntu-22.04 (alternatively you can install this on the Microsoft Store)
+1. run following command to install Ubuntu-22.04 (alternatively you can install this on the Microsoft Store)
 
     ```wsl --install -d Ubuntu-22.04```
 
@@ -58,34 +57,30 @@ apply and restart
 
 ## Create your Work space
 1. boot WSL (cli or microsoft store)
-2. navigate home
+1. navigate home
 ```
 cd ~
 ```
-3. create a new working directory
+1. create a new working directory
 ```bash
 mkdir -p  ~/workspaces/isaac_ros-dev/src
 ```
-4. create a new command line variable 
+1. create a new command line variable 
 ```bash
 echo "export ISAAC_ROS_WS=${HOME}/workspaces/isaac_ros-dev/" >> ~/.bashrc
 ```
-5. source bash script
+1. source bash script
 ```bash
 source ~/.bashrc
 ```
 
 github clone repo for isaac ros common for the dev enviorrment with 
 
-6. clone the Isaac ros dev evniornment repo
+1. clone the Isaac ros dev evniornment repo
 ``` bash
 cd ${ISAAC_ROS_WS}/src/
 git clone https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common.git
 ```
-
-
-
-
 
 ## ISAAC ROS Conatiner
 

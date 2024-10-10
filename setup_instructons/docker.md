@@ -94,7 +94,7 @@ Our installation script will:
 ## 8. Access your new container
 
 For beginners to Docker:
-- Go to `localhost:6060` in your web browser of choice
+- Go to `http://localhost:6060` in your web browser of choice
 
 Recommended way:
 - Open up VS Code 
@@ -108,7 +108,8 @@ Recommended way:
 
 Open terminator on the desktop (this is the recommended terminal for commands in your container)
 
-right click on terminal -> profiles -> profile preferences -> scrolling -> set to a pretty high number
+> ** _TIP_** extend your terminal scroll
+> right click on terminator -> navigate to profiles -> profile preferences -> scrolling -> set to a pretty high number (beware of RAM usage)
 
 ![You can find terminator at the top right](./pictures/terminator_location.png)
 
@@ -137,7 +138,7 @@ git clone https://github.com/RoboJackets/stsl.git
 ```
 
 
-## isntall ROS Dependencies
+## Install ROS Dependencies
 ```bash
 cd /training_ws
 rosdep update && rosdep install --from-paths src --ignore-src -r -y
