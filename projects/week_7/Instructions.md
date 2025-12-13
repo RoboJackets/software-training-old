@@ -172,7 +172,7 @@ It will not move until you implement LQR or PID and the action client.
 
 The second command that won't work until you implement your action client is
 ```bash
-ros2 run controller controller_test_client --ros-args -p use_sim_time:=True
+ros2 run controllers controller_test_client --ros-args -p use_sim_time:=True
 ```
 
 This runs the action client and sets use_sim_time to true so that all nodes are using the same time source.
