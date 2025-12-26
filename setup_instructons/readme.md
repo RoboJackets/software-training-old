@@ -14,21 +14,24 @@ The teams with access to a Jetson platform are using ISAAC ROS built and maintai
 - [Docker](docker.md)
 
 
-## For Windows Computers
+## Legacy Instructions
+Please note that docker is the only LTS setup as of right now regardless of OS. Note: we have had issues with docker and VNC on some apple silicon Macs, the issue has not be reliabley reproduceable so if you run into any issues please create a ticket and try other methods of running ubuntu. 
+
+### For Windows Computers
 If you have an NVIDIA GPU we recomend using WSL for best use of the CUDA acceration
 - [Windows Subsystem for Linux](wsl.md) 
 - [VirtualBox](virtualbox.md)
 
-## For Intel-based Apple Computers
+### For Intel-based Apple Computers
 
 - [VirtualBox](virtualbox.md)
 
-## For Apple Silicon Computers (M1 / M2)
+### For Apple Silicon Computers (M1 / M2)
 
 - [Docker](docker.md)
 - [VMware Fusion](vmware_fusion.md)
 
-## For Linux Computers
+### For Linux Computers
 
 - [Linux Setup for amd64](bare_metal_ubuntu_amd64.md)
 - [Linux Setup for arm64](bare_metal_ubuntu_arm64.md)
