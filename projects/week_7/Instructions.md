@@ -144,7 +144,7 @@ The myopic behavior of the PID controller should look sad in comparison once you
 
 [Nav2](https://navigation.ros.org/) is ROS 2 "navigation stack". This is a collection of nodes and tools for handling the different parts of navigation for an autonomous robot, including path planning, path following, and recovery. Nav2 uses a plugin-based system to allow other developers to customize certain parts of the navigation stack. The diagram below shows the overall architecture of the Nav2 stack and highlights which parts are customizable with plugins.
 
-![Diagram](https://navigation.ros.org/_images/architectural_diagram.png)
+![Diagram](https://docs.nav2.org/_images/nav2_architecture.png)
 
 Each part of the Nav2 stack communicates with the other parts primarily through ROS actions. For example, the "Planner Server" hosts an action, called `/compute_path_to_pose`, which will plan the path from the robot's current location to the given pose. The "BT Navigator Server" can then call that action whenever a new path needs to be planned. The "BT Navigator Server" itself also hosts an action `/navigate_to_pose` that acts as the main entry point for the navigation stack for most other parts of our ROS system. Whenever some part of our ROS system wants the robot to move, it can send the destination pose to the `/navigate_to_pose` action, which will take care of the rest.
 
