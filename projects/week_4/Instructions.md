@@ -121,6 +121,14 @@ ros2 interface show <service_type>
 
 You should see two sets of fields, separated by `---`. The fields above this line are the request message. The fields below the line are the response message. So, hopefully now it's clear that our client will be sending a location (x and y), and will be getting back the elevation and a success flag. If any of your service requests reply with the success flag set to `false`, you should see an error message logged from the `elevation_server` node.
 
+<details markdown="1">
+  <summary>If encountered `Unknown package 'stsl_interfaces'` </summary>
+  Go back to the stsl dir and run the setup script
+
+    `cd../stsl`
+    `source install/setup.bash`
+</details>
+
 Try sending an elevation sample request from the command line. You can do this with the `service call` command:
 
 ```bash
