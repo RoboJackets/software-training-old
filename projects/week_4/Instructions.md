@@ -285,3 +285,7 @@ Once you've got your code for this project working, use the command below to com
 ```bash
 $ git commit -a -m "My project 4 code."
 ```
+
+### 3.10 Trouble shooting
+
+If your code doesn't work, quit the terminal, run `colcon build` at the `training_ws` dir level again, then also make sure you've ran the setup scripts: `source install/setup.bash`. 
