@@ -27,6 +27,7 @@
 #include <rclcpp_components/register_node_macro.hpp>
 #include "aruco_sensor_model.hpp"
 // BEGIN STUDENT CODE
+#include "odometry_sensor_model.hpp"
 // END STUDENT CODE
 
 namespace localization
@@ -71,6 +72,7 @@ ParticleFilterLocalizer::ParticleFilterLocalizer(const rclcpp::NodeOptions & opt
 
   sensor_models_.push_back(std::make_unique<ArucoSensorModel>(*this));
   // BEGIN STUDENT CODE
+  sensor_models_.push_back(std::make_unique<OdometrySensorModel>(*this));
   // END STUDENT CODE
 }
 
