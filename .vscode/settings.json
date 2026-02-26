@@ -64,5 +64,6 @@
         "xtr1common": "cpp",
         "xtree": "cpp",
         "xutility": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "/workspaces/software-training/coordinate_transform"
 }

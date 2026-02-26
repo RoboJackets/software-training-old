@@ -1,0 +1,1 @@
+Invoking command in '/home/ubuntu/rj_training_container/training_ws/src/software-training/build/mapping': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/ubuntu/rj_training_container/training_ws/src/software-training/mapping -DCMAKE_INSTALL_PREFIX=/home/ubuntu/rj_training_container/training_ws/src/software-training/install/mapping

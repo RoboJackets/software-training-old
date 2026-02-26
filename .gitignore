@@ -14,3 +14,7 @@ build
 data
 
 wiki edit
+
+build/
+install/
+log/
